@@ -146,10 +146,11 @@
   .cap-card{
     border:1px solid var(--ground-line); padding:38px 36px;
     display:flex; flex-direction:column; justify-content:center; min-height:180px;
-    opacity:0; transform:translateY(14px);
+    opacity:1; transform:none;
     transition:opacity .6s ease, transform .6s ease, border-color .3s ease, background .3s ease;
   }
-  .cap-card.in{ opacity:1; transform:none; }
+  .cap-card.pre-reveal{ opacity:0; transform:translateY(14px); }
+  .cap-card.pre-reveal.in{ opacity:1; transform:none; }
   .cap-card:hover{ border-color:var(--verdant); background:rgba(92,152,115,.07); }
   .cap-card .tag{ font-family:var(--font-mono); font-size:12.5px; color:var(--verdant); letter-spacing:.1em; text-transform:uppercase; }
   .cap-card h3{ margin-top:16px; font-style:italic; font-weight:400; font-size:clamp(20px,2.5vw,25px); color:var(--bone); line-height:1.42; }
@@ -161,10 +162,11 @@
   .belief-row{
     padding:26px 0; border-top:1px solid var(--ground-line); border-left:2px solid transparent;
     font-family:var(--font-display); font-style:italic; font-size:clamp(20px,2.6vw,25px); line-height:1.5; color:var(--bone); max-width:62ch;
-    opacity:0; transform:translateY(10px);
+    opacity:1; transform:none;
     transition:opacity .6s ease, transform .6s ease, padding-left .3s cubic-bezier(.16,1,.3,1), border-left-color .3s ease;
   }
-  .belief-row.in{ opacity:1; transform:none; }
+  .belief-row.pre-reveal{ opacity:0; transform:translateY(10px); }
+  .belief-row.pre-reveal.in{ opacity:1; transform:none; }
   .belief-row:hover{ padding-left:20px; border-left-color:var(--verdant); }
   .belief-row:last-child{ border-bottom:1px solid var(--ground-line); }
 
@@ -468,9 +470,15 @@
   var closeSignalEl = document.querySelector('.close-signal');
   if(closeSignalEl) closeObserver.observe(closeSignalEl);
 
-  /* ---------- reveal on scroll ---------- */
+  /* ---------- reveal on scroll ----------
+     Content is visible by default in CSS. Only opt an element into the
+     hidden pre-reveal state once we can also guarantee it gets revealed:
+     via IntersectionObserver, or a safety-net timeout if that somehow
+     never fires. Content should never depend on JS succeeding to be seen. */
   var revealTargets = document.querySelectorAll('.cap-card, .belief-row');
-  if('IntersectionObserver' in window && revealTargets.length){
+  if('IntersectionObserver' in window && revealTargets.length && !reduced){
+    revealTargets.forEach(function(el){ el.classList.add('pre-reveal'); });
+
     var revealObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry, i){
         if(entry.isIntersecting){
@@ -478,10 +486,12 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold:0.3 });
+    }, { threshold:0.01, rootMargin:'0px 0px 150px 0px' });
     revealTargets.forEach(function(el){ revealObserver.observe(el); });
-  } else {
-    revealTargets.forEach(function(el){ el.classList.add('in'); });
+
+    setTimeout(function(){
+      revealTargets.forEach(function(el){ el.classList.add('in'); });
+    }, 4000);
   }
 
   /* ---------- nav progress + active link ---------- */
