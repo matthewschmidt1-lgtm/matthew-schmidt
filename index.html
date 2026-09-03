@@ -415,7 +415,6 @@
           <span class="form-status" id="cfStatus" role="status" aria-live="polite"></span>
         </div>
       </form>
-      <p class="cta-alt" style="margin-top:22px;">or email directly — matthewschmidt1@mac.com</p>
     </div>
   </section>
 
@@ -590,7 +589,7 @@
           cfStatus.className = 'form-status ok';
         })
         .catch(function(){
-          cfStatus.textContent = 'Something went wrong — email me directly instead.';
+          cfStatus.textContent = 'Something went wrong — please try again in a moment.';
           cfStatus.className = 'form-status err';
         })
         .finally(function(){
