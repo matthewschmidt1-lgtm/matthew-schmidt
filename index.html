@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matthew Schmidt</title>
 <meta name="description" content="I turn data into decisions and ideas into things people can use — twenty years in analytics leadership across beverage and CPG.">
+<meta name="theme-color" content="#0E1B20">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzBFMUIyMCIvPjxwYXRoIGQ9Ik00IDE2SDExUTE0IDkgMTYgMTZRMTggMjMgMjEgMTZIMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVDOTg3MyIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==">
+<!-- canonical: add once a domain is live, e.g. <link rel="canonical" href="https://matthewschmidt.com/"> -->
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Matthew Schmidt">
@@ -37,7 +40,7 @@
     --bone:#EFEADA;
     --bone-dim: rgba(239,234,218,.68);
     --bone-faint: rgba(239,234,218,.4);
-    --verdant:#4E8F68;
+    --verdant:#5C9873;
     --verdant-deep:#2E6B4B;
     --sage:#7E9A82;
     --font-display:'Fraunces', ui-serif, Georgia, serif;
@@ -97,7 +100,8 @@
   .topnav-links{ display:flex; align-items:center; gap:14px; }
   .topnav-links a{
     font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--bone-faint); text-decoration:none; padding:4px 2px; border-bottom:1px solid transparent;
+    color:var(--bone-faint); text-decoration:none; border-bottom:1px solid transparent;
+    padding:13px 4px; margin:-13px -4px;
     transition:color .2s ease, border-color .2s ease;
   }
   .topnav-links a:hover, .topnav-links a:focus-visible, .topnav-links a.active{
@@ -118,6 +122,7 @@
 
   .signal-wrap{ margin-top:56px; border-top:1px solid var(--ground-line); border-bottom:1px solid var(--ground-line); padding:22px 0; }
   .signal-svg{ width:100%; height:110px; display:block; }
+  .signal-svg path{ stroke:var(--verdant); }
   .signal-caption{ display:flex; justify-content:space-between; gap:16px; font-family:var(--font-mono); font-size:11px; color:var(--bone-faint); letter-spacing:.05em; margin-top:8px; }
 
   /* ================= STORY / ABOUT ================= */
@@ -140,11 +145,12 @@
   @media (max-width:700px){ .cap-grid{ grid-template-columns:1fr; } }
   .cap-card{
     border:1px solid var(--ground-line); padding:38px 36px;
+    display:flex; flex-direction:column; justify-content:center; min-height:180px;
     opacity:0; transform:translateY(14px);
     transition:opacity .6s ease, transform .6s ease, border-color .3s ease, background .3s ease;
   }
   .cap-card.in{ opacity:1; transform:none; }
-  .cap-card:hover{ border-color:var(--verdant); background:rgba(78,143,104,.06); }
+  .cap-card:hover{ border-color:var(--verdant); background:rgba(92,152,115,.07); }
   .cap-card .tag{ font-family:var(--font-mono); font-size:12.5px; color:var(--verdant); letter-spacing:.1em; text-transform:uppercase; }
   .cap-card h3{ margin-top:16px; font-style:italic; font-weight:400; font-size:clamp(20px,2.5vw,25px); color:var(--bone); line-height:1.42; }
 
@@ -167,7 +173,7 @@
     padding:0; min-height:52vh; display:flex; align-items:center; justify-content:center;
     background:linear-gradient(180deg, var(--ground) 0%, var(--ground) 15%, var(--paper) 85%, var(--paper) 100%);
   }
-  .shift p{ font-family:var(--font-display); font-style:italic; font-size:clamp(24px,3.6vw,34px); color:var(--ink); text-align:center; }
+  .shift h2{ font-style:italic; font-size:clamp(24px,3.6vw,34px); color:var(--ink); text-align:center; }
 
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
@@ -226,6 +232,7 @@
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
     .cap-card, .belief-row{ opacity:1 !important; transform:none !important; }
+    .breath-ring{ animation:none !important; }
   }
 </style>
 </head>
@@ -258,7 +265,7 @@
     </div>
     <div class="wrap signal-wrap">
       <svg class="signal-svg" id="signalHero" viewBox="0 0 1000 110" preserveAspectRatio="none" role="img" aria-label="An animated line that responds to cursor movement">
-        <path id="signalHeroPath" d="" fill="none" stroke="#4E8F68" stroke-width="1.5"/>
+        <path id="signalHeroPath" d="" fill="none" stroke-width="1.5"/>
       </svg>
       <div class="signal-caption">
         <span>DATA INTO DECISIONS · IDEAS INTO THINGS</span>
@@ -310,7 +317,7 @@
   </section>
 
   <section class="shift">
-    <p>Recent Creative Project: Stillward</p>
+    <h2>Recent Creative Project: Stillward</h2>
   </section>
 
   <section class="room" id="ideas">
@@ -355,7 +362,7 @@
       <p class="hero-line" style="margin-top:22px;">I'm interested in conversations about analytics, technology, consumer businesses, leadership, and ideas that haven't been built yet.</p>
       <div class="close-signal">
         <svg class="signal-svg" id="signalClose" viewBox="0 0 1000 70" preserveAspectRatio="none" aria-hidden="true">
-          <path id="signalClosePath" d="" fill="none" stroke="#4E8F68" stroke-width="1.5"/>
+          <path id="signalClosePath" d="" fill="none" stroke-width="1.5"/>
         </svg>
       </div>
       <div class="cta-row">
@@ -388,6 +395,7 @@
     var t = 0, amp = opts.startAmp || 0, targetAmp = opts.startAmp || 0;
     var settleOnly = !!opts.settleOnly;
     var steps = 60;
+    var running = false;
 
     function draw(){
       t += 0.045;
@@ -400,17 +408,28 @@
         d += ' L' + x.toFixed(1) + ',' + y.toFixed(1);
       }
       pathEl.setAttribute('d', d);
-      if(!reduced && (amp > 0.3 || targetAmp > 0.3)) requestAnimationFrame(draw);
-      else if(!reduced && settleOnly) requestAnimationFrame(draw);
+      var settled = amp < 0.3 && targetAmp < 0.3;
+      if(!reduced && !settled){
+        requestAnimationFrame(draw);
+      } else {
+        running = false;
+      }
+    }
+
+    function ensureRunning(){
+      if(!running && !reduced){
+        running = true;
+        requestAnimationFrame(draw);
+      }
     }
 
     if(reduced){
       pathEl.setAttribute('d', 'M0,' + mid + ' L1000,' + mid);
       return { setTarget:function(){} };
     }
-    requestAnimationFrame(draw);
+    ensureRunning();
     return {
-      setTarget:function(v){ targetAmp = v; }
+      setTarget:function(v){ targetAmp = v; ensureRunning(); }
     };
   }
 
