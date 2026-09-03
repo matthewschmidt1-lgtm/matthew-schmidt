@@ -47,7 +47,6 @@
     --verdant:#5C9873;
     --verdant-deep:#2E6B4B;
     --sage:#7E9A82;
-    --warn:#C1553C;
     --font-display:'Fraunces', ui-serif, Georgia, serif;
     --font-body:'Archivo', ui-sans-serif, system-ui, sans-serif;
     --font-mono:'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
@@ -223,6 +222,7 @@
   .close h2{ font-size:clamp(33px,4.8vw,54px); max-width:16ch; line-height:1.16; }
   .close-signal{ margin-top:48px; border-top:1px solid var(--ground-line); border-bottom:1px solid var(--ground-line); padding:20px 0; }
   .close-signal .signal-svg{ height:70px; }
+  .cta-row{ margin-top:44px; }
   .cta-btn{
     font-family:var(--font-body); font-weight:600; font-size:15px; color:var(--ground);
     background:var(--bone); border:none; padding:16px 30px; border-radius:2px;
@@ -231,24 +231,6 @@
   }
   .cta-btn:hover{ transform:translateX(6px); background:var(--verdant); color:var(--ground); }
   .cta-btn:disabled{ opacity:.55; pointer-events:none; transform:none; }
-  .cta-alt{ font-family:var(--font-mono); font-size:12px; color:var(--bone-faint); letter-spacing:.04em; }
-
-  .contact-form{ margin-top:44px; max-width:520px; }
-  .form-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:28px; }
-  .form-row label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-faint); }
-  .form-row input, .form-row textarea{
-    background:transparent; border:none; border-bottom:1px solid var(--ground-line);
-    color:var(--bone); font-family:var(--font-body); font-size:15.5px; padding:10px 2px;
-    transition:border-color .25s ease;
-  }
-  .form-row input:focus, .form-row textarea:focus{ outline:none; border-bottom-color:var(--verdant); }
-  .form-row input::placeholder, .form-row textarea::placeholder{ color:var(--bone-faint); }
-  .form-row textarea{ resize:vertical; min-height:110px; line-height:1.6; font-family:var(--font-body); }
-  .form-hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
-  .form-submit-row{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
-  .form-status{ font-family:var(--font-mono); font-size:12px; letter-spacing:.03em; }
-  .form-status.ok{ color:var(--verdant); }
-  .form-status.err{ color:var(--warn); }
 
   footer{ border-top:1px solid var(--ground-line); padding:44px 0; }
   .foot-row{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--font-mono); font-size:11px; color:var(--bone-faint); letter-spacing:.06em; }
@@ -389,36 +371,9 @@
           <path id="signalClosePath" d="" fill="none" stroke-width="1.5"/>
         </svg>
       </div>
-      <!--
-        Contact form delivery: Web3Forms (no backend needed — POSTs straight
-        from this static page). Get a free access key at web3forms.com
-        (enter matthewschmidt1@mac.com, key arrives by email instantly) and
-        replace YOUR_WEB3FORMS_ACCESS_KEY below before this goes live.
-      -->
-      <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="e4e3c847-acc3-4b18-b4f9-4bfc0eeb1454">
-        <input type="hidden" name="subject" value="New message from matthewschmidt.com">
-        <input type="hidden" name="from_name" value="Matthew Schmidt site">
-        <input type="text" name="botcheck" class="form-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-        <div class="form-row">
-          <label for="cf-name">Name</label>
-          <input type="text" id="cf-name" name="name" required autocomplete="name">
-        </div>
-        <div class="form-row">
-          <label for="cf-email">Email</label>
-          <input type="email" id="cf-email" name="email" required autocomplete="email">
-        </div>
-        <div class="form-row">
-          <label for="cf-message">Message</label>
-          <textarea id="cf-message" name="message" required></textarea>
-        </div>
-
-        <div class="form-submit-row">
-          <button type="submit" class="cta-btn" id="cfSubmit">Send message</button>
-          <span class="form-status" id="cfStatus" role="status" aria-live="polite"></span>
-        </div>
-      </form>
+      <div class="cta-row">
+        <a class="cta-btn" href="https://www.linkedin.com/in/matthew-schmidt-2349795" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
     </div>
   </section>
 
@@ -561,47 +516,6 @@
   window.addEventListener('scroll', onScroll, { passive:true });
   window.addEventListener('resize', onScroll);
   onScroll();
-
-  /* ---------- contact form ---------- */
-  var contactForm = document.getElementById('contactForm');
-  if(contactForm){
-    var cfSubmit = document.getElementById('cfSubmit');
-    var cfStatus = document.getElementById('cfStatus');
-
-    contactForm.addEventListener('submit', function(e){
-      e.preventDefault();
-
-      if(contactForm.botcheck && contactForm.botcheck.value){
-        return; // honeypot tripped — silently drop, no feedback for bots
-      }
-
-      cfSubmit.disabled = true;
-      cfSubmit.textContent = 'Sending…';
-      cfStatus.textContent = '';
-      cfStatus.className = 'form-status';
-
-      fetch(contactForm.action, {
-        method: 'POST',
-        body: new FormData(contactForm),
-        headers: { 'Accept': 'application/json' }
-      })
-        .then(function(res){ return res.json(); })
-        .then(function(json){
-          if(!json.success) throw new Error(json.message || 'Send failed');
-          contactForm.reset();
-          cfStatus.textContent = 'Sent — thanks, I’ll get back to you.';
-          cfStatus.className = 'form-status ok';
-        })
-        .catch(function(){
-          cfStatus.textContent = 'Something went wrong — please try again in a moment.';
-          cfStatus.className = 'form-status err';
-        })
-        .finally(function(){
-          cfSubmit.disabled = false;
-          cfSubmit.textContent = 'Send message';
-        });
-    });
-  }
 })();
 </script>
 
