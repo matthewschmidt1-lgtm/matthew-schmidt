@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matthew Schmidt</title>
-<meta name="description" content="Analytics and the apps I build, presented as one discipline of attention practiced at two speeds.">
+<meta name="description" content="I turn data into decisions and ideas into things people can use — twenty years in analytics leadership across beverage and CPG.">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Matthew Schmidt">
-<meta property="og:description" content="Analytics and the apps I build, presented as one discipline of attention practiced at two speeds.">
+<meta property="og:description" content="I turn data into decisions and ideas into things people can use — twenty years in analytics leadership across beverage and CPG.">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Matthew Schmidt">
-<meta name="twitter:description" content="Analytics and the apps I build, presented as one discipline of attention practiced at two speeds.">
+<meta name="twitter:description" content="I turn data into decisions and ideas into things people can use — twenty years in analytics leadership across beverage and CPG.">
 <!-- og:url / og:image: add once a domain + share image exist, same as Stillward's own OG setup -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -120,6 +120,7 @@
   /* ================= HERO ================= */
   .hero{ padding:120px 0 110px; border-bottom:1px solid var(--ground-line); }
   .hero .wrap{ display:flex; flex-direction:column; gap:36px; }
+  .hero .eyebrow{ margin-bottom:-18px; }
   .hero h1{ font-size:clamp(46px,8vw,96px); line-height:.98; letter-spacing:-.01em; }
   .hero-line{ max-width:560px; font-size:19px; line-height:1.6; color:var(--bone-dim); }
 
@@ -127,27 +128,36 @@
   .signal-svg{ width:100%; height:110px; display:block; }
   .signal-caption{ display:flex; justify-content:space-between; gap:16px; font-family:var(--font-mono); font-size:11px; color:var(--bone-faint); letter-spacing:.05em; margin-top:8px; }
 
-  /* ================= DUALITY ================= */
-  .duality h2{ font-size:clamp(30px,4vw,46px); max-width:16ch; line-height:1.1; }
-  .duality-grid{ margin-top:56px; display:grid; grid-template-columns:1fr 1px 1fr; gap:0 52px; }
-  .duality-divider{ background:var(--ground-line); }
-  .duality-col .tag{ font-family:var(--font-mono); font-size:11px; color:var(--verdant); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; display:block; }
-  .duality-col p{ color:var(--bone-dim); line-height:1.75; font-size:16px; max-width:44ch; }
-  .duality-col{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
-  .duality-col.in{ opacity:1; transform:none; }
-  .duality-note{ grid-column:1/-1; margin-top:46px; padding-top:34px; border-top:1px solid var(--ground-line); font-family:var(--font-display); font-style:italic; font-size:23px; line-height:1.5; max-width:54ch; }
-  @media (max-width:760px){ .duality-grid{ grid-template-columns:1fr; } .duality-divider{ display:none; } }
+  /* ================= STORY ================= */
+  .path-strip{ margin-top:16px; font-family:var(--font-mono); font-size:13px; letter-spacing:.06em; color:var(--bone-faint); }
+  .path-strip .now{ color:var(--verdant); }
+  .story-lede{ margin-top:30px; max-width:48ch; font-family:var(--font-display); font-style:italic; font-size:clamp(21px,2.8vw,27px); line-height:1.5; color:var(--bone); }
+  .story-body{ margin-top:24px; max-width:58ch; color:var(--bone-dim); font-size:16px; line-height:1.75; }
+  .pullquote{ margin-top:44px; padding-top:34px; border-top:1px solid var(--ground-line); max-width:52ch; font-family:var(--font-display); font-style:italic; font-size:23px; line-height:1.55; color:var(--bone); }
 
-  /* ================= WORK ================= */
-  .work h2{ font-size:clamp(30px,4vw,46px); max-width:16ch; line-height:1.1; }
-  .work-card{
-    margin-top:52px; border:1px solid var(--ground-line); padding:44px 40px;
+  /* ================= CAPABILITIES ================= */
+  .capabilities h2{ margin-top:14px; font-size:clamp(30px,4vw,46px); max-width:18ch; line-height:1.1; }
+  .cap-grid{ margin-top:52px; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:700px){ .cap-grid{ grid-template-columns:1fr; } }
+  .cap-card{
+    border:1px solid var(--ground-line); padding:38px 36px;
     opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;
   }
-  .work-card.in{ opacity:1; transform:none; }
-  .work-card .tag{ font-family:var(--font-mono); font-size:11px; color:var(--verdant); letter-spacing:.1em; text-transform:uppercase; }
-  .work-card h3{ margin-top:16px; font-style:italic; font-size:clamp(22px,3vw,30px); color:var(--bone); max-width:22ch; }
-  .work-card p{ margin-top:14px; color:var(--bone-dim); font-size:15px; line-height:1.7; max-width:52ch; }
+  .cap-card.in{ opacity:1; transform:none; }
+  .cap-card .tag{ font-family:var(--font-mono); font-size:11px; color:var(--verdant); letter-spacing:.1em; text-transform:uppercase; }
+  .cap-card h3{ margin-top:14px; font-style:italic; font-weight:400; font-size:clamp(19px,2.4vw,23px); color:var(--bone); line-height:1.45; }
+
+  /* ================= BELIEFS ================= */
+  .beliefs{ background:var(--ground); border-top:1px solid var(--ground-line); }
+  .beliefs h2{ margin-top:14px; font-size:clamp(28px,3.6vw,40px); max-width:20ch; line-height:1.15; }
+  .belief-list{ margin-top:40px; }
+  .belief-row{
+    padding:26px 0; border-top:1px solid var(--ground-line);
+    font-family:var(--font-display); font-style:italic; font-size:clamp(19px,2.4vw,23px); line-height:1.5; color:var(--bone); max-width:62ch;
+    opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s ease;
+  }
+  .belief-row.in{ opacity:1; transform:none; }
+  .belief-row:last-child{ border-bottom:1px solid var(--ground-line); }
 
   /* ================= SHIFT ================= */
   .shift{
@@ -212,7 +222,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
-    .duality-col, .work-card{ opacity:1 !important; transform:none !important; }
+    .cap-card, .belief-row{ opacity:1 !important; transform:none !important; }
   }
 </style>
 </head>
@@ -225,9 +235,10 @@
     <div class="rail-fill" id="railFill"></div>
   </div>
   <a href="#hero" class="rail-tick" style="top:0%;" aria-label="Intro" data-id="hero"></a>
-  <a href="#duality" class="rail-tick" style="top:25%;" aria-label="The duality" data-id="duality"></a>
-  <a href="#work" class="rail-tick" style="top:50%;" aria-label="Selected work" data-id="work"></a>
-  <a href="#stillward" class="rail-tick" style="top:75%;" aria-label="Stillward" data-id="stillward"></a>
+  <a href="#story" class="rail-tick" style="top:20%;" aria-label="The path" data-id="story"></a>
+  <a href="#capabilities" class="rail-tick" style="top:40%;" aria-label="Capabilities" data-id="capabilities"></a>
+  <a href="#stillward" class="rail-tick" style="top:60%;" aria-label="Stillward" data-id="stillward"></a>
+  <a href="#beliefs" class="rail-tick" style="top:80%;" aria-label="Things I believe" data-id="beliefs"></a>
   <a href="#contact" class="rail-tick" style="top:100%;" aria-label="Contact" data-id="contact"></a>
   <div class="rail-label">MATTHEW SCHMIDT</div>
 </nav>
@@ -238,47 +249,52 @@
 
   <section class="hero" id="hero">
     <div class="wrap">
+      <span class="eyebrow">Analytics Director — Beverage &amp; CPG</span>
       <h1>Matthew Schmidt</h1>
-      <p class="hero-line">I read what the data says, then build what a person actually needs.</p>
+      <p class="hero-line">I turn data into decisions. I turn ideas into things people can use.</p>
     </div>
     <div class="wrap signal-wrap">
       <svg class="signal-svg" id="signalHero" viewBox="0 0 1000 110" preserveAspectRatio="none" role="img" aria-label="An animated line that responds to cursor movement">
         <path id="signalHeroPath" d="" fill="none" stroke="#4E8F68" stroke-width="1.5"/>
       </svg>
       <div class="signal-caption">
-        <span>ANALYTICS &amp; APPS — ONE DISCIPLINE, TWO SPEEDS</span>
+        <span>DATA INTO DECISIONS · IDEAS INTO THINGS</span>
         <span>SCROLL</span>
       </div>
     </div>
   </section>
 
-  <section class="duality" id="duality">
+  <section class="story" id="story">
     <div class="wrap">
-      <span class="eyebrow">The duality</span>
-      <h2 style="margin-top:14px;">Two disciplines that look opposed are one discipline at different speeds.</h2>
-      <div class="duality-grid">
-        <div class="duality-col">
-          <span class="tag">Analytics</span>
-          <p>Dashboards, models, cohorts, forecasts — the work of noticing what's actually true in a pile of numbers, and saying so plainly.</p>
-        </div>
-        <div class="duality-divider"></div>
-        <div class="duality-col">
-          <span class="tag">Apps I build</span>
-          <p>Stillward, and whatever comes after it — the work of noticing what's actually true in a person, and building something small enough to hold it.</p>
-        </div>
-        <p class="duality-note">I don't pick a side. Attention just moves at different speeds.</p>
-      </div>
+      <span class="eyebrow">The path</span>
+      <p class="path-strip">ANALYTICS → CPG → LEADERSHIP → <span class="now">TECH → CREATIVITY</span></p>
+      <p class="story-lede">By day, I lead analytics. Outside the org chart, I'm usually building an app, experimenting with an idea, or figuring out a better way to solve a problem.</p>
+      <p class="story-body">My career has spent two decades at the intersection of numbers, consumers, and business decisions. I've worked across the beverage and CPG worlds, building an appreciation for what data can tell us — and what it can't. Today I lead analytics as a director, but my curiosity doesn't stop when the workday ends. I build apps, experiment with technology, and chase ideas simply because I'm curious whether I can make them work.</p>
+      <p class="pullquote">Understand the problem deeply. Find the signal through the noise. Then build something better.</p>
     </div>
   </section>
 
-  <section class="work" id="work">
+  <section class="capabilities" id="capabilities">
     <div class="wrap">
-      <span class="eyebrow">Selected work</span>
-      <h2 style="margin-top:14px;">A few things worth reading twice.</h2>
-      <div class="work-card">
-        <span class="tag">Analytics</span>
-        <h3>The case studies are being written.</h3>
-        <p>This is where specific work will live — the questions asked, what the data actually said. First entries coming soon.</p>
+      <span class="eyebrow">Capabilities</span>
+      <h2>Turning analytics into a business capability.</h2>
+      <div class="cap-grid">
+        <div class="cap-card">
+          <span class="tag">Analytics</span>
+          <h3>I translate complex data into decisions leaders can act on.</h3>
+        </div>
+        <div class="cap-card">
+          <span class="tag">Consumer &amp; CPG</span>
+          <h3>Twenty years in industries where understanding consumers, brands, channels, and commercial performance matters.</h3>
+        </div>
+        <div class="cap-card">
+          <span class="tag">Business Leadership</span>
+          <h3>I don't see analytics as a reporting function — I see it as a way to help organizations make better decisions.</h3>
+        </div>
+        <div class="cap-card">
+          <span class="tag">Builder Mindset</span>
+          <h3>If I can't find the tool I want, I tend to build it.</h3>
+        </div>
       </div>
     </div>
   </section>
@@ -309,9 +325,24 @@
     </div>
   </section>
 
+  <section class="beliefs" id="beliefs">
+    <div class="wrap">
+      <span class="eyebrow">Things I believe</span>
+      <h2>A few things I keep coming back to.</h2>
+      <div class="belief-list">
+        <p class="belief-row">Data doesn't make decisions, people do.</p>
+        <p class="belief-row">The best analytics teams understand the business before they understand the model.</p>
+        <p class="belief-row">If the answer requires a 40-slide deck, we probably haven't found the answer yet.</p>
+        <p class="belief-row">Curiosity is an underrated professional skill.</p>
+        <p class="belief-row">Some of the best ideas start as side projects.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="close" id="contact">
     <div class="wrap">
-      <h2>If any of this is useful to you, say so.</h2>
+      <h2>Have an interesting problem?</h2>
+      <p class="hero-line" style="margin-top:22px;">I'm interested in conversations about analytics, technology, consumer businesses, leadership, and ideas that haven't been built yet.</p>
       <div class="close-signal">
         <svg class="signal-svg" id="signalClose" viewBox="0 0 1000 70" preserveAspectRatio="none" aria-hidden="true">
           <path id="signalClosePath" d="" fill="none" stroke="#4E8F68" stroke-width="1.5"/>
@@ -409,7 +440,7 @@
   if(closeSignalEl) closeObserver.observe(closeSignalEl);
 
   /* ---------- reveal on scroll ---------- */
-  var revealTargets = document.querySelectorAll('.duality-col, .work-card');
+  var revealTargets = document.querySelectorAll('.cap-card, .belief-row');
   if('IntersectionObserver' in window && revealTargets.length){
     var revealObserver = new IntersectionObserver(function(entries){
       entries.forEach(function(entry, i){
