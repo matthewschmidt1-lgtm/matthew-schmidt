@@ -23,7 +23,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap">
 
 <style>
   /* critical: paint ground immediately, no white flash before CSS/fonts settle */
@@ -177,7 +177,6 @@
   /* ================= READING ================= */
   .reading{ background:var(--ground); border-top:1px solid var(--ground-line); }
   .reading h2{ margin-top:14px; font-size:clamp(27px,4vw,44px); max-width:20ch; line-height:1.18; }
-  .reading-lede{ margin-top:20px; max-width:52ch; font-size:15.5px; line-height:1.6; color:var(--bone-dim); }
   .book-grid{ margin-top:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
   @media (max-width:820px){ .book-grid{ grid-template-columns:repeat(2,1fr); gap:26px; } }
   .book{
@@ -245,7 +244,7 @@
   .lens-diagram{ display:block; width:100%; max-width:400px; height:auto; margin:44px auto 0; }
   .lens-circle{ fill:var(--verdant); fill-opacity:.16; stroke:var(--verdant); stroke-opacity:.55; stroke-width:1.5; mix-blend-mode:screen; }
   .lens-label{ font-family:var(--font-mono); font-size:14px; letter-spacing:.08em; text-transform:uppercase; fill:var(--bone); text-anchor:middle; }
-  .lens-label-center{ font-size:11px; fill:var(--verdant); }
+  .lens-label-center{ font-size:11px; font-weight:700; fill:var(--bone); }
   .lens-legend{ margin-top:48px; display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
   @media (max-width:700px){ .lens-legend{ grid-template-columns:1fr; } }
   .lens-item{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s ease; }
@@ -445,8 +444,7 @@
   <section class="reading" id="reading">
     <div class="wrap">
       <span class="eyebrow">Reading</span>
-      <h2>How I Think About Work.</h2>
-      <p class="reading-lede">A few ideas that have shaped how I approach analytics, leadership, and building things:</p>
+      <h2>Books That Have Shaped How I Lead:</h2>
       <div class="book-grid">
         <button class="book" type="button">
           <img class="book-cover" src="images/books/how-google-works.jpg" alt="Cover of How Google Works" width="180" height="268" loading="lazy">
