@@ -240,8 +240,9 @@
 
   /* ---- lens map ---- */
   .lens-map{ margin-top:96px; padding-top:64px; border-top:1px solid var(--ground-line); }
-  .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:20px; line-height:1.5; color:var(--bone); }
-  .lens-diagram{ display:block; width:100%; max-width:520px; height:auto; margin:44px auto 0; }
+  .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:22px; line-height:1.4; color:var(--bone); }
+  .lens-body{ margin-top:18px; max-width:56ch; font-size:15.5px; line-height:1.65; color:var(--bone-dim); }
+  .lens-diagram{ display:block; width:100%; max-width:400px; height:auto; margin:44px auto 0; }
   .lens-circle{ fill:var(--verdant); fill-opacity:.16; stroke:var(--verdant); stroke-opacity:.55; stroke-width:1.5; mix-blend-mode:screen; }
   .lens-label{ font-family:var(--font-mono); font-size:15px; letter-spacing:.08em; text-transform:uppercase; fill:var(--bone); text-anchor:middle; }
   .lens-legend{ margin-top:48px; display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
@@ -515,15 +516,16 @@
       </div>
 
       <div class="lens-map">
-        <span class="eyebrow">How they combine</span>
-        <p class="lens-lede">Different books, but the same three lenses keep showing up.</p>
-        <svg class="lens-diagram" viewBox="0 0 600 420" role="img" aria-label="Three overlapping circles labeled The Business, The System, and The People, showing where they combine in the center">
-          <circle class="lens-circle" cx="230" cy="190" r="150"/>
-          <circle class="lens-circle" cx="370" cy="190" r="150"/>
-          <circle class="lens-circle" cx="300" cy="310" r="150"/>
-          <text class="lens-label" x="165" y="120">The business</text>
-          <text class="lens-label" x="435" y="120">The system</text>
-          <text class="lens-label" x="300" y="400">The people</text>
+        <span class="eyebrow">The Three Lenses</span>
+        <p class="lens-lede">The Ideas Behind How I Work.</p>
+        <p class="lens-body">Different books, different perspectives. But the same three questions keep showing up: How does the business create value? How does the system create leverage? And how do we help people do their best work?</p>
+        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled The Business, The System, and The People, showing where they combine in the center">
+          <circle class="lens-circle" cx="205" cy="175" r="130"/>
+          <circle class="lens-circle" cx="335" cy="175" r="130"/>
+          <circle class="lens-circle" cx="270" cy="290" r="130"/>
+          <text class="lens-label" x="150" y="115">The business</text>
+          <text class="lens-label" x="390" y="115">The system</text>
+          <text class="lens-label" x="270" y="368">The people</text>
         </svg>
         <div class="lens-legend">
           <div class="lens-item">
