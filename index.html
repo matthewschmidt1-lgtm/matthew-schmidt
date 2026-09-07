@@ -180,7 +180,8 @@
   .book-grid{ margin-top:48px; display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
   @media (max-width:820px){ .book-grid{ grid-template-columns:repeat(2,1fr); gap:26px; } }
   .book{
-    display:flex; flex-direction:column; gap:14px;
+    display:flex; flex-direction:column; gap:14px; width:100%;
+    background:none; border:none; padding:0; margin:0; text-align:left; font:inherit; cursor:pointer;
     opacity:1; transform:none;
     transition:opacity .6s ease, transform .6s ease;
   }
@@ -199,6 +200,41 @@
   .book-cover-fallback span{ font-family:var(--font-display); font-style:italic; font-size:15px; color:var(--bone-dim); line-height:1.4; }
   .book-title{ font-family:var(--font-display); font-style:italic; font-size:15px; color:var(--bone); line-height:1.35; }
   .book-author{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--bone-faint); }
+  .book-hint{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--verdant); border-bottom:1px solid transparent; align-self:flex-start;
+    transition:border-color .2s ease;
+  }
+  .book:hover .book-hint, .book:focus-visible .book-hint{ border-color:var(--verdant); }
+
+  /* ---- book insight modal ---- */
+  .book-modal-overlay{
+    position:fixed; inset:0; z-index:70; padding:24px;
+    background:rgba(14,27,32,.82);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .book-modal-overlay[hidden]{ display:none; }
+  .book-modal{
+    position:relative; width:100%; max-width:560px; max-height:82vh; overflow-y:auto;
+    background:var(--ground-raised); border:1px solid var(--ground-line); border-radius:2px;
+    padding:48px 44px;
+  }
+  .book-modal:focus{ outline:none; }
+  .book-modal-close{
+    position:absolute; top:14px; right:14px; width:36px; height:36px;
+    display:flex; align-items:center; justify-content:center;
+    background:none; border:none; color:var(--bone-faint); font-size:24px; line-height:1; cursor:pointer;
+    transition:color .2s ease;
+  }
+  .book-modal-close:hover, .book-modal-close:focus-visible{ color:var(--verdant); }
+  .book-modal-meta{ display:flex; flex-direction:column; gap:6px; padding-right:30px; }
+  .book-modal-title{ font-family:var(--font-display); font-style:italic; font-size:22px; color:var(--bone); line-height:1.3; }
+  .book-modal-author{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-faint); }
+  .book-modal-body{ margin-top:28px; padding-top:26px; border-top:1px solid var(--ground-line); }
+  .book-modal-body .insight-heading{
+    display:block; font-family:var(--font-display); font-style:italic; font-size:26px; color:var(--verdant); line-height:1.32; margin-bottom:18px;
+  }
+  .book-modal-body p{ color:var(--bone-dim); font-size:16px; line-height:1.75; }
 
   /* ================= SHIFT ================= */
   .shift{
@@ -391,41 +427,82 @@
   <section class="reading" id="reading">
     <div class="wrap">
       <span class="eyebrow">Reading</span>
-      <h2>Books that changed how I lead.</h2>
+      <h2>How I Think About Work.</h2>
       <div class="book-grid">
-        <div class="book">
+        <button class="book" type="button">
           <img class="book-cover" src="images/books/how-google-works.jpg" alt="Cover of How Google Works" width="180" height="268" loading="lazy">
           <div class="book-title">How Google Works</div>
           <div class="book-author">Eric Schmidt &amp; Jonathan Rosenberg</div>
-        </div>
-        <div class="book">
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Culture is an operating system</span>
+            <p>How Google Works made me think more deeply about the environments we create for people. Hiring well matters, but so do transparency, autonomy, psychological safety, and giving people enough context to make good decisions without waiting for permission.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
           <img class="book-cover" src="images/books/15-commitments-conscious-leadership.jpg" alt="Cover of The 15 Commitments of Conscious Leadership" width="180" height="277" loading="lazy">
           <div class="book-title">The 15 Commitments of Conscious Leadership</div>
           <div class="book-author">Dethmer, Chapman &amp; Klemp</div>
-        </div>
-        <div class="book">
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Self-awareness is a professional skill</span>
+            <p>The 15 Commitments of Conscious Leadership challenged me to look at leadership not just in terms of what gets accomplished, but how I show up while accomplishing it. Taking responsibility, staying curious, and recognizing when ego or defensiveness is driving a reaction are practical skills, not just personal-development concepts.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
           <img class="book-cover" src="images/books/trillion-dollar-coach.jpg" alt="Cover of Trillion Dollar Coach" width="180" height="271" loading="lazy">
           <div class="book-title">Trillion Dollar Coach</div>
           <div class="book-author">Schmidt, Rosenberg &amp; Eagle</div>
-        </div>
-        <div class="book">
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Your job is to make the people around you better</span>
+            <p>Trillion Dollar Coach influenced my view of leadership as something less about having all the answers and more about asking good questions, giving honest feedback, building trust, and helping talented people perform at their best.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
           <img class="book-cover" src="images/books/what-the-ceo-wants-you-to-know.jpg" alt="Cover of What the CEO Wants You to Know" width="180" height="278" loading="lazy">
           <div class="book-title">What the CEO Wants You to Know</div>
           <div class="book-author">Ram Charan</div>
-        </div>
-        <div class="book">
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Understand the business underneath the job</span>
+            <p>What the CEO Wants You to Know reinforced something I think is easy to lose sight of: every function ultimately exists within a business. Understanding customers, cash flow, margins, and the mechanics of creating value makes you better at almost any role.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
           <img class="book-cover" src="images/books/poor-charlies-almanack.jpg" alt="Cover of Poor Charlie's Almanack" width="180" height="185" loading="lazy">
           <div class="book-title">Poor Charlie's Almanack</div>
           <div class="book-author">Charlie Munger</div>
-        </div>
-        <div class="book">
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Think in models, not formulas</span>
+            <p>Poor Charlie's Almanack reinforced my appreciation for mental models and multidisciplinary thinking. The more perspectives you can bring to a problem — economics, psychology, incentives, statistics, human behavior — the less likely you are to mistake a familiar pattern for the whole picture.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
           <img class="book-cover" src="images/books/high-output-management.jpg" alt="Cover of High Output Management" width="180" height="277" loading="lazy">
           <div class="book-title">High Output Management</div>
           <div class="book-author">Andrew S. Grove</div>
-        </div>
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Build systems, not heroics</span>
+            <p>High Output Management changed how I think about management. Strong outcomes shouldn't depend on one person constantly rescuing a broken process. Good managers create leverage through clear expectations, effective processes, useful metrics, and developing the people around them.</p>
+          </template>
+        </button>
       </div>
     </div>
   </section>
+
+  <div class="book-modal-overlay" id="bookModalOverlay" hidden>
+    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <div class="book-modal-meta">
+        <span class="book-modal-title" id="bookModalTitle"></span>
+        <span class="book-modal-author"></span>
+      </div>
+      <div class="book-modal-body"></div>
+    </div>
+  </div>
 
   <section class="close" id="contact">
     <div class="wrap">
@@ -581,6 +658,56 @@
   window.addEventListener('scroll', onScroll, { passive:true });
   window.addEventListener('resize', onScroll);
   onScroll();
+
+  /* ---------- book insight modal ---------- */
+  var bookOverlay = document.getElementById('bookModalOverlay');
+  if(bookOverlay){
+    var bookModal = bookOverlay.querySelector('.book-modal');
+    var bookModalClose = bookOverlay.querySelector('.book-modal-close');
+    var bookModalTitle = bookOverlay.querySelector('.book-modal-title');
+    var bookModalAuthor = bookOverlay.querySelector('.book-modal-author');
+    var bookModalBody = bookOverlay.querySelector('.book-modal-body');
+    var bookLastTrigger = null;
+
+    function trapTab(e){
+      if(e.key !== 'Tab') return;
+      var focusables = bookModal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      if(!focusables.length) return;
+      var first = focusables[0], last = focusables[focusables.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+    function onBookKeydown(e){
+      if(e.key === 'Escape') closeBookModal();
+      else trapTab(e);
+    }
+    function openBookModal(bookEl){
+      bookLastTrigger = bookEl;
+      bookModalTitle.textContent = bookEl.querySelector('.book-title').textContent;
+      bookModalAuthor.textContent = bookEl.querySelector('.book-author').textContent;
+      var tpl = bookEl.querySelector('template.book-insight');
+      bookModalBody.innerHTML = '';
+      if(tpl) bookModalBody.appendChild(tpl.content.cloneNode(true));
+      bookOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      bookModal.focus();
+      document.addEventListener('keydown', onBookKeydown);
+    }
+    function closeBookModal(){
+      bookOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onBookKeydown);
+      if(bookLastTrigger) bookLastTrigger.focus();
+    }
+
+    document.querySelectorAll('.book').forEach(function(b){
+      b.addEventListener('click', function(){ openBookModal(b); });
+    });
+    bookModalClose.addEventListener('click', closeBookModal);
+    bookOverlay.addEventListener('click', function(e){
+      if(e.target === bookOverlay) closeBookModal();
+    });
+  }
 })();
 </script>
 
