@@ -242,9 +242,12 @@
   .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.35; color:var(--bone); }
   .lens-body{ margin-top:18px; max-width:56ch; font-size:15.5px; line-height:1.65; color:var(--bone-dim); }
   .lens-diagram{ display:block; width:100%; max-width:400px; height:auto; margin:44px auto 0; }
+  @media (max-width:520px){
+    .lens-diagram{ max-width:none; width:calc(100% + 52px); margin-left:-26px; margin-right:-26px; }
+  }
   .lens-circle{ fill:var(--verdant); fill-opacity:.16; stroke:var(--verdant); stroke-opacity:.55; stroke-width:1.5; mix-blend-mode:screen; }
   .lens-label{ font-family:var(--font-mono); font-size:14px; letter-spacing:.08em; text-transform:uppercase; fill:var(--bone); text-anchor:middle; }
-  .lens-label-center{ font-size:11px; font-weight:700; fill:var(--bone); }
+  .lens-label-center{ font-size:15px; font-weight:700; fill:var(--bone); }
   .lens-legend{ margin-top:48px; display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
   @media (max-width:700px){ .lens-legend{ grid-template-columns:1fr; } }
   .lens-item{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s ease; }
