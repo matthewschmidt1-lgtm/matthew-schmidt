@@ -244,7 +244,8 @@
   .lens-body{ margin-top:18px; max-width:56ch; font-size:15.5px; line-height:1.65; color:var(--bone-dim); }
   .lens-diagram{ display:block; width:100%; max-width:400px; height:auto; margin:44px auto 0; }
   .lens-circle{ fill:var(--verdant); fill-opacity:.16; stroke:var(--verdant); stroke-opacity:.55; stroke-width:1.5; mix-blend-mode:screen; }
-  .lens-label{ font-family:var(--font-mono); font-size:15px; letter-spacing:.08em; text-transform:uppercase; fill:var(--bone); text-anchor:middle; }
+  .lens-label{ font-family:var(--font-mono); font-size:14px; letter-spacing:.08em; text-transform:uppercase; fill:var(--bone); text-anchor:middle; }
+  .lens-label-center{ font-size:11px; fill:var(--verdant); }
   .lens-legend{ margin-top:48px; display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
   @media (max-width:700px){ .lens-legend{ grid-template-columns:1fr; } }
   .lens-item{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s ease; }
@@ -519,13 +520,26 @@
         <span class="eyebrow">The Three Lenses</span>
         <p class="lens-lede">The Ideas Behind How I Work.</p>
         <p class="lens-body">Different books, different perspectives. But the same three questions keep showing up: How does the business create value? How does the system create leverage? And how do we help people do their best work?</p>
-        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled The Business, The System, and The People, showing where they combine in the center">
-          <circle class="lens-circle" cx="205" cy="175" r="130"/>
-          <circle class="lens-circle" cx="335" cy="175" r="130"/>
-          <circle class="lens-circle" cx="270" cy="290" r="130"/>
-          <text class="lens-label" x="150" y="115">The business</text>
-          <text class="lens-label" x="390" y="115">The system</text>
-          <text class="lens-label" x="270" y="368">The people</text>
+        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled The Business, The System, and The People, with the overlap in the center labeled The Multiplier">
+          <circle class="lens-circle" cx="220" cy="180" r="130"/>
+          <circle class="lens-circle" cx="320" cy="180" r="130"/>
+          <circle class="lens-circle" cx="270" cy="267" r="130"/>
+          <text class="lens-label" x="160" y="118">
+            <tspan x="160" dy="0">The</tspan>
+            <tspan x="160" dy="1.15em">Business</tspan>
+          </text>
+          <text class="lens-label" x="380" y="118">
+            <tspan x="380" dy="0">The</tspan>
+            <tspan x="380" dy="1.15em">System</tspan>
+          </text>
+          <text class="lens-label" x="270" y="358">
+            <tspan x="270" dy="0">The</tspan>
+            <tspan x="270" dy="1.15em">People</tspan>
+          </text>
+          <text class="lens-label lens-label-center" x="270" y="200">
+            <tspan x="270" dy="0">The</tspan>
+            <tspan x="270" dy="1.1em">Multiplier</tspan>
+          </text>
         </svg>
         <div class="lens-legend">
           <div class="lens-item">
