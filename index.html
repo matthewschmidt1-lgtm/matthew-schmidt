@@ -237,6 +237,10 @@
   }
   .book-modal-body p{ color:var(--bone-dim); font-size:16px; line-height:1.75; }
 
+  .lens-modal-eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-faint); }
+  .lens-modal-heading{ display:block; margin-top:14px; font-family:var(--font-display); font-style:italic; font-size:28px; color:var(--verdant); line-height:1.3; }
+  .lens-modal-text{ margin-top:20px; padding-top:22px; border-top:1px solid var(--ground-line); color:var(--bone-dim); font-size:16px; line-height:1.75; }
+
   /* ---- lens map ---- */
   .lens-map{ margin-top:96px; padding-top:64px; border-top:1px solid var(--ground-line); }
   .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.35; color:var(--bone); }
@@ -245,9 +249,39 @@
   @media (max-width:520px){
     .lens-diagram{ max-width:none; width:calc(100% + 52px); margin-left:-26px; margin-right:-26px; }
   }
-  .lens-circle{ fill:var(--verdant); fill-opacity:.16; stroke:var(--verdant); stroke-opacity:.55; stroke-width:1.5; mix-blend-mode:screen; }
-  .lens-label{ font-family:var(--font-mono); font-size:14px; letter-spacing:.08em; text-transform:uppercase; fill:var(--bone); text-anchor:middle; }
+  .lens-hint{ margin-top:14px; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--bone-faint); }
+  .lens-circle{
+    fill:var(--verdant); fill-opacity:.16; stroke:var(--verdant); stroke-opacity:.55; stroke-width:1.5; mix-blend-mode:screen;
+    opacity:1; transform:translate(0,0);
+  }
+  .lens-label{ font-family:var(--font-mono); font-size:14px; letter-spacing:.08em; fill:var(--bone); text-anchor:middle; opacity:1; }
   .lens-label-center{ font-size:15px; font-weight:700; fill:var(--bone); }
+  .lens-glow{ fill:var(--verdant); opacity:0; transform-box:fill-box; transform-origin:center; pointer-events:none; }
+  .lens-map.in .lens-glow{ animation:lensGlow 1.6s cubic-bezier(.16,1,.3,1) 1.7s 1 both; }
+  @keyframes lensGlow{
+    0%{ opacity:0; transform:scale(.3); }
+    40%{ opacity:.35; transform:scale(1); }
+    100%{ opacity:0; transform:scale(1.7); }
+  }
+
+  /* entrance choreography: gated behind JS + motion preference, safe by default */
+  .lens-map.pre-anim .lens-circle{ opacity:0; }
+  .lens-map.pre-anim .lens-circle-business{ transform:translate(-63px,-31px); }
+  .lens-map.pre-anim .lens-circle-system{ transform:translate(63px,-31px); }
+  .lens-map.pre-anim .lens-circle-people{ transform:translate(0,70px); }
+  .lens-map.pre-anim.in .lens-circle{ opacity:1; }
+  .lens-map.pre-anim.in .lens-circle-business{ transform:translate(0,0); transition:transform 1.1s cubic-bezier(.16,1,.3,1) 0s, opacity 1s ease 0s; }
+  .lens-map.pre-anim.in .lens-circle-system{ transform:translate(0,0); transition:transform 1.1s cubic-bezier(.16,1,.3,1) .3s, opacity 1s ease .3s; }
+  .lens-map.pre-anim.in .lens-circle-people{ transform:translate(0,0); transition:transform 1.1s cubic-bezier(.16,1,.3,1) .6s, opacity 1s ease .6s; }
+  .lens-map.pre-anim .lens-label-business, .lens-map.pre-anim .lens-label-system, .lens-map.pre-anim .lens-label-people{ opacity:0; }
+  .lens-map.pre-anim.in .lens-label-business{ opacity:1; transition:opacity .8s ease .5s; }
+  .lens-map.pre-anim.in .lens-label-system{ opacity:1; transition:opacity .8s ease .8s; }
+  .lens-map.pre-anim.in .lens-label-people{ opacity:1; transition:opacity .8s ease 1.1s; }
+  .lens-map.pre-anim .lens-label-center{ opacity:0; }
+  .lens-map.pre-anim.in .lens-label-center{ opacity:1; transition:opacity 1s ease 2.3s; }
+
+  .lens-hotspot{ fill:transparent; stroke:transparent; stroke-width:1.5; cursor:pointer; transition:fill .25s ease, stroke .25s ease; }
+  .lens-hotspot:hover, .lens-hotspot:focus-visible{ fill:rgba(239,234,218,.08); stroke:var(--bone-faint); outline:none; }
   .lens-legend{ margin-top:48px; display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
   @media (max-width:700px){ .lens-legend{ grid-template-columns:1fr; } }
   .lens-item{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s ease; }
@@ -521,26 +555,44 @@
         <span class="eyebrow">The Three Lenses</span>
         <p class="lens-lede">The Ideas Behind How I Work.</p>
         <p class="lens-body">Different books, different perspectives. But the same three questions keep showing up: How does the business create value? How does the system create leverage? And how do we help people do their best work?</p>
-        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled The Business, The System, and The People, with the overlap in the center labeled The Multiplier">
-          <circle class="lens-circle" cx="220" cy="180" r="130"/>
-          <circle class="lens-circle" cx="320" cy="180" r="130"/>
-          <circle class="lens-circle" cx="270" cy="267" r="130"/>
-          <text class="lens-label" x="160" y="118">
-            <tspan x="160" dy="0">The</tspan>
-            <tspan x="160" dy="1.15em">Business</tspan>
+        <p class="lens-hint">Click where the circles overlap.</p>
+        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled The Business, The System, and The People, with the overlap in the center labeled The Multiplier. Each overlap is clickable for more detail.">
+          <circle class="lens-circle lens-circle-business" cx="220" cy="180" r="130"/>
+          <circle class="lens-circle lens-circle-system" cx="320" cy="180" r="130"/>
+          <circle class="lens-circle lens-circle-people" cx="270" cy="267" r="130"/>
+          <circle class="lens-glow" cx="270" cy="205" r="50"/>
+          <text class="lens-label lens-label-business" x="160" y="118">
+            <tspan x="160" dy="0">THE</tspan>
+            <tspan x="160" dy="1.15em">BUSINESS</tspan>
           </text>
-          <text class="lens-label" x="380" y="118">
-            <tspan x="380" dy="0">The</tspan>
-            <tspan x="380" dy="1.15em">System</tspan>
+          <text class="lens-label lens-label-system" x="380" y="118">
+            <tspan x="380" dy="0">THE</tspan>
+            <tspan x="380" dy="1.15em">SYSTEM</tspan>
           </text>
-          <text class="lens-label" x="270" y="358">
-            <tspan x="270" dy="0">The</tspan>
-            <tspan x="270" dy="1.15em">People</tspan>
+          <text class="lens-label lens-label-people" x="270" y="358">
+            <tspan x="270" dy="0">THE</tspan>
+            <tspan x="270" dy="1.15em">PEOPLE</tspan>
           </text>
           <text class="lens-label lens-label-center" x="270" y="200">
-            <tspan x="270" dy="0">The</tspan>
-            <tspan x="270" dy="1.1em">Multiplier</tspan>
+            <tspan x="270" dy="0">THE</tspan>
+            <tspan x="270" dy="1.1em">MULTIPLIER</tspan>
           </text>
+          <circle class="lens-hotspot" cx="270" cy="100" r="38" tabindex="0" role="button"
+            aria-label="Business and System: Scale"
+            data-eyebrow="Business + System" data-heading="Scale"
+            data-text="You understand what matters and build a way to do it repeatedly."/>
+          <circle class="lens-hotspot" cx="334" cy="246" r="38" tabindex="0" role="button"
+            aria-label="System and People: Capability"
+            data-eyebrow="System + People" data-heading="Capability"
+            data-text="You create an environment where people can perform without constantly fighting the system."/>
+          <circle class="lens-hotspot" cx="206" cy="246" r="38" tabindex="0" role="button"
+            aria-label="Business and People: Leadership"
+            data-eyebrow="Business + People" data-heading="Leadership"
+            data-text="You connect what the organization needs with what people need to do their best work."/>
+          <circle class="lens-hotspot lens-hotspot-center" cx="270" cy="205" r="30" tabindex="0" role="button"
+            aria-label="Business, System, and People: The Multiplier"
+            data-eyebrow="Business + System + People" data-heading="The Multiplier"
+            data-text="When the business is understood, the system creates leverage, and people are equipped to act, good things start to compound."/>
         </svg>
         <div class="lens-legend">
           <div class="lens-item">
@@ -559,6 +611,15 @@
       </div>
     </div>
   </section>
+
+  <div class="book-modal-overlay" id="lensModalOverlay" hidden>
+    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="lensModalHeading" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="lens-modal-eyebrow" id="lensModalEyebrow"></span>
+      <span class="lens-modal-heading" id="lensModalHeading"></span>
+      <p class="lens-modal-text" id="lensModalText"></p>
+    </div>
+  </div>
 
   <div class="book-modal-overlay" id="bookModalOverlay" hidden>
     <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle" tabindex="-1">
@@ -774,6 +835,77 @@
     bookOverlay.addEventListener('click', function(e){
       if(e.target === bookOverlay) closeBookModal();
     });
+  }
+
+  /* ---------- lens intersection modal ---------- */
+  var lensOverlay = document.getElementById('lensModalOverlay');
+  if(lensOverlay){
+    var lensModal = lensOverlay.querySelector('.book-modal');
+    var lensModalClose = lensOverlay.querySelector('.book-modal-close');
+    var lensModalEyebrow = document.getElementById('lensModalEyebrow');
+    var lensModalHeading = document.getElementById('lensModalHeading');
+    var lensModalText = document.getElementById('lensModalText');
+    var lensLastTrigger = null;
+
+    function trapTabLens(e){
+      if(e.key !== 'Tab') return;
+      var focusables = lensModal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      if(!focusables.length) return;
+      var first = focusables[0], last = focusables[focusables.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+    function onLensKeydown(e){
+      if(e.key === 'Escape') closeLensModal();
+      else trapTabLens(e);
+    }
+    function openLensModal(hotspot){
+      lensLastTrigger = hotspot;
+      lensModalEyebrow.textContent = hotspot.dataset.eyebrow;
+      lensModalHeading.textContent = hotspot.dataset.heading;
+      lensModalText.textContent = hotspot.dataset.text;
+      lensOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      lensModal.focus();
+      document.addEventListener('keydown', onLensKeydown);
+    }
+    function closeLensModal(){
+      lensOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onLensKeydown);
+      if(lensLastTrigger && lensLastTrigger.focus) lensLastTrigger.focus();
+    }
+
+    document.querySelectorAll('.lens-hotspot').forEach(function(h){
+      h.addEventListener('click', function(){ openLensModal(h); });
+      h.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLensModal(h); }
+      });
+    });
+    lensModalClose.addEventListener('click', closeLensModal);
+    lensOverlay.addEventListener('click', function(e){
+      if(e.target === lensOverlay) closeLensModal();
+    });
+  }
+
+  /* ---------- lens map entrance choreography ----------
+     Circles/labels are visible by default in CSS. Only pulled into the
+     pre-anim hidden/offset state when JS can guarantee revealing them
+     (IntersectionObserver + a safety-net timeout), and only when the
+     visitor hasn't asked for reduced motion. */
+  var lensMap = document.querySelector('.lens-map');
+  if(lensMap && 'IntersectionObserver' in window && !reduced){
+    lensMap.classList.add('pre-anim');
+    var lensMapObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          lensMap.classList.add('in');
+          lensMapObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.3 });
+    lensMapObserver.observe(lensMap);
+    setTimeout(function(){ lensMap.classList.add('in'); }, 20000);
   }
 })();
 </script>
