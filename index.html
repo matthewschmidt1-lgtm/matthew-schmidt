@@ -1170,24 +1170,27 @@
 })();
 
 /* ---------- noise -> signal ambient animation (About section) ----------
-   Hundreds of tiny drifting fragments; a three-node Business/System/People
-   pattern periodically resolves out of them, holds, then dissolves back.
-   Ambient and self-playing, but never required to convey information the
-   pullquote above it doesn't already state in words — purely decorative,
-   so it's safe to skip entirely under reduced motion or if canvas is
-   unavailable, rather than needing a JS-visibility safety net like the
-   content-bearing reveals elsewhere on the page. */
+   Hundreds of tiny drifting fragments; each cycle, a random subset of them
+   is pulled (spring physics, not a teleport/fade) into one of four target
+   formations — dashboard, decision tree, sparse interface, or the
+   Business/System/People triangle — holds, then releases back into noise.
+   Ambient and self-playing, but purely decorative reinforcement of the
+   pullquote's own words above it, not unique content — so it's safe to
+   skip entirely under reduced motion or if canvas is unavailable, unlike
+   the page's content-bearing reveals which need a no-JS safety net. */
 (function(){
   var canvas = document.getElementById('noiseSignal');
   if(!canvas || !canvas.getContext) return;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ctx = canvas.getContext('2d');
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var W = 0, H = 0;
+  var W = 0, H = 0, scale = 0;
   var BONE = '239,234,218';
-  var VERDANT = '92,152,115';
+  var BRIGHT = '150,232,178';
 
   function smooth(x){ return x*x*(3-2*x); }
+  function clamp(x,a,b){ return x<a?a:(x>b?b:x); }
+  function lerp(a,b,t){ return a+(b-a)*t; }
 
   function resize(){
     var rect = canvas.getBoundingClientRect();
@@ -1195,10 +1198,10 @@
     canvas.width = Math.round(W*dpr);
     canvas.height = Math.round(H*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    layoutNodes();
+    scale = Math.min(W,H)*0.42;
   }
 
-  var NUM_NOISE = 140;
+  var NUM_NOISE = 150;
   var noise = [];
   function initNoise(){
     noise = [];
@@ -1206,38 +1209,81 @@
       noise.push({
         x: Math.random()*W, y: Math.random()*H,
         w: 2+Math.random()*3, h: 2+Math.random()*3,
-        vx: (Math.random()-0.5)*0.12, vy:(Math.random()-0.5)*0.12,
-        base: 0.08+Math.random()*0.16
+        vx: (Math.random()-0.5)*0.26, vy:(Math.random()-0.5)*0.26,
+        base: 0.10+Math.random()*0.20
       });
     }
   }
 
-  var nodes = [];
-  function layoutNodes(){
-    var cx = W/2, cy = H/2, r = Math.min(W,H)*0.34;
-    nodes = [
-      { label:'BUSINESS', x:cx,        y:cy-r },
-      { label:'SYSTEM',   x:cx+r*0.87, y:cy+r*0.5 },
-      { label:'PEOPLE',   x:cx-r*0.87, y:cy+r*0.5 }
-    ];
-  }
+  /* Scene blueprints, in a normalized -1..1 box around canvas center.
+     frame: draw a bounding card around the points (dashboard/interface).
+     edges: index pairs to connect with a line (tree/triangle).
+     converge: points collapse to the shared center during hold, then
+     release from there — the "words become a single point" scene. */
+  var SCENES = [
+    { name:'dashboard', frame:true, bars:[1,3],
+      points:[ {x:-0.55,y:-0.34},{x:0,y:-0.34},{x:0.55,y:-0.34},
+               {x:-0.55,y:0.34},{x:0,y:0.34},{x:0.55,y:0.34} ], edges:[] },
+    { name:'tree', frame:false,
+      points:[ {x:0,y:-0.55},{x:-0.42,y:0.05},{x:0.42,y:0.05},
+               {x:0.18,y:0.6},{x:0.62,y:0.6} ],
+      edges:[[0,1],[0,2],[2,3],[2,4]] },
+    { name:'interface', frame:true,
+      points:[ {x:-0.05,y:-0.55},{x:-0.35,y:-0.1},{x:-0.35,y:0.15},{x:0.4,y:0.5} ],
+      edges:[], wide:[0], button:[3] },
+    { name:'bsp', frame:false, converge:true,
+      points:[ {x:0,y:-0.5,label:'BUSINESS'},{x:0.5,y:0.3,label:'SYSTEM'},{x:-0.5,y:0.3,label:'PEOPLE'} ],
+      edges:[[0,1],[1,2],[2,0]] }
+  ];
 
-  function phase(t){
-    if(t < 0.35) return 0;
-    if(t < 0.55) return smooth((t-0.35)/0.20);
-    if(t < 0.74) return 1;
-    if(t < 0.92) return 1-smooth((t-0.74)/0.18);
+  var P1=0.16, P2=0.36, P3=0.66, P4=0.84; // noise|emerge|hold|dissolve|noise
+  function pullStrength(t){
+    if(t < P1) return 0;
+    if(t < P2) return smooth((t-P1)/(P2-P1));
+    if(t < P3) return 1;
+    if(t < P4) return 1-smooth((t-P3)/(P4-P3));
     return 0;
   }
 
-  var CYCLE = 13000;
+  var CYCLE = 8200;
   var running = false, startTime = null;
+  var cycleIndex = -1, scene = null, assigned = [];
 
-  function drawFrame(signalOpacity, animateNoise){
+  function startScene(){
+    cycleIndex++;
+    scene = SCENES[cycleIndex % SCENES.length];
+    var picked = {};
+    assigned = scene.points.map(function(pt){
+      var idx;
+      do { idx = Math.floor(Math.random()*noise.length); } while(picked[idx]);
+      picked[idx] = true;
+      return { p:noise[idx], target:pt };
+    });
+  }
+
+  function effectiveTarget(a, t){
+    var tx = a.target.x, ty = a.target.y;
+    if(scene.converge && t > P2){
+      var cStart = P3 - (P3-P2)*0.45;
+      var cT = smooth(clamp((t-cStart)/(P3-cStart), 0, 1));
+      tx = lerp(tx, 0, cT); ty = lerp(ty, 0, cT);
+    }
+    return { x: W/2+tx*scale, y: H/2+ty*scale };
+  }
+
+  function drawFrame(t, animate){
+    var pull = pullStrength(t);
     ctx.clearRect(0,0,W,H);
-    var noiseFade = 1 - signalOpacity*0.55;
-    noise.forEach(function(p){
-      if(animateNoise){
+
+    var assignedSet = null;
+    if(pull > 0.001){
+      assignedSet = {};
+      assigned.forEach(function(a){ assignedSet[noise.indexOf(a.p)] = true; });
+    }
+
+    var noiseFade = 1 - pull*0.6;
+    noise.forEach(function(p, i){
+      if(animate && !(assignedSet && assignedSet[i])){
         p.x += p.vx; p.y += p.vy;
         if(p.x < -5) p.x = W+5; else if(p.x > W+5) p.x = -5;
         if(p.y < -5) p.y = H+5; else if(p.y > H+5) p.y = -5;
@@ -1246,36 +1292,78 @@
       ctx.fillRect(p.x, p.y, p.w, p.h);
     });
 
-    if(signalOpacity > 0.01){
-      ctx.strokeStyle = 'rgba('+VERDANT+','+(signalOpacity*0.5).toFixed(3)+')';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(nodes[0].x, nodes[0].y);
-      ctx.lineTo(nodes[1].x, nodes[1].y);
-      ctx.lineTo(nodes[2].x, nodes[2].y);
-      ctx.closePath();
-      ctx.stroke();
+    if(pull <= 0.001) return;
 
-      nodes.forEach(function(n){
-        var size = 6.5*(0.85+0.15*signalOpacity);
-        ctx.fillStyle = 'rgba('+VERDANT+','+signalOpacity.toFixed(3)+')';
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, size, 0, Math.PI*2);
-        ctx.fill();
-
-        ctx.fillStyle = 'rgba('+BONE+','+signalOpacity.toFixed(3)+')';
-        ctx.font = '700 10px "IBM Plex Mono", ui-monospace, monospace';
-        ctx.textAlign = 'center';
-        ctx.fillText(n.label, n.x, n.y - size - 8);
+    var pts = assigned.map(function(a){ return effectiveTarget(a, t); });
+    if(animate){
+      assigned.forEach(function(a, i){
+        var tgt = pts[i];
+        a.p.x += (tgt.x - a.p.x) * 0.14 * pull;
+        a.p.y += (tgt.y - a.p.y) * 0.14 * pull;
+        a.p.x += a.p.vx * (1 - pull*0.92);
+        a.p.y += a.p.vy * (1 - pull*0.92);
       });
     }
+
+    ctx.save();
+    ctx.shadowColor = 'rgba('+BRIGHT+',0.85)';
+    ctx.shadowBlur = 9;
+
+    if(scene.frame && pts.length){
+      var xs = pts.map(function(p){return p.x;}), ys = pts.map(function(p){return p.y;});
+      var pad = scale*0.28;
+      var fx = Math.min.apply(null,xs)-pad, fy = Math.min.apply(null,ys)-pad;
+      var fw = Math.max.apply(null,xs)-fx+pad, fh = Math.max.apply(null,ys)-fy+pad;
+      ctx.strokeStyle = 'rgba('+BRIGHT+','+(pull*0.55).toFixed(3)+')';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(fx, fy, fw, fh);
+    }
+
+    if(scene.edges && scene.edges.length){
+      ctx.strokeStyle = 'rgba('+BRIGHT+','+(pull*0.6).toFixed(3)+')';
+      ctx.lineWidth = 1.2;
+      scene.edges.forEach(function(e){
+        ctx.beginPath();
+        ctx.moveTo(pts[e[0]].x, pts[e[0]].y);
+        ctx.lineTo(pts[e[1]].x, pts[e[1]].y);
+        ctx.stroke();
+      });
+    }
+
+    ctx.fillStyle = 'rgba('+BRIGHT+','+pull.toFixed(3)+')';
+    pts.forEach(function(pt, i){
+      var pointDef = scene.points[i];
+      if(scene.wide && scene.wide.indexOf(i) !== -1){
+        ctx.fillRect(pt.x-22, pt.y-3, 44, 6);
+      } else if(scene.button && scene.button.indexOf(i) !== -1){
+        ctx.fillRect(pt.x-14, pt.y-9, 28, 18);
+      } else if(scene.bars && scene.bars.indexOf(i) !== -1){
+        ctx.fillRect(pt.x-5, pt.y-2, 10, 16);
+      } else {
+        var size = 6*(0.8+0.2*pull);
+        ctx.fillRect(pt.x-size/2, pt.y-size/2, size, size);
+      }
+
+      if(pointDef.label){
+        var convergeFade = scene.converge ? clamp(1-((t-(P3-(P3-P2)*0.45))/((P3-P2)*0.45)),0,1) : 1;
+        ctx.fillStyle = 'rgba('+BONE+','+(pull*Math.max(convergeFade,0)).toFixed(3)+')';
+        ctx.font = '700 10px "IBM Plex Mono", ui-monospace, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(pointDef.label, pt.x, pt.y-14);
+        ctx.fillStyle = 'rgba('+BRIGHT+','+pull.toFixed(3)+')';
+      }
+    });
+    ctx.restore();
   }
 
   function loop(ts){
     if(!running) return;
     if(!startTime) startTime = ts;
-    var t = ((ts - startTime) % CYCLE) / CYCLE;
-    drawFrame(phase(t), true);
+    var elapsed = ts - startTime;
+    var idx = Math.floor(elapsed/CYCLE);
+    if(idx !== cycleIndex) startScene();
+    var t = (elapsed % CYCLE) / CYCLE;
+    drawFrame(t, true);
     requestAnimationFrame(loop);
   }
   function start(){ if(!running){ running = true; startTime = null; requestAnimationFrame(loop); } }
@@ -1286,7 +1374,9 @@
   window.addEventListener('resize', function(){ resize(); });
 
   if(reduced){
-    drawFrame(1, false);
+    cycleIndex = 0; scene = SCENES[3];
+    assigned = scene.points.map(function(pt,i){ return { p:noise[i], target:pt }; });
+    drawFrame(0.5, false);
   } else if('IntersectionObserver' in window){
     new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting) start(); else stop(); });
