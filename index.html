@@ -252,10 +252,29 @@
   .lens-hint{ margin-top:14px; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--bone-faint); }
   .lens-circle{
     fill:var(--verdant); fill-opacity:.16; stroke:var(--verdant); stroke-opacity:.55; stroke-width:1.5; mix-blend-mode:screen;
-    opacity:1; transform:translate(0,0);
+    opacity:1; transform:translate(0,0); transform-box:fill-box; transform-origin:center; cursor:pointer;
+    transition:transform .4s cubic-bezier(.16,1,.3,1), opacity .4s ease;
   }
-  .lens-label{ font-family:var(--font-mono); font-size:14px; letter-spacing:.08em; fill:var(--bone); text-anchor:middle; opacity:1; }
+  .lens-circle:focus-visible{ outline:2px solid var(--verdant); outline-offset:2px; }
+  .lens-map[data-active="business"] .lens-circle-business,
+  .lens-map[data-active="system"] .lens-circle-system,
+  .lens-map[data-active="people"] .lens-circle-people{ transform:scale(1.045); }
+  .lens-map[data-active="business"] .lens-circle-system,
+  .lens-map[data-active="business"] .lens-circle-people,
+  .lens-map[data-active="system"] .lens-circle-business,
+  .lens-map[data-active="system"] .lens-circle-people,
+  .lens-map[data-active="people"] .lens-circle-business,
+  .lens-map[data-active="people"] .lens-circle-system{ opacity:.38; }
+  .lens-label{ font-family:var(--font-mono); font-size:14px; letter-spacing:.08em; fill:var(--bone); text-anchor:middle; opacity:1; pointer-events:none; }
+  .lens-label-tagline{ font-family:var(--font-display); font-style:italic; font-weight:400; letter-spacing:0; font-size:11px; fill:var(--bone-faint); text-transform:none; }
   .lens-label-center{ font-size:15px; font-weight:700; fill:var(--bone); }
+  .lens-hotspot-preview{
+    font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.06em;
+    fill:var(--bone); text-anchor:middle; opacity:0; pointer-events:none; transition:opacity .25s ease;
+  }
+  .lens-map[data-active-hotspot="bs"] .lens-hotspot-preview[data-preview-for="bs"],
+  .lens-map[data-active-hotspot="sp"] .lens-hotspot-preview[data-preview-for="sp"],
+  .lens-map[data-active-hotspot="bp"] .lens-hotspot-preview[data-preview-for="bp"]{ opacity:1; }
   .lens-glow{ fill:var(--verdant); opacity:0; transform-box:fill-box; transform-origin:center; pointer-events:none; }
   .lens-map.in .lens-glow{ animation:lensGlow 1.6s cubic-bezier(.16,1,.3,1) 1.7s 1 both; }
   @keyframes lensGlow{
@@ -282,13 +301,15 @@
 
   .lens-hotspot{ fill:transparent; stroke:transparent; stroke-width:1.5; cursor:pointer; transition:fill .25s ease, stroke .25s ease; }
   .lens-hotspot:hover, .lens-hotspot:focus-visible{ fill:rgba(239,234,218,.08); stroke:var(--bone-faint); outline:none; }
-  .lens-legend{ margin-top:48px; display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
-  @media (max-width:700px){ .lens-legend{ grid-template-columns:1fr; } }
-  .lens-item{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s ease; }
-  .lens-item.pre-reveal{ opacity:0; transform:translateY(14px); }
-  .lens-item.pre-reveal.in{ opacity:1; transform:none; }
-  .lens-item .tag{ font-family:var(--font-mono); font-size:14px; color:var(--verdant); letter-spacing:.1em; text-transform:uppercase; }
-  .lens-item p{ margin-top:10px; color:var(--bone-dim); font-size:15px; line-height:1.6; }
+
+  .lens-detail{
+    margin-top:40px; padding-top:28px; border-top:1px solid var(--ground-line);
+    min-height:128px; max-width:56ch;
+  }
+  .lens-detail-name{ font-family:var(--font-display); font-style:italic; font-size:21px; color:var(--bone); transition:color .3s ease; }
+  .lens-detail.is-active .lens-detail-name{ color:var(--verdant); }
+  .lens-detail-text{ margin-top:10px; color:var(--bone-dim); font-size:15.5px; line-height:1.65; }
+  .lens-detail-keywords{ margin-top:14px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-faint); }
 
   /* ================= SHIFT ================= */
   .shift{
@@ -353,7 +374,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
-    .cap-card, .belief-row, .book, .lens-item{ opacity:1 !important; transform:none !important; }
+    .cap-card, .belief-row, .book{ opacity:1 !important; transform:none !important; }
     .breath-ring{ animation:none !important; }
   }
 </style>
@@ -555,37 +576,52 @@
         <span class="eyebrow">The Three Lenses</span>
         <p class="lens-lede">The Ideas Behind How I Work.</p>
         <p class="lens-body">Different books, different perspectives. But the same three questions keep showing up: How does the business create value? How does the system create leverage? And how do we help people do their best work?</p>
-        <p class="lens-hint">Click where the circles overlap.</p>
-        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled The Business, The System, and The People, with the overlap in the center labeled The Multiplier. Each overlap is clickable for more detail.">
-          <circle class="lens-circle lens-circle-business" cx="220" cy="180" r="130"/>
-          <circle class="lens-circle lens-circle-system" cx="320" cy="180" r="130"/>
-          <circle class="lens-circle lens-circle-people" cx="270" cy="267" r="130"/>
+        <p class="lens-hint">Explore each lens — hover or tap where circles overlap for more.</p>
+        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier. Each circle and overlap responds to hover or focus for more detail.">
+          <circle class="lens-circle lens-circle-business" cx="220" cy="180" r="130" tabindex="0" role="button"
+            aria-label="Business: Create value"
+            data-lens="business" data-name="Business" data-tagline="Create value"
+            data-text="Understand the customer, the economics, and the decisions that actually move the business."
+            data-keywords="Customer · Economics · Strategy"/>
+          <circle class="lens-circle lens-circle-system" cx="320" cy="180" r="130" tabindex="0" role="button"
+            aria-label="System: Create leverage"
+            data-lens="system" data-name="System" data-tagline="Create leverage"
+            data-text="Build processes, technology, metrics, and operating mechanisms that make good work repeatable."
+            data-keywords="Process · Technology · Scale"/>
+          <circle class="lens-circle lens-circle-people" cx="270" cy="267" r="130" tabindex="0" role="button"
+            aria-label="People: Create capability"
+            data-lens="people" data-name="People" data-tagline="Create capability"
+            data-text="Give smart people the clarity, trust, and accountability to do their best work."
+            data-keywords="Clarity · Trust · Leadership"/>
           <circle class="lens-glow" cx="270" cy="205" r="50"/>
           <text class="lens-label lens-label-business" x="160" y="118">
-            <tspan x="160" dy="0">THE</tspan>
-            <tspan x="160" dy="1.15em">BUSINESS</tspan>
+            <tspan x="160" dy="0">BUSINESS</tspan>
+            <tspan class="lens-label-tagline" x="160" dy="1.3em">Create value</tspan>
           </text>
           <text class="lens-label lens-label-system" x="380" y="118">
-            <tspan x="380" dy="0">THE</tspan>
-            <tspan x="380" dy="1.15em">SYSTEM</tspan>
+            <tspan x="380" dy="0">SYSTEM</tspan>
+            <tspan class="lens-label-tagline" x="380" dy="1.3em">Create leverage</tspan>
           </text>
           <text class="lens-label lens-label-people" x="270" y="358">
-            <tspan x="270" dy="0">THE</tspan>
-            <tspan x="270" dy="1.15em">PEOPLE</tspan>
+            <tspan x="270" dy="0">PEOPLE</tspan>
+            <tspan class="lens-label-tagline" x="270" dy="1.3em">Create capability</tspan>
           </text>
           <text class="lens-label lens-label-center" x="270" y="200">
             <tspan x="270" dy="0">THE</tspan>
             <tspan x="270" dy="1.1em">MULTIPLIER</tspan>
           </text>
-          <circle class="lens-hotspot" cx="270" cy="100" r="38" tabindex="0" role="button"
+          <text class="lens-hotspot-preview" data-preview-for="bs" x="270" y="104">SCALE</text>
+          <text class="lens-hotspot-preview" data-preview-for="sp" x="334" y="250">CAPABILITY</text>
+          <text class="lens-hotspot-preview" data-preview-for="bp" x="206" y="250">LEADERSHIP</text>
+          <circle class="lens-hotspot" data-preview-key="bs" cx="270" cy="100" r="38" tabindex="0" role="button"
             aria-label="Business and System: Scale"
             data-eyebrow="Business + System" data-heading="Scale"
             data-text="You understand what matters and build a way to do it repeatedly."/>
-          <circle class="lens-hotspot" cx="334" cy="246" r="38" tabindex="0" role="button"
+          <circle class="lens-hotspot" data-preview-key="sp" cx="334" cy="246" r="38" tabindex="0" role="button"
             aria-label="System and People: Capability"
             data-eyebrow="System + People" data-heading="Capability"
             data-text="You create an environment where people can perform without constantly fighting the system."/>
-          <circle class="lens-hotspot" cx="206" cy="246" r="38" tabindex="0" role="button"
+          <circle class="lens-hotspot" data-preview-key="bp" cx="206" cy="246" r="38" tabindex="0" role="button"
             aria-label="Business and People: Leadership"
             data-eyebrow="Business + People" data-heading="Leadership"
             data-text="You connect what the organization needs with what people need to do their best work."/>
@@ -594,19 +630,10 @@
             data-eyebrow="Business + System + People" data-heading="The Multiplier"
             data-text="When the business is understood, the system creates leverage, and people are equipped to act, good things start to compound."/>
         </svg>
-        <div class="lens-legend">
-          <div class="lens-item">
-            <span class="tag">The business</span>
-            <p>Understand how the organization actually creates value.</p>
-          </div>
-          <div class="lens-item">
-            <span class="tag">The system</span>
-            <p>Build processes and teams that create leverage.</p>
-          </div>
-          <div class="lens-item">
-            <span class="tag">The people</span>
-            <p>Help smart people do their best work.</p>
-          </div>
+        <div class="lens-detail" id="lensDetail">
+          <span class="lens-detail-name" id="lensDetailName">Explore a lens</span>
+          <p class="lens-detail-text" id="lensDetailText">Business, System, and People — the three questions that show up in almost everything I read.</p>
+          <p class="lens-detail-keywords" id="lensDetailKeywords">&nbsp;</p>
         </div>
       </div>
     </div>
@@ -748,7 +775,7 @@
      hidden pre-reveal state once we can also guarantee it gets revealed:
      via IntersectionObserver, or a safety-net timeout if that somehow
      never fires. Content should never depend on JS succeeding to be seen. */
-  var revealTargets = document.querySelectorAll('.cap-card, .belief-row, .book, .lens-item');
+  var revealTargets = document.querySelectorAll('.cap-card, .belief-row, .book');
   if('IntersectionObserver' in window && revealTargets.length && !reduced){
     revealTargets.forEach(function(el){ el.classList.add('pre-reveal'); });
 
@@ -868,6 +895,10 @@
       document.body.style.overflow = 'hidden';
       lensModal.focus();
       document.addEventListener('keydown', onLensKeydown);
+      // clicking to open doesn't reliably fire mouseleave on the hotspot
+      // underneath once the overlay covers it — clear hover state by hand
+      var mapEl = document.querySelector('.lens-map');
+      if(mapEl){ mapEl.removeAttribute('data-active-hotspot'); mapEl.removeAttribute('data-active'); }
     }
     function closeLensModal(){
       lensOverlay.hidden = true;
@@ -901,11 +932,63 @@
         if(entry.isIntersecting){
           lensMap.classList.add('in');
           lensMapObserver.unobserve(entry.target);
+          // pre-anim's only job was the entrance transition; drop it once
+          // settled so it can't out-specificity the hover/focus states below
+          setTimeout(function(){ lensMap.classList.remove('pre-anim'); }, 1900);
         }
       });
     }, { threshold:0.3 });
     lensMapObserver.observe(lensMap);
     setTimeout(function(){ lensMap.classList.add('in'); }, 20000);
+  }
+
+  /* ---------- lens hover/focus detail panel ---------- */
+  if(lensMap){
+    var lensCircles = lensMap.querySelectorAll('.lens-circle');
+    var lensDetail = document.getElementById('lensDetail');
+    var lensDetailName = document.getElementById('lensDetailName');
+    var lensDetailText = document.getElementById('lensDetailText');
+    var lensDetailKeywords = document.getElementById('lensDetailKeywords');
+    var defaultName = lensDetailName.textContent;
+    var defaultText = lensDetailText.textContent;
+    var activeLensKey = null;
+
+    function setActiveLens(circle){
+      activeLensKey = circle.dataset.lens;
+      lensMap.setAttribute('data-active', activeLensKey);
+      lensDetail.classList.add('is-active');
+      lensDetailName.textContent = circle.dataset.name;
+      lensDetailText.textContent = circle.dataset.text;
+      lensDetailKeywords.textContent = circle.dataset.keywords;
+    }
+    function clearActiveLens(){
+      activeLensKey = null;
+      lensMap.removeAttribute('data-active');
+      lensDetail.classList.remove('is-active');
+      lensDetailName.textContent = defaultName;
+      lensDetailText.textContent = defaultText;
+      lensDetailKeywords.textContent = ' ';
+    }
+    lensCircles.forEach(function(c){
+      c.addEventListener('mouseenter', function(){ setActiveLens(c); });
+      c.addEventListener('mouseleave', function(){ clearActiveLens(); });
+      c.addEventListener('focus', function(){ setActiveLens(c); });
+      c.addEventListener('blur', function(){ clearActiveLens(); });
+      c.addEventListener('click', function(){
+        if(activeLensKey === c.dataset.lens){ clearActiveLens(); } else { setActiveLens(c); }
+      });
+    });
+
+    var lensHotspots = lensMap.querySelectorAll('.lens-hotspot');
+    function setActiveHotspot(h){ lensMap.setAttribute('data-active-hotspot', h.dataset.previewKey); }
+    function clearActiveHotspot(){ lensMap.removeAttribute('data-active-hotspot'); }
+    lensHotspots.forEach(function(h){
+      if(!h.dataset.previewKey) return;
+      h.addEventListener('mouseenter', function(){ setActiveHotspot(h); });
+      h.addEventListener('mouseleave', clearActiveHotspot);
+      h.addEventListener('focus', function(){ setActiveHotspot(h); });
+      h.addEventListener('blur', clearActiveHotspot);
+    });
   }
 })();
 </script>
