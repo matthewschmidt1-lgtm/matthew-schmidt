@@ -147,10 +147,12 @@
   .path-arrow.now{ color:var(--verdant); }
   .story-lede{ margin-top:36px; max-width:48ch; font-family:var(--font-display); font-style:italic; font-size:clamp(21px,2.8vw,27px); line-height:1.5; color:var(--bone); }
   .story-body{ margin-top:22px; max-width:58ch; color:var(--bone-dim); font-size:16px; line-height:1.75; }
-  .pullquote{ margin-top:46px; padding-top:34px; border-top:1px solid var(--ground-line); max-width:52ch; font-family:var(--font-display); font-style:italic; font-size:25px; line-height:1.55; color:var(--bone); }
+  .philosophy-wrap{ margin-top:46px; padding-top:34px; border-top:1px solid var(--ground-line); }
+  .pullquote{ margin-top:16px; max-width:52ch; font-family:var(--font-display); font-style:italic; font-size:25px; line-height:1.55; color:var(--bone); }
 
   /* ---------- activity loop / learning loop diagnostic ---------- */
   .loops-wrap{ margin-top:56px; padding-top:48px; border-top:1px solid var(--ground-line); }
+  .loops-question{ margin-top:16px; margin-bottom:40px; text-align:center; font-family:var(--font-display); font-style:italic; font-size:24px; color:var(--bone); }
   .loop-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
   @media (max-width:760px){ .loop-grid{ grid-template-columns:1fr; } }
   .loop-card{
@@ -187,11 +189,6 @@
     box-shadow:0 18px 30px -16px rgba(150,232,178,.28);
     outline:none;
   }
-  .loops-question{
-    margin-top:40px; text-align:center;
-    font-family:var(--font-display); font-style:italic; font-size:24px; color:var(--bone);
-  }
-
   /* ================= CAPABILITIES ================= */
   .capabilities h2{ margin-top:14px; font-size:clamp(30px,4.4vw,52px); max-width:16ch; line-height:1.14; }
   .cap-grid{ margin-top:52px; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
@@ -525,9 +522,14 @@
       </div>
       <p class="story-lede">I've spent my career helping organizations turn complexity into decisions and decisions into action.</p>
       <p class="story-body">I'm curious about how businesses create value, how systems create leverage, and what helps people do their best work. If I can't find the tool I want, I tend to build it.</p>
-      <p class="pullquote">Understand the problem deeply. Find the signal through the noise. Then build something better.</p>
+      <div class="philosophy-wrap">
+        <span class="eyebrow">Operating Philosophy</span>
+        <p class="pullquote">Understand the problem deeply. Find the signal through the noise. Then build something better.</p>
+      </div>
 
       <div class="loops-wrap">
+        <span class="eyebrow">Collective Reinforcement</span>
+        <p class="loops-question">Which loop are you in?</p>
         <div class="loop-grid">
           <button class="loop-card loop-card-activity" type="button"
             data-eyebrow="The Activity Loop"
@@ -549,7 +551,6 @@
             <p class="loop-caption">A loop that gets smarter with every cycle.</p>
           </button>
         </div>
-        <p class="loops-question">Which loop are you in?</p>
       </div>
     </div>
   </section>
