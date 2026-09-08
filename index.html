@@ -147,12 +147,17 @@
   .path-arrow.now{ color:var(--verdant); }
   .story-lede{ margin-top:36px; max-width:48ch; font-family:var(--font-display); font-style:italic; font-size:clamp(21px,2.8vw,27px); line-height:1.5; color:var(--bone); }
   .story-body{ margin-top:22px; max-width:58ch; color:var(--bone-dim); font-size:16px; line-height:1.75; }
-  .philosophy-wrap{ margin-top:46px; padding-top:34px; border-top:1px solid var(--ground-line); }
+  .section-break{
+    margin-top:60px; text-align:center;
+    font-family:var(--font-mono); font-size:13px; letter-spacing:.5em;
+    color:var(--bone-faint); opacity:.55;
+  }
+  .philosophy-wrap{ margin-top:44px; }
   .pullquote{ margin-top:16px; max-width:52ch; font-family:var(--font-display); font-style:italic; font-size:25px; line-height:1.55; color:var(--bone); }
 
   /* ---------- activity loop / learning loop diagnostic ---------- */
   .loops-wrap{ margin-top:56px; padding-top:48px; border-top:1px solid var(--ground-line); }
-  .loops-question{ margin-top:16px; margin-bottom:40px; text-align:center; font-family:var(--font-display); font-style:italic; font-size:24px; color:var(--bone); }
+  .loops-question{ margin-top:32px; margin-bottom:40px; text-align:center; font-family:var(--font-display); font-style:italic; font-size:24px; color:var(--bone); }
   .loop-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
   @media (max-width:760px){ .loop-grid{ grid-template-columns:1fr; } }
   .loop-card{
@@ -522,13 +527,16 @@
       </div>
       <p class="story-lede">I've spent my career helping organizations turn complexity into decisions and decisions into action.</p>
       <p class="story-body">I'm curious about how businesses create value, how systems create leverage, and what helps people do their best work. If I can't find the tool I want, I tend to build it.</p>
+
+      <div class="section-break" aria-hidden="true">· · ·</div>
+
       <div class="philosophy-wrap">
         <span class="eyebrow">Operating Philosophy</span>
         <p class="pullquote">Understand the problem deeply. Find the signal through the noise. Then build something better.</p>
       </div>
 
       <div class="loops-wrap">
-        <span class="eyebrow">Collective Reinforcement</span>
+        <span class="eyebrow">The Blind Spot</span>
         <p class="loops-question">Which loop are you in?</p>
         <div class="loop-grid">
           <button class="loop-card loop-card-activity" type="button"
