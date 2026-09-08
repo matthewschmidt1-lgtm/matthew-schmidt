@@ -243,7 +243,7 @@
   .lens-modal-text{ margin-top:20px; padding-top:22px; border-top:1px solid var(--ground-line); color:var(--bone-dim); font-size:16px; line-height:1.75; }
 
   /* ---- lens map ---- */
-  .lens-map{ margin-top:96px; padding-top:64px; border-top:1px solid var(--ground-line); }
+  .lens-map{ margin-top:0; }
   .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.35; color:var(--bone); }
   .lens-body{ margin-top:18px; max-width:56ch; font-size:15.5px; line-height:1.65; color:var(--bone-dim); }
   .lens-diagram{ display:block; width:100%; max-width:400px; height:auto; margin:44px auto 0; }
@@ -485,6 +485,164 @@
     </div>
   </section>
 
+  <section class="lens-section" id="lenses">
+    <div class="wrap">
+      <div class="lens-map">
+        <span class="eyebrow">The Three Lenses</span>
+        <p class="lens-lede">The Ideas Behind How I Work.</p>
+        <p class="lens-body">Different books, different perspectives. But the same three questions keep showing up: How does the business create value? How does the system create leverage? And how do we help people do their best work?</p>
+        <p class="lens-hint">Explore each lens — hover or tap where circles overlap for more.</p>
+        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier. Each circle and overlap responds to hover or focus for more detail.">
+          <circle class="lens-circle lens-circle-business" cx="220" cy="180" r="130" tabindex="0" role="button"
+            aria-label="Business: Create value"
+            data-lens="business" data-name="Business" data-tagline="Create value"
+            data-text="Understand the customer, the economics, and the decisions that actually move the business."
+            data-keywords="Customer · Economics · Strategy"/>
+          <circle class="lens-circle lens-circle-system" cx="320" cy="180" r="130" tabindex="0" role="button"
+            aria-label="System: Create leverage"
+            data-lens="system" data-name="System" data-tagline="Create leverage"
+            data-text="Build processes, technology, metrics, and operating mechanisms that make good work repeatable."
+            data-keywords="Process · Technology · Scale"/>
+          <circle class="lens-circle lens-circle-people" cx="270" cy="267" r="130" tabindex="0" role="button"
+            aria-label="People: Create capability"
+            data-lens="people" data-name="People" data-tagline="Create capability"
+            data-text="Give smart people the clarity, trust, and accountability to do their best work."
+            data-keywords="Clarity · Trust · Leadership"/>
+          <circle class="lens-glow" cx="270" cy="205" r="50"/>
+          <text class="lens-label lens-label-business" x="160" y="118">
+            <tspan x="160" dy="0">BUSINESS</tspan>
+            <tspan class="lens-label-tagline" x="160" dy="1.3em">Create value</tspan>
+          </text>
+          <text class="lens-label lens-label-system" x="380" y="118">
+            <tspan x="380" dy="0">SYSTEM</tspan>
+            <tspan class="lens-label-tagline" x="380" dy="1.3em">Create leverage</tspan>
+          </text>
+          <text class="lens-label lens-label-people" x="270" y="358">
+            <tspan x="270" dy="0">PEOPLE</tspan>
+            <tspan class="lens-label-tagline" x="270" dy="1.3em">Create capability</tspan>
+          </text>
+          <text class="lens-label lens-label-center" x="270" y="200">
+            <tspan x="270" dy="0">THE</tspan>
+            <tspan x="270" dy="1.1em">MULTIPLIER</tspan>
+          </text>
+          <text class="lens-hotspot-preview" data-preview-for="bs" x="270" y="104">SCALE</text>
+          <text class="lens-hotspot-preview" data-preview-for="sp" x="334" y="250">CAPABILITY</text>
+          <text class="lens-hotspot-preview" data-preview-for="bp" x="206" y="250">LEADERSHIP</text>
+          <circle class="lens-hotspot" data-preview-key="bs" cx="270" cy="100" r="38" tabindex="0" role="button"
+            aria-label="Business and System: Scale"
+            data-eyebrow="Business + System" data-heading="Scale"
+            data-text="You understand what matters and build a way to do it repeatedly."/>
+          <circle class="lens-hotspot" data-preview-key="sp" cx="334" cy="246" r="38" tabindex="0" role="button"
+            aria-label="System and People: Capability"
+            data-eyebrow="System + People" data-heading="Capability"
+            data-text="You create an environment where people can perform without constantly fighting the system."/>
+          <circle class="lens-hotspot" data-preview-key="bp" cx="206" cy="246" r="38" tabindex="0" role="button"
+            aria-label="Business and People: Leadership"
+            data-eyebrow="Business + People" data-heading="Leadership"
+            data-text="You connect what the organization needs with what people need to do their best work."/>
+          <circle class="lens-hotspot lens-hotspot-center" cx="270" cy="205" r="30" tabindex="0" role="button"
+            aria-label="Business, System, and People: The Multiplier"
+            data-eyebrow="Business + System + People" data-heading="The Multiplier"
+            data-text="When the business is understood, the system creates leverage, and people are equipped to act, good things start to compound."/>
+        </svg>
+        <div class="lens-detail" id="lensDetail">
+          <span class="lens-detail-name" id="lensDetailName">Explore a lens</span>
+          <p class="lens-detail-text" id="lensDetailText">Business, System, and People — the three questions that show up in almost everything I read.</p>
+          <p class="lens-detail-keywords" id="lensDetailKeywords">&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="friction" id="friction">
+    <div class="wrap">
+      <span class="eyebrow">The Friction</span>
+      <h2>The problem usually isn't one of the three.</h2>
+      <p class="friction-lede">It's the gap between them. The details change. The friction doesn't.</p>
+      <div class="friction-grid">
+        <div class="friction-card">
+          <span class="tag">Business</span>
+          <h3>Do you know what matters?</h3>
+          <p>Everything gets measured. Not everyone agrees on what actually drives value.</p>
+          <button class="friction-cta" type="button"
+            data-eyebrow="Business"
+            data-heading="The problem isn't a lack of data."
+            data-text="It's that nobody's agreed what decision the data is supposed to inform.">
+            Explore the problem →
+          </button>
+        </div>
+        <div class="friction-card">
+          <span class="tag">System</span>
+          <h3>Can the organization execute?</h3>
+          <p>The strategy makes sense. The processes around it don't support it.</p>
+          <button class="friction-cta" type="button"
+            data-eyebrow="System"
+            data-heading="The problem isn't always the process."
+            data-text="It's the workarounds everyone has quietly built around it.">
+            Explore the problem →
+          </button>
+        </div>
+        <div class="friction-card">
+          <span class="tag">People</span>
+          <h3>Can people act on it?</h3>
+          <p>The answer exists. People don't have the clarity, authority, or incentive to act on it.</p>
+          <button class="friction-cta" type="button"
+            data-eyebrow="People"
+            data-heading="People act when the outcome matters to them."
+            data-text="People don't act on information just because it exists. Clarity tells them what to do. Authority tells them they can. Incentives give them a reason to.">
+            Explore the problem →
+          </button>
+        </div>
+      </div>
+      <p class="friction-synthesis">The interesting problems rarely live inside just one of these — they live in the gap between them. That's usually where I start.</p>
+    </div>
+  </section>
+
+  <div class="book-modal-overlay" id="lensModalOverlay" hidden>
+    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="lensModalHeading" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="lens-modal-eyebrow" id="lensModalEyebrow"></span>
+      <span class="lens-modal-heading" id="lensModalHeading"></span>
+      <p class="lens-modal-text" id="lensModalText"></p>
+    </div>
+  </div>
+
+  <div class="book-modal-overlay" id="bookModalOverlay" hidden>
+    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <div class="book-modal-meta">
+        <span class="book-modal-title" id="bookModalTitle"></span>
+        <span class="book-modal-author"></span>
+      </div>
+      <div class="book-modal-body"></div>
+    </div>
+  </div>
+
+  <div class="book-modal-overlay" id="frictionModalOverlay" hidden>
+    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="frictionModalHeading" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="lens-modal-eyebrow" id="frictionModalEyebrow"></span>
+      <span class="lens-modal-heading" id="frictionModalHeading"></span>
+      <p class="lens-modal-text" id="frictionModalText"></p>
+      <a class="cta-btn friction-modal-cta" id="frictionModalCta" href="#contact">Let's talk →</a>
+    </div>
+  </div>
+
+  <section class="beliefs" id="beliefs">
+    <div class="wrap">
+      <span class="eyebrow">Things I believe</span>
+      <h2>A few things I keep coming back to.</h2>
+      <div class="belief-list">
+        <p class="belief-row">Data doesn't make decisions, people do.</p>
+        <p class="belief-row">The best analytics teams understand the business before they understand the model.</p>
+        <p class="belief-row">If the answer requires a 40-slide deck, we probably haven't found the answer yet.</p>
+        <p class="belief-row">Curiosity is an underrated professional skill.</p>
+        <p class="belief-row">Some of the best ideas start as side projects.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="capabilities" id="capabilities">
     <div class="wrap">
       <span class="eyebrow">Capabilities</span>
@@ -506,20 +664,6 @@
           <span class="tag">Builder Mindset</span>
           <h3>If I can't find the tool I want, I tend to build it.</h3>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="beliefs" id="beliefs">
-    <div class="wrap">
-      <span class="eyebrow">Things I believe</span>
-      <h2>A few things I keep coming back to.</h2>
-      <div class="belief-list">
-        <p class="belief-row">Data doesn't make decisions, people do.</p>
-        <p class="belief-row">The best analytics teams understand the business before they understand the model.</p>
-        <p class="belief-row">If the answer requires a 40-slide deck, we probably haven't found the answer yet.</p>
-        <p class="belief-row">Curiosity is an underrated professional skill.</p>
-        <p class="belief-row">Some of the best ideas start as side projects.</p>
       </div>
     </div>
   </section>
@@ -622,147 +766,8 @@
           </template>
         </button>
       </div>
-
-      <div class="lens-map">
-        <span class="eyebrow">The Three Lenses</span>
-        <p class="lens-lede">The Ideas Behind How I Work.</p>
-        <p class="lens-body">Different books, different perspectives. But the same three questions keep showing up: How does the business create value? How does the system create leverage? And how do we help people do their best work?</p>
-        <p class="lens-hint">Explore each lens — hover or tap where circles overlap for more.</p>
-        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier. Each circle and overlap responds to hover or focus for more detail.">
-          <circle class="lens-circle lens-circle-business" cx="220" cy="180" r="130" tabindex="0" role="button"
-            aria-label="Business: Create value"
-            data-lens="business" data-name="Business" data-tagline="Create value"
-            data-text="Understand the customer, the economics, and the decisions that actually move the business."
-            data-keywords="Customer · Economics · Strategy"/>
-          <circle class="lens-circle lens-circle-system" cx="320" cy="180" r="130" tabindex="0" role="button"
-            aria-label="System: Create leverage"
-            data-lens="system" data-name="System" data-tagline="Create leverage"
-            data-text="Build processes, technology, metrics, and operating mechanisms that make good work repeatable."
-            data-keywords="Process · Technology · Scale"/>
-          <circle class="lens-circle lens-circle-people" cx="270" cy="267" r="130" tabindex="0" role="button"
-            aria-label="People: Create capability"
-            data-lens="people" data-name="People" data-tagline="Create capability"
-            data-text="Give smart people the clarity, trust, and accountability to do their best work."
-            data-keywords="Clarity · Trust · Leadership"/>
-          <circle class="lens-glow" cx="270" cy="205" r="50"/>
-          <text class="lens-label lens-label-business" x="160" y="118">
-            <tspan x="160" dy="0">BUSINESS</tspan>
-            <tspan class="lens-label-tagline" x="160" dy="1.3em">Create value</tspan>
-          </text>
-          <text class="lens-label lens-label-system" x="380" y="118">
-            <tspan x="380" dy="0">SYSTEM</tspan>
-            <tspan class="lens-label-tagline" x="380" dy="1.3em">Create leverage</tspan>
-          </text>
-          <text class="lens-label lens-label-people" x="270" y="358">
-            <tspan x="270" dy="0">PEOPLE</tspan>
-            <tspan class="lens-label-tagline" x="270" dy="1.3em">Create capability</tspan>
-          </text>
-          <text class="lens-label lens-label-center" x="270" y="200">
-            <tspan x="270" dy="0">THE</tspan>
-            <tspan x="270" dy="1.1em">MULTIPLIER</tspan>
-          </text>
-          <text class="lens-hotspot-preview" data-preview-for="bs" x="270" y="104">SCALE</text>
-          <text class="lens-hotspot-preview" data-preview-for="sp" x="334" y="250">CAPABILITY</text>
-          <text class="lens-hotspot-preview" data-preview-for="bp" x="206" y="250">LEADERSHIP</text>
-          <circle class="lens-hotspot" data-preview-key="bs" cx="270" cy="100" r="38" tabindex="0" role="button"
-            aria-label="Business and System: Scale"
-            data-eyebrow="Business + System" data-heading="Scale"
-            data-text="You understand what matters and build a way to do it repeatedly."/>
-          <circle class="lens-hotspot" data-preview-key="sp" cx="334" cy="246" r="38" tabindex="0" role="button"
-            aria-label="System and People: Capability"
-            data-eyebrow="System + People" data-heading="Capability"
-            data-text="You create an environment where people can perform without constantly fighting the system."/>
-          <circle class="lens-hotspot" data-preview-key="bp" cx="206" cy="246" r="38" tabindex="0" role="button"
-            aria-label="Business and People: Leadership"
-            data-eyebrow="Business + People" data-heading="Leadership"
-            data-text="You connect what the organization needs with what people need to do their best work."/>
-          <circle class="lens-hotspot lens-hotspot-center" cx="270" cy="205" r="30" tabindex="0" role="button"
-            aria-label="Business, System, and People: The Multiplier"
-            data-eyebrow="Business + System + People" data-heading="The Multiplier"
-            data-text="When the business is understood, the system creates leverage, and people are equipped to act, good things start to compound."/>
-        </svg>
-        <div class="lens-detail" id="lensDetail">
-          <span class="lens-detail-name" id="lensDetailName">Explore a lens</span>
-          <p class="lens-detail-text" id="lensDetailText">Business, System, and People — the three questions that show up in almost everything I read.</p>
-          <p class="lens-detail-keywords" id="lensDetailKeywords">&nbsp;</p>
-        </div>
-      </div>
     </div>
   </section>
-
-  <section class="friction" id="friction">
-    <div class="wrap">
-      <span class="eyebrow">The Friction</span>
-      <h2>The problem usually isn't one of the three.</h2>
-      <p class="friction-lede">It's the gap between them. The details change. The friction doesn't.</p>
-      <div class="friction-grid">
-        <div class="friction-card">
-          <span class="tag">Business</span>
-          <h3>Do you know what matters?</h3>
-          <p>Everything gets measured. Not everyone agrees on what actually drives value.</p>
-          <button class="friction-cta" type="button"
-            data-eyebrow="Business"
-            data-heading="The problem isn't a lack of data."
-            data-text="It's that nobody's agreed what decision the data is supposed to inform.">
-            Explore the problem →
-          </button>
-        </div>
-        <div class="friction-card">
-          <span class="tag">System</span>
-          <h3>Can the organization execute?</h3>
-          <p>The strategy makes sense. The processes around it don't support it.</p>
-          <button class="friction-cta" type="button"
-            data-eyebrow="System"
-            data-heading="The problem isn't always the process."
-            data-text="It's the workarounds everyone has quietly built around it.">
-            Explore the problem →
-          </button>
-        </div>
-        <div class="friction-card">
-          <span class="tag">People</span>
-          <h3>Can people act on it?</h3>
-          <p>The answer exists. People don't have the clarity, authority, or incentive to act on it.</p>
-          <button class="friction-cta" type="button"
-            data-eyebrow="People"
-            data-heading="People act when the outcome matters to them."
-            data-text="People don't act on information just because it exists. Clarity tells them what to do. Authority tells them they can. Incentives give them a reason to.">
-            Explore the problem →
-          </button>
-        </div>
-      </div>
-      <p class="friction-synthesis">The interesting problems rarely live inside just one of these — they live in the gap between them. That's usually where I start.</p>
-    </div>
-  </section>
-
-  <div class="book-modal-overlay" id="lensModalOverlay" hidden>
-    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="lensModalHeading" tabindex="-1">
-      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
-      <span class="lens-modal-eyebrow" id="lensModalEyebrow"></span>
-      <span class="lens-modal-heading" id="lensModalHeading"></span>
-      <p class="lens-modal-text" id="lensModalText"></p>
-    </div>
-  </div>
-
-  <div class="book-modal-overlay" id="bookModalOverlay" hidden>
-    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle" tabindex="-1">
-      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
-      <div class="book-modal-meta">
-        <span class="book-modal-title" id="bookModalTitle"></span>
-        <span class="book-modal-author"></span>
-      </div>
-      <div class="book-modal-body"></div>
-    </div>
-  </div>
-
-  <div class="book-modal-overlay" id="frictionModalOverlay" hidden>
-    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="frictionModalHeading" tabindex="-1">
-      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
-      <span class="lens-modal-eyebrow" id="frictionModalEyebrow"></span>
-      <span class="lens-modal-heading" id="frictionModalHeading"></span>
-      <p class="lens-modal-text" id="frictionModalText"></p>
-      <a class="cta-btn friction-modal-cta" id="frictionModalCta" href="#contact">Let's talk →</a>
-    </div>
-  </div>
 
   <section class="close" id="contact">
     <div class="wrap">
