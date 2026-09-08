@@ -157,7 +157,8 @@
 
   /* ---------- activity loop / learning loop diagnostic ---------- */
   .loops-wrap{ margin-top:56px; padding-top:48px; border-top:1px solid var(--ground-line); }
-  .loops-question{ margin-top:32px; margin-bottom:40px; text-align:center; font-family:var(--font-display); font-style:italic; font-size:24px; color:var(--bone); }
+  .loops-lede{ margin-top:32px; margin-bottom:40px; text-align:center; max-width:44ch; margin-left:auto; margin-right:auto; font-family:var(--font-display); font-style:italic; font-size:24px; line-height:1.5; color:var(--bone); }
+  .loops-question{ margin-bottom:40px; text-align:center; font-family:var(--font-display); font-style:italic; font-size:24px; color:var(--bone); }
   .loop-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
   @media (max-width:760px){ .loop-grid{ grid-template-columns:1fr; } }
   .loop-card{
@@ -537,6 +538,7 @@
 
       <div class="loops-wrap">
         <span class="eyebrow">The Blind Spot</span>
+        <p class="loops-lede">Sometimes the hardest thing to see is what everyone has learned to accept.</p>
         <p class="loops-question">Which loop are you in?</p>
         <div class="loop-grid">
           <button class="loop-card loop-card-activity" type="button"
@@ -567,7 +569,7 @@
     <div class="wrap">
       <div class="lens-map">
         <span class="eyebrow">The Three Lenses</span>
-        <p class="lens-lede">The Ideas Behind How I Work.</p>
+        <p class="lens-lede">Three Places To Look.</p>
         <p class="lens-body">Different books, different perspectives. But the same three questions keep showing up: How does the business create value? How does the system create leverage? And how do we help people do their best work?</p>
         <p class="lens-hint">Click a lens, or where circles overlap, to learn more.</p>
         <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier. Click a circle or an overlap for more detail.">
