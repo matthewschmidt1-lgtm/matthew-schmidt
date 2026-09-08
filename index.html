@@ -269,12 +269,17 @@
   .lens-label-tagline{ font-family:var(--font-display); font-style:italic; font-weight:400; letter-spacing:0; font-size:11px; fill:var(--bone-faint); text-transform:none; }
   .lens-label-center{ font-size:15px; font-weight:700; fill:var(--bone); }
   .lens-hotspot-preview{
-    font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.06em;
-    fill:var(--bone); text-anchor:middle; opacity:0; pointer-events:none; transition:opacity .25s ease;
+    font-family:var(--font-mono); font-size:13px; font-weight:700; letter-spacing:.05em;
+    fill:var(--bone); opacity:.85; text-anchor:middle; pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease; transform-box:fill-box; transform-origin:center;
   }
   .lens-map[data-active-hotspot="bs"] .lens-hotspot-preview[data-preview-for="bs"],
   .lens-map[data-active-hotspot="sp"] .lens-hotspot-preview[data-preview-for="sp"],
-  .lens-map[data-active-hotspot="bp"] .lens-hotspot-preview[data-preview-for="bp"]{ opacity:1; }
+  .lens-map[data-active-hotspot="bp"] .lens-hotspot-preview[data-preview-for="bp"]{
+    opacity:1; fill:var(--verdant); transform:scale(1.1);
+  }
+  .lens-map.pre-anim .lens-hotspot-preview{ opacity:0; }
+  .lens-map.pre-anim.in .lens-hotspot-preview{ opacity:.85; transition:opacity .8s ease 1.8s; }
   .lens-glow{ fill:var(--verdant); opacity:0; transform-box:fill-box; transform-origin:center; pointer-events:none; }
   .lens-map.in .lens-glow{ animation:lensGlow 1.6s cubic-bezier(.16,1,.3,1) 1.7s 1 both; }
   @keyframes lensGlow{
@@ -310,6 +315,34 @@
   .lens-detail.is-active .lens-detail-name{ color:var(--verdant); }
   .lens-detail-text{ margin-top:10px; color:var(--bone-dim); font-size:15.5px; line-height:1.65; }
   .lens-detail-keywords{ margin-top:14px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-faint); }
+
+  /* ================= FRICTION ================= */
+  .friction{ background:var(--sage); color:var(--ink); }
+  .friction .eyebrow{ color:var(--ink); }
+  .friction h2{ margin-top:14px; font-size:clamp(27px,4vw,44px); max-width:19ch; line-height:1.18; color:var(--ink); }
+  .friction-lede{ margin-top:18px; max-width:56ch; font-size:16px; line-height:1.65; color:var(--ink); }
+  .friction-grid{ margin-top:48px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  @media (max-width:820px){ .friction-grid{ grid-template-columns:1fr; } }
+  .friction-card{
+    background:rgba(25,34,28,.07); border:1px solid rgba(25,34,28,.18); border-radius:2px;
+    padding:32px 30px; display:flex; flex-direction:column; gap:12px;
+    opacity:1; transform:none; transition:opacity .6s ease, transform .6s ease, background .3s ease, border-color .3s ease;
+  }
+  .friction-card.pre-reveal{ opacity:0; transform:translateY(14px); }
+  .friction-card.pre-reveal.in{ opacity:1; transform:none; }
+  .friction-card:hover{ background:rgba(25,34,28,.12); border-color:rgba(25,34,28,.3); }
+  .friction-card .tag{ font-family:var(--font-mono); font-size:12.5px; color:var(--ink); letter-spacing:.1em; text-transform:uppercase; opacity:.7; }
+  .friction-card h3{ font-family:var(--font-display); font-style:italic; font-weight:400; font-size:21px; color:var(--ink); line-height:1.3; }
+  .friction-card p{ color:var(--ink); opacity:.75; font-size:14.5px; line-height:1.55; }
+  .friction-cta{
+    margin-top:6px; align-self:flex-start;
+    background:none; border:none; padding:0; font:inherit; cursor:pointer;
+    font-family:var(--font-body); font-weight:600; font-size:14.5px; color:var(--ink);
+    border-bottom:1px solid var(--ink); padding-bottom:2px;
+    transition:transform .5s cubic-bezier(.16,1,.3,1);
+  }
+  .friction-cta:hover{ transform:translateX(4px); }
+  .friction-modal-cta{ margin-top:26px; }
 
   /* ================= SHIFT ================= */
   .shift{
@@ -374,7 +407,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
-    .cap-card, .belief-row, .book{ opacity:1 !important; transform:none !important; }
+    .cap-card, .belief-row, .book, .friction-card{ opacity:1 !important; transform:none !important; }
     .breath-ring{ animation:none !important; }
   }
 </style>
@@ -639,6 +672,49 @@
     </div>
   </section>
 
+  <section class="friction" id="friction">
+    <div class="wrap">
+      <span class="eyebrow">The Friction</span>
+      <h2>Where does it usually break down?</h2>
+      <p class="friction-lede">After twenty years watching businesses, systems, and people pull in different directions, the friction almost always traces back to one of three places.</p>
+      <div class="friction-grid">
+        <div class="friction-card">
+          <span class="tag">Business</span>
+          <h3>Do you know what matters?</h3>
+          <p>Strategy, customers, economics, priorities.</p>
+          <button class="friction-cta" type="button"
+            data-eyebrow="Business"
+            data-heading="Maybe it's not a data problem."
+            data-text="Maybe you don't have a data problem. Maybe you have a decision problem — too many priorities and not enough clarity on what actually moves the business.">
+            Explore the problem →
+          </button>
+        </div>
+        <div class="friction-card">
+          <span class="tag">System</span>
+          <h3>Can the organization execute?</h3>
+          <p>Processes, data, technology, measurement, operating model.</p>
+          <button class="friction-cta" type="button"
+            data-eyebrow="System"
+            data-heading="Maybe the problem isn't the people."
+            data-text="Maybe the system is making good work harder than it needs to be. I've spent my career thinking about how data, technology, processes, and people can work together to create leverage.">
+            Explore the problem →
+          </button>
+        </div>
+        <div class="friction-card">
+          <span class="tag">People</span>
+          <h3>Can people act on it?</h3>
+          <p>Leadership, clarity, incentives, accountability, culture.</p>
+          <button class="friction-cta" type="button"
+            data-eyebrow="People"
+            data-heading="It isn't always about knowing what to do."
+            data-text="Sometimes the hardest part isn't knowing what to do — it's creating the conditions for people to do it.">
+            Explore the problem →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="book-modal-overlay" id="lensModalOverlay" hidden>
     <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="lensModalHeading" tabindex="-1">
       <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
@@ -656,6 +732,16 @@
         <span class="book-modal-author"></span>
       </div>
       <div class="book-modal-body"></div>
+    </div>
+  </div>
+
+  <div class="book-modal-overlay" id="frictionModalOverlay" hidden>
+    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="frictionModalHeading" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="lens-modal-eyebrow" id="frictionModalEyebrow"></span>
+      <span class="lens-modal-heading" id="frictionModalHeading"></span>
+      <p class="lens-modal-text" id="frictionModalText"></p>
+      <a class="cta-btn friction-modal-cta" id="frictionModalCta" href="#contact">Let's talk →</a>
     </div>
   </div>
 
@@ -775,7 +861,7 @@
      hidden pre-reveal state once we can also guarantee it gets revealed:
      via IntersectionObserver, or a safety-net timeout if that somehow
      never fires. Content should never depend on JS succeeding to be seen. */
-  var revealTargets = document.querySelectorAll('.cap-card, .belief-row, .book');
+  var revealTargets = document.querySelectorAll('.cap-card, .belief-row, .book, .friction-card');
   if('IntersectionObserver' in window && revealTargets.length && !reduced){
     revealTargets.forEach(function(el){ el.classList.add('pre-reveal'); });
 
@@ -916,6 +1002,60 @@
     lensModalClose.addEventListener('click', closeLensModal);
     lensOverlay.addEventListener('click', function(e){
       if(e.target === lensOverlay) closeLensModal();
+    });
+  }
+
+  /* ---------- friction card modal ---------- */
+  var frictionOverlay = document.getElementById('frictionModalOverlay');
+  if(frictionOverlay){
+    var frictionModal = frictionOverlay.querySelector('.book-modal');
+    var frictionModalClose = frictionOverlay.querySelector('.book-modal-close');
+    var frictionModalEyebrow = document.getElementById('frictionModalEyebrow');
+    var frictionModalHeading = document.getElementById('frictionModalHeading');
+    var frictionModalText = document.getElementById('frictionModalText');
+    var frictionModalCta = document.getElementById('frictionModalCta');
+    var frictionLastTrigger = null;
+
+    function trapTabFriction(e){
+      if(e.key !== 'Tab') return;
+      var focusables = frictionModal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      if(!focusables.length) return;
+      var first = focusables[0], last = focusables[focusables.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+    function onFrictionKeydown(e){
+      if(e.key === 'Escape') closeFrictionModal();
+      else trapTabFriction(e);
+    }
+    function openFrictionModal(btn){
+      frictionLastTrigger = btn;
+      frictionModalEyebrow.textContent = btn.dataset.eyebrow;
+      frictionModalHeading.textContent = btn.dataset.heading;
+      frictionModalText.textContent = btn.dataset.text;
+      frictionOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      frictionModal.focus();
+      document.addEventListener('keydown', onFrictionKeydown);
+    }
+    function closeFrictionModal(){
+      frictionOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onFrictionKeydown);
+      if(frictionLastTrigger) frictionLastTrigger.focus();
+    }
+
+    document.querySelectorAll('.friction-cta').forEach(function(b){
+      b.addEventListener('click', function(){ openFrictionModal(b); });
+    });
+    frictionModalClose.addEventListener('click', closeFrictionModal);
+    frictionOverlay.addEventListener('click', function(e){
+      if(e.target === frictionOverlay) closeFrictionModal();
+    });
+    frictionModalCta.addEventListener('click', function(){
+      frictionOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onFrictionKeydown);
     });
   }
 
