@@ -463,6 +463,50 @@
 
   .quote{ font-family:var(--font-display); font-style:italic; font-size:clamp(20px,2.6vw,26px); color:var(--ink); line-height:1.5; }
 
+  /* ---------- Friction preview (pulls its own "Low Tide" palette) ---------- */
+  .friction-room{
+    --fr-foam:#F7F3EA; --fr-sand:#E9DCC4; --fr-sand-deep:#8A6A38;
+    --fr-tide:#2C8C9E; --fr-tide-deep:#1E6E7E;
+    --fr-sun:#F08A3E; --fr-sun-deep:#D8702A;
+    --fr-kelp:#3E8A6A; --fr-deep:#123F5A;
+    padding-top:64px; border-top:1px solid rgba(138,106,56,.22);
+  }
+  .friction-room .eyebrow{ color:var(--fr-tide-deep); }
+  .friction-room .room-cta{ color:var(--fr-tide-deep); border-bottom-color:var(--fr-tide-deep); }
+  .friction-mock{
+    max-width:300px; margin:0 auto; background:var(--fr-foam);
+    border:1px solid var(--fr-sand); border-radius:20px; padding:24px 22px 20px;
+    box-shadow:0 24px 44px rgba(18,63,90,.14);
+    transition:transform 1.6s cubic-bezier(.37,0,.24,1);
+  }
+  .friction-mock:hover{ transform:scale(1.03); }
+  .friction-mock-top{
+    display:flex; align-items:center; gap:8px; margin-bottom:18px;
+    font-family:var(--font-display); font-weight:500; font-size:15px; color:var(--fr-deep);
+  }
+  .friction-mark{ display:inline-grid; gap:3px; width:16px; }
+  .friction-mark i{ display:block; height:3px; border-radius:2px; }
+  .friction-mark i:first-child{ background:var(--fr-tide); width:16px; }
+  .friction-mark i:last-child{ background:var(--fr-sun); width:11px; justify-self:end; }
+  .friction-map-mini{ width:100%; height:auto; display:block; }
+  .friction-map-mini .edge{ stroke:var(--fr-sand-deep); stroke-opacity:.4; stroke-width:2; fill:none; }
+  .friction-map-mini .edge-bs{ stroke:var(--fr-sun); stroke-opacity:.6; stroke-width:3; }
+  .friction-map-mini .vertex-b{ fill:var(--fr-sun); }
+  .friction-map-mini .vertex-s{ fill:var(--fr-tide); }
+  .friction-map-mini .vertex-p{ fill:var(--fr-kelp); }
+  .friction-map-mini .vertex-label{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; fill:var(--fr-deep); opacity:.7;
+  }
+  .friction-map-mini .fp .ring{
+    fill:none; stroke:var(--fr-sun); stroke-width:1.5; opacity:.55;
+    transform-origin:212px 140px; animation:frictionPulse 3.2s ease-in-out infinite;
+  }
+  @keyframes frictionPulse{ 0%,100%{ transform:scale(.85); opacity:.6; } 50%{ transform:scale(1.15); opacity:.15; } }
+  .friction-map-mini .fp-dot{ fill:var(--fr-sun); stroke:var(--fr-foam); stroke-width:2; }
+  .friction-map-mini .fp-label{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; fill:var(--fr-sun-deep);
+  }
+
   /* ================= CLOSE ================= */
   .close{ background:var(--ground); border-top:1px solid var(--ground-line); text-align:left; }
   .close h2{ font-size:clamp(33px,4.8vw,54px); max-width:16ch; line-height:1.16; }
@@ -760,7 +804,7 @@
   </section>
 
   <section class="shift">
-    <h2>Recent Creative Project: Stillward</h2>
+    <h2>Recent Creative Project: Stillward &amp; Friction</h2>
   </section>
 
   <section class="room" id="ideas">
@@ -780,6 +824,42 @@
           <p class="quote">"Three minutes. No pressure. Just a small return to yourself."</p>
           <p class="room-body">A guided three-minute practice — pick a teacher, breathe, return. No streaks, no account, no pressure.</p>
           <a class="room-cta" href="https://stillward-production.up.railway.app" target="_blank" rel="noopener">Try Stillward →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="room friction-room" id="friction-project">
+    <div class="wrap">
+      <span class="eyebrow">Friction</span>
+      <h2>Something isn't working.</h2>
+      <div class="stillward-layout">
+        <div class="friction-mock">
+          <div class="friction-mock-top">
+            <span class="friction-mark" aria-hidden="true"><i></i><i></i></span>
+            <span>Friction</span>
+          </div>
+          <svg class="friction-map-mini" viewBox="0 0 300 270" role="img" aria-label="A triangle map with Business, System, and People at each corner, and a glowing point on the Business to System edge marking where the friction lives.">
+            <line class="edge" x1="150" y1="30" x2="38" y2="230"/>
+            <line class="edge" x1="38" y1="230" x2="262" y2="230"/>
+            <line class="edge edge-bs" x1="150" y1="30" x2="262" y2="230"/>
+            <circle class="vertex-dot vertex-b" cx="150" cy="30" r="7"/>
+            <circle class="vertex-dot vertex-s" cx="262" cy="230" r="7"/>
+            <circle class="vertex-dot vertex-p" cx="38" cy="230" r="7"/>
+            <text class="vertex-label" x="150" y="18" text-anchor="middle">BUSINESS</text>
+            <text class="vertex-label" x="262" y="252" text-anchor="middle">SYSTEM</text>
+            <text class="vertex-label" x="38" y="252" text-anchor="middle">PEOPLE</text>
+            <g class="fp">
+              <circle class="ring" cx="212" cy="140" r="14"/>
+              <circle class="fp-dot" cx="212" cy="140" r="8"/>
+            </g>
+            <text class="fp-label" x="212" y="116" text-anchor="middle">FRICTION</text>
+          </svg>
+        </div>
+        <div>
+          <p class="quote friction-quote">"Something isn't working. Let's find out why."</p>
+          <p class="room-body">A guided diagnosis, not an assessment — nine questions, about three minutes, no score. It shows you where the friction actually lives: between Business, System, and People.</p>
+          <a class="room-cta friction-cta" href="https://friction-production.up.railway.app" target="_blank" rel="noopener">Try Friction →</a>
         </div>
       </div>
     </div>
