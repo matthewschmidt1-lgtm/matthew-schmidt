@@ -103,9 +103,9 @@
     border-bottom:1px solid var(--ground-line);
   }
   .topnav-mark{ font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; color:var(--bone); text-decoration:none; }
-  .topnav-links{ display:flex; align-items:center; gap:14px; }
+  .topnav-links{ display:flex; align-items:center; gap:16px; }
   .topnav-links a{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    font-family:var(--font-mono); font-size:13px; letter-spacing:.1em; text-transform:uppercase;
     color:var(--bone-faint); text-decoration:none; border-bottom:1px solid transparent;
     padding:13px 4px; margin:-13px -4px;
     transition:color .2s ease, border-color .2s ease;
@@ -113,8 +113,20 @@
   .topnav-links a:hover, .topnav-links a:focus-visible, .topnav-links a.active{
     color:var(--verdant); border-bottom-color:var(--verdant);
   }
-  .topnav-sep{ color:var(--bone-faint); font-family:var(--font-mono); font-size:11px; }
-  @media (max-width:640px){ .topnav{ padding:0 20px; } .topnav-mark{ display:none; } .topnav-links{ gap:10px; } .topnav-links a{ font-size:9.5px; } }
+  .topnav-sep{ color:var(--bone-faint); font-family:var(--font-mono); font-size:13px; }
+  @media (max-width:640px){
+    .topnav{ padding:0 16px; }
+    .topnav-mark{ display:none; }
+    .topnav-links{ gap:7px; }
+    .topnav-links a{ font-size:11.5px; letter-spacing:.06em; }
+    .topnav-sep{ font-size:11.5px; }
+  }
+  @media (max-width:400px){
+    .topnav{ padding:0 12px; }
+    .topnav-links{ gap:5px; }
+    .topnav-links a{ font-size:10.5px; letter-spacing:.04em; }
+    .topnav-sep{ font-size:10.5px; }
+  }
 
   .hairline{ position:fixed; top:68px; left:0; right:0; height:2px; background:var(--ground-raised); z-index:49; }
   .hairline-fill{ height:100%; width:0%; background:var(--verdant); }
@@ -486,6 +498,8 @@
     <a href="#home" data-id="home">Home</a>
     <span class="topnav-sep" aria-hidden="true">·</span>
     <a href="#about" data-id="about">About</a>
+    <span class="topnav-sep" aria-hidden="true">·</span>
+    <a href="#lenses" data-id="lenses">Lenses</a>
     <span class="topnav-sep" aria-hidden="true">·</span>
     <a href="#ideas" data-id="ideas">Ideas</a>
     <span class="topnav-sep" aria-hidden="true">·</span>
