@@ -516,18 +516,24 @@
   .close h2{ font-size:clamp(33px,4.8vw,54px); max-width:16ch; line-height:1.16; }
   .close-signal{ margin-top:48px; border-top:1px solid var(--ground-line); border-bottom:1px solid var(--ground-line); padding:20px 0; }
   .close-signal .signal-svg{ height:70px; }
-  .cta-row{ margin-top:44px; }
+  .cta-row{ margin-top:44px; display:flex; flex-wrap:wrap; gap:16px; }
   .cta-btn{
     font-family:var(--font-body); font-weight:600; font-size:15px; color:var(--ground);
     background:var(--bone); border:none; padding:16px 30px; border-radius:2px;
     text-decoration:none; display:inline-block; cursor:pointer;
-    transition:transform .5s cubic-bezier(.16,1,.3,1), background .5s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+    transition:transform .5s cubic-bezier(.16,1,.3,1), background .5s cubic-bezier(.16,1,.3,1), color .5s ease, opacity .3s ease;
   }
   .cta-btn:hover{ transform:translateX(6px); background:var(--verdant); color:var(--ground); }
   .cta-btn:disabled{ opacity:.55; pointer-events:none; transform:none; }
+  .cta-btn.friction-btn{ background:#2C8C9E; color:#F7F3EA; }
+  .cta-btn.friction-btn:hover{ background:#F08A3E; color:#123F5A; }
+  .cta-btn.stillward-btn{ background:var(--sage); color:var(--ground); }
+  .cta-btn.stillward-btn:hover{ background:var(--verdant-deep); color:var(--ground); }
 
   footer{ border-top:1px solid var(--ground-line); padding:44px 0; }
   .foot-row{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--font-mono); font-size:11px; color:var(--bone-faint); letter-spacing:.06em; }
+  .foot-row a{ color:inherit; text-decoration:none; transition:color .3s ease; }
+  .foot-row a:hover, .foot-row a:focus-visible{ color:var(--verdant); }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
@@ -954,6 +960,8 @@
       </div>
       <div class="cta-row">
         <a class="cta-btn" href="https://www.linkedin.com/in/matthew-schmidt-2349795" target="_blank" rel="noopener">Connect on LinkedIn</a>
+        <a class="cta-btn friction-btn" href="https://friction-production.up.railway.app" target="_blank" rel="noopener">Try Friction →</a>
+        <a class="cta-btn stillward-btn" href="https://stillward-production.up.railway.app" target="_blank" rel="noopener">Try Stillward →</a>
       </div>
     </div>
   </section>
@@ -962,8 +970,8 @@
 
 <footer>
   <div class="wrap foot-row">
-    <span>MATTHEW SCHMIDT</span>
-    <span id="year"></span>
+    <a href="#home">MATTHEW SCHMIDT</a>
+    <a href="#home">Home</a>
   </div>
 </footer>
 
@@ -971,8 +979,6 @@
 (function(){
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var noHover = window.matchMedia('(hover: none)').matches;
-
-  document.getElementById('year').textContent = new Date().getFullYear();
 
   /* ---------- signal line: hero (interactive) ---------- */
   function initSignal(pathEl, opts){
