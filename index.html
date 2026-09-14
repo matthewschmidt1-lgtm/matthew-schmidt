@@ -428,7 +428,8 @@
   .shift h2{ font-style:italic; font-size:clamp(24px,3.6vw,34px); color:var(--ink); text-align:center; }
   @media (max-width:760px){ .shift{ padding-top:48px; min-height:16vh; } }
 
-  #ideas{ padding-top:64px; }
+  .shift + .room{ padding-top:64px; }
+  .room + .room{ padding-top:64px; border-top:1px solid rgba(138,106,56,.22); }
 
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
@@ -472,7 +473,6 @@
     --fr-tide:#2C8C9E; --fr-tide-deep:#1E6E7E;
     --fr-sun:#F08A3E; --fr-sun-deep:#D8702A;
     --fr-kelp:#3E8A6A; --fr-deep:#123F5A;
-    padding-top:64px; border-top:1px solid rgba(138,106,56,.22);
   }
   .friction-room .eyebrow{ color:var(--fr-tide-deep); }
   .friction-room h2{ font-size:clamp(22px,2.8vw,32px); max-width:19ch; }
@@ -807,32 +807,10 @@
   </section>
 
   <section class="shift">
-    <h2>Creative Projects: Stillward &amp; Friction</h2>
+    <h2>Things I've Built:</h2>
   </section>
 
-  <section class="room" id="ideas">
-    <div class="wrap">
-      <span class="eyebrow">Stillward</span>
-      <h2>Three minutes. No pressure.</h2>
-      <div class="stillward-layout">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="phone-notch"></div>
-            <div class="breath-ring"></div>
-            <div class="phone-time">03:00 → 00:00</div>
-            <div class="phone-caption">breathe. return.</div>
-          </div>
-        </div>
-        <div>
-          <p class="quote">"Three minutes. No pressure. Just a small return to yourself."</p>
-          <p class="room-body">A guided three-minute practice — pick a teacher, breathe, return. No streaks, no account, no pressure.</p>
-          <a class="room-cta" href="https://stillward-production.up.railway.app" target="_blank" rel="noopener">Try Stillward →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="room friction-room" id="friction-project">
+  <section class="room friction-room" id="ideas">
     <div class="wrap">
       <span class="eyebrow">Friction</span>
       <h2>Friction is the symptom. The Gap is Where To Focus.</h2>
@@ -860,9 +838,31 @@
           </svg>
         </div>
         <div>
-          <p class="quote friction-quote">"Something isn't working. Let's find out why."</p>
-          <p class="room-body">A guided diagnosis, not an assessment — nine questions, about three minutes, no score. It shows you where the friction actually lives: between Business, System, and People.</p>
+          <p class="quote friction-quote">"Find where the organization gets stuck."</p>
+          <p class="room-body">A guided diagnosis of the gaps between Business, Systems, and People — A dozen questions, about three minutes, no score. It shows you where the friction actually lives.</p>
           <a class="room-cta" href="https://friction-production.up.railway.app" target="_blank" rel="noopener">Try Friction →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="room" id="stillward-project">
+    <div class="wrap">
+      <span class="eyebrow">Stillward</span>
+      <h2>Three minutes. No pressure.</h2>
+      <div class="stillward-layout">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="breath-ring"></div>
+            <div class="phone-time">03:00 → 00:00</div>
+            <div class="phone-caption">breathe. return.</div>
+          </div>
+        </div>
+        <div>
+          <p class="quote">"Three minutes. No pressure. Just a small return to yourself."</p>
+          <p class="room-body">A guided three-minute practice — pick a teacher, breathe, return. No streaks, no account, no pressure.</p>
+          <a class="room-cta" href="https://stillward-production.up.railway.app" target="_blank" rel="noopener">Try Stillward →</a>
         </div>
       </div>
     </div>
