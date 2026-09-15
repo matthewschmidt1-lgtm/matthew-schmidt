@@ -375,8 +375,10 @@
   /* ================= FRICTION ================= */
   .friction{
     position:relative; overflow:hidden; color:var(--ink);
-    background:linear-gradient(180deg, var(--ground) 0%, var(--sage-mist) 90px, var(--sage-mist) 100%);
+    background:var(--sage-mist);
   }
+  .friction-mark{ display:block; width:120px; height:20px; margin:0 0 40px; }
+  .friction-mark path{ fill:none; stroke:var(--ink); stroke-width:1.5; }
   .friction::before{
     content:'';
     position:absolute; inset:0;
@@ -705,6 +707,9 @@
 
   <section class="friction" id="friction">
     <div class="wrap">
+      <svg class="friction-mark" viewBox="0 0 120 20" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,10 L20,10 L30,10 L36,3 L45,17 L54,10 L63,10 L69,5 L78,15 L87,10 L96,10 L120,10"/>
+      </svg>
       <span class="eyebrow">The Friction</span>
       <h2>The problem usually isn't one of the three.</h2>
       <p class="friction-lede">It's The Gap between them. The details change. The friction doesn't.</p>
