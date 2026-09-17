@@ -209,12 +209,13 @@
     outline:none;
   }
   /* ================= CAPABILITIES ================= */
+  .capabilities{ padding:80px 0; }
   .capabilities h2{ margin-top:14px; font-size:clamp(30px,4.4vw,52px); max-width:16ch; line-height:1.14; }
-  .cap-grid{ margin-top:52px; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-  @media (max-width:700px){ .cap-grid{ grid-template-columns:1fr; } }
+  .cap-grid{ margin-top:40px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  @media (max-width:900px){ .cap-grid{ grid-template-columns:1fr; } }
   .cap-card{
-    border:1px solid var(--ground-line); padding:38px 36px;
-    display:flex; flex-direction:column; justify-content:center; min-height:180px;
+    border:1px solid var(--ground-line); padding:30px 26px;
+    display:flex; flex-direction:column; justify-content:center; min-height:150px;
     opacity:1; transform:none;
     transition:opacity .6s ease, transform .6s ease, border-color .3s ease, background .3s ease;
   }
@@ -517,6 +518,32 @@
   .friction-map-mini .fp-label{
     font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; fill:var(--fr-sun-deep);
   }
+
+  /* ---------- Clarity preview (pulls its own brand palette) ---------- */
+  .clarity-room{
+    --cl-paper:#F3EFE6; --cl-ink:#16201B; --cl-fog:#7C857E;
+    --cl-moss:#1E6B47; --cl-moss-deep:#154F35; --cl-gold:#C9A24C;
+  }
+  .clarity-room .eyebrow{ color:var(--cl-moss-deep); }
+  .clarity-soon{
+    display:inline-block; margin-top:28px;
+    font-family:var(--font-body); font-weight:600; font-size:19px; letter-spacing:.02em;
+    color:var(--ink-faint); border-bottom:1px solid var(--ink-faint); padding-bottom:2px;
+  }
+  .clarity-mock{
+    max-width:300px; margin:0 auto; background:var(--cl-paper);
+    border:1px solid rgba(22,32,27,.14); border-radius:20px; padding:24px 22px 20px;
+    box-shadow:0 24px 44px rgba(22,32,27,.14);
+  }
+  .clarity-mock-top{
+    display:flex; align-items:center; gap:8px; margin-bottom:6px;
+    font-family:var(--font-display); font-weight:500; font-size:15px; color:var(--cl-ink);
+  }
+  .clarity-mark-tiny circle{ fill:var(--cl-moss); }
+  .clarity-mark-tiny circle.fallen{ fill:var(--cl-gold); }
+  .clarity-clover{ display:block; width:100%; height:auto; color:var(--cl-moss); }
+  .clarity-clover .clarity-stem{ stroke:var(--cl-moss); }
+  .clarity-clover .clarity-fallen{ fill:var(--cl-gold); }
 
   /* ================= CLOSE ================= */
   .close{ background:var(--ground); border-top:1px solid var(--ground-line); text-align:left; }
@@ -851,6 +878,44 @@
     </div>
   </section>
 
+  <section class="room clarity-room" id="clarity-project">
+    <div class="wrap">
+      <span class="eyebrow">Clarity</span>
+      <h2>See what your decision depends on.</h2>
+      <div class="stillward-layout">
+        <div class="clarity-mock">
+          <div class="clarity-mock-top">
+            <span class="clarity-mark-tiny" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="16" height="16">
+                <circle cx="8" cy="4" r="2.2"/>
+                <circle cx="4" cy="8" r="2.2"/>
+                <circle cx="12" cy="8" r="2.2"/>
+                <circle cx="8" cy="12" r="2.2"/>
+                <circle class="fallen" cx="13.4" cy="13.4" r="1.5"/>
+              </svg>
+            </span>
+            <span>Clarity</span>
+          </div>
+          <svg class="clarity-clover" viewBox="0 0 220 220" role="img" aria-label="A four-leaf clover mark, with one fallen gold leaf beside it.">
+            <g transform="translate(104 92) scale(1.15)" fill="currentColor" class="clarity-leaves">
+              <g transform="rotate(45)"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <g transform="rotate(135)"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <g transform="rotate(225)"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <g transform="rotate(315)"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <path class="clarity-stem" d="M0 2 C 2 26, 0 46, 6 60" fill="none" stroke-width="4" stroke-linecap="round"/>
+              <circle class="clarity-fallen" cx="38" cy="58" r="6"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <p class="quote clarity-quote">"Don't ask what you should do. Ask what your decision depends on."</p>
+          <p class="room-body">A guided decision tool that separates what you know from what you're assuming, finds what's uncertain, and identifies the one thing that could change your mind.</p>
+          <span class="clarity-soon">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="beliefs" id="beliefs">
     <div class="wrap">
       <span class="eyebrow">Things I believe</span>
@@ -881,10 +946,6 @@
         <div class="cap-card">
           <span class="tag">Business Leadership</span>
           <h3>I don't see analytics as a reporting function. I see it as a way to understand what matters, find what's getting in the way, and help the business create more value.</h3>
-        </div>
-        <div class="cap-card">
-          <span class="tag">Builder Mindset</span>
-          <h3>If I can't find the tool I want, I tend to build it.</h3>
         </div>
       </div>
     </div>
