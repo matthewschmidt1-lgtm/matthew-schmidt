@@ -541,9 +541,33 @@
   }
   .clarity-mark-tiny circle{ fill:var(--cl-moss); }
   .clarity-mark-tiny circle.fallen{ fill:var(--cl-gold); }
-  .clarity-clover{ display:block; width:100%; height:auto; color:var(--cl-moss); }
+  .clarity-clover{ display:block; width:100%; height:auto; color:var(--cl-moss); overflow:visible; }
   .clarity-clover .clarity-stem{ stroke:var(--cl-moss); }
   .clarity-clover .clarity-fallen{ fill:var(--cl-gold); }
+  .clarity-leaf-1{ transform:rotate(45deg); }
+  .clarity-leaf-2{ transform:rotate(135deg); }
+  .clarity-leaf-3{ transform:rotate(225deg); }
+  .clarity-leaf-4{ transform:rotate(315deg); }
+  .clarity-leaf-5{ opacity:0; }
+  /* ---------- clover entrance choreography ----------
+     Visible in its settled state by default (above). Only pulled into
+     the pre-anim gathered/hidden state when JS can guarantee revealing
+     it (IntersectionObserver + safety-net timeout), matching the lens
+     map's entrance pattern. */
+  .clarity-clover.pre-anim .clarity-leaf{ transition:none; opacity:.75; }
+  .clarity-clover.pre-anim .clarity-leaf-1,
+  .clarity-clover.pre-anim .clarity-leaf-2,
+  .clarity-clover.pre-anim .clarity-leaf-3,
+  .clarity-clover.pre-anim .clarity-leaf-4,
+  .clarity-clover.pre-anim .clarity-leaf-5{ transform:rotate(0deg) scale(.2); }
+  .clarity-clover.pre-anim .clarity-stem, .clarity-clover.pre-anim .clarity-fallen{ opacity:0; transition:none; }
+  .clarity-clover.pre-anim.in .clarity-leaf-1{ transform:rotate(45deg) scale(1); opacity:1; transition:transform .9s cubic-bezier(.22,.72,.18,1) 0s, opacity .5s ease 0s; }
+  .clarity-clover.pre-anim.in .clarity-leaf-2{ transform:rotate(135deg) scale(1); opacity:1; transition:transform .9s cubic-bezier(.22,.72,.18,1) .12s, opacity .5s ease .12s; }
+  .clarity-clover.pre-anim.in .clarity-leaf-3{ transform:rotate(225deg) scale(1); opacity:1; transition:transform .9s cubic-bezier(.22,.72,.18,1) .24s, opacity .5s ease .24s; }
+  .clarity-clover.pre-anim.in .clarity-leaf-4{ transform:rotate(315deg) scale(1); opacity:1; transition:transform .9s cubic-bezier(.22,.72,.18,1) .36s, opacity .5s ease .36s; }
+  .clarity-clover.pre-anim.in .clarity-leaf-5{ transform:translate(38px,58px) rotate(100deg) scale(.55); opacity:0; transition:transform 1.1s cubic-bezier(.22,.72,.18,1) .5s, opacity .5s ease 1.1s; }
+  .clarity-clover.pre-anim.in .clarity-stem{ opacity:1; transition:opacity .6s ease 1.3s; }
+  .clarity-clover.pre-anim.in .clarity-fallen{ opacity:1; transition:opacity .5s ease 1.5s; }
 
   /* ================= CLOSE ================= */
   .close{ background:var(--ground); border-top:1px solid var(--ground-line); text-align:left; }
@@ -898,10 +922,11 @@
           </div>
           <svg class="clarity-clover" viewBox="0 0 220 220" role="img" aria-label="A four-leaf clover mark, with one fallen gold leaf beside it.">
             <g transform="translate(104 92) scale(1.15)" fill="currentColor" class="clarity-leaves">
-              <g transform="rotate(45)"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
-              <g transform="rotate(135)"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
-              <g transform="rotate(225)"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
-              <g transform="rotate(315)"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <g class="clarity-leaf clarity-leaf-1"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <g class="clarity-leaf clarity-leaf-2"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <g class="clarity-leaf clarity-leaf-3"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <g class="clarity-leaf clarity-leaf-4"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
+              <g class="clarity-leaf clarity-leaf-5" aria-hidden="true"><path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/></g>
               <path class="clarity-stem" d="M0 2 C 2 26, 0 46, 6 60" fill="none" stroke-width="4" stroke-linecap="round"/>
               <circle class="clarity-fallen" cx="38" cy="58" r="6"/>
             </g>
@@ -1371,6 +1396,23 @@
     }, { threshold:0.3 });
     lensMapObserver.observe(lensMap);
     setTimeout(function(){ lensMap.classList.add('in'); }, 20000);
+  }
+
+  /* ---------- clarity clover entrance choreography ---------- */
+  var clarityClover = document.querySelector('.clarity-clover');
+  if(clarityClover && 'IntersectionObserver' in window && !reduced){
+    clarityClover.classList.add('pre-anim');
+    var clarityCloverObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          clarityClover.classList.add('in');
+          clarityCloverObserver.unobserve(entry.target);
+          setTimeout(function(){ clarityClover.classList.remove('pre-anim'); }, 2000);
+        }
+      });
+    }, { threshold:0.3 });
+    clarityCloverObserver.observe(clarityClover);
+    setTimeout(function(){ clarityClover.classList.add('in'); }, 20000);
   }
 
   /* ---------- lens hover visual ----------
