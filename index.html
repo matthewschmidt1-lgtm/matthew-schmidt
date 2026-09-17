@@ -541,9 +541,11 @@
   }
   .clarity-mark-tiny circle{ fill:var(--cl-moss); }
   .clarity-mark-tiny circle.fallen{ fill:var(--cl-gold); }
-  .clarity-clover{ display:block; width:100%; height:auto; color:var(--cl-moss); overflow:visible; }
+  .clarity-clover{ display:block; width:100%; height:auto; color:var(--cl-moss); }
   .clarity-clover .clarity-stem{ stroke:var(--cl-moss); }
   .clarity-clover .clarity-fallen{ fill:var(--cl-gold); }
+  .clarity-soil{ fill:var(--cl-paper); }
+  .clarity-ground{ stroke:var(--cl-fog); stroke-width:1.5; opacity:.5; }
   /* ---------- clover loop ----------
      Same idea as the Friction/Stillward ambient pulses: a continuous,
      no-trigger-needed animation. The rotate/scale/translate on each
@@ -941,8 +943,10 @@
             </span>
             <span>Clarity</span>
           </div>
-          <svg class="clarity-clover" viewBox="0 0 220 220" role="img" aria-label="A four-leaf clover mark, with one fallen gold leaf beside it.">
-            <g transform="translate(104 92) scale(1.15)" fill="currentColor" class="clarity-leaves">
+          <svg class="clarity-clover" viewBox="0 0 220 220" role="img" aria-label="A four-leaf clover mark sprouting up from the ground, with one fallen gold leaf beside it.">
+            <g class="clarity-sprout">
+              <animateTransform attributeName="transform" type="translate" values="0 140;0 140;0 0;0 0;0 140;0 140" keyTimes="0;0.06;0.26;0.76;0.94;1" dur="8s" repeatCount="indefinite"/>
+              <g transform="translate(104 92) scale(1.15)" fill="currentColor" class="clarity-leaves">
               <g class="clarity-leaf clarity-leaf-1">
                 <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;1;1;.2" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
                 <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;45;45;0" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
@@ -971,7 +975,10 @@
               </g>
               <path class="clarity-stem" d="M0 2 C 2 26, 0 46, 6 60" fill="none" stroke-width="4" stroke-linecap="round"/>
               <circle class="clarity-fallen" cx="38" cy="58" r="6"/>
+              </g>
             </g>
+            <rect class="clarity-soil" x="0" y="166" width="220" height="54"/>
+            <line class="clarity-ground" x1="30" y1="166" x2="190" y2="166"/>
           </svg>
         </div>
         <div>
