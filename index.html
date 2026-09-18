@@ -546,13 +546,27 @@
   .clarity-clover .clarity-fallen{ fill:var(--cl-gold); }
   .clarity-soil{ fill:var(--cl-paper); }
   .clarity-ground{ stroke:var(--cl-fog); stroke-width:1.5; opacity:.5; }
+  /* ---------- clarity lens: scattered dots resolving to one line ----------
+     A small stand-in for the real site's noise field: ~12 dots drift
+     from scattered positions to one clean line, a moss line draws
+     itself in, one gold point stands out, it all fades where it meets
+     the ground -- then the clover sprouts up from that same spot. */
+  .clarity-noise{ opacity:0; animation:clarityNoiseLoop 14s ease-in-out infinite; }
+  .clarity-noise-dot{ fill:var(--cl-moss); }
+  .clarity-noise-dot.gold{ fill:var(--cl-gold); }
+  .clarity-noise-line{ stroke:var(--cl-moss); stroke-width:1.5; stroke-dasharray:1; }
+  @keyframes clarityNoiseLoop{
+    0%,46.43%{ opacity:1; }
+    53.57%,100%{ opacity:0; }
+  }
   /* ---------- clover loop ----------
      Same idea as the Friction/Stillward ambient pulses: a continuous,
-     no-trigger-needed animation. The rotate/scale/translate on each
-     leaf runs as native SVG SMIL (<animateTransform> in the markup
-     below) rather than CSS transforms -- CSS transform-origin on
-     nested SVG groups pivots around each element's own bounding box,
-     not the shared local origin the leaves are drawn from, which
+     no-trigger-needed animation, sequenced after the noise field above
+     resolves and fades at the ground. The rotate/scale/translate on
+     each leaf runs as native SVG SMIL (<animateTransform> in the
+     markup below) rather than CSS transforms -- CSS transform-origin
+     on nested SVG groups pivots around each element's own bounding
+     box, not the shared local origin the leaves are drawn from, which
      collapsed the fan-out into a tiny off-center blob. SMIL animates
      the transform attribute directly, matching the original static
      transform="rotate(45)" pivot exactly. Opacity fades stay in CSS
@@ -560,34 +574,34 @@
      frame SMIL animates from/to, so a browser without SMIL, or with
      the reduced-motion override below (JS removes the SMIL elements),
      still renders the correct settled clover. */
-  .clarity-leaf-1{ transform:rotate(45deg); animation:clarityLeafOpacityLoop 8s ease-in-out infinite; }
-  .clarity-leaf-2{ transform:rotate(135deg); animation:clarityLeafOpacityLoop 8s ease-in-out infinite; }
-  .clarity-leaf-3{ transform:rotate(225deg); animation:clarityLeafOpacityLoop 8s ease-in-out infinite; }
-  .clarity-leaf-4{ transform:rotate(315deg); animation:clarityLeafOpacityLoop 8s ease-in-out infinite; }
-  .clarity-leaf-5{ opacity:0; animation:clarityLeaf5OpacityLoop 8s ease-in-out infinite; }
-  .clarity-clover .clarity-stem{ animation:clarityStemLoop 8s ease-in-out infinite; }
-  .clarity-clover .clarity-fallen{ animation:clarityFallenLoop 8s ease-in-out infinite; }
+  .clarity-leaf-1{ transform:rotate(45deg); animation:clarityLeafOpacityLoop 14s ease-in-out infinite; }
+  .clarity-leaf-2{ transform:rotate(135deg); animation:clarityLeafOpacityLoop 14s ease-in-out infinite; }
+  .clarity-leaf-3{ transform:rotate(225deg); animation:clarityLeafOpacityLoop 14s ease-in-out infinite; }
+  .clarity-leaf-4{ transform:rotate(315deg); animation:clarityLeafOpacityLoop 14s ease-in-out infinite; }
+  .clarity-leaf-5{ opacity:0; animation:clarityLeaf5OpacityLoop 14s ease-in-out infinite; }
+  .clarity-clover .clarity-stem{ animation:clarityStemLoop 14s ease-in-out infinite; }
+  .clarity-clover .clarity-fallen{ animation:clarityFallenLoop 14s ease-in-out infinite; }
   @keyframes clarityLeafOpacityLoop{
-    0%,6%{ opacity:.75; }
-    28%,68%{ opacity:1; }
+    0%,55.71%,58.37%{ opacity:.75; }
+    68.11%,85.83%{ opacity:1; }
     100%{ opacity:.75; }
   }
   @keyframes clarityLeaf5OpacityLoop{
-    0%,6%{ opacity:.75; }
-    28%{ opacity:1; }
-    40%,68%{ opacity:0; }
-    88%{ opacity:1; }
+    0%,55.71%,58.37%{ opacity:.75; }
+    68.11%{ opacity:1; }
+    73.43%,85.83%{ opacity:0; }
+    94.69%{ opacity:1; }
     100%{ opacity:.75; }
   }
   @keyframes clarityStemLoop{
-    0%,28%{ opacity:0; }
-    40%,68%{ opacity:1; }
-    80%,100%{ opacity:0; }
+    0%,55.71%,68.11%{ opacity:0; }
+    73.43%,85.83%{ opacity:1; }
+    91.14%,100%{ opacity:0; }
   }
   @keyframes clarityFallenLoop{
-    0%,30%{ opacity:0; }
-    42%,68%{ opacity:1; }
-    78%,100%{ opacity:0; }
+    0%,55.71%,69.00%{ opacity:0; }
+    74.31%,85.83%{ opacity:1; }
+    90.26%,100%{ opacity:0; }
   }
 
   /* ================= CLOSE ================= */
@@ -620,6 +634,7 @@
     .breath-ring{ animation:none !important; }
     .clarity-leaf-1, .clarity-leaf-2, .clarity-leaf-3, .clarity-leaf-4, .clarity-leaf-5,
     .clarity-clover .clarity-stem, .clarity-clover .clarity-fallen{ animation:none !important; }
+    .clarity-noise{ animation:none !important; opacity:0 !important; }
   }
 </style>
 </head>
@@ -943,34 +958,87 @@
             </span>
             <span>Clarity</span>
           </div>
-          <svg class="clarity-clover" viewBox="0 0 220 220" role="img" aria-label="A four-leaf clover mark sprouting up from the ground, with one fallen gold leaf beside it.">
+          <svg class="clarity-clover" viewBox="0 0 220 220" role="img" aria-label="A field of scattered dots resolving into one clean line with a single gold point, then a four-leaf clover sprouting up from the ground where the line met it.">
+            <g class="clarity-noise" aria-hidden="true">
+              <polyline class="clarity-noise-line" pathLength="1" fill="none" points="20,120 36,112 53,102 69,90 85,80 102,66 118,74 135,80 151,90 167,102 184,112 200,120">
+                <animate attributeName="stroke-dashoffset" values="1;1;0;0" keyTimes="0;0.3214;0.3786;1" dur="14s" repeatCount="indefinite"/>
+              </polyline>
+              <circle class="clarity-noise-dot" r="3.6" cx="30" cy="40">
+                <animate attributeName="cx" values="30;30;20;20" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="40;40;120;120" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="170" cy="25">
+                <animate attributeName="cx" values="170;170;36;36" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="25;25;112;112" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="60" cy="110">
+                <animate attributeName="cx" values="60;60;53;53" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="110;110;102;102" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="140" cy="130">
+                <animate attributeName="cx" values="140;140;69;69" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="130;130;90;90" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="20" cy="90">
+                <animate attributeName="cx" values="20;20;85;85" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="90;90;80;80" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot gold" r="4.4" cx="190" cy="60">
+                <animate attributeName="cx" values="190;190;102;102" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="60;60;66;66" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="100" cy="20">
+                <animate attributeName="cx" values="100;100;118;118" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="20;20;74;74" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="75" cy="135">
+                <animate attributeName="cx" values="75;75;135;135" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="135;135;80;80" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="155" cy="100">
+                <animate attributeName="cx" values="155;155;151;151" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="100;100;90;90" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="45" cy="65">
+                <animate attributeName="cx" values="45;45;167;167" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="65;65;102;102" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="185" cy="130">
+                <animate attributeName="cx" values="185;185;184;184" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="130;130;112;112" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+              <circle class="clarity-noise-dot" r="3.6" cx="110" cy="45">
+                <animate attributeName="cx" values="110;110;200;200" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="45;45;120;120" keyTimes="0;0.0357;0.3214;1" dur="14s" repeatCount="indefinite"/>
+              </circle>
+            </g>
             <g class="clarity-sprout">
-              <animateTransform attributeName="transform" type="translate" values="0 140;0 140;0 0;0 0;0 140;0 140" keyTimes="0;0.06;0.26;0.76;0.94;1" dur="8s" repeatCount="indefinite"/>
+              <animateTransform attributeName="transform" type="translate" values="0 140;0 140;0 140;0 0;0 0;0 140;0 140" keyTimes="0;0.5571;0.5837;0.6723;0.8937;0.9734;1" dur="14s" repeatCount="indefinite"/>
               <g transform="translate(104 92) scale(1.15)" fill="currentColor" class="clarity-leaves">
               <g class="clarity-leaf clarity-leaf-1">
-                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;1;1;.2" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
-                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;45;45;0" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;.2;1;1;.2" keyTimes="0;0.5571;0.5837;0.6811;0.8583;1" dur="14s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;0;45;45;0" keyTimes="0;0.5571;0.5837;0.6811;0.8583;1" dur="14s" repeatCount="indefinite"/>
                 <path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/>
               </g>
               <g class="clarity-leaf clarity-leaf-2">
-                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;1;1;.2" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
-                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;135;135;0" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;.2;1;1;.2" keyTimes="0;0.5571;0.5837;0.6811;0.8583;1" dur="14s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;0;135;135;0" keyTimes="0;0.5571;0.5837;0.6811;0.8583;1" dur="14s" repeatCount="indefinite"/>
                 <path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/>
               </g>
               <g class="clarity-leaf clarity-leaf-3">
-                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;1;1;.2" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
-                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;225;225;0" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;.2;1;1;.2" keyTimes="0;0.5571;0.5837;0.6811;0.8583;1" dur="14s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;0;225;225;0" keyTimes="0;0.5571;0.5837;0.6811;0.8583;1" dur="14s" repeatCount="indefinite"/>
                 <path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/>
               </g>
               <g class="clarity-leaf clarity-leaf-4">
-                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;1;1;.2" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
-                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;315;315;0" keyTimes="0;0.06;0.28;0.68;1" dur="8s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;.2;1;1;.2" keyTimes="0;0.5571;0.5837;0.6811;0.8583;1" dur="14s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;0;315;315;0" keyTimes="0;0.5571;0.5837;0.6811;0.8583;1" dur="14s" repeatCount="indefinite"/>
                 <path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/>
               </g>
               <g class="clarity-leaf clarity-leaf-5" aria-hidden="true">
-                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;1;.55;.55;1;.2" keyTimes="0;0.06;0.28;0.40;0.68;0.88;1" dur="8s" repeatCount="indefinite"/>
-                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;0;100;100;0;0" keyTimes="0;0.06;0.28;0.40;0.68;0.88;1" dur="8s" repeatCount="indefinite"/>
-                <animateTransform attributeName="transform" type="translate" additive="sum" values="0 0;0 0;0 0;38 58;38 58;0 0;0 0" keyTimes="0;0.06;0.28;0.40;0.68;0.88;1" dur="8s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="scale" additive="sum" values=".2;.2;.2;1;.55;.55;1;.2" keyTimes="0;0.5571;0.5837;0.6811;0.7343;0.8583;0.9469;1" dur="14s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;0;0;0;100;100;0;0" keyTimes="0;0.5571;0.5837;0.6811;0.7343;0.8583;0.9469;1" dur="14s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="translate" additive="sum" values="0 0;0 0;0 0;0 0;38 58;38 58;0 0;0 0" keyTimes="0;0.5571;0.5837;0.6811;0.7343;0.8583;0.9469;1" dur="14s" repeatCount="indefinite"/>
                 <path transform="translate(0,-3)" d="M0 0 C -16 -8, -28 -26, -18 -40 C -10 -50, 0 -44, 0 -34 C 0 -44, 10 -50, 18 -40 C 28 -26, 16 -8, 0 0 Z"/>
               </g>
               <path class="clarity-stem" d="M0 2 C 2 26, 0 46, 6 60" fill="none" stroke-width="4" stroke-linecap="round"/>
@@ -1135,7 +1203,7 @@
      so remove it explicitly -- the static transform="rotate(45)" base
      on each leaf still renders the correct settled clover without it. */
   if(reduced){
-    document.querySelectorAll('.clarity-clover animateTransform').forEach(function(a){ a.remove(); });
+    document.querySelectorAll('.clarity-clover animateTransform, .clarity-clover animate').forEach(function(a){ a.remove(); });
   }
 
   /* ---------- signal line: hero (interactive) ---------- */
