@@ -604,6 +604,42 @@
     90.26%,100%{ opacity:0; }
   }
 
+  /* ---------- Night Night preview (pulls its own night-sky palette) ---------- */
+  .aspen-room{
+    --as-stage:#080e1c; --as-sky-top:#141d3f; --as-ink:#f5f5f7;
+    --as-bark:#ece8da; --as-leaf-green:#9cd870; --as-leaf-gold:#f4bc4a;
+    --as-leaf-fallen:#ccab78; --as-gold-deep:#b8862e;
+  }
+  .aspen-room .eyebrow{ color:var(--as-gold-deep); }
+  .aspen-room .room-cta{ color:var(--as-gold-deep); border-bottom-color:var(--as-gold-deep); }
+  .aspen-mock{
+    display:block; max-width:300px; margin:0 auto;
+    background:linear-gradient(180deg, var(--as-sky-top), var(--as-stage));
+    border:1px solid rgba(245,245,247,.14); border-radius:20px; padding:24px 22px 20px;
+    box-shadow:0 24px 44px rgba(8,14,28,.4);
+    text-decoration:none; color:var(--as-ink); cursor:pointer;
+    transition:transform 1.6s cubic-bezier(.37,0,.24,1);
+  }
+  .aspen-mock:hover{ transform:scale(1.03); }
+  .aspen-mock-top{
+    display:flex; align-items:center; gap:8px; margin-bottom:6px;
+    font-family:var(--font-display); font-weight:500; font-size:15px; color:var(--as-ink);
+  }
+  .aspen-mark-tiny svg{ fill:var(--as-leaf-gold); }
+  .aspen-scene{ display:block; width:100%; height:auto; margin-top:14px; }
+  .aspen-star{ fill:var(--as-ink); animation:aspenTwinkle 4s ease-in-out infinite; }
+  @keyframes aspenTwinkle{ 0%,100%{ opacity:.35; } 50%{ opacity:1; } }
+  .aspen-ground{ stroke:rgba(245,245,247,.14); stroke-width:1; }
+  .aspen-trunk{ stroke:var(--as-bark); stroke-width:5; }
+  .aspen-leaf{ fill:var(--as-leaf-green); animation:aspenSeason 10s ease-in-out infinite; }
+  .aspen-leaf-fall{ fill:var(--as-leaf-gold); }
+  @keyframes aspenSeason{
+    0%,45%{ fill:var(--as-leaf-green); }
+    60%,80%{ fill:var(--as-leaf-gold); }
+    95%{ fill:var(--as-leaf-fallen); opacity:.35; }
+    100%{ fill:var(--as-leaf-green); opacity:1; }
+  }
+
   /* ================= CLOSE ================= */
   .close{ background:var(--ground); border-top:1px solid var(--ground-line); text-align:left; }
   .close h2{ font-size:clamp(33px,4.8vw,54px); max-width:16ch; line-height:1.16; }
@@ -635,6 +671,8 @@
     .clarity-leaf-1, .clarity-leaf-2, .clarity-leaf-3, .clarity-leaf-4, .clarity-leaf-5,
     .clarity-clover .clarity-stem, .clarity-clover .clarity-fallen{ animation:none !important; }
     .clarity-noise{ animation:none !important; opacity:0 !important; }
+    .aspen-star, .aspen-leaf{ animation:none !important; }
+    .aspen-leaf-fall{ opacity:0 !important; }
   }
 </style>
 </head>
@@ -1058,6 +1096,75 @@
     </div>
   </section>
 
+  <section class="room aspen-room" id="aspen-project">
+    <div class="wrap">
+      <span class="eyebrow">Night Night</span>
+      <h2>A tree that grows, glows, and lets go.</h2>
+      <div class="stillward-layout">
+        <a class="aspen-mock" href="https://night-night-production.up.railway.app" target="_blank" rel="noopener" aria-label="Try Night Night (opens in a new tab)">
+          <div class="aspen-mock-top">
+            <span class="aspen-mark-tiny" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 1 L9.5 6.5 L15 8 L9.5 9.5 L8 15 L6.5 9.5 L1 8 L6.5 6.5 Z"/></svg>
+            </span>
+            <span>Night Night</span>
+          </div>
+          <svg class="aspen-scene" viewBox="0 0 300 200" role="img" aria-label="An aspen tree at night under a sky of stars, its leaves turning from green to gold and falling.">
+            <circle class="aspen-star" style="animation-delay:-.2s" cx="20" cy="20" r="1.3"/>
+            <circle class="aspen-star" style="animation-delay:-1.4s" cx="50" cy="15" r="1.1"/>
+            <circle class="aspen-star" style="animation-delay:-2.6s" cx="80" cy="35" r="1.4"/>
+            <circle class="aspen-star" style="animation-delay:-.8s" cx="110" cy="10" r="1"/>
+            <circle class="aspen-star" style="animation-delay:-3.1s" cx="222" cy="22" r="1.3"/>
+            <circle class="aspen-star" style="animation-delay:-1.9s" cx="200" cy="40" r="1.5"/>
+            <circle class="aspen-star" style="animation-delay:-.5s" cx="230" cy="20" r="1"/>
+            <circle class="aspen-star" style="animation-delay:-2.2s" cx="262" cy="30" r="1.3"/>
+            <circle class="aspen-star" style="animation-delay:-3.6s" cx="282" cy="15" r="1.1"/>
+            <circle class="aspen-star" style="animation-delay:-1.1s" cx="35" cy="55" r="1.2"/>
+            <circle class="aspen-star" style="animation-delay:-2.9s" cx="257" cy="62" r="1.2"/>
+            <circle class="aspen-star" style="animation-delay:-.3s" cx="15" cy="90" r="1.4"/>
+            <circle class="aspen-star" style="animation-delay:-1.7s" cx="272" cy="88" r="1"/>
+            <circle class="aspen-star" style="animation-delay:-3.3s" cx="150" cy="18" r="1.1"/>
+            <line class="aspen-ground" x1="30" y1="185" x2="270" y2="185"/>
+            <path class="aspen-trunk" d="M150,185 C147,165 153,145 149,120 C147,108 151,100 150,90" fill="none" stroke-linecap="round"/>
+            <circle class="aspen-leaf" style="animation-delay:-.4s" cx="150" cy="60" r="10"/>
+            <circle class="aspen-leaf" style="animation-delay:-1.6s" cx="125" cy="68" r="9"/>
+            <circle class="aspen-leaf" style="animation-delay:-2.8s" cx="175" cy="68" r="9"/>
+            <circle class="aspen-leaf" style="animation-delay:-.9s" cx="108" cy="85" r="8"/>
+            <circle class="aspen-leaf" style="animation-delay:-3.2s" cx="192" cy="85" r="8"/>
+            <circle class="aspen-leaf" style="animation-delay:-1.3s" cx="120" cy="100" r="9"/>
+            <circle class="aspen-leaf" style="animation-delay:-2.1s" cx="180" cy="100" r="9"/>
+            <circle class="aspen-leaf" style="animation-delay:-.6s" cx="140" cy="50" r="7"/>
+            <circle class="aspen-leaf" style="animation-delay:-3.7s" cx="160" cy="50" r="7"/>
+            <circle class="aspen-leaf" style="animation-delay:-1.8s" cx="150" cy="105" r="8"/>
+            <circle class="aspen-leaf" style="animation-delay:-2.4s" cx="100" cy="100" r="7"/>
+            <circle class="aspen-leaf" style="animation-delay:-.1s" cx="200" cy="100" r="7"/>
+            <circle class="aspen-leaf" style="animation-delay:-3.9s" cx="135" cy="115" r="7"/>
+            <circle class="aspen-leaf" style="animation-delay:-1.5s" cx="165" cy="115" r="7"/>
+            <circle class="aspen-leaf-fall" cx="140" cy="70" r="4">
+              <animate attributeName="cx" values="140;140;140;120;110;140" keyTimes="0;.60;.65;.85;.92;1" dur="10s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="70;70;70;140;180;70" keyTimes="0;.60;.65;.85;.92;1" dur="10s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.60;.65;.85;.92;1" dur="10s" repeatCount="indefinite"/>
+            </circle>
+            <circle class="aspen-leaf-fall" cx="165" cy="90" r="3.6">
+              <animate attributeName="cx" values="165;165;165;185;196;165" keyTimes="0;.63;.68;.87;.94;1" dur="10s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="90;90;90;150;180;90" keyTimes="0;.63;.68;.87;.94;1" dur="10s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.63;.68;.87;.94;1" dur="10s" repeatCount="indefinite"/>
+            </circle>
+            <circle class="aspen-leaf-fall" cx="118" cy="92" r="3.8">
+              <animate attributeName="cx" values="118;118;118;100;90;118" keyTimes="0;.66;.71;.89;.96;1" dur="10s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="92;92;92;150;180;92" keyTimes="0;.66;.71;.89;.96;1" dur="10s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.66;.71;.89;.96;1" dur="10s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </a>
+        <div>
+          <p class="quote aspen-quote">"Watch a season pass under a slow turn of stars."</p>
+          <p class="room-body">A screen you leave alone to watch — an aspen tree sprouts, grows, turns gold, and lets its leaves fall while two owls settle into the branches for the night.</p>
+          <a class="room-cta aspen-cta" href="https://night-night-production.up.railway.app" target="_blank" rel="noopener">Try Night Night →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="beliefs" id="beliefs">
     <div class="wrap">
       <span class="eyebrow">Things I believe</span>
@@ -1203,7 +1310,7 @@
      so remove it explicitly -- the static transform="rotate(45)" base
      on each leaf still renders the correct settled clover without it. */
   if(reduced){
-    document.querySelectorAll('.clarity-clover animateTransform, .clarity-clover animate').forEach(function(a){ a.remove(); });
+    document.querySelectorAll('.clarity-clover animateTransform, .clarity-clover animate, .aspen-scene animate').forEach(function(a){ a.remove(); });
   }
 
   /* ---------- signal line: hero (interactive) ---------- */
