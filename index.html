@@ -435,7 +435,13 @@
   .shift h2{ font-style:italic; font-size:clamp(24px,3.6vw,34px); color:var(--ink); text-align:center; }
 
   .shift + .room{ padding-top:64px; }
-  .room + .room{ padding-top:64px; border-top:1px solid rgba(138,106,56,.22); }
+  /* Between built projects: a full-width signal line instead of a hairline.
+     The blip sits further right on each successive divider (left -> center
+     -> right), so the seams read as a quiet progress marker down the list. */
+  .built-divider{ background:var(--paper); line-height:0; }
+  .built-divider svg{ display:block; width:100%; height:24px; }
+  .built-divider path{ fill:none; stroke:var(--sage); stroke-width:1.5; opacity:.6; }
+  .built-divider + .room{ padding-top:64px; }
 
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
@@ -956,6 +962,10 @@
     </div>
   </section>
 
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H120 L126,5 L135,19 L144,12 L153,12 L159,7 L168,17 L177,12 H1000"/></svg>
+  </div>
+
   <section class="room" id="stillward-project">
     <div class="wrap">
       <span class="eyebrow">Stillward</span>
@@ -977,6 +987,10 @@
       </div>
     </div>
   </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H470 L476,5 L485,19 L494,12 L503,12 L509,7 L518,17 L527,12 H1000"/></svg>
+  </div>
 
   <section class="room clarity-room" id="clarity-project">
     <div class="wrap">
@@ -1095,6 +1109,10 @@
       </div>
     </div>
   </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H820 L826,5 L835,19 L844,12 L853,12 L859,7 L868,17 L877,12 H1000"/></svg>
+  </div>
 
   <section class="room aspen-room" id="aspen-project">
     <div class="wrap">
