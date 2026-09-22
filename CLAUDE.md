@@ -25,7 +25,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 hero `#home` → about `#about` (story, Operating Philosophy, The Blind Spot loop cards) →
 Three Lenses `#lenses` (Venn diagram) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
-`#ideas`, Stillward, Clarity, Night Night, separated by `.built-divider`) → Things I
+`#ideas`, Decision OS, Stillward, Clarity, Night Night, separated by `.built-divider`) → Things I
 Believe `#beliefs` → How I Work `#capabilities` → Reading `#reading` → close `#contact`.
 
 - The nav scroll-spy is generic: each `.topnav-links a` has a `data-id` matching a section
@@ -33,10 +33,10 @@ Believe `#beliefs` → How I Work `#capabilities` → Reading `#reading` → clo
   link and its active state land at the top of the projects.
 - Section spacing uses order-independent adjacent-sibling selectors
   (`.shift + .room`, `.built-divider + .room`) so project sections can be reordered
-  without touching CSS. The three `.built-divider` signal lines shift their blip
-  left → center → right down the list.
+  without touching CSS. The four `.built-divider` signal lines shift their blip
+  left → right down the list (H120 / H353 / H587 / H820).
 - Each project preview scopes its own product palette as custom properties on the
-  section (`.friction-room{--fr-*}`, `.clarity-room{--cl-*}`, `.aspen-room{--as-*}`),
+  section (`.friction-room{--fr-*}`, `.decision-room{--do-*}`, `.clarity-room{--cl-*}`, `.aspen-room{--as-*}`),
   pulled from that project's source. Don't leak them into `:root`.
 
 ## Conventions that are easy to break
@@ -55,7 +55,7 @@ Believe `#beliefs` → How I Work `#capabilities` → Reading `#reading` → clo
   `@media (prefers-reduced-motion)` block (add new animated selectors there with
   `animation:none !important`). SMIL ignores that media query, so the JS guard near the
   top of the script removes `<animateTransform>`/`<animate>` under `.clarity-clover` and
-  `.aspen-scene` when `reduced` is true — extend that selector for any new SMIL.
+  `.aspen-scene`/`.decision-scene` when `reduced` is true — extend that selector for any new SMIL.
 - The shared modal chrome (`.book-modal-overlay`) is reused by three overlays (books,
   lenses, friction cards). Click handlers select by class (e.g. `.friction-cta`) — don't
   reuse those class names on unrelated elements; a "Try Friction" link once triggered the

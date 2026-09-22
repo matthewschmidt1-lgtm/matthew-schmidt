@@ -525,6 +525,36 @@
     font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; fill:var(--fr-sun-deep);
   }
 
+  /* ---------- Decision OS preview (pulls its own palette from css/tokens.css) ---------- */
+  .decision-room{
+    --do-bg:#F5F5F0; --do-elev:#FBFBF8; --do-ink:#171717; --do-ink-2:#4A4A46; --do-muted:#7B7B76;
+    --do-line:rgba(23,23,23,.10); --do-accent:#2457D6;
+  }
+  .decision-room .eyebrow{ color:var(--do-accent); }
+  .decision-room h2{ font-size:clamp(22px,2.8vw,32px); max-width:22ch; }
+  .decision-room .room-cta{ color:var(--do-accent); border-bottom-color:var(--do-accent); }
+  .decision-mock{
+    display:block; max-width:300px; margin:0 auto; background:var(--do-bg);
+    border:1px solid var(--do-line); border-radius:20px; padding:24px 22px 20px;
+    box-shadow:0 24px 44px rgba(23,23,23,.12);
+    text-decoration:none; color:inherit; cursor:pointer;
+    transition:transform 1.6s cubic-bezier(.37,0,.24,1);
+  }
+  .decision-mock:hover{ transform:scale(1.03); }
+  .decision-mock-top{
+    display:flex; align-items:center; gap:8px; margin-bottom:18px;
+    font-family:var(--font-body); font-weight:600; font-size:15px; color:var(--do-ink);
+  }
+  .decision-mark{ width:16px; height:16px; display:block; }
+  .decision-scene{ width:100%; height:auto; display:block; }
+  .decision-scene .do-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; fill:var(--do-ink); opacity:.72; }
+  .decision-scene .do-caption{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.1em; fill:var(--do-muted); }
+  .decision-scene .do-track-bg{ fill:var(--do-line); }
+  .decision-scene .do-bar-bg{ fill:var(--do-line); }
+  .decision-scene .do-track{ stroke:var(--do-ink); stroke-opacity:.18; stroke-width:2; stroke-linecap:round; }
+  .decision-scene .do-thumb{ fill:var(--do-ink); }
+  .decision-scene .do-thumb-in{ fill:var(--do-bg); }
+
   /* ---------- Clarity preview (pulls its own brand palette) ---------- */
   .clarity-room{
     --cl-paper:#F3EFE6; --cl-ink:#16201B; --cl-fog:#7C857E;
@@ -966,6 +996,68 @@
     <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H120 L126,5 L135,19 L144,12 L153,12 L159,7 L168,17 L177,12 H1000"/></svg>
   </div>
 
+  <section class="room decision-room" id="decision-project">
+    <div class="wrap">
+      <span class="eyebrow">Decision OS</span>
+      <h2>What should I do next, given what I know?</h2>
+      <div class="stillward-layout">
+        <a class="decision-mock" href="https://decision-os-production-5b4a.up.railway.app" target="_blank" rel="noopener" aria-label="Try Decision OS (opens in a new tab)">
+          <div class="decision-mock-top">
+            <svg class="decision-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#171717"/><circle cx="32" cy="32" r="13" fill="#F5F5F0"/></svg>
+            <span>Decision OS</span>
+          </div>
+          <!-- A territory decision re-weighting as one assumption changes:
+               the slider glides, the three option bars recalculate, and the
+               recommendation (the blue bar) moves from Protect to Shift and back. -->
+          <svg class="decision-scene" viewBox="0 0 300 196" role="img" aria-label="Three sales options, Protect, Shift, and Investigate, shown as bars that recalculate as a slider moves, with the recommended option highlighted in blue.">
+            <text class="do-caption" x="0" y="12">KROGER DOWN 8%. WHAT NEXT?</text>
+
+            <text class="do-label" x="0" y="52">PROTECT</text>
+            <rect class="do-bar-bg" x="100" y="43" width="200" height="10" rx="5"/>
+            <rect class="do-bar" x="100" y="43" width="168" height="10" rx="5" fill="#2457D6">
+              <animate attributeName="width" values="168;168;96;96;168" keyTimes="0;0.35;0.5;0.85;1" dur="12s" calcMode="spline" keySplines="0 0 1 1;.4 0 .2 1;0 0 1 1;.4 0 .2 1" repeatCount="indefinite"/>
+              <animate attributeName="fill" values="#2457D6;#2457D6;#C6C6C0;#C6C6C0;#2457D6" keyTimes="0;0.35;0.425;0.85;0.925" dur="12s" calcMode="discrete" repeatCount="indefinite"/>
+            </rect>
+
+            <text class="do-label" x="0" y="88">SHIFT</text>
+            <rect class="do-bar-bg" x="100" y="79" width="200" height="10" rx="5"/>
+            <rect class="do-bar" x="100" y="79" width="110" height="10" rx="5" fill="#C6C6C0">
+              <animate attributeName="width" values="110;110;186;186;110" keyTimes="0;0.35;0.5;0.85;1" dur="12s" calcMode="spline" keySplines="0 0 1 1;.4 0 .2 1;0 0 1 1;.4 0 .2 1" repeatCount="indefinite"/>
+              <animate attributeName="fill" values="#C6C6C0;#C6C6C0;#2457D6;#2457D6;#C6C6C0" keyTimes="0;0.35;0.425;0.85;0.925" dur="12s" calcMode="discrete" repeatCount="indefinite"/>
+            </rect>
+
+            <text class="do-label" x="0" y="124">INVESTIGATE</text>
+            <rect class="do-bar-bg" x="100" y="115" width="200" height="10" rx="5"/>
+            <rect class="do-bar" x="100" y="115" width="74" height="10" rx="5" fill="#C6C6C0">
+              <animate attributeName="width" values="74;74;118;118;74" keyTimes="0;0.35;0.5;0.85;1" dur="12s" calcMode="spline" keySplines="0 0 1 1;.4 0 .2 1;0 0 1 1;.4 0 .2 1" repeatCount="indefinite"/>
+            </rect>
+
+            <line class="do-track" x1="8" y1="162" x2="292" y2="162"/>
+            <g class="do-thumb-g">
+              <circle class="do-thumb" cx="40" cy="162" r="8">
+                <animate attributeName="cx" values="40;40;260;260;40" keyTimes="0;0.35;0.5;0.85;1" dur="12s" calcMode="spline" keySplines="0 0 1 1;.4 0 .2 1;0 0 1 1;.4 0 .2 1" repeatCount="indefinite"/>
+              </circle>
+              <circle class="do-thumb-in" cx="40" cy="162" r="3.5">
+                <animate attributeName="cx" values="40;40;260;260;40" keyTimes="0;0.35;0.5;0.85;1" dur="12s" calcMode="spline" keySplines="0 0 1 1;.4 0 .2 1;0 0 1 1;.4 0 .2 1" repeatCount="indefinite"/>
+              </circle>
+            </g>
+            <text class="do-caption" x="0" y="190">THIS QUARTER</text>
+            <text class="do-caption" x="300" y="190" text-anchor="end">NEXT YEAR</text>
+          </svg>
+        </a>
+        <div>
+          <p class="quote decision-quote">"Every recommendation shows its reasoning."</p>
+          <p class="room-body">A decision-making OS for CPG sales. Short, real field cases: a Kroger decline, a Publix promo ask, a distributor loading before quarter-end. You choose, get feedback, then see the evidence, the reasoning, and the principle underneath. The algorithms are there too, one slider at a time.</p>
+          <a class="room-cta" href="https://decision-os-production-5b4a.up.railway.app" target="_blank" rel="noopener">Try Decision OS →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H353 L359,5 L368,19 L377,12 L386,12 L392,7 L401,17 L410,12 H1000"/></svg>
+  </div>
+
   <section class="room" id="stillward-project">
     <div class="wrap">
       <span class="eyebrow">Stillward</span>
@@ -989,7 +1081,7 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H470 L476,5 L485,19 L494,12 L503,12 L509,7 L518,17 L527,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H587 L593,5 L602,19 L611,12 L620,12 L626,7 L635,17 L644,12 H1000"/></svg>
   </div>
 
   <section class="room clarity-room" id="clarity-project">
@@ -1327,7 +1419,7 @@
      so remove it explicitly -- the static transform="rotate(45)" base
      on each leaf still renders the correct settled clover without it. */
   if(reduced){
-    document.querySelectorAll('.clarity-clover animateTransform, .clarity-clover animate, .aspen-scene animate').forEach(function(a){ a.remove(); });
+    document.querySelectorAll('.clarity-clover animateTransform, .clarity-clover animate, .aspen-scene animate, .decision-scene animate').forEach(function(a){ a.remove(); });
   }
 
   /* ---------- signal line: hero (interactive) ---------- */
