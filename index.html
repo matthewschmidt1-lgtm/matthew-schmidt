@@ -568,7 +568,7 @@
   .water-mock{
     display:block; max-width:300px; margin:0 auto; overflow:hidden;
     background:linear-gradient(180deg,var(--wa-deep) 0%,var(--wa-night) 45%,var(--wa-ocean) 100%);
-    border:1px solid rgba(127,242,255,.16); border-radius:20px; padding:24px 22px 20px;
+    border:1px solid rgba(127,242,255,.16); border-radius:20px; padding:24px 22px 0;
     box-shadow:0 24px 44px rgba(4,17,31,.28);
     text-decoration:none; color:inherit; cursor:pointer;
     transition:transform 1.6s cubic-bezier(.37,0,.24,1);
@@ -579,7 +579,9 @@
     font-family:var(--font-body); font-weight:600; font-size:15px; color:var(--wa-white);
   }
   .water-mark{ width:16px; height:16px; display:block; fill:var(--wa-cyan); }
-  .water-scene{ width:100%; height:auto; display:block; border-radius:10px; overflow:hidden; }
+  /* The tide bleeds to the card edges: negative side margins cancel the
+     card padding so the water meets the rounded corners, not an inset box. */
+  .water-scene{ width:calc(100% + 44px); margin:0 -22px 0; height:auto; display:block; }
   .water-scene .wa-bubble{ fill:var(--wa-cyan); }
 
   /* ---------- Clarity preview (pulls its own brand palette) ---------- */
