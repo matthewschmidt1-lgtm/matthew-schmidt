@@ -557,6 +557,31 @@
   .decision-scene .do-thumb{ fill:var(--do-ink); }
   .decision-scene .do-thumb-in{ fill:var(--do-bg); }
 
+  /* ---------- Water preview (pulls its own palette from css/water.css) ---------- */
+  .water-room{
+    --wa-deep:#04111f; --wa-night:#071a2e; --wa-ocean:#0b3352; --wa-turquoise:#2fb8c6;
+    --wa-cyan:#7ff2ff; --wa-mist:#dbe9f2; --wa-white:#f4f9fb; --wa-accent-deep:#0b3352;
+  }
+  .water-room .eyebrow{ color:var(--wa-accent-deep); }
+  .water-room h2{ font-size:clamp(22px,2.8vw,32px); max-width:22ch; }
+  .water-room .room-cta{ color:var(--wa-accent-deep); border-bottom-color:var(--wa-accent-deep); }
+  .water-mock{
+    display:block; max-width:300px; margin:0 auto; overflow:hidden;
+    background:linear-gradient(180deg,var(--wa-deep) 0%,var(--wa-night) 45%,var(--wa-ocean) 100%);
+    border:1px solid rgba(127,242,255,.16); border-radius:20px; padding:24px 22px 20px;
+    box-shadow:0 24px 44px rgba(4,17,31,.28);
+    text-decoration:none; color:inherit; cursor:pointer;
+    transition:transform 1.6s cubic-bezier(.37,0,.24,1);
+  }
+  .water-mock:hover{ transform:scale(1.03); }
+  .water-mock-top{
+    display:flex; align-items:center; gap:8px; margin-bottom:18px;
+    font-family:var(--font-body); font-weight:600; font-size:15px; color:var(--wa-white);
+  }
+  .water-mark{ width:16px; height:16px; display:block; fill:var(--wa-cyan); }
+  .water-scene{ width:100%; height:auto; display:block; border-radius:10px; overflow:hidden; }
+  .water-scene .wa-bubble{ fill:var(--wa-cyan); }
+
   /* ---------- Clarity preview (pulls its own brand palette) ---------- */
   .clarity-room{
     --cl-paper:#F3EFE6; --cl-ink:#16201B; --cl-fog:#7C857E;
@@ -698,6 +723,8 @@
   .cta-btn.stillward-btn:hover{ background:var(--verdant-deep); color:var(--ground); }
   .cta-btn.decision-btn{ background:#2457D6; color:#F5F5F0; }
   .cta-btn.decision-btn:hover{ background:#183F9E; color:#F5F5F0; }
+  .cta-btn.water-btn{ background:#0b3352; color:#f4f9fb; }
+  .cta-btn.water-btn:hover{ background:#2a7fae; color:#f4f9fb; }
 
   footer{ border-top:1px solid var(--ground-line); padding:44px 0; }
   .foot-row{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--font-mono); font-size:11px; color:var(--bone-faint); letter-spacing:.06em; }
@@ -1060,7 +1087,7 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H353 L359,5 L368,19 L377,12 L386,12 L392,7 L401,17 L410,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H295 L301,5 L310,19 L319,12 L328,12 L334,7 L343,17 L352,12 H1000"/></svg>
   </div>
 
   <section class="room" id="stillward-project">
@@ -1086,7 +1113,7 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H587 L593,5 L602,19 L611,12 L620,12 L626,7 L635,17 L644,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H470 L476,5 L485,19 L494,12 L503,12 L509,7 L518,17 L527,12 H1000"/></svg>
   </div>
 
   <section class="room clarity-room" id="clarity-project">
@@ -1208,7 +1235,7 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H820 L826,5 L835,19 L844,12 L853,12 L859,7 L868,17 L877,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H645 L651,5 L660,19 L669,12 L678,12 L684,7 L693,17 L702,12 H1000"/></svg>
   </div>
 
   <section class="room aspen-room" id="aspen-project">
@@ -1274,6 +1301,71 @@
         <div>
           <p class="quote aspen-quote">"Watch a season pass under a slow turn of stars."</p>
           <a class="room-cta aspen-cta" href="https://night-night-production.up.railway.app" target="_blank" rel="noopener">Try Night Night →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H820 L826,5 L835,19 L844,12 L853,12 L859,7 L868,17 L877,12 H1000"/></svg>
+  </div>
+
+  <section class="room water-room" id="water-project">
+    <div class="wrap">
+      <span class="eyebrow">Water</span>
+      <h2>It is always going somewhere.</h2>
+      <div class="stillward-layout">
+        <a class="water-mock" href="https://water-production-4036.up.railway.app/" target="_blank" rel="noopener" aria-label="Try Water (opens in a new tab)">
+          <div class="water-mock-top">
+            <svg class="water-mark" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 C8 1.5 3 7.2 3 10.2 A5 5 0 0 0 13 10.2 C13 7.2 8 1.5 8 1.5 Z"/></svg>
+            <span>Water</span>
+          </div>
+          <!-- A tide that breathes on the site's ten-second clock: two layered
+               waves rise and fall together (ease in, ease out) while their
+               crests drift sideways. SMIL only, so it works on SVG groups. -->
+          <svg class="water-scene" viewBox="0 0 300 196" role="img" aria-label="Two layers of blue water rising and falling slowly, like a breath.">
+            <defs>
+              <linearGradient id="waSky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0b3352" stop-opacity="0"/>
+                <stop offset="1" stop-color="#2fb8c6" stop-opacity=".16"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="300" height="196" fill="url(#waSky)"/>
+            <g transform="translate(0 92)">
+              <animateTransform attributeName="transform" type="translate" values="0 92;0 62;0 92" keyTimes="0;.5;1" dur="10s" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" repeatCount="indefinite"/>
+              <g transform="translate(-40 0)">
+                <animateTransform attributeName="transform" type="translate" values="-40 0;-190 0" dur="10s" repeatCount="indefinite"/>
+                <path d="M0 0 q37.5 -10 75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 V200 H0 Z" fill="#7ff2ff" fill-opacity=".28"/>
+              </g>
+            </g>
+            <g transform="translate(0 112)">
+              <animateTransform attributeName="transform" type="translate" values="0 112;0 84;0 112" keyTimes="0;.5;1" dur="10s" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" repeatCount="indefinite"/>
+              <g transform="translate(-150 0)">
+                <animateTransform attributeName="transform" type="translate" values="-150 0;0 0" dur="10s" repeatCount="indefinite"/>
+                <path d="M0 0 q37.5 -10 75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 V200 H0 Z" fill="#2fb8c6" fill-opacity=".55"/>
+              </g>
+            </g>
+            <g transform="translate(0 134)">
+              <animateTransform attributeName="transform" type="translate" values="0 134;0 108;0 134" keyTimes="0;.5;1" dur="10s" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" repeatCount="indefinite"/>
+              <g transform="translate(-75 0)">
+                <animateTransform attributeName="transform" type="translate" values="-75 0;-225 0" dur="10s" repeatCount="indefinite"/>
+                <path d="M0 0 q37.5 -10 75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 t75 0 V200 H0 Z" fill="#0b3352" fill-opacity=".85"/>
+              </g>
+            </g>
+            <circle class="wa-bubble" cx="86" cy="170" r="2.4" opacity=".0">
+              <animate attributeName="cy" values="180;120" dur="10s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;.5;0" keyTimes="0;.5;1" dur="10s" repeatCount="indefinite"/>
+            </circle>
+            <circle class="wa-bubble" cx="214" cy="170" r="1.8" opacity=".0">
+              <animate attributeName="cy" values="186;130" dur="10s" begin="-4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;.45;0" keyTimes="0;.5;1" dur="10s" begin="-4s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </a>
+        <div>
+          <p class="quote water-quote">"Follow one drop from cloud to cup to ocean."</p>
+          <p class="room-body">An interactive journey of water for every age. Cloud, rain, mountain, soil, tree, cup, ocean, lab, you. The whole site breathes on one ten-second clock, and everything on it is drawn live, no images, no video.</p>
+          <a class="room-cta" href="https://water-production-4036.up.railway.app/" target="_blank" rel="noopener">Try Water →</a>
         </div>
       </div>
     </div>
@@ -1403,6 +1495,7 @@
         <a class="cta-btn friction-btn" href="https://friction-production.up.railway.app" target="_blank" rel="noopener">Try Friction →</a>
         <a class="cta-btn stillward-btn" href="https://stillward-production.up.railway.app" target="_blank" rel="noopener">Try Stillward →</a>
         <a class="cta-btn decision-btn" href="https://decision-os-production-5b4a.up.railway.app/" target="_blank" rel="noopener">Try Decision OS →</a>
+        <a class="cta-btn water-btn" href="https://water-production-4036.up.railway.app/" target="_blank" rel="noopener">Try Water →</a>
       </div>
     </div>
   </section>
@@ -1425,7 +1518,7 @@
      so remove it explicitly -- the static transform="rotate(45)" base
      on each leaf still renders the correct settled clover without it. */
   if(reduced){
-    document.querySelectorAll('.clarity-clover animateTransform, .clarity-clover animate, .aspen-scene animate, .decision-scene animate').forEach(function(a){ a.remove(); });
+    document.querySelectorAll('.clarity-clover animateTransform, .clarity-clover animate, .aspen-scene animate, .decision-scene animate, .water-scene animateTransform, .water-scene animate').forEach(function(a){ a.remove(); });
   }
 
   /* ---------- signal line: hero (interactive) ---------- */
