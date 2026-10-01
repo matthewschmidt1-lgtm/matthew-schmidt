@@ -25,7 +25,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 hero `#home` → about `#about` (story, Operating Philosophy, The Blind Spot loop cards) →
 Three Lenses `#lenses` (Venn diagram) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
-`#ideas`, Decision OS, Stillward, Clarity, Night Night, Water, separated by `.built-divider`) → Things I
+`#ideas`, Decision OS, Stillward, Night Night, Water, separated by `.built-divider`) → Things I
 Believe `#beliefs` → Reading `#reading` → close `#contact`.
 
 - The nav scroll-spy is generic: each `.topnav-links a` has a `data-id` matching a section
@@ -33,10 +33,10 @@ Believe `#beliefs` → Reading `#reading` → close `#contact`.
   link and its active state land at the top of the projects.
 - Section spacing uses order-independent adjacent-sibling selectors
   (`.shift + .room`, `.built-divider + .room`) so project sections can be reordered
-  without touching CSS. The five `.built-divider` signal lines shift their blip
-  left → right down the list (H120 / H295 / H470 / H645 / H820).
+  without touching CSS. The four `.built-divider` signal lines shift their blip
+  left → right down the list (H120 / H353 / H587 / H820).
 - Each project preview scopes its own product palette as custom properties on the
-  section (`.friction-room{--fr-*}`, `.decision-room{--do-*}`, `.clarity-room{--cl-*}`, `.aspen-room{--as-*}`, `.water-room{--wa-*}`),
+  section (`.friction-room{--fr-*}`, `.decision-room{--do-*}`, `.aspen-room{--as-*}`, `.water-room{--wa-*}`),
   pulled from that project's source. Don't leak them into `:root`.
 
 ## Conventions that are easy to break
@@ -49,12 +49,12 @@ Believe `#beliefs` → Reading `#reading` → close `#contact`.
   out-rank hover states (documented in the lens-map code).
 - **Animate SVG group transforms with SMIL (`<animateTransform>`), not CSS `transform`.**
   CSS transforms on nested `<g>` pivot around each element's own bounding box, not the
-  local origin the shapes are drawn from; this collapsed the Clarity clover into a blob.
+  local origin the shapes are drawn from; this collapsed the (since removed) Clarity clover into a blob.
   Plain `<animate>` on `cx`/`cy`/opacity is fine. `transform-box: view-box` did not fix it.
 - **Reduced motion:** CSS animations are neutralised by the global
   `@media (prefers-reduced-motion)` block (add new animated selectors there with
   `animation:none !important`). SMIL ignores that media query, so the JS guard near the
-  top of the script removes `<animateTransform>`/`<animate>` under `.clarity-clover` and
+  top of the script removes `<animateTransform>`/`<animate>` under
   `.aspen-scene`/`.decision-scene`/`.water-scene` when `reduced` is true — extend that selector for any new SMIL.
 - The shared modal chrome (`.book-modal-overlay`) is reused by three overlays (books,
   lenses, friction cards). Click handlers select by class (e.g. `.friction-cta`) — don't
@@ -62,7 +62,7 @@ Believe `#beliefs` → Reading `#reading` → close `#contact`.
   wrong modal that way.
 - Interactive non-button SVG elements need `tabindex="0" role="button"` + `aria-label`;
   prefer real `<button>`/`<a>` where possible. Project mock cards that link out are `<a>`;
-  non-live ones (Clarity, "Coming Soon") are plain `<div>`/`<span>`.
+  a non-live one would be a plain `<div>`/`<span>` with a "Coming Soon" label (Clarity was, before it was removed).
 
 ## Browser-pane testing gotchas
 
