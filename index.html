@@ -208,23 +208,6 @@
     box-shadow:0 18px 30px -16px rgba(150,232,178,.28);
     outline:none;
   }
-  /* ================= CAPABILITIES ================= */
-  .capabilities{ padding:80px 0; }
-  .capabilities h2{ margin-top:14px; font-size:clamp(30px,4.4vw,52px); max-width:16ch; line-height:1.14; }
-  .cap-grid{ margin-top:40px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
-  @media (max-width:900px){ .cap-grid{ grid-template-columns:1fr; } }
-  .cap-card{
-    border:1px solid var(--ground-line); padding:30px 26px;
-    display:flex; flex-direction:column; justify-content:center; min-height:150px;
-    opacity:1; transform:none;
-    transition:opacity .6s ease, transform .6s ease, border-color .3s ease, background .3s ease;
-  }
-  .cap-card.pre-reveal{ opacity:0; transform:translateY(14px); }
-  .cap-card.pre-reveal.in{ opacity:1; transform:none; }
-  .cap-card:hover{ border-color:var(--verdant); background:rgba(92,152,115,.07); }
-  .cap-card .tag{ font-family:var(--font-mono); font-size:14px; color:var(--verdant); letter-spacing:.1em; text-transform:uppercase; }
-  .cap-card h3{ margin-top:16px; font-style:italic; font-weight:400; font-size:clamp(20px,2.5vw,25px); color:var(--bone); line-height:1.42; }
-
   /* ================= BELIEFS ================= */
   .beliefs{ background:var(--ground); border-top:1px solid var(--ground-line); }
   .beliefs h2{ margin-top:14px; font-size:clamp(27px,4vw,44px); max-width:19ch; line-height:1.18; }
@@ -735,7 +718,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
-    .cap-card, .belief-row, .book, .friction-card{ opacity:1 !important; transform:none !important; }
+    .belief-row, .book, .friction-card{ opacity:1 !important; transform:none !important; }
     .breath-ring{ animation:none !important; }
     .clarity-leaf-1, .clarity-leaf-2, .clarity-leaf-3, .clarity-leaf-4, .clarity-leaf-5,
     .clarity-clover .clarity-stem, .clarity-clover .clarity-fallen{ animation:none !important; }
@@ -801,7 +784,7 @@
         <span class="path-step now">Creativity</span>
       </div>
       <p class="story-lede">I've spent my career watching smart organizations struggle with the same problem: they have more information than they can turn into action.</p>
-      <p class="story-body">I'm curious about how businesses create value, how systems create leverage, and what helps people do their best work. If I can't find the tool I want, I tend to build it to help people focus on what matters.</p>
+      <p class="story-body">I'm curious about how businesses create value, how systems create leverage, and what helps people do their best work. I see analytics as a way to understand what matters and find what's getting in the way, not simply as reporting. If I can't find the tool I want, I tend to build it to help people focus on what matters.</p>
 
       <div class="section-break" aria-hidden="true">· · ·</div>
 
@@ -1434,27 +1417,6 @@
     </div>
   </section>
 
-  <section class="capabilities" id="capabilities">
-    <div class="wrap">
-      <span class="eyebrow">How I Work</span>
-      <h2>Turning analytics into a business capability.</h2>
-      <div class="cap-grid">
-        <div class="cap-card">
-          <span class="tag">Analytics</span>
-          <h3>I translate complex data into decisions leaders can act on.</h3>
-        </div>
-        <div class="cap-card">
-          <span class="tag">Consumer &amp; CPG</span>
-          <h3>Twenty years in industries where understanding consumers, brands, channels, and commercial performance matters.</h3>
-        </div>
-        <div class="cap-card">
-          <span class="tag">Business Leadership</span>
-          <h3>I don't see analytics as a reporting function. I see it as a way to understand what matters, find what's getting in the way, and help the business create more value.</h3>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="reading" id="reading">
     <div class="wrap">
       <span class="eyebrow">Reading</span>
@@ -1655,7 +1617,7 @@
      hidden pre-reveal state once we can also guarantee it gets revealed:
      via IntersectionObserver, or a safety-net timeout if that somehow
      never fires. Content should never depend on JS succeeding to be seen. */
-  var revealTargets = document.querySelectorAll('.cap-card, .belief-row, .book, .friction-card');
+  var revealTargets = document.querySelectorAll('.belief-row, .book, .friction-card');
   if('IntersectionObserver' in window && revealTargets.length && !reduced){
     revealTargets.forEach(function(el){ el.classList.add('pre-reveal'); });
 

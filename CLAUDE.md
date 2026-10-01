@@ -26,7 +26,7 @@ hero `#home` → about `#about` (story, Operating Philosophy, The Blind Spot loo
 Three Lenses `#lenses` (Venn diagram) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Stillward, Clarity, Night Night, Water, separated by `.built-divider`) → Things I
-Believe `#beliefs` → How I Work `#capabilities` → Reading `#reading` → close `#contact`.
+Believe `#beliefs` → Reading `#reading` → close `#contact`.
 
 - The nav scroll-spy is generic: each `.topnav-links a` has a `data-id` matching a section
   id. **`id="ideas"` must stay on whichever project section comes first** so the Ideas
