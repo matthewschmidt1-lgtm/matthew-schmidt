@@ -320,7 +320,8 @@
   /* ---- the turn: one loop, then three places to look ----
      Sits between The Blind Spot and the lenses. A single line curls once
      (the loop), breaks out, and fans into three strands that end in three
-     small lens circles. Visible by default. JS adds .pre-draw only when it
+     numbered dots (1 2 3, for the three questions below). It is independent
+     of the Venn diagram. Visible by default. JS adds .pre-draw only when it
      can also guarantee .in, then the drawing is revealed left to right with
      a clip (dash animation is unreliable with non-scaling-stroke). */
   .turn{ background:var(--ground); padding:8px 0 0; }
@@ -333,8 +334,7 @@
   .turn-lens:nth-of-type(2){ animation-delay:-2s; }
   .turn-lens:nth-of-type(3){ animation-delay:-4s; }
   @keyframes turnLens{ 0%,100%{ fill-opacity:.14; } 50%{ fill-opacity:.42; } }
-  /* once the Venn has taken the dots, leave faint rings where they were */
-  .turn.sent .turn-lens{ animation:none; fill-opacity:0; stroke-opacity:.3; transition:fill-opacity .6s ease, stroke-opacity .6s ease; }
+  .turn-num{ font-family:var(--font-mono); font-size:14px; font-weight:600; fill:var(--bone); text-anchor:middle; dominant-baseline:central; }
   .turn.pre-draw .turn-line{ clip-path:inset(-10% 100% -10% 0); }
   .turn.pre-draw.in .turn-line{ clip-path:inset(-10% -2% -10% 0); transition:clip-path 3.4s cubic-bezier(.45,0,.35,1); }
 
@@ -342,7 +342,7 @@
   .lens-map{ margin-top:0; }
   .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.35; color:var(--bone); }
   .lens-body{ margin-top:18px; max-width:58ch; font-size:18px; line-height:1.7; color:var(--bone-dim); }
-  .lens-diagram{ display:block; width:100%; max-width:600px; height:auto; margin:44px auto 0; overflow:visible; }
+  .lens-diagram{ display:block; width:100%; max-width:600px; height:auto; margin:44px auto 0; }
   @media (max-width:520px){
     .lens-diagram{ max-width:none; width:calc(100% + 52px); margin-left:-26px; margin-right:-26px; }
   }
@@ -791,7 +791,7 @@
 
   <div class="turn" aria-hidden="true">
     <div class="wrap">
-      <svg class="turn-line" viewBox="0 0 600 120">
+      <svg class="turn-line" viewBox="50 0 550 120">
         <defs>
           <linearGradient id="turnGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="300" y2="0">
             <stop offset="0" stop-color="#B87A5C" stop-opacity=".2"/>
@@ -806,10 +806,13 @@
         <path class="turn-strand" vector-effect="non-scaling-stroke" d="M300,60 C372,60 396,102 540,102"/>
         <circle class="turn-node" cx="300" cy="60" r="3.2"/>
         <g>
-          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="552" cy="18" r="11"/>
-          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="552" cy="60" r="11"/>
-          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="552" cy="102" r="11"/>
+          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="556" cy="18" r="15"/>
+          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="556" cy="60" r="15"/>
+          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="556" cy="102" r="15"/>
         </g>
+        <text class="turn-num" x="556" y="18">1</text>
+        <text class="turn-num" x="556" y="60">2</text>
+        <text class="turn-num" x="556" y="102">3</text>
       </svg>
     </div>
   </div>
@@ -1777,44 +1780,11 @@
     // watch the diagram itself, not the whole section, so the circles
     // assemble when the Venn is actually on screen
     whenArrived(lensDiagram, 0.3, function(){
-      // The three dots at the end of the turn line ARE the three lenses:
-      // start each Venn circle at its dot's position and size, then let it
-      // travel down and grow into place. Positions come from the SVG's own
-      // geometry (not the circle's current box, which pre-anim has offset).
-      var dots = document.querySelectorAll('.turn .turn-lens');
-      var circles = ['business','system','people'].map(function(n){
-        return lensMap.querySelector('.lens-circle-' + n);
-      });
-      var handoff = dots.length === 3 && circles.every(Boolean);
-      if(handoff){
-        var box = lensDiagram.getBoundingClientRect();
-        var k = box.width / lensDiagram.viewBox.baseVal.width;
-        circles.forEach(function(c, i){
-          var d = dots[i].getBoundingClientRect();
-          var cx = box.left + c.cx.baseVal.value * k, cy = box.top + c.cy.baseVal.value * k;
-          var dx = (d.left + d.width/2 - cx) / k, dy = (d.top + d.height/2 - cy) / k;
-          var sc = (d.width/2) / (c.r.baseVal.value * k);
-          c.style.transition = 'none';
-          c.style.opacity = '1';
-          c.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + sc + ')';
-        });
-        lensDiagram.getBoundingClientRect(); // commit the start state
-        circles.forEach(function(c, i){
-          c.style.transition = 'transform 1.9s cubic-bezier(.3,.7,.2,1) ' + (i*0.18) + 's';
-          c.style.transform = 'translate(0px,0px) scale(1)';
-        });
-        if(turn) turn.classList.add('sent');
-      }
       lensMap.classList.add('in');
-      // pre-anim's only job was the entrance transition; drop it (and the
-      // inline handoff styles) once the last piece, the center label
-      // (2.3s delay + 1s), has settled so hover/focus states work again
-      setTimeout(function(){
-        lensMap.classList.remove('pre-anim');
-        if(handoff) circles.forEach(function(c){
-          c.style.transition = ''; c.style.transform = ''; c.style.opacity = '';
-        });
-      }, 3500);
+      // pre-anim's only job was the entrance transition; drop it once the
+      // last piece (the center label, 2.3s delay + 1s) has settled so it
+      // can't out-specificity the hover/focus states below
+      setTimeout(function(){ lensMap.classList.remove('pre-anim'); }, 3500);
     });
   }
 
