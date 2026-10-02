@@ -333,6 +333,8 @@
   .turn-lens:nth-of-type(2){ animation-delay:-2s; }
   .turn-lens:nth-of-type(3){ animation-delay:-4s; }
   @keyframes turnLens{ 0%,100%{ fill-opacity:.14; } 50%{ fill-opacity:.42; } }
+  /* once the Venn has taken the dots, leave faint rings where they were */
+  .turn.sent .turn-lens{ animation:none; fill-opacity:0; stroke-opacity:.3; transition:fill-opacity .6s ease, stroke-opacity .6s ease; }
   .turn.pre-draw .turn-line{ clip-path:inset(-10% 100% -10% 0); }
   .turn.pre-draw.in .turn-line{ clip-path:inset(-10% -2% -10% 0); transition:clip-path 3.4s cubic-bezier(.45,0,.35,1); }
 
@@ -340,7 +342,7 @@
   .lens-map{ margin-top:0; }
   .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.35; color:var(--bone); }
   .lens-body{ margin-top:18px; max-width:58ch; font-size:18px; line-height:1.7; color:var(--bone-dim); }
-  .lens-diagram{ display:block; width:100%; max-width:600px; height:auto; margin:44px auto 0; }
+  .lens-diagram{ display:block; width:100%; max-width:600px; height:auto; margin:44px auto 0; overflow:visible; }
   @media (max-width:520px){
     .lens-diagram{ max-width:none; width:calc(100% + 52px); margin-left:-26px; margin-right:-26px; }
   }
@@ -1774,12 +1776,45 @@
     lensMap.classList.add('pre-anim');
     // watch the diagram itself, not the whole section, so the circles
     // assemble when the Venn is actually on screen
-    whenArrived(lensDiagram, 0.4, function(){
+    whenArrived(lensDiagram, 0.3, function(){
+      // The three dots at the end of the turn line ARE the three lenses:
+      // start each Venn circle at its dot's position and size, then let it
+      // travel down and grow into place. Positions come from the SVG's own
+      // geometry (not the circle's current box, which pre-anim has offset).
+      var dots = document.querySelectorAll('.turn .turn-lens');
+      var circles = ['business','system','people'].map(function(n){
+        return lensMap.querySelector('.lens-circle-' + n);
+      });
+      var handoff = dots.length === 3 && circles.every(Boolean);
+      if(handoff){
+        var box = lensDiagram.getBoundingClientRect();
+        var k = box.width / lensDiagram.viewBox.baseVal.width;
+        circles.forEach(function(c, i){
+          var d = dots[i].getBoundingClientRect();
+          var cx = box.left + c.cx.baseVal.value * k, cy = box.top + c.cy.baseVal.value * k;
+          var dx = (d.left + d.width/2 - cx) / k, dy = (d.top + d.height/2 - cy) / k;
+          var sc = (d.width/2) / (c.r.baseVal.value * k);
+          c.style.transition = 'none';
+          c.style.opacity = '1';
+          c.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + sc + ')';
+        });
+        lensDiagram.getBoundingClientRect(); // commit the start state
+        circles.forEach(function(c, i){
+          c.style.transition = 'transform 1.9s cubic-bezier(.3,.7,.2,1) ' + (i*0.18) + 's';
+          c.style.transform = 'translate(0px,0px) scale(1)';
+        });
+        if(turn) turn.classList.add('sent');
+      }
       lensMap.classList.add('in');
-      // pre-anim's only job was the entrance transition; drop it once the
-      // last piece (the center label, 2.3s delay + 1s) has settled so it
-      // can't out-specificity the hover/focus states below
-      setTimeout(function(){ lensMap.classList.remove('pre-anim'); }, 3500);
+      // pre-anim's only job was the entrance transition; drop it (and the
+      // inline handoff styles) once the last piece, the center label
+      // (2.3s delay + 1s), has settled so hover/focus states work again
+      setTimeout(function(){
+        lensMap.classList.remove('pre-anim');
+        if(handoff) circles.forEach(function(c){
+          c.style.transition = ''; c.style.transform = ''; c.style.opacity = '';
+        });
+      }, 3500);
     });
   }
 
