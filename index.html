@@ -327,7 +327,7 @@
      (pathLength="1"). Strokes scale with the SVG, so phones get a heavier
      stroke-width instead of vector-effect (which breaks dash lengths). */
   .turn{ background:var(--ground); padding:8px 0 0; }
-  .turn-line{ display:block; width:100%; max-width:560px; height:auto; margin:0 auto; overflow:visible; }
+  .turn-line{ display:block; width:100%; max-width:470px; height:auto; margin:0 auto; overflow:visible; }
   .turn-line path{ fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
   .turn-in{ stroke:url(#turnGrad); }
   .turn-trunk, .turn-strand{ stroke:var(--verdant); opacity:.85; }
@@ -351,11 +351,12 @@
   .lens-map{ margin-top:0; }
   .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.35; color:var(--bone); }
   .lens-body{ margin-top:18px; max-width:58ch; font-size:18px; line-height:1.7; color:var(--bone-dim); }
+  .lens-questions{ margin-top:28px; }
   .lens-diagram{ display:block; width:100%; max-width:600px; height:auto; margin:44px auto 0; }
   @media (max-width:520px){
     .lens-diagram{ max-width:none; width:calc(100% + 52px); margin-left:-26px; margin-right:-26px; }
   }
-  .lens-hint{ margin-top:44px; text-align:center; font-family:var(--font-mono); font-size:15px; letter-spacing:.05em; text-transform:uppercase; color:var(--bone-dim); }
+  .lens-hint{ margin-top:76px; text-align:center; font-family:var(--font-mono); font-size:15px; letter-spacing:.05em; text-transform:uppercase; color:var(--bone-dim); }
   .lens-circle{
     fill:var(--verdant); fill-opacity:.22; stroke:var(--verdant); stroke-opacity:.7; stroke-width:1.5; mix-blend-mode:screen;
     opacity:1; transform:translate(0,0); transform-box:fill-box; transform-origin:center; cursor:pointer;
@@ -800,7 +801,7 @@
 
   <div class="turn" aria-hidden="true">
     <div class="wrap">
-      <svg class="turn-line" viewBox="40 0 480 214">
+      <svg class="turn-line" viewBox="40 0 400 214">
         <defs>
           <linearGradient id="turnGrad" gradientUnits="userSpaceOnUse" x1="50" y1="0" x2="330" y2="0">
             <stop offset="0" stop-color="#B87A5C" stop-opacity=".2"/>
@@ -810,19 +811,19 @@
           </linearGradient>
         </defs>
         <path class="turn-in" pathLength="1" d="M50,50 H96 C142,50 156,8 126,8 C96,8 108,50 156,50 H196 C242,50 256,8 226,8 C196,8 208,50 256,50 H330"/>
-        <path class="turn-trunk" pathLength="1" d="M330,50 C384,50 420,60 420,104"/>
-        <path class="turn-strand" pathLength="1" d="M420,104 C420,150 352,136 352,179"/>
-        <path class="turn-strand" pathLength="1" d="M420,104 V179"/>
-        <path class="turn-strand" pathLength="1" d="M420,104 C420,150 488,136 488,179"/>
+        <path class="turn-trunk" pathLength="1" d="M330,50 V104"/>
+        <path class="turn-strand" pathLength="1" d="M330,104 C330,150 262,136 262,179"/>
+        <path class="turn-strand" pathLength="1" d="M330,104 V179"/>
+        <path class="turn-strand" pathLength="1" d="M330,104 C330,150 398,136 398,179"/>
         <circle class="turn-node" cx="330" cy="50" r="3.4"/>
         <g>
-          <circle class="turn-lens" cx="352" cy="195" r="15"/>
-          <circle class="turn-lens" cx="420" cy="195" r="15"/>
-          <circle class="turn-lens" cx="488" cy="195" r="15"/>
+          <circle class="turn-lens" cx="262" cy="195" r="15"/>
+          <circle class="turn-lens" cx="330" cy="195" r="15"/>
+          <circle class="turn-lens" cx="398" cy="195" r="15"/>
         </g>
-        <text class="turn-num" x="352" y="195">1</text>
-        <text class="turn-num" x="420" y="195">2</text>
-        <text class="turn-num" x="488" y="195">3</text>
+        <text class="turn-num" x="262" y="195">1</text>
+        <text class="turn-num" x="330" y="195">2</text>
+        <text class="turn-num" x="398" y="195">3</text>
       </svg>
     </div>
   </div>
@@ -832,7 +833,8 @@
       <div class="lens-map">
         <span class="eyebrow">The Three Lenses</span>
         <p class="lens-lede">Three Places To Look.</p>
-        <p class="lens-body">When you want to understand what's really happening, look at it three ways:<br>1) How does the business create value?<br>2) How does the system create leverage?<br>3) How do we help people do their best work?</p>
+        <p class="lens-body">When you want to understand what's really happening, look at it three ways:</p>
+        <p class="lens-body lens-questions">1) How does the business create value?<br>2) How does the system create leverage?<br>3) How do we help people do their best work?</p>
         <p class="lens-hint">Click a lens or click where circles overlap to learn more.</p>
         <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier. Click a circle or an overlap for more detail.">
           <circle class="lens-circle lens-circle-business" cx="220" cy="180" r="130" tabindex="0" role="button"
