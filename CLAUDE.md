@@ -22,7 +22,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 
 ## Page structure (top to bottom)
 
-hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards) →
+hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards) → `.turn` (noise-to-signal line + one bridging sentence, drawn once on scroll) →
 Three Lenses `#lenses` (Venn diagram) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Stillward, Water, Night Night, separated by `.built-divider`) → Things I

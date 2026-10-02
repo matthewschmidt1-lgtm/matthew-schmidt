@@ -317,6 +317,27 @@
   .lens-modal-keywords{ margin-top:18px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-faint); }
 
   /* ---- lens map ---- */
+  /* ---- the turn: noise resolving into signal, between The Blind Spot and the lenses ----
+     A full-width line. The left third is a rust scribble (the Activity Loop's
+     busyness); it settles into the flat verdant signal line with one clean blip.
+     Visible by default. JS adds .pre-draw only when it can also guarantee .in,
+     then the line is revealed left to right with a clip (dash animation is
+     unreliable with non-scaling-stroke) and the sentence fades in as the blip lands. */
+  .turn{ background:var(--ground); }
+  .turn-line{ display:block; width:100%; height:28px; }
+  .turn-line path{ fill:none; stroke-width:1.5; stroke-linejoin:round; stroke-linecap:round; }
+  .turn-noise{ stroke:var(--rust); opacity:.8; }
+  .turn-signal{ stroke:var(--verdant); }
+  .turn-text{
+    margin-top:34px; text-align:center; text-wrap:balance;
+    font-family:var(--font-display); font-style:italic; font-size:24px; line-height:1.4; color:var(--bone);
+  }
+  @media (max-width:520px){ .turn-text{ font-size:21px; } }
+  .turn.pre-draw .turn-line{ clip-path:inset(0 100% 0 0); }
+  .turn.pre-draw .turn-text{ opacity:0; transform:translateY(6px); }
+  .turn.pre-draw.in .turn-line{ clip-path:inset(0 0 0 0); transition:clip-path 3.2s cubic-bezier(.45,0,.35,1); }
+  .turn.pre-draw.in .turn-text{ opacity:1; transform:none; transition:opacity 1s ease 2.2s, transform 1s ease 2.2s; }
+
   .lens-section{ padding-top:56px; }
   .lens-map{ margin-top:0; }
   .lens-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.35; color:var(--bone); }
@@ -766,6 +787,16 @@
       </div>
     </div>
   </section>
+
+  <div class="turn">
+    <svg class="turn-line" viewBox="0 0 1000 28" preserveAspectRatio="none" aria-hidden="true">
+      <path class="turn-noise" vector-effect="non-scaling-stroke" d="M0,14 L8.6,24.5 L16.6,6.0 L25.4,20.1 L33.7,5.2 L43.5,19.5 L50.7,8.5 L60.7,23.1 L66.4,3.1 L77.2,22.9 L86.1,8.1 L91.7,22.1 L97.5,7.9 L104.3,19.1 L112.4,6.4 L122.5,22.1 L131.5,6.0 L140.7,21.7 L147.7,3.0 L158.7,24.0 L168.1,7.1 L174.8,20.7 L180.7,4.4 L188.4,24.1 L196.1,3.3 L206.2,19.0 L212.9,3.5 L221.0,24.9 L228.6,8.6 L237.6,23.7 L244.6,8.5 L251.9,24.6 L261.6,8.9 L268.4,18.7 L274.3,6.2 L280.7,20.2 L288.7,9.8 L298.2,17.5 L307.3,11.0 L315.1,16.9 L322.1,9.6 L332.0,16.2 L342.4,12.5 L350.0,15.8 L359.1,13.4 L370.0,14.1 L392,14"/>
+      <path class="turn-signal" vector-effect="non-scaling-stroke" d="M392,14 H640 L646,6 L655,22 L664,14 L673,14 L679,9 L688,19 L697,14 H1000"/>
+    </svg>
+    <div class="wrap">
+      <p class="turn-text">Don't ask which loop. Ask what you haven't looked at yet.</p>
+    </div>
+  </div>
 
   <section class="lens-section" id="lenses">
     <div class="wrap">
@@ -1464,6 +1495,17 @@
     setTimeout(function(){
       revealTargets.forEach(function(el){ el.classList.add('in'); });
     }, 4000);
+  }
+
+  /* ---------- the turn: draw the noise-to-signal line once, on arrival ---------- */
+  var turn = document.querySelector('.turn');
+  if(turn && 'IntersectionObserver' in window && !reduced){
+    turn.classList.add('pre-draw');
+    var turnObserver = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){ turn.classList.add('in'); turnObserver.disconnect(); }
+    }, { threshold:0.6 });
+    turnObserver.observe(turn);
+    setTimeout(function(){ turn.classList.add('in'); }, 20000);
   }
 
   /* ---------- nav progress + active link ---------- */
