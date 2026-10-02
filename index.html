@@ -224,6 +224,29 @@
   .belief-row:last-child{ border-bottom:1px solid var(--ground-line); }
 
   /* ================= READING ================= */
+  /* ================= CONTINUED LEARNING ================= */
+  .learning{ background:var(--ground); border-top:1px solid var(--ground-line); }
+  .learning h2{ margin-top:14px; font-size:clamp(24px,3.6vw,39px); max-width:22ch; line-height:1.18; }
+  .learning-meta{
+    margin-top:18px; font-family:var(--font-mono); font-size:13.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--bone-dim); line-height:1.7;
+  }
+  .cert-link{
+    font:inherit; letter-spacing:inherit; text-transform:inherit; cursor:pointer;
+    background:none; border:none; padding:0 0 1px; color:var(--verdant);
+    border-bottom:1px solid var(--verdant); transition:color .2s ease, border-color .2s ease;
+  }
+  .cert-link:hover, .cert-link:focus-visible{ color:var(--bone); border-bottom-color:var(--bone); }
+  .learning-body{ margin-top:22px; max-width:58ch; font-size:18px; line-height:1.7; color:var(--bone-dim); }
+  /* .book-modal is declared later, so these need the extra class to win */
+  .book-modal.cert-modal{ max-width:780px; padding:52px 24px 24px; }
+  .cert-modal-title{
+    display:block; margin-bottom:16px; padding-right:36px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-faint);
+  }
+  .cert-modal img{ display:block; width:100%; height:auto; border-radius:2px; background:#fff; }
+  @media (max-width:520px){ .book-modal.cert-modal{ padding:48px 12px 12px; } .book-modal-overlay#certModalOverlay{ padding:12px; } }
+
   .reading{ background:var(--ground); border-top:1px solid var(--ground-line); }
   .reading h2{ margin-top:14px; font-size:clamp(24px,3.6vw,39px); max-width:20ch; line-height:1.18; }
   .book-grid{ margin-top:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
@@ -1207,6 +1230,24 @@
     </div>
   </section>
 
+  <section class="learning" id="learning">
+    <div class="wrap">
+      <span class="eyebrow">Continued Learning</span>
+      <h2>AI Adoption: Driving Business Value and Impact</h2>
+      <p class="learning-meta">MIT Sloan Executive Education · <button class="cert-link" type="button" id="certOpen" aria-haspopup="dialog">Professional Certificate</button> 2026</p>
+      <p class="learning-body">Exploring how organizations move from AI experimentation to measurable business value and what it takes for people, systems, and strategy to make adoption actually work.</p>
+    </div>
+  </section>
+
+  <div class="book-modal-overlay" id="certModalOverlay" hidden>
+    <div class="book-modal cert-modal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="cert-modal-title" id="certModalTitle">MIT Sloan Executive Education · Certificate</span>
+      <img src="images/certificates/mit-sloan-ai-adoption-2026.jpg" width="1600" height="1131" loading="lazy"
+        alt="Certificate from the MIT Sloan School of Management certifying that Matthew Schmidt has successfully completed the executive program AI Adoption: Driving Business Value and Impact, August 2026.">
+    </div>
+  </div>
+
   <section class="reading" id="reading">
     <div class="wrap">
       <span class="eyebrow">Reading</span>
@@ -1558,6 +1599,35 @@
     lensModalClose.addEventListener('click', closeLensModal);
     lensOverlay.addEventListener('click', function(e){
       if(e.target === lensOverlay) closeLensModal();
+    });
+  }
+
+  /* ---------- certificate modal ---------- */
+  var certOverlay = document.getElementById('certModalOverlay');
+  var certOpen = document.getElementById('certOpen');
+  if(certOverlay && certOpen){
+    var certModal = certOverlay.querySelector('.book-modal');
+    var certClose = certOverlay.querySelector('.book-modal-close');
+    function onCertKeydown(e){
+      if(e.key === 'Escape') closeCertModal();
+      else if(e.key === 'Tab'){ e.preventDefault(); certClose.focus(); }
+    }
+    function openCertModal(){
+      certOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      certModal.focus();
+      document.addEventListener('keydown', onCertKeydown);
+    }
+    function closeCertModal(){
+      certOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onCertKeydown);
+      certOpen.focus();
+    }
+    certOpen.addEventListener('click', openCertModal);
+    certClose.addEventListener('click', closeCertModal);
+    certOverlay.addEventListener('click', function(e){
+      if(e.target === certOverlay) closeCertModal();
     });
   }
 
