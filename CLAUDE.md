@@ -25,7 +25,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 hero `#home` → about `#about` (story, Operating Philosophy, The Blind Spot loop cards) →
 Three Lenses `#lenses` (Venn diagram) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
-`#ideas`, Decision OS, Stillward, Night Night, Water, separated by `.built-divider`) → Things I
+`#ideas`, Decision OS, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
 Believe `#beliefs` → Reading `#reading` → close `#contact`.
 
 - The nav scroll-spy is generic: each `.topnav-links a` has a `data-id` matching a section
