@@ -45,6 +45,9 @@ Believe `#beliefs` → Reading `#reading` → close `#contact`.
   adds `.pre-reveal`/`.pre-anim` only when an IntersectionObserver + a safety-net
   `setTimeout` can guarantee revealing it, and only when `prefers-reduced-motion` is off.
   A real "stuck invisible" bug came from breaking this.
+  For entrances that should be *seen* (the `.turn` line, the Venn diagram), use the
+  `whenArrived(el, ratio, cb)` helper (IntersectionObserver + scroll-position fallback) and
+  no timed fallback: a 20s timer used to play them before the visitor scrolled down.
 - **Strip `.pre-anim` after an entrance settles** — its higher-specificity rules otherwise
   out-rank hover states (documented in the lens-map code).
 - **Animate SVG group transforms with SMIL (`<animateTransform>`), not CSS `transform`.**

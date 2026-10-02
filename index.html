@@ -1511,15 +1511,37 @@
     }, 4000);
   }
 
-  /* ---------- the turn: draw the noise-to-signal line once, on arrival ---------- */
+  /* ---------- play-on-arrival helper ----------
+     Calls cb once, the first time `ratio` of el is on screen. Uses
+     IntersectionObserver, with a scroll-position check as the fallback.
+     Deliberately no timed fallback: a timer would play the entrance while
+     the visitor is still reading higher up, so they would never see it. */
+  function whenArrived(el, ratio, cb){
+    var done = false, io = null;
+    function fire(){
+      if(done) return;
+      done = true;
+      window.removeEventListener('scroll', check);
+      if(io) io.disconnect();
+      cb();
+    }
+    function check(){
+      var r = el.getBoundingClientRect(), vh = window.innerHeight;
+      var visible = Math.min(r.bottom, vh) - Math.max(r.top, 0);
+      if(visible >= Math.min(r.height, vh) * ratio) fire();
+    }
+    io = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting) fire();
+    }, { threshold:ratio });
+    io.observe(el);
+    window.addEventListener('scroll', check, { passive:true });
+  }
+
+  /* ---------- the turn: draw the line once, when the visitor reaches it ---------- */
   var turn = document.querySelector('.turn');
   if(turn && 'IntersectionObserver' in window && !reduced){
     turn.classList.add('pre-draw');
-    var turnObserver = new IntersectionObserver(function(entries){
-      if(entries[0].isIntersecting){ turn.classList.add('in'); turnObserver.disconnect(); }
-    }, { threshold:0.6 });
-    turnObserver.observe(turn);
-    setTimeout(function(){ turn.classList.add('in'); }, 20000);
+    whenArrived(turn, 0.7, function(){ turn.classList.add('in'); });
   }
 
   /* ---------- nav progress + active link ---------- */
@@ -1744,24 +1766,21 @@
   /* ---------- lens map entrance choreography ----------
      Circles/labels are visible by default in CSS. Only pulled into the
      pre-anim hidden/offset state when JS can guarantee revealing them
-     (IntersectionObserver + a safety-net timeout), and only when the
-     visitor hasn't asked for reduced motion. */
+     (whenArrived: IntersectionObserver + a scroll-position fallback), and
+     only when the visitor hasn't asked for reduced motion. */
   var lensMap = document.querySelector('.lens-map');
-  if(lensMap && 'IntersectionObserver' in window && !reduced){
+  var lensDiagram = lensMap && lensMap.querySelector('.lens-diagram');
+  if(lensMap && lensDiagram && 'IntersectionObserver' in window && !reduced){
     lensMap.classList.add('pre-anim');
-    var lensMapObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          lensMap.classList.add('in');
-          lensMapObserver.unobserve(entry.target);
-          // pre-anim's only job was the entrance transition; drop it once
-          // settled so it can't out-specificity the hover/focus states below
-          setTimeout(function(){ lensMap.classList.remove('pre-anim'); }, 1900);
-        }
-      });
-    }, { threshold:0.3 });
-    lensMapObserver.observe(lensMap);
-    setTimeout(function(){ lensMap.classList.add('in'); }, 20000);
+    // watch the diagram itself, not the whole section, so the circles
+    // assemble when the Venn is actually on screen
+    whenArrived(lensDiagram, 0.4, function(){
+      lensMap.classList.add('in');
+      // pre-anim's only job was the entrance transition; drop it once the
+      // last piece (the center label, 2.3s delay + 1s) has settled so it
+      // can't out-specificity the hover/focus states below
+      setTimeout(function(){ lensMap.classList.remove('pre-anim'); }, 3500);
+    });
   }
 
   /* ---------- lens hover visual ----------
