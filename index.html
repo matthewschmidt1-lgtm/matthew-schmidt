@@ -317,26 +317,35 @@
   .lens-modal-keywords{ margin-top:18px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-faint); }
 
   /* ---- lens map ---- */
-  /* ---- the turn: one loop, then three places to look ----
-     Sits between The Blind Spot and the lenses. A single line curls once
-     (the loop), breaks out, and fans into three strands that end in three
-     numbered dots (1 2 3, for the three questions below). It is independent
-     of the Venn diagram. Visible by default. JS adds .pre-draw only when it
-     can also guarantee .in, then the drawing is revealed left to right with
-     a clip (dash animation is unreliable with non-scaling-stroke). */
+  /* ---- the turn: two loops, a break point, then three ways down ----
+     Sits between The Blind Spot and the lenses, independent of the Venn.
+     A rust line goes around twice (the loop you can get stuck in), reaches
+     a break point, turns green, heads downward and branches into three
+     numbered dots that point at the three questions below.
+     Visible by default. JS adds .pre-draw only when it can also guarantee
+     .in; then each path draws in sequence with a normalised dash
+     (pathLength="1"). Strokes scale with the SVG, so phones get a heavier
+     stroke-width instead of vector-effect (which breaks dash lengths). */
   .turn{ background:var(--ground); padding:8px 0 0; }
-  .turn-line{ display:block; width:100%; max-width:640px; height:auto; margin:0 auto; overflow:visible; }
-  .turn-line path{ fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+  .turn-line{ display:block; width:100%; max-width:560px; height:auto; margin:0 auto; overflow:visible; }
+  .turn-line path{ fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
   .turn-in{ stroke:url(#turnGrad); }
-  .turn-strand{ stroke:var(--verdant); opacity:.85; }
+  .turn-trunk, .turn-strand{ stroke:var(--verdant); opacity:.85; }
   .turn-node{ fill:var(--verdant); }
-  .turn-lens{ fill:var(--verdant); fill-opacity:.22; stroke:var(--verdant); stroke-opacity:.8; stroke-width:1.5; animation:turnLens 6s ease-in-out infinite; }
+  .turn-lens{ fill:var(--verdant); fill-opacity:.22; stroke:var(--verdant); stroke-opacity:.8; stroke-width:1.6; animation:turnLens 6s ease-in-out infinite; }
   .turn-lens:nth-of-type(2){ animation-delay:-2s; }
   .turn-lens:nth-of-type(3){ animation-delay:-4s; }
   @keyframes turnLens{ 0%,100%{ fill-opacity:.14; } 50%{ fill-opacity:.42; } }
   .turn-num{ font-family:var(--font-mono); font-size:14px; font-weight:600; fill:var(--bone); text-anchor:middle; dominant-baseline:central; }
-  .turn.pre-draw .turn-line{ clip-path:inset(-10% 100% -10% 0); }
-  .turn.pre-draw.in .turn-line{ clip-path:inset(-10% -2% -10% 0); transition:clip-path 3.4s cubic-bezier(.45,0,.35,1); }
+  @media (max-width:520px){ .turn-line path, .turn-lens{ stroke-width:2.3; } }
+  .turn.pre-draw .turn-line path{ stroke-dasharray:1 2; stroke-dashoffset:1.02; }
+  .turn.pre-draw .turn-node, .turn.pre-draw .turn-lens, .turn.pre-draw .turn-num{ opacity:0; }
+  .turn.pre-draw.in .turn-line path{ stroke-dashoffset:0; }
+  .turn.pre-draw.in .turn-in{ transition:stroke-dashoffset 2.2s cubic-bezier(.45,0,.4,1); }
+  .turn.pre-draw.in .turn-node{ opacity:1; transition:opacity .35s ease 2.1s; }
+  .turn.pre-draw.in .turn-trunk{ transition:stroke-dashoffset .6s ease-in 2.25s; }
+  .turn.pre-draw.in .turn-strand{ transition:stroke-dashoffset .7s ease-out 2.85s; }
+  .turn.pre-draw.in .turn-lens, .turn.pre-draw.in .turn-num{ opacity:1; transition:opacity .5s ease 3.45s; }
 
   .lens-section{ padding-top:56px; }
   .lens-map{ margin-top:0; }
@@ -791,28 +800,29 @@
 
   <div class="turn" aria-hidden="true">
     <div class="wrap">
-      <svg class="turn-line" viewBox="50 0 550 120">
+      <svg class="turn-line" viewBox="40 0 480 214">
         <defs>
-          <linearGradient id="turnGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="300" y2="0">
+          <linearGradient id="turnGrad" gradientUnits="userSpaceOnUse" x1="50" y1="0" x2="330" y2="0">
             <stop offset="0" stop-color="#B87A5C" stop-opacity=".2"/>
-            <stop offset=".3" stop-color="#B87A5C"/>
-            <stop offset=".62" stop-color="#B87A5C"/>
+            <stop offset=".18" stop-color="#B87A5C"/>
+            <stop offset=".82" stop-color="#B87A5C"/>
             <stop offset="1" stop-color="#5C9873"/>
           </linearGradient>
         </defs>
-        <path class="turn-in" vector-effect="non-scaling-stroke" d="M0,60 H112 C158,60 172,18 142,18 C112,18 124,60 172,60 H300"/>
-        <path class="turn-strand" vector-effect="non-scaling-stroke" d="M300,60 C372,60 396,18 540,18"/>
-        <path class="turn-strand" vector-effect="non-scaling-stroke" d="M300,60 H540"/>
-        <path class="turn-strand" vector-effect="non-scaling-stroke" d="M300,60 C372,60 396,102 540,102"/>
-        <circle class="turn-node" cx="300" cy="60" r="3.2"/>
+        <path class="turn-in" pathLength="1" d="M50,50 H96 C142,50 156,8 126,8 C96,8 108,50 156,50 H196 C242,50 256,8 226,8 C196,8 208,50 256,50 H330"/>
+        <path class="turn-trunk" pathLength="1" d="M330,50 C384,50 420,60 420,104"/>
+        <path class="turn-strand" pathLength="1" d="M420,104 C420,150 352,136 352,179"/>
+        <path class="turn-strand" pathLength="1" d="M420,104 V179"/>
+        <path class="turn-strand" pathLength="1" d="M420,104 C420,150 488,136 488,179"/>
+        <circle class="turn-node" cx="330" cy="50" r="3.4"/>
         <g>
-          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="556" cy="18" r="15"/>
-          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="556" cy="60" r="15"/>
-          <circle class="turn-lens" vector-effect="non-scaling-stroke" cx="556" cy="102" r="15"/>
+          <circle class="turn-lens" cx="352" cy="195" r="15"/>
+          <circle class="turn-lens" cx="420" cy="195" r="15"/>
+          <circle class="turn-lens" cx="488" cy="195" r="15"/>
         </g>
-        <text class="turn-num" x="556" y="18">1</text>
-        <text class="turn-num" x="556" y="60">2</text>
-        <text class="turn-num" x="556" y="102">3</text>
+        <text class="turn-num" x="352" y="195">1</text>
+        <text class="turn-num" x="420" y="195">2</text>
+        <text class="turn-num" x="488" y="195">3</text>
       </svg>
     </div>
   </div>
