@@ -312,7 +312,7 @@
 
   .lens-modal-eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-faint); }
   .lens-modal-heading{ display:block; margin-top:14px; font-family:var(--font-display); font-style:italic; font-size:28px; color:var(--verdant); line-height:1.3; }
-  .lens-modal-text{ margin-top:20px; padding-top:22px; border-top:1px solid var(--ground-line); color:var(--bone-dim); font-size:16px; line-height:1.75; }
+  .lens-modal-text{ margin-top:20px; padding-top:22px; border-top:1px solid var(--ground-line); color:var(--bone-dim); font-size:16px; line-height:1.75; white-space:pre-line; }
   .lens-modal--loop .lens-modal-text{ font-size:18.5px; line-height:1.7; }
   .lens-modal-keywords{ margin-top:18px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--bone-faint); }
 
@@ -481,6 +481,61 @@
   .built-divider svg{ display:block; width:100%; height:24px; }
   .built-divider path{ fill:none; stroke:var(--sage); stroke-width:1.5; opacity:.6; }
   .built-divider + .room{ padding-top:64px; }
+
+  /* ================= SEEING THE SYSTEM ================= */
+  .seeing{ background:var(--ground); border-top:1px solid var(--ground-line); }
+  .seeing h2{ margin-top:14px; font-size:clamp(24px,3.6vw,39px); max-width:20ch; line-height:1.18; }
+  .see-lede{ margin-top:16px; font-family:var(--font-display); font-style:italic; font-size:clamp(20px,2.6vw,25px); line-height:1.4; color:var(--bone); }
+  .see-body{ margin-top:18px; max-width:58ch; font-size:18px; line-height:1.7; color:var(--bone-dim); }
+  .see-map{ margin-top:44px; }
+  .see-svg{ display:block; width:100%; max-width:600px; height:auto; margin:0 auto; overflow:visible; }
+  @media (max-width:520px){ .see-svg{ max-width:none; width:calc(100% + 40px); margin-left:-20px; margin-right:-20px; } }
+  .see-lens{ fill:var(--verdant); fill-opacity:.07; stroke:var(--verdant); stroke-opacity:.28; stroke-width:1; }
+  .see-lens-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.12em; fill:var(--bone-faint); }
+  .see-echoes line{ stroke:var(--bone); stroke-opacity:.16; stroke-width:1; stroke-dasharray:3 5; }
+  .see-path{ fill:none; stroke:var(--verdant); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .see-runner{ fill:var(--bone); opacity:.9; }
+  .see-node{ cursor:pointer; outline:none; }
+  .see-hit{ fill:transparent; }
+  .see-dot{ fill:var(--ground); stroke:var(--verdant); stroke-width:1.8; transition:fill .25s ease, transform .4s cubic-bezier(.16,1,.3,1); transform-box:fill-box; transform-origin:center; }
+  .see-num{ font-family:var(--font-mono); font-size:11.5px; font-weight:600; fill:var(--bone); text-anchor:middle; dominant-baseline:central; pointer-events:none; }
+  .see-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; fill:var(--bone-dim); dominant-baseline:central; pointer-events:none; transition:fill .25s ease; }
+  .see-node:hover .see-dot, .see-node:focus-visible .see-dot{ fill:var(--verdant-deep); transform:scale(1.12); }
+  .see-node:hover .see-label, .see-node:focus-visible .see-label{ fill:var(--bone); }
+  .see-node:focus-visible .see-dot{ stroke:var(--bone); }
+  .see-hint{ margin-top:36px; text-align:center; font-family:var(--font-mono); font-size:13px; letter-spacing:.05em; text-transform:uppercase; color:var(--bone-faint); }
+  .see-legend{ margin-top:40px; display:grid; grid-template-columns:1fr 1fr; gap:0 40px; border-top:1px solid var(--ground-line); }
+  @media (max-width:760px){ .see-legend{ grid-template-columns:1fr; } }
+  .see-row{
+    display:flex; align-items:baseline; gap:18px; width:100%; padding:16px 0; text-align:left;
+    background:none; border:none; border-bottom:1px solid var(--ground-line); color:inherit; font:inherit; cursor:pointer;
+    transition:padding-left .3s ease;
+  }
+  .see-row:hover, .see-row:focus-visible{ padding-left:8px; outline:none; }
+  .see-row-num{ font-family:var(--font-mono); font-size:12px; color:var(--verdant); letter-spacing:.08em; flex:none; }
+  .see-row-body{ display:flex; flex-direction:column; gap:3px; }
+  .see-row-title{ font-family:var(--font-display); font-style:italic; font-size:17px; color:var(--bone); line-height:1.3; }
+  .see-row-lens{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; color:var(--bone-faint); }
+  .see-row:hover .see-row-lens, .see-row:focus-visible .see-row-lens{ color:var(--verdant); }
+  .see-system{ margin-top:88px; padding-top:48px; border-top:1px solid var(--ground-line); }
+  .see-chain{ margin-top:28px; display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
+  .see-chain-step{ font-family:var(--font-mono); font-size:13px; letter-spacing:.12em; color:var(--bone); }
+  .see-chain-arrow{ font-family:var(--font-mono); font-size:13px; color:var(--verdant); padding-left:2px; }
+  .see-close{ margin-top:36px; color:var(--bone); font-family:var(--font-display); font-style:italic; font-size:clamp(20px,2.6vw,25px); line-height:1.45; }
+  .see-strip{ margin-top:32px; }
+  /* entrance: path draws through the books in order, nodes land as it reaches them */
+  .seeing.pre-draw .see-path{ stroke-dasharray:1 2; stroke-dashoffset:1.02; }
+  .seeing.pre-draw .see-node, .seeing.pre-draw .see-runner, .seeing.pre-draw .see-echoes{ opacity:0; }
+  .seeing.pre-draw.in .see-path{ stroke-dashoffset:0; transition:stroke-dashoffset 4.2s cubic-bezier(.4,0,.3,1); }
+  .seeing.pre-draw.in .see-node{ opacity:1; transition:opacity .5s ease; }
+  .seeing.pre-draw.in .see-node:nth-of-type(1){ transition-delay:.1s; }
+  .seeing.pre-draw.in .see-node:nth-of-type(2){ transition-delay:.9s; }
+  .seeing.pre-draw.in .see-node:nth-of-type(3){ transition-delay:1.7s; }
+  .seeing.pre-draw.in .see-node:nth-of-type(4){ transition-delay:2.5s; }
+  .seeing.pre-draw.in .see-node:nth-of-type(5){ transition-delay:3.2s; }
+  .seeing.pre-draw.in .see-node:nth-of-type(6){ transition-delay:3.9s; }
+  .seeing.pre-draw.in .see-runner, .seeing.pre-draw.in .see-echoes{ opacity:1; transition:opacity 1s ease 4.4s; }
+  .seeing.pre-draw.in .see-echoes{ opacity:1; }
 
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
@@ -1385,6 +1440,122 @@
     </div>
   </section>
 
+  <section class="seeing" id="seeing">
+    <div class="wrap">
+      <span class="eyebrow">Seeing the System</span>
+      <h2>Learning to See the System</h2>
+      <p class="see-lede">Six books. Three lenses. One system for thinking.</p>
+      <p class="see-body">Each book adds a different way of seeing. Together, they move from self → people → business → systems → mental models → leverage.</p>
+
+      <!-- The map: the three lenses sit faintly behind, each book sits in the
+           lens (or overlap) it belongs to, and the progression path runs
+           01 → 06 through them. Thin dashed lines mark the pairs that echo
+           each other across the journey. -->
+      <div class="see-map">
+        <svg class="see-svg" viewBox="0 0 540 440" role="img" aria-label="A map of six books placed over the three lenses, Business, System, and People, joined by one path from See Yourself to See the Leverage.">
+          <defs>
+            <path id="seePathDef" d="M270,352 C256.0,337.0 206.0,297.0 186,262 C166.0,227.0 115.7,162.0 150,142 C184.3,122.0 372.0,128.7 392,142 C412.0,155.3 290.3,230.3 270,222 C249.7,213.7 270.0,113.7 270,92"/>
+          </defs>
+          <g class="see-lenses" aria-hidden="true">
+            <circle class="see-lens" cx="220" cy="180" r="130"/>
+            <circle class="see-lens" cx="320" cy="180" r="130"/>
+            <circle class="see-lens" cx="270" cy="267" r="130"/>
+            <text class="see-lens-label" x="118" y="70">BUSINESS</text>
+            <text class="see-lens-label" x="422" y="70" text-anchor="end">SYSTEM</text>
+            <text class="see-lens-label" x="270" y="418" text-anchor="middle">PEOPLE</text>
+          </g>
+          <g class="see-echoes" aria-hidden="true">
+            <line x1="270" y1="352" x2="270" y2="222"/>
+            <line x1="186" y1="262" x2="392" y2="142"/>
+            <line x1="150" y1="142" x2="270" y2="92"/>
+          </g>
+          <path class="see-path" pathLength="1" d="M270,352 C256.0,337.0 206.0,297.0 186,262 C166.0,227.0 115.7,162.0 150,142 C184.3,122.0 372.0,128.7 392,142 C412.0,155.3 290.3,230.3 270,222 C249.7,213.7 270.0,113.7 270,92"/>
+          <circle class="see-runner" r="3.6" aria-hidden="true">
+            <animateMotion dur="18s" repeatCount="indefinite" calcMode="linear"><mpath href="#seePathDef"/></animateMotion>
+          </circle>
+          <g class="see-node" tabindex="0" role="button" aria-label="01: The 15 Commitments of Conscious Leadership, See Yourself" data-eyebrow="01 · The 15 Commitments of Conscious Leadership" data-heading="See Yourself" data-text="Core idea: Awareness precedes choice.&#10;&#10;Notice your assumptions, emotions, stories, and patterns before they shape your decisions. The prerequisite to better thinking is recognizing that you are part of the system you're trying to understand." data-keywords="Reveals: Self-awareness → choice → responsibility">
+            <circle class="see-hit" cx="270" cy="352" r="26"/>
+            <circle class="see-dot" cx="270" cy="352" r="15"/>
+            <text class="see-num" x="270" y="352">01</text>
+            <text class="see-label" x="270" y="386" text-anchor="middle">SEE YOURSELF</text>
+          </g>
+          <g class="see-node" tabindex="0" role="button" aria-label="02: Trillion Dollar Coach, See People" data-eyebrow="02 · Trillion Dollar Coach" data-heading="See People" data-text="Core idea: People perform better when they feel trusted, challenged, and supported.&#10;&#10;Leadership isn't primarily about having answers. It's about creating the conditions for other people to think, grow, and perform at their best." data-keywords="Reveals: Trust → relationships → collective performance">
+            <circle class="see-hit" cx="186" cy="262" r="26"/>
+            <circle class="see-dot" cx="186" cy="262" r="15"/>
+            <text class="see-num" x="186" y="262">02</text>
+            <text class="see-label" x="162" y="266" text-anchor="end">SEE PEOPLE</text>
+          </g>
+          <g class="see-node" tabindex="0" role="button" aria-label="03: What the CEO Wants You to Know, See Value" data-eyebrow="03 · What the CEO Wants You to Know" data-heading="See Value" data-text="Core idea: Every organization is a system for creating value.&#10;&#10;Understand customers, revenue, costs, cash, and the basic mechanics of a business. Once you understand how value moves through the organization, your own work becomes part of a larger picture." data-keywords="Reveals: Customer → value → economics">
+            <circle class="see-hit" cx="150" cy="142" r="26"/>
+            <circle class="see-dot" cx="150" cy="142" r="15"/>
+            <text class="see-num" x="150" y="142">03</text>
+            <text class="see-label" x="126" y="146" text-anchor="end">SEE VALUE</text>
+          </g>
+          <g class="see-node" tabindex="0" role="button" aria-label="04: How Google Works, See the System" data-eyebrow="04 · How Google Works" data-heading="See the System" data-text="Core idea: Outcomes are shaped by the environment around people.&#10;&#10;Culture, information, autonomy, incentives, talent, and decision-making systems determine what an organization is capable of. Don't just manage the output. Design the conditions that produce it." data-keywords="Reveals: Environment → behavior → outcomes">
+            <circle class="see-hit" cx="392" cy="142" r="26"/>
+            <circle class="see-dot" cx="392" cy="142" r="15"/>
+            <text class="see-num" x="392" y="142">04</text>
+            <text class="see-label" x="416" y="146" text-anchor="start">SEE THE SYSTEM</text>
+          </g>
+          <g class="see-node" tabindex="0" role="button" aria-label="05: Poor Charlie's Almanack, See the Pattern" data-eyebrow="05 · Poor Charlie's Almanack" data-heading="See the Pattern" data-text="Core idea: No single mental model explains reality.&#10;&#10;Use incentives, inversion, first principles, probability, opportunity cost, and other models to look at the same problem from different angles. The goal isn't to collect frameworks. It's to recognize patterns." data-keywords="Reveals: Models → patterns → judgment">
+            <circle class="see-hit" cx="270" cy="222" r="26"/>
+            <circle class="see-dot" cx="270" cy="222" r="15"/>
+            <text class="see-num" x="270" y="222">05</text>
+            <text class="see-label" x="294" y="226" text-anchor="start">SEE THE PATTERN</text>
+          </g>
+          <g class="see-node" tabindex="0" role="button" aria-label="06: High Output Management, See the Leverage" data-eyebrow="06 · High Output Management" data-heading="See the Leverage" data-text="Core idea: The best results don't always come from doing more. They come from improving the system.&#10;&#10;Find the bottleneck. Improve the process. Delegate. Multiply the effectiveness of others. Focus your effort where a small intervention can create a much larger outcome." data-keywords="Reveals: Systems → leverage → output">
+            <circle class="see-hit" cx="270" cy="92" r="26"/>
+            <circle class="see-dot" cx="270" cy="92" r="15"/>
+            <text class="see-num" x="270" y="92">06</text>
+            <text class="see-label" x="294" y="96" text-anchor="start">SEE THE LEVERAGE</text>
+          </g>
+        </svg>
+      </div>
+      <p class="see-hint">Click a number to see what each book reveals.</p>
+
+      <div class="see-legend">
+        <button class="see-row" type="button" data-eyebrow="01 · The 15 Commitments of Conscious Leadership" data-heading="See Yourself" data-text="Core idea: Awareness precedes choice.&#10;&#10;Notice your assumptions, emotions, stories, and patterns before they shape your decisions. The prerequisite to better thinking is recognizing that you are part of the system you're trying to understand." data-keywords="Reveals: Self-awareness → choice → responsibility">
+          <span class="see-row-num">01</span>
+          <span class="see-row-body"><span class="see-row-title">The 15 Commitments of Conscious Leadership</span><span class="see-row-lens">SEE YOURSELF</span></span>
+        </button>
+        <button class="see-row" type="button" data-eyebrow="02 · Trillion Dollar Coach" data-heading="See People" data-text="Core idea: People perform better when they feel trusted, challenged, and supported.&#10;&#10;Leadership isn't primarily about having answers. It's about creating the conditions for other people to think, grow, and perform at their best." data-keywords="Reveals: Trust → relationships → collective performance">
+          <span class="see-row-num">02</span>
+          <span class="see-row-body"><span class="see-row-title">Trillion Dollar Coach</span><span class="see-row-lens">SEE PEOPLE</span></span>
+        </button>
+        <button class="see-row" type="button" data-eyebrow="03 · What the CEO Wants You to Know" data-heading="See Value" data-text="Core idea: Every organization is a system for creating value.&#10;&#10;Understand customers, revenue, costs, cash, and the basic mechanics of a business. Once you understand how value moves through the organization, your own work becomes part of a larger picture." data-keywords="Reveals: Customer → value → economics">
+          <span class="see-row-num">03</span>
+          <span class="see-row-body"><span class="see-row-title">What the CEO Wants You to Know</span><span class="see-row-lens">SEE VALUE</span></span>
+        </button>
+        <button class="see-row" type="button" data-eyebrow="04 · How Google Works" data-heading="See the System" data-text="Core idea: Outcomes are shaped by the environment around people.&#10;&#10;Culture, information, autonomy, incentives, talent, and decision-making systems determine what an organization is capable of. Don't just manage the output. Design the conditions that produce it." data-keywords="Reveals: Environment → behavior → outcomes">
+          <span class="see-row-num">04</span>
+          <span class="see-row-body"><span class="see-row-title">How Google Works</span><span class="see-row-lens">SEE THE SYSTEM</span></span>
+        </button>
+        <button class="see-row" type="button" data-eyebrow="05 · Poor Charlie's Almanack" data-heading="See the Pattern" data-text="Core idea: No single mental model explains reality.&#10;&#10;Use incentives, inversion, first principles, probability, opportunity cost, and other models to look at the same problem from different angles. The goal isn't to collect frameworks. It's to recognize patterns." data-keywords="Reveals: Models → patterns → judgment">
+          <span class="see-row-num">05</span>
+          <span class="see-row-body"><span class="see-row-title">Poor Charlie's Almanack</span><span class="see-row-lens">SEE THE PATTERN</span></span>
+        </button>
+        <button class="see-row" type="button" data-eyebrow="06 · High Output Management" data-heading="See the Leverage" data-text="Core idea: The best results don't always come from doing more. They come from improving the system.&#10;&#10;Find the bottleneck. Improve the process. Delegate. Multiply the effectiveness of others. Focus your effort where a small intervention can create a much larger outcome." data-keywords="Reveals: Systems → leverage → output">
+          <span class="see-row-num">06</span>
+          <span class="see-row-body"><span class="see-row-title">High Output Management</span><span class="see-row-lens">SEE THE LEVERAGE</span></span>
+        </button>
+      </div>
+
+      <div class="see-system">
+        <span class="eyebrow">The System</span>
+        <div class="see-chain" aria-label="See yourself, then people, then value, then the system, then the pattern, then the leverage"><span class="see-chain-step">SEE YOURSELF</span><span class="see-chain-arrow" aria-hidden="true">↓</span><span class="see-chain-step">SEE PEOPLE</span><span class="see-chain-arrow" aria-hidden="true">↓</span><span class="see-chain-step">SEE VALUE</span><span class="see-chain-arrow" aria-hidden="true">↓</span><span class="see-chain-step">SEE THE SYSTEM</span><span class="see-chain-arrow" aria-hidden="true">↓</span><span class="see-chain-step">SEE THE PATTERN</span><span class="see-chain-arrow" aria-hidden="true">↓</span><span class="see-chain-step">SEE THE LEVERAGE</span></div>
+        <p class="see-body see-close">The progression isn't really about becoming better at management.<br>It's about becoming better at seeing.</p>
+        <p class="see-body">The more clearly you see, the less you have to react. You begin to understand why things happen, recognize what actually matters, and choose where your effort can have the greatest effect.</p>
+        <p class="see-body">Take in the ideas. Reveal the connections. Make something better.</p>
+        <div class="path-strip see-strip" aria-label="Knowledge, then understanding, then judgment, then agency">
+          <span class="path-step">Knowledge</span><span class="path-arrow">→</span>
+          <span class="path-step">Understanding</span><span class="path-arrow">→</span>
+          <span class="path-step">Judgment</span><span class="path-arrow">→</span>
+          <span class="path-step now">Agency</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="close" id="contact">
     <div class="wrap">
       <h2>Have an interesting problem?</h2>
@@ -1421,7 +1592,7 @@
   /* SMIL ignores the CSS reduced-motion override, so remove it explicitly.
      Each scene's static attributes are its settled first frame. */
   if(reduced){
-    document.querySelectorAll('.aspen-scene animate, .decision-scene animate, .water-scene animateTransform, .water-scene animate').forEach(function(a){ a.remove(); });
+    document.querySelectorAll('.aspen-scene animate, .decision-scene animate, .water-scene animateTransform, .water-scene animate, .see-svg animateMotion').forEach(function(a){ a.remove(); });
   }
 
   /* ---------- signal line: hero (interactive) ---------- */
@@ -1561,6 +1732,14 @@
     whenArrived(turn, 0.7, function(){ turn.classList.add('in'); });
   }
 
+  /* ---------- seeing-the-system map: draw the path once, on arrival ---------- */
+  var seeing = document.querySelector('.seeing');
+  var seeSvg = seeing && seeing.querySelector('.see-svg');
+  if(seeing && seeSvg && 'IntersectionObserver' in window && !reduced){
+    seeing.classList.add('pre-draw');
+    whenArrived(seeSvg, 0.35, function(){ seeing.classList.add('in'); });
+  }
+
   /* ---------- nav progress + active link ---------- */
   var hairlineFill = document.getElementById('hairlineFill');
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.topnav-links a'));
@@ -1659,7 +1838,7 @@
       lensModalEyebrow.textContent = el.dataset.eyebrow;
       lensModalHeading.textContent = el.dataset.heading;
       lensModalText.textContent = el.dataset.text;
-      lensModal.classList.toggle('lens-modal--loop', el.classList.contains('loop-card'));
+      lensModal.classList.toggle('lens-modal--loop', el.classList.contains('loop-card') || el.classList.contains('see-node') || el.classList.contains('see-row'));
       if(el.dataset.keywords){
         lensModalKeywords.textContent = el.dataset.keywords;
         lensModalKeywords.hidden = false;
@@ -1690,6 +1869,14 @@
     });
     document.querySelectorAll('.loop-card').forEach(function(c){
       c.addEventListener('click', function(){ openLensModal(c); });
+    });
+    document.querySelectorAll('.see-node, .see-row').forEach(function(n){
+      n.addEventListener('click', function(){ openLensModal(n); });
+      if(n.tagName.toLowerCase() !== 'button'){
+        n.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLensModal(n); }
+        });
+      }
     });
     lensModalClose.addEventListener('click', closeLensModal);
     lensOverlay.addEventListener('click', function(e){
