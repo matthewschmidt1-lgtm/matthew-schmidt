@@ -518,6 +518,52 @@
   .seeing.pre-draw.in .net-theme{ transition-delay:1.2s; }
   .seeing.pre-draw.in .net-book{ transition-delay:2.2s; }
 
+  /* ---- phones: landscape fits the whole network, portrait drills down ---- */
+  @media (max-width:900px) and (orientation:landscape){
+    .net-scroll{ overflow:visible; }
+    .net-svg{ min-width:0; }
+  }
+  .net-drill{ display:none; margin-top:28px; }
+  @media (max-width:760px) and (orientation:portrait){
+    .seeing.has-drill .net-scroll{ display:none; }
+    .seeing.has-drill .net-drill{ display:block; }
+  }
+  .drill-mult{
+    display:flex; flex-direction:column; align-items:center; gap:4px; width:120px; height:120px; margin:0 auto;
+    justify-content:center; border-radius:50%; border:1.5px solid var(--verdant); background:rgba(92,152,115,.14);
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; color:var(--bone); text-align:center;
+  }
+  .drill-mult small{ font-family:var(--font-display); font-style:italic; font-size:11px; letter-spacing:0; color:var(--bone-dim); text-transform:none; }
+  .drill-stem{ width:1px; height:26px; margin:0 auto; background:var(--ground-line); }
+  .drill-lenses{ display:flex; justify-content:center; gap:14px; }
+  .drill-lens{
+    width:88px; height:88px; border-radius:50%; cursor:pointer;
+    border:1.5px solid var(--verdant); background:rgba(92,152,115,.14); color:var(--bone);
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; transition:background .25s ease;
+  }
+  .drill-lens[aria-selected="true"]{ background:var(--verdant-deep); }
+  .drill-lens:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; }
+  .drill-tree{ margin-top:26px; }
+  .drill-lens-head{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; color:var(--bone-faint); }
+  .drill-ideas{ list-style:none; margin:12px 0 0; padding:0 0 0 14px; border-left:1px solid var(--ground-line); }
+  .drill-ideas > li{ position:relative; padding:10px 0 10px 14px; }
+  .drill-ideas > li::before{ content:""; position:absolute; left:-14px; top:22px; width:22px; height:1px; background:var(--ground-line); }
+  .drill-idea{ display:flex; flex-direction:column; gap:2px; }
+  .drill-idea-label{ font-family:var(--font-mono); font-size:13px; letter-spacing:.1em; color:var(--bone); }
+  .drill-idea-sub{ font-family:var(--font-display); font-style:italic; font-size:14px; color:var(--bone-dim); }
+  .drill-books{ list-style:none; margin:8px 0 0; padding:0 0 0 14px; border-left:1px solid var(--ground-line); }
+  .drill-books > li{ position:relative; }
+  .drill-books > li::before{ content:""; position:absolute; left:-14px; top:50%; width:14px; height:1px; background:var(--ground-line); }
+  .drill-book{
+    display:flex; align-items:center; gap:10px; width:100%; padding:8px 0 8px 12px; cursor:pointer; text-align:left;
+    background:none; border:0; color:inherit; font:inherit;
+  }
+  .drill-book::before{ content:""; flex:none; width:9px; height:9px; border-radius:50%; background:var(--verdant); }
+  .drill-book-label{ font-family:var(--font-mono); font-size:12.5px; letter-spacing:.08em; color:var(--bone); }
+  .drill-book-title{ font-family:var(--font-display); font-style:italic; font-size:14px; color:var(--bone-dim); }
+  .drill-book:hover .drill-book-title, .drill-book:focus-visible .drill-book-title{ color:var(--bone); }
+  .drill-book:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; border-radius:2px; }
+
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
   .room .eyebrow{ color:var(--verdant-deep); }
@@ -1558,6 +1604,10 @@
           </g>
         </svg>
       </div>
+      <!-- Portrait phones: the same network one layer at a time. Built by JS
+           from the SVG above (single source of truth); the SVG stays as the
+           fallback if that never runs. -->
+      <div class="net-drill" aria-label="The network, one lens at a time"></div>
       <div class="see-system">
         <div class="path-strip see-strip" aria-label="Knowledge, then understanding, then judgment, then agency">
           <span class="path-step">Knowledge</span><span class="path-arrow">→</span>
@@ -1851,7 +1901,7 @@
       lensModalEyebrow.textContent = el.dataset.eyebrow;
       lensModalHeading.textContent = el.dataset.heading;
       lensModalText.textContent = el.dataset.text;
-      lensModal.classList.toggle('lens-modal--loop', el.classList.contains('loop-card') || el.classList.contains('net-book'));
+      lensModal.classList.toggle('lens-modal--loop', el.classList.contains('loop-card') || el.classList.contains('net-book') || el.classList.contains('drill-book'));
       if(el.dataset.keywords){
         lensModalKeywords.textContent = el.dataset.keywords;
         lensModalKeywords.hidden = false;
@@ -1885,6 +1935,10 @@
     });
     document.querySelectorAll('.net-book').forEach(function(n){
       n.addEventListener('click', function(){ openLensModal(n); });
+    });
+    document.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('.drill-book');
+      if(b) openLensModal(b);
     });
     lensModalClose.addEventListener('click', closeLensModal);
     lensOverlay.addEventListener('click', function(e){
@@ -1920,6 +1974,73 @@
       if(e.target === certOverlay) closeCertModal();
     });
   }
+
+  /* ---------- portrait phones: the network one lens at a time ----------
+     Built from the SVG so there is one source of truth: edges give the
+     links, node labels give the words, book nodes carry the modal data. */
+  (function buildDrill(){
+    var sec = document.querySelector('.seeing');
+    var svg = sec && sec.querySelector('.net-svg');
+    var drill = sec && sec.querySelector('.net-drill');
+    if(!svg || !drill) return;
+    var nodes = {};
+    Array.prototype.forEach.call(svg.querySelectorAll('.net-node'), function(n){
+      var labels = n.querySelectorAll('.net-label');
+      nodes[n.dataset.id] = {
+        el: n,
+        label: Array.prototype.map.call(labels, function(t){ return t.textContent; }).join(' '),
+        sub: (n.querySelector('.net-sub') || {}).textContent || ''
+      };
+    });
+    var into = {}; // target -> [sources]
+    Array.prototype.forEach.call(svg.querySelectorAll('.net-edge'), function(e){
+      (into[e.dataset.to] = into[e.dataset.to] || []).push(e.dataset.from);
+    });
+    var lensIds = into['m'] || [];
+    if(!lensIds.length) return;
+
+    function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+    function copyData(from){
+      return Object.keys(from.dataset).filter(function(k){ return /^(eyebrow|heading|text|keywords)$/.test(k); })
+        .map(function(k){ return 'data-' + k + '="' + esc(from.dataset[k]) + '"'; }).join(' ');
+    }
+    function tree(lensId){
+      var html = '<div class="drill-lens-head">' + esc(nodes[lensId].label) + ' · fed by</div><ul class="drill-ideas">';
+      (into[lensId] || []).forEach(function(t){
+        html += '<li><div class="drill-idea"><span class="drill-idea-label">' + esc(nodes[t].label) + '</span>' +
+                '<span class="drill-idea-sub">' + esc(nodes[t].sub) + '</span></div><ul class="drill-books">';
+        (into[t] || []).forEach(function(b){
+          var bl = nodes[b].label.split(' · ');
+          html += '<li><button type="button" class="drill-book" ' + copyData(nodes[b].el) + '>' +
+                  '<span class="drill-book-label">' + esc(bl[0]) + '</span>' +
+                  '<span class="drill-book-title">' + esc(nodes[b].sub) + '</span></button></li>';
+        });
+        html += '</ul></li>';
+      });
+      return html + '</ul>';
+    }
+
+    drill.innerHTML =
+      '<div class="drill-mult">THE MULTIPLIER<small>where the three lenses meet</small></div>' +
+      '<div class="drill-stem"></div>' +
+      '<div class="drill-lenses" role="tablist" aria-label="Lenses">' +
+        lensIds.map(function(id, i){
+          return '<button type="button" class="drill-lens" role="tab" data-lens="' + id + '" aria-selected="' + (i===0) + '">' + esc(nodes[id].label) + '</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="drill-tree" aria-live="polite"></div>';
+    var treeEl = drill.querySelector('.drill-tree');
+    var tabs = drill.querySelectorAll('.drill-lens');
+    function select(id){
+      Array.prototype.forEach.call(tabs, function(t){ t.setAttribute('aria-selected', String(t.dataset.lens === id)); });
+      treeEl.innerHTML = tree(id);
+    }
+    Array.prototype.forEach.call(tabs, function(t){
+      t.addEventListener('click', function(){ select(t.dataset.lens); });
+    });
+    select(lensIds[0]);
+    sec.classList.add('has-drill');
+  })();
 
   /* ---------- the network: trace a node's path; books open their modal ---------- */
   var netSvg = document.querySelector('.seeing .net-svg');
