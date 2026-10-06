@@ -554,7 +554,8 @@
   .drill-ideas{ list-style:none; margin:12px 0 0; padding:0 0 0 14px; border-left:1px solid var(--ground-line); }
   .drill-ideas > li{ position:relative; padding:10px 0 10px 14px; }
   .drill-ideas > li::before{ content:""; position:absolute; left:-14px; top:22px; width:22px; height:1px; background:var(--ground-line); }
-  .drill-idea{ display:flex; flex-direction:column; gap:2px; }
+  .drill-idea{ display:flex; flex-direction:column; align-items:flex-start; gap:2px; width:100%; padding:0; background:none; border:0; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+  .drill-idea:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; border-radius:2px; }
   .drill-idea-label{ font-family:var(--font-mono); font-size:13px; letter-spacing:.1em; color:var(--bone); }
   .drill-idea-sub{ font-family:var(--font-display); font-style:italic; font-size:14px; color:var(--bone-dim); }
   .drill-books{ list-style:none; margin:8px 0 0; padding:0 0 0 14px; border-left:1px solid var(--ground-line); }
@@ -569,6 +570,16 @@
   .drill-book-title{ font-family:var(--font-display); font-style:italic; font-size:14px; color:var(--bone-dim); }
   .drill-book:hover .drill-book-title, .drill-book:focus-visible .drill-book-title{ color:var(--bone); }
   .drill-book:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; border-radius:2px; }
+
+  /* ---- shared-idea pop-ups ---- */
+  .book-modal.idea-modal{ max-width:640px; padding-top:36px; padding-bottom:48px; }
+  .idea-modal-eyebrow{ font-size:12.5px; letter-spacing:.12em; }
+  .idea-modal-body{ margin-top:22px; padding-top:22px; border-top:1px solid var(--ground-line); }
+  .idea-block + .idea-block{ margin-top:20px; }
+  .idea-block-label{ display:block; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--verdant); }
+  .idea-block p{ margin-top:6px; color:var(--bone-dim); font-size:16.5px; line-height:1.7; }
+  .idea-block-ask p{ font-family:var(--font-display); font-style:italic; font-size:19px; line-height:1.5; color:var(--bone); }
+  .net-theme{ cursor:pointer; }
 
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
@@ -1625,6 +1636,15 @@
     </div>
   </section>
 
+  <div class="book-modal-overlay" id="ideaModalOverlay" hidden>
+    <div class="book-modal idea-modal" role="dialog" aria-modal="true" aria-labelledby="ideaModalHeading" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="lens-modal-eyebrow idea-modal-eyebrow" id="ideaModalEyebrow"></span>
+      <span class="lens-modal-heading" id="ideaModalHeading"></span>
+      <div class="idea-modal-body" id="ideaModalBody"></div>
+    </div>
+  </div>
+
   <section class="close" id="contact">
     <div class="wrap">
       <h2>Have an interesting problem?</h2>
@@ -1983,6 +2003,114 @@
     });
   }
 
+  /* ---------- shared-idea pop-ups (network nodes and the phone drill-down) ---------- */
+  var ideaData = {
+      "t1": {
+          "name": "Awareness",
+          "tag": "See your own part.",
+          "healthy": "People examine their own assumptions and contribution before diagnosing others.",
+          "warning": "Blame increases. Defensiveness increases. The same problem keeps happening despite repeated attempts to \"fix\" other people.",
+          "pattern": "The organization is treating problems as something other people have rather than something the system is producing.",
+          "move": "Before solving the problem, examine your own role in creating or maintaining it.",
+          "ask": "What might I be contributing that I can't currently see?"
+      },
+      "t2": {
+          "name": "Trust",
+          "tag": "Create the conditions for people to do their best work.",
+          "healthy": "People tell the truth, ask for help, challenge ideas, take risks, and recover from mistakes.",
+          "warning": "People stay quiet in meetings. Problems surface late. Everyone agrees publicly and disagrees privately.",
+          "pattern": "People are managing their relationship with authority rather than focusing entirely on the work.",
+          "move": "Reward candor, especially when the information is uncomfortable.",
+          "ask": "What truth are people least likely to tell me?"
+      },
+      "t3": {
+          "name": "Conditions",
+          "tag": "Design the environment, not just the behavior.",
+          "healthy": "The environment makes the desired behavior relatively easy and the right priorities visible.",
+          "warning": "People are constantly told to \"communicate better,\" \"take ownership,\" or \"prioritize,\" but the system keeps producing the opposite.",
+          "pattern": "The organization is trying to change people without changing the conditions around them.",
+          "move": "Change the environment that produces the behavior.",
+          "ask": "What are our current conditions making almost inevitable?"
+      },
+      "t4": {
+          "name": "Value",
+          "tag": "Know what actually creates value.",
+          "healthy": "People understand who they serve, what matters to them, and how their work contributes to the outcome.",
+          "warning": "More activity, more meetings, more reports, but little movement in meaningful outcomes.",
+          "pattern": "Activity has become a proxy for value.",
+          "move": "Trace work all the way to the customer or business outcome.",
+          "ask": "If we stopped doing this, who would actually lose value?"
+      },
+      "t5": {
+          "name": "Incentives",
+          "tag": "Look at what the system actually rewards.",
+          "healthy": "The behaviors that get rewarded are broadly aligned with what the organization says it values.",
+          "warning": "People optimize metrics, protect their territory, avoid risk, or pursue short-term wins despite the stated strategy.",
+          "pattern": "The real strategy is being communicated through consequences, not words.",
+          "move": "Examine what gets rewarded, promoted, measured, celebrated, and tolerated.",
+          "ask": "What behavior are we unintentionally paying people to produce?"
+      },
+      "t6": {
+          "name": "Leverage",
+          "tag": "Find where effort multiplies.",
+          "healthy": "A decision, process improvement, relationship, or coaching intervention improves outcomes far beyond the initial effort.",
+          "warning": "Leaders are busy everywhere but progress is slow. More people and more effort aren't producing proportional results.",
+          "pattern": "Effort is being applied to symptoms instead of constraints or high-leverage points.",
+          "move": "Find the point where changing one thing changes many things.",
+          "ask": "Where would one hour of attention create the greatest downstream impact?"
+      }
+  };
+  var ideaOverlay = document.getElementById('ideaModalOverlay');
+  var openIdeaModal = null;
+  if(ideaOverlay){
+    var ideaModal = ideaOverlay.querySelector('.book-modal');
+    var ideaClose = ideaOverlay.querySelector('.book-modal-close');
+    var ideaEyebrow = document.getElementById('ideaModalEyebrow');
+    var ideaHeading = document.getElementById('ideaModalHeading');
+    var ideaBody = document.getElementById('ideaModalBody');
+    var ideaLastTrigger = null;
+    function escText(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+    function ideaBlock(label, text, cls){
+      return '<div class="idea-block' + (cls ? ' ' + cls : '') + '"><span class="idea-block-label">' + label + '</span><p>' + escText(text) + '</p></div>';
+    }
+    function onIdeaKeydown(e){
+      if(e.key === 'Escape') closeIdeaModal();
+      else if(e.key === 'Tab'){ e.preventDefault(); ideaClose.focus(); }
+    }
+    openIdeaModal = function(id, trigger){
+      var d = ideaData[id];
+      if(!d) return;
+      ideaLastTrigger = trigger || null;
+      ideaEyebrow.textContent = 'Shared idea';
+      ideaHeading.textContent = d.name + '. ' + d.tag;
+      ideaBody.innerHTML =
+        ideaBlock('Healthy', d.healthy) +
+        ideaBlock('Warning signs', d.warning) +
+        ideaBlock('The pattern', d.pattern) +
+        ideaBlock('The move', d.move) +
+        ideaBlock('Ask', d.ask, 'idea-block-ask');
+      ideaOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      ideaModal.focus();
+      document.addEventListener('keydown', onIdeaKeydown);
+    };
+    function closeIdeaModal(){
+      ideaOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onIdeaKeydown);
+      if(ideaLastTrigger && ideaLastTrigger.focus) ideaLastTrigger.focus();
+    }
+    ideaClose.addEventListener('click', closeIdeaModal);
+    ideaOverlay.addEventListener('click', function(e){
+      if(e.target === ideaOverlay) closeIdeaModal();
+    });
+    // the phone drill-down rebuilds its idea buttons per lens, so delegate
+    document.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('.drill-idea');
+      if(b && b.dataset.idea) openIdeaModal(b.dataset.idea, b);
+    });
+  }
+
   /* ---------- portrait phones: the network one lens at a time ----------
      Built from the SVG so there is one source of truth: edges give the
      links, node labels give the words, book nodes carry the modal data. */
@@ -2015,8 +2143,8 @@
     function tree(lensId){
       var html = '<div class="drill-lens-head">' + esc(nodes[lensId].label) + ' · fed by</div><ul class="drill-ideas">';
       (into[lensId] || []).forEach(function(t){
-        html += '<li><div class="drill-idea"><span class="drill-idea-label">' + esc(nodes[t].label) + '</span>' +
-                '<span class="drill-idea-sub">' + esc(nodes[t].sub) + '</span></div><ul class="drill-books">';
+        html += '<li><button type="button" class="drill-idea" data-idea="' + esc(t) + '"><span class="drill-idea-label">' + esc(nodes[t].label) + '</span>' +
+                '<span class="drill-idea-sub">' + esc(nodes[t].sub) + '</span></button><ul class="drill-books">';
         (into[t] || []).forEach(function(b){
           var bl = nodes[b].label.split(' · ');
           html += '<li><button type="button" class="drill-book" ' + copyData(nodes[b].el) + '>' +
@@ -2085,6 +2213,7 @@
       n.addEventListener('blur', netClear);
       n.addEventListener('click', function(){
         if(n.classList.contains('net-book')) return; // opens its modal (wired with the lens modal)
+        if(n.classList.contains('net-theme') && openIdeaModal){ openIdeaModal(n.dataset.id, n); return; }
         netPinned = (netPinned === n.dataset.id) ? null : n.dataset.id;
         if(netPinned) netTrace(netPinned); else netClear();
       });
