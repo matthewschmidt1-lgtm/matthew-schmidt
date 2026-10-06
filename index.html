@@ -1488,10 +1488,10 @@
       <p class="net-intro">The System helps you see beneath the complexity.</p>
       <p class="net-intro net-intro-2">Complexity becomes clearer when we learn to see the patterns and relationships that shape it.</p>
       <div class="net-scroll">
-        <svg class="net-svg" viewBox="0 0 1040 530" role="img" aria-label="A network: The Multiplier on the left, fed by the People, Business, and System lenses, which are fed by six shared ideas, which are fed by six books on the right.">
+        <svg class="net-svg" viewBox="0 0 1040 530" role="img" aria-label="A network: The Multiplier on the left, fed by the People, Business, and System lenses, which are fed by six forces, which are fed by six books on the right.">
           <g class="net-heads" aria-hidden="true">
             <text x="290" y="24" text-anchor="middle">LENSES</text>
-            <text x="580" y="24" text-anchor="middle">SHARED IDEAS</text>
+            <text x="580" y="24" text-anchor="middle">FORCES</text>
             <text x="800" y="24" text-anchor="start">BOOKS</text>
           </g>
           <g class="net-edges">
@@ -2081,7 +2081,7 @@
       var d = ideaData[id];
       if(!d) return;
       ideaLastTrigger = trigger || null;
-      ideaEyebrow.textContent = 'Shared idea';
+      ideaEyebrow.textContent = 'Force';
       ideaHeading.textContent = d.name + '. ' + d.tag;
       ideaBody.innerHTML =
         ideaBlock('Healthy', d.healthy) +
