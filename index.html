@@ -483,57 +483,19 @@
   .built-divider + .room{ padding-top:64px; }
 
   /* ================= SEEING THE SYSTEM ================= */
-  .seeing{ background:var(--ground); border-top:1px solid var(--ground-line); }
+  .seeing{ background:var(--ground); padding-top:0; }
   .seeing h2{ margin-top:14px; font-size:clamp(24px,3.6vw,39px); max-width:20ch; line-height:1.18; }
   .see-body{ margin-top:18px; max-width:58ch; font-size:18px; line-height:1.7; color:var(--bone-dim); }
-  .see-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
-  @media (max-width:820px){ .see-grid{ grid-template-columns:1fr; gap:40px; } }
-  .see-system{ margin-top:0; }
   .see-close{ margin-top:36px; color:var(--bone); font-family:var(--font-display); font-style:italic; font-size:clamp(20px,2.6vw,25px); line-height:1.45; }
   .see-strip{ margin-top:32px; }
-  .see-list{ list-style:none; margin:0; padding:0; position:relative; }
-  .see-list::before{ content:""; position:absolute; left:20px; top:28px; bottom:28px; width:1px; background:var(--ground-line); transform-origin:top; }
-  .see-list li{ position:relative; }
-  .see-node{ display:flex; align-items:center; gap:18px; width:100%; padding:14px 0; background:none; border:0; text-align:left; color:inherit; font:inherit; cursor:pointer; }
-  .see-num{ flex:none; width:41px; height:41px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:var(--ground); border:1px solid var(--verdant); font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--bone); position:relative; transition:background .25s ease; }
-  .see-step{ flex:1; min-width:0; display:flex; flex-direction:column; gap:4px; }
-  .see-label{ font-family:var(--font-mono); font-size:13px; letter-spacing:.12em; color:var(--bone); }
-  .see-book{ font-family:var(--font-display); font-style:italic; font-size:15px; line-height:1.3; color:var(--bone-dim); }
-  .see-bookline{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; }
-  .see-tag{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-faint); }
-  .see-node:hover .see-num, .see-node:focus-visible .see-num{ background:var(--verdant-deep); }
-  .see-node:hover .see-book, .see-node:focus-visible .see-book{ color:var(--bone); }
-  @media (max-width:520px){ .see-node{ gap:14px; } }
-  .see-hint{ margin-top:22px; font-family:var(--font-mono); font-size:13px; letter-spacing:.05em; text-transform:uppercase; color:var(--bone-faint); }
-  /* entrance: the line draws down, steps fade in behind it */
-  .seeing.pre-draw .see-list::before{ transform:scaleY(0); }
-  .seeing.pre-draw .see-list li{ opacity:0; }
-  .seeing.pre-draw.in .see-list::before{ transform:scaleY(1); transition:transform 2.4s cubic-bezier(.4,0,.3,1); }
-  .seeing.pre-draw.in .see-list li{ opacity:1; transition:opacity .6s ease; }
-  .seeing.pre-draw.in .see-list li:nth-child(1){ transition-delay:.1s; }
-  .seeing.pre-draw.in .see-list li:nth-child(2){ transition-delay:.5s; }
-  .seeing.pre-draw.in .see-list li:nth-child(3){ transition-delay:.9s; }
-  .seeing.pre-draw.in .see-list li:nth-child(4){ transition-delay:1.3s; }
-  .seeing.pre-draw.in .see-list li:nth-child(5){ transition-delay:1.7s; }
-  .seeing.pre-draw.in .see-list li:nth-child(6){ transition-delay:2.1s; }
-
-  .see-open{
-    margin-top:22px; display:inline-flex; align-items:center; gap:8px; cursor:pointer;
-    font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
-    color:var(--verdant); background:none; border:1px solid var(--verdant); border-radius:2px; padding:11px 16px;
-    transition:background .25s ease, color .25s ease;
-  }
-  .see-open:hover, .see-open:focus-visible{ background:var(--verdant); color:var(--ground); outline:none; }
-  /* ---- the network modal: books -> shared ideas -> lenses -> The Multiplier ---- */
-  .book-modal.net-modal{ max-width:1180px; padding:48px 36px 28px; }
-  .net-intro{ margin:8px 0 18px; max-width:66ch; font-size:15.5px; line-height:1.65; color:var(--bone-dim); }
-  .net-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
-  .net-svg{ display:block; width:100%; min-width:860px; height:auto; }
+  .net-intro{ margin-top:18px; max-width:62ch; font-size:17px; line-height:1.65; color:var(--bone-dim); }
+  .net-scroll{ margin-top:36px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .net-svg{ display:block; width:100%; max-width:1100px; min-width:860px; height:auto; margin:0 auto; }
   .net-heads text{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em; fill:var(--bone-faint); }
   .net-edge{ fill:none; stroke:var(--bone); stroke-opacity:.14; stroke-width:1.2; transition:stroke-opacity .3s ease, stroke .3s ease; }
   .net-node{ cursor:pointer; outline:none; transition:opacity .3s ease; }
   .net-hit{ fill:transparent; }
-  .net-dot{ fill:var(--verdant); transition:r .25s ease; }
+  .net-dot{ fill:var(--verdant); }
   .net-theme .net-dot{ fill:var(--bone-dim); }
   .net-ring{ fill:var(--verdant); fill-opacity:.14; stroke:var(--verdant); stroke-width:1.5; transition:fill-opacity .3s ease; }
   .net-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; fill:var(--bone); dominant-baseline:central; pointer-events:none; }
@@ -544,17 +506,18 @@
   .net-svg.tracing .net-edge.lit{ stroke:var(--verdant); stroke-opacity:.9; stroke-width:1.6; }
   .net-node.lit .net-ring{ fill-opacity:.4; }
   .net-node:focus-visible .net-dot, .net-node:focus-visible .net-ring{ stroke:var(--bone); stroke-width:2; }
-  /* draw-in when the modal opens */
-  .net-svg.pre .net-edge{ stroke-dasharray:1 2; stroke-dashoffset:1.02; }
-  .net-svg.pre .net-node{ opacity:0; }
-  .net-svg.pre.in .net-edge{ stroke-dashoffset:0; transition:stroke-dashoffset 1.2s ease-out; }
-  .net-svg.pre.in .net-edge[data-from^="t"]{ transition-delay:.9s; }
-  .net-svg.pre.in .net-edge[data-from^="l"]{ transition-delay:1.8s; }
-  .net-svg.pre.in .net-node{ opacity:1; transition:opacity .5s ease; }
-  .net-svg.pre.in .net-theme{ transition-delay:.9s; }
-  .net-svg.pre.in .net-lens{ transition-delay:1.8s; }
-  .net-svg.pre.in .net-mult{ transition-delay:2.6s; }
-  @media (max-width:520px){ .book-modal.net-modal{ padding:48px 14px 14px; } }
+  .see-hint{ margin-top:18px; font-family:var(--font-mono); font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--bone-faint); }
+  .see-system{ margin-top:64px; max-width:62ch; }
+  /* entrance on arrival: The Multiplier first, then outward to the books */
+  .seeing.pre-draw .net-edge{ stroke-dasharray:1 2; stroke-dashoffset:1.02; }
+  .seeing.pre-draw .net-node{ opacity:0; }
+  .seeing.pre-draw.in .net-edge{ stroke-dashoffset:0; transition:stroke-dashoffset 1.2s ease-out; }
+  .seeing.pre-draw.in .net-edge[data-from^="t"]{ transition-delay:.9s; }
+  .seeing.pre-draw.in .net-edge[data-from^="b"]{ transition-delay:1.8s; }
+  .seeing.pre-draw.in .net-node{ opacity:1; transition:opacity .5s ease; }
+  .seeing.pre-draw.in .net-lens{ transition-delay:.4s; }
+  .seeing.pre-draw.in .net-theme{ transition-delay:1.2s; }
+  .seeing.pre-draw.in .net-book{ transition-delay:2.2s; }
 
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
@@ -1461,9 +1424,143 @@
 
   <section class="seeing" id="seeing">
     <div class="wrap">
-      <div class="see-grid">
+      <span class="eyebrow">The System</span>
+      <p class="net-intro">Six books feed a few shared ideas. The ideas feed the three lenses. Where the lenses meet is The Multiplier.</p>
+      <div class="net-scroll">
+        <svg class="net-svg" viewBox="0 0 1000 530" role="img" aria-label="A network: The Multiplier on the left, fed by the People, Business, and System lenses, which are fed by six shared ideas, which are fed by six books on the right.">
+          <g class="net-heads" aria-hidden="true">
+            <text x="290" y="24" text-anchor="middle">LENSES</text>
+            <text x="580" y="24" text-anchor="middle">SHARED IDEAS</text>
+            <text x="800" y="24" text-anchor="start">BOOKS</text>
+          </g>
+          <g class="net-edges">
+            
+            <path class="net-edge" data-from="b1" data-to="t1" pathLength="1" d="M800,70 C690.0,70 690.0,70 580,70"/>
+            <path class="net-edge" data-from="b1" data-to="t2" pathLength="1" d="M800,70 C690.0,70 690.0,152 580,152"/>
+            <path class="net-edge" data-from="b2" data-to="t2" pathLength="1" d="M800,152 C690.0,152 690.0,152 580,152"/>
+            <path class="net-edge" data-from="b2" data-to="t3" pathLength="1" d="M800,152 C690.0,152 690.0,234 580,234"/>
+            <path class="net-edge" data-from="b2" data-to="t6" pathLength="1" d="M800,152 C690.0,152 690.0,480 580,480"/>
+            <path class="net-edge" data-from="b3" data-to="t4" pathLength="1" d="M800,234 C690.0,234 690.0,316 580,316"/>
+            <path class="net-edge" data-from="b3" data-to="t5" pathLength="1" d="M800,234 C690.0,234 690.0,398 580,398"/>
+            <path class="net-edge" data-from="b4" data-to="t3" pathLength="1" d="M800,316 C690.0,316 690.0,234 580,234"/>
+            <path class="net-edge" data-from="b4" data-to="t5" pathLength="1" d="M800,316 C690.0,316 690.0,398 580,398"/>
+            <path class="net-edge" data-from="b4" data-to="t6" pathLength="1" d="M800,316 C690.0,316 690.0,480 580,480"/>
+            <path class="net-edge" data-from="b5" data-to="t1" pathLength="1" d="M800,398 C690.0,398 690.0,70 580,70"/>
+            <path class="net-edge" data-from="b5" data-to="t5" pathLength="1" d="M800,398 C690.0,398 690.0,398 580,398"/>
+            <path class="net-edge" data-from="b6" data-to="t4" pathLength="1" d="M800,480 C690.0,480 690.0,316 580,316"/>
+            <path class="net-edge" data-from="b6" data-to="t6" pathLength="1" d="M800,480 C690.0,480 690.0,480 580,480"/>
+            <path class="net-edge" data-from="t1" data-to="lp" pathLength="1" d="M580,70 C435.0,70 435.0,152 290,152"/>
+            <path class="net-edge" data-from="t2" data-to="lp" pathLength="1" d="M580,152 C435.0,152 435.0,152 290,152"/>
+            <path class="net-edge" data-from="t3" data-to="lp" pathLength="1" d="M580,234 C435.0,234 435.0,152 290,152"/>
+            <path class="net-edge" data-from="t3" data-to="ls" pathLength="1" d="M580,234 C435.0,234 435.0,380 290,380"/>
+            <path class="net-edge" data-from="t4" data-to="lb" pathLength="1" d="M580,316 C435.0,316 435.0,266 290,266"/>
+            <path class="net-edge" data-from="t5" data-to="lb" pathLength="1" d="M580,398 C435.0,398 435.0,266 290,266"/>
+            <path class="net-edge" data-from="t5" data-to="ls" pathLength="1" d="M580,398 C435.0,398 435.0,380 290,380"/>
+            <path class="net-edge" data-from="t6" data-to="ls" pathLength="1" d="M580,480 C435.0,480 435.0,380 290,380"/>
+            <path class="net-edge" data-from="t6" data-to="lb" pathLength="1" d="M580,480 C435.0,480 435.0,266 290,266"/>
+            <path class="net-edge" data-from="lp" data-to="m" pathLength="1" d="M290,152 C190.0,152 190.0,266 90,266"/>
+            <path class="net-edge" data-from="lb" data-to="m" pathLength="1" d="M290,266 C190.0,266 190.0,266 90,266"/>
+            <path class="net-edge" data-from="ls" data-to="m" pathLength="1" d="M290,380 C190.0,380 190.0,266 90,266"/>
+          </g>
+          <g class="net-nodes">
+            <g class="net-node net-mult" data-id="m" tabindex="0" role="button" aria-label="The Multiplier: where all three lenses meet">
+              <circle class="net-hit" cx="90" cy="266" r="50"/>
+              <circle class="net-ring net-ring-big" cx="90" cy="266" r="34"/>
+              <text class="net-label" x="90" y="261" text-anchor="middle">THE</text>
+              <text class="net-label" x="90" y="276" text-anchor="middle">MULTIPLIER</text>
+            </g>
+            <g class="net-node net-lens" data-id="lp" tabindex="0" role="button" aria-label="People lens">
+              <circle class="net-hit" cx="290" cy="152" r="40"/>
+              <circle class="net-ring" cx="290" cy="152" r="24"/>
+              <text class="net-label" x="290" y="194" text-anchor="middle">PEOPLE</text>
+            </g>
+            <g class="net-node net-lens" data-id="lb" tabindex="0" role="button" aria-label="Business lens">
+              <circle class="net-hit" cx="290" cy="266" r="40"/>
+              <circle class="net-ring" cx="290" cy="266" r="24"/>
+              <text class="net-label" x="290" y="308" text-anchor="middle">BUSINESS</text>
+            </g>
+            <g class="net-node net-lens" data-id="ls" tabindex="0" role="button" aria-label="System lens">
+              <circle class="net-hit" cx="290" cy="380" r="40"/>
+              <circle class="net-ring" cx="290" cy="380" r="24"/>
+              <text class="net-label" x="290" y="422" text-anchor="middle">SYSTEM</text>
+            </g>
+            <g class="net-node net-theme" data-id="t1" tabindex="0" role="button" aria-label="Awareness: notice your own part">
+              <circle class="net-hit" cx="580" cy="70" r="30"/>
+              <circle class="net-dot" cx="580" cy="70" r="6"/>
+              <text class="net-label" x="580" y="54" text-anchor="middle">AWARENESS</text>
+              <text class="net-sub" x="580" y="92" text-anchor="middle">notice your own part</text>
+            </g>
+            <g class="net-node net-theme" data-id="t2" tabindex="0" role="button" aria-label="Trust: people do their best work">
+              <circle class="net-hit" cx="580" cy="152" r="30"/>
+              <circle class="net-dot" cx="580" cy="152" r="6"/>
+              <text class="net-label" x="580" y="136" text-anchor="middle">TRUST</text>
+              <text class="net-sub" x="580" y="174" text-anchor="middle">people do their best work</text>
+            </g>
+            <g class="net-node net-theme" data-id="t3" tabindex="0" role="button" aria-label="Conditions: design the environment">
+              <circle class="net-hit" cx="580" cy="234" r="30"/>
+              <circle class="net-dot" cx="580" cy="234" r="6"/>
+              <text class="net-label" x="580" y="218" text-anchor="middle">CONDITIONS</text>
+              <text class="net-sub" x="580" y="256" text-anchor="middle">design the environment</text>
+            </g>
+            <g class="net-node net-theme" data-id="t4" tabindex="0" role="button" aria-label="Value: how value moves">
+              <circle class="net-hit" cx="580" cy="316" r="30"/>
+              <circle class="net-dot" cx="580" cy="316" r="6"/>
+              <text class="net-label" x="580" y="300" text-anchor="middle">VALUE</text>
+              <text class="net-sub" x="580" y="338" text-anchor="middle">how value moves</text>
+            </g>
+            <g class="net-node net-theme" data-id="t5" tabindex="0" role="button" aria-label="Incentives: why people act as they do">
+              <circle class="net-hit" cx="580" cy="398" r="30"/>
+              <circle class="net-dot" cx="580" cy="398" r="6"/>
+              <text class="net-label" x="580" y="382" text-anchor="middle">INCENTIVES</text>
+              <text class="net-sub" x="580" y="420" text-anchor="middle">why people act as they do</text>
+            </g>
+            <g class="net-node net-theme" data-id="t6" tabindex="0" role="button" aria-label="Leverage: small effort, big outcome">
+              <circle class="net-hit" cx="580" cy="480" r="30"/>
+              <circle class="net-dot" cx="580" cy="480" r="6"/>
+              <text class="net-label" x="580" y="464" text-anchor="middle">LEVERAGE</text>
+              <text class="net-sub" x="580" y="502" text-anchor="middle">small effort, big outcome</text>
+            </g>
+            <g class="net-node net-book" data-id="b1" tabindex="0" role="button" aria-label="01 See Yourself, The 15 Commitments. Opens the book's core idea." data-eyebrow="01 · The 15 Commitments of Conscious Leadership" data-heading="See Yourself" data-text="Core idea: Awareness precedes choice.&#10;&#10;Notice your assumptions, emotions, stories, and patterns before they shape your decisions. The prerequisite to better thinking is recognizing that you are part of the system you're trying to understand." data-keywords="Reveals: Self-awareness → choice → responsibility">
+              <circle class="net-hit" cx="800" cy="70" r="30"/>
+              <circle class="net-dot" cx="800" cy="70" r="7"/>
+              <text class="net-label" x="816" y="67" text-anchor="start">01 · SEE YOURSELF</text>
+              <text class="net-sub" x="816" y="83" text-anchor="start">The 15 Commitments</text>
+            </g>
+            <g class="net-node net-book" data-id="b2" tabindex="0" role="button" aria-label="02 See People, Trillion Dollar Coach. Opens the book's core idea." data-eyebrow="02 · Trillion Dollar Coach" data-heading="See People" data-text="Core idea: People perform better when they feel trusted, challenged, and supported.&#10;&#10;Leadership isn't primarily about having answers. It's about creating the conditions for other people to think, grow, and perform at their best." data-keywords="Reveals: Trust → relationships → collective performance">
+              <circle class="net-hit" cx="800" cy="152" r="30"/>
+              <circle class="net-dot" cx="800" cy="152" r="7"/>
+              <text class="net-label" x="816" y="149" text-anchor="start">02 · SEE PEOPLE</text>
+              <text class="net-sub" x="816" y="165" text-anchor="start">Trillion Dollar Coach</text>
+            </g>
+            <g class="net-node net-book" data-id="b3" tabindex="0" role="button" aria-label="03 See Value, What the CEO Wants You to Know. Opens the book's core idea." data-eyebrow="03 · What the CEO Wants You to Know" data-heading="See Value" data-text="Core idea: Every organization is a system for creating value.&#10;&#10;Understand customers, revenue, costs, cash, and the basic mechanics of a business. Once you understand how value moves through the organization, your own work becomes part of a larger picture." data-keywords="Reveals: Customer → value → economics">
+              <circle class="net-hit" cx="800" cy="234" r="30"/>
+              <circle class="net-dot" cx="800" cy="234" r="7"/>
+              <text class="net-label" x="816" y="231" text-anchor="start">03 · SEE VALUE</text>
+              <text class="net-sub" x="816" y="247" text-anchor="start">What the CEO Wants You to Know</text>
+            </g>
+            <g class="net-node net-book" data-id="b4" tabindex="0" role="button" aria-label="04 See the System, How Google Works. Opens the book's core idea." data-eyebrow="04 · How Google Works" data-heading="See the System" data-text="Core idea: Outcomes are shaped by the environment around people.&#10;&#10;Culture, information, autonomy, incentives, talent, and decision-making systems determine what an organization is capable of. Don't just manage the output. Design the conditions that produce it." data-keywords="Reveals: Environment → behavior → outcomes">
+              <circle class="net-hit" cx="800" cy="316" r="30"/>
+              <circle class="net-dot" cx="800" cy="316" r="7"/>
+              <text class="net-label" x="816" y="313" text-anchor="start">04 · SEE THE SYSTEM</text>
+              <text class="net-sub" x="816" y="329" text-anchor="start">How Google Works</text>
+            </g>
+            <g class="net-node net-book" data-id="b5" tabindex="0" role="button" aria-label="05 See the Pattern, Poor Charlie's Almanack. Opens the book's core idea." data-eyebrow="05 · Poor Charlie's Almanack" data-heading="See the Pattern" data-text="Core idea: No single mental model explains reality.&#10;&#10;Use incentives, inversion, first principles, probability, opportunity cost, and other models to look at the same problem from different angles. The goal isn't to collect frameworks. It's to recognize patterns." data-keywords="Reveals: Models → patterns → judgment">
+              <circle class="net-hit" cx="800" cy="398" r="30"/>
+              <circle class="net-dot" cx="800" cy="398" r="7"/>
+              <text class="net-label" x="816" y="395" text-anchor="start">05 · SEE THE PATTERN</text>
+              <text class="net-sub" x="816" y="411" text-anchor="start">Poor Charlie's Almanack</text>
+            </g>
+            <g class="net-node net-book" data-id="b6" tabindex="0" role="button" aria-label="06 See the Leverage, High Output Management. Opens the book's core idea." data-eyebrow="06 · High Output Management" data-heading="See the Leverage" data-text="Core idea: The best results don't always come from doing more. They come from improving the system.&#10;&#10;Find the bottleneck. Improve the process. Delegate. Multiply the effectiveness of others. Focus your effort where a small intervention can create a much larger outcome." data-keywords="Reveals: Systems → leverage → output">
+              <circle class="net-hit" cx="800" cy="480" r="30"/>
+              <circle class="net-dot" cx="800" cy="480" r="7"/>
+              <text class="net-label" x="816" y="477" text-anchor="start">06 · SEE THE LEVERAGE</text>
+              <text class="net-sub" x="816" y="493" text-anchor="start">High Output Management</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <p class="see-hint">Hover or tap anything to trace its path. Click a book to see what it reveals.</p>
       <div class="see-system">
-        <span class="eyebrow">The System</span>
         <p class="see-body see-close">The progression is about learning to see more clearly.</p>
         <p class="see-body">As you see more clearly, you react less. You understand why things happen, recognize what matters, and focus your effort where it can make the biggest difference.</p>
         <p class="see-body">Take in the ideas. Reveal the connections. Make something better.</p>
@@ -1474,164 +1571,8 @@
           <span class="path-step now">Agency</span>
         </div>
       </div>
-      <!-- The sequence: one list, six steps, each a book and a button. The tag
-           names the lens (People / Business / System) the step belongs to, which
-           the order alone cannot say. -->
-      <div class="see-right">
-        <ol class="see-list" aria-label="Six books, in order, each a way of seeing">
-          <li><button type="button" class="see-node" aria-label="01: The 15 Commitments of Conscious Leadership, See Yourself" data-eyebrow="01 · The 15 Commitments of Conscious Leadership" data-heading="See Yourself" data-text="Core idea: Awareness precedes choice.&#10;&#10;Notice your assumptions, emotions, stories, and patterns before they shape your decisions. The prerequisite to better thinking is recognizing that you are part of the system you're trying to understand." data-keywords="Reveals: Self-awareness → choice → responsibility"><span class="see-num">01</span><span class="see-step"><span class="see-label">SEE YOURSELF</span><span class="see-bookline"><span class="see-book">The 15 Commitments of Conscious Leadership</span><span class="see-tag">People</span></span></span></button></li>
-          <li><button type="button" class="see-node" aria-label="02: Trillion Dollar Coach, See People" data-eyebrow="02 · Trillion Dollar Coach" data-heading="See People" data-text="Core idea: People perform better when they feel trusted, challenged, and supported.&#10;&#10;Leadership isn't primarily about having answers. It's about creating the conditions for other people to think, grow, and perform at their best." data-keywords="Reveals: Trust → relationships → collective performance"><span class="see-num">02</span><span class="see-step"><span class="see-label">SEE PEOPLE</span><span class="see-bookline"><span class="see-book">Trillion Dollar Coach</span><span class="see-tag">People · Business</span></span></span></button></li>
-          <li><button type="button" class="see-node" aria-label="03: What the CEO Wants You to Know, See Value" data-eyebrow="03 · What the CEO Wants You to Know" data-heading="See Value" data-text="Core idea: Every organization is a system for creating value.&#10;&#10;Understand customers, revenue, costs, cash, and the basic mechanics of a business. Once you understand how value moves through the organization, your own work becomes part of a larger picture." data-keywords="Reveals: Customer → value → economics"><span class="see-num">03</span><span class="see-step"><span class="see-label">SEE VALUE</span><span class="see-bookline"><span class="see-book">What the CEO Wants You to Know</span><span class="see-tag">Business</span></span></span></button></li>
-          <li><button type="button" class="see-node" aria-label="04: How Google Works, See the System" data-eyebrow="04 · How Google Works" data-heading="See the System" data-text="Core idea: Outcomes are shaped by the environment around people.&#10;&#10;Culture, information, autonomy, incentives, talent, and decision-making systems determine what an organization is capable of. Don't just manage the output. Design the conditions that produce it." data-keywords="Reveals: Environment → behavior → outcomes"><span class="see-num">04</span><span class="see-step"><span class="see-label">SEE THE SYSTEM</span><span class="see-bookline"><span class="see-book">How Google Works</span><span class="see-tag">System</span></span></span></button></li>
-          <li><button type="button" class="see-node" aria-label="05: Poor Charlie's Almanack, See the Pattern" data-eyebrow="05 · Poor Charlie's Almanack" data-heading="See the Pattern" data-text="Core idea: No single mental model explains reality.&#10;&#10;Use incentives, inversion, first principles, probability, opportunity cost, and other models to look at the same problem from different angles. The goal isn't to collect frameworks. It's to recognize patterns." data-keywords="Reveals: Models → patterns → judgment"><span class="see-num">05</span><span class="see-step"><span class="see-label">SEE THE PATTERN</span><span class="see-bookline"><span class="see-book">Poor Charlie's Almanack</span><span class="see-tag">All three</span></span></span></button></li>
-          <li><button type="button" class="see-node" aria-label="06: High Output Management, See the Leverage" data-eyebrow="06 · High Output Management" data-heading="See the Leverage" data-text="Core idea: The best results don't always come from doing more. They come from improving the system.&#10;&#10;Find the bottleneck. Improve the process. Delegate. Multiply the effectiveness of others. Focus your effort where a small intervention can create a much larger outcome." data-keywords="Reveals: Systems → leverage → output"><span class="see-num">06</span><span class="see-step"><span class="see-label">SEE THE LEVERAGE</span><span class="see-bookline"><span class="see-book">High Output Management</span><span class="see-tag">Business · System</span></span></span></button></li>
-        </ol>
-        <p class="see-hint">Click a step to see what each book reveals.</p>
-        <button class="see-open" type="button" id="netOpen" aria-haspopup="dialog">See how they connect →</button>
-      </div>
-      </div>
     </div>
   </section>
-
-  <div class="book-modal-overlay" id="netModalOverlay" hidden>
-    <div class="book-modal net-modal" role="dialog" aria-modal="true" aria-labelledby="netModalTitle" tabindex="-1">
-      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
-      <span class="cert-modal-title" id="netModalTitle">How the six books fit together</span>
-      <p class="net-intro">Each book feeds a few shared ideas. The ideas feed the three lenses. Where the lenses meet is The Multiplier. Hover or tap anything to trace its path.</p>
-      <div class="net-scroll">
-        <svg class="net-svg" viewBox="0 0 1000 530" role="img" aria-label="A network: six books on the left connect to six shared ideas, which connect to the People, Business, and System lenses, which all meet at The Multiplier.">
-          <g class="net-heads" aria-hidden="true">
-            <text x="235" y="24" text-anchor="end">BOOKS</text>
-            <text x="440" y="24" text-anchor="middle">SHARED IDEAS</text>
-            <text x="730" y="24" text-anchor="middle">LENSES</text>
-          </g>
-          <g class="net-edges">
-            <path class="net-edge" data-from="b1" data-to="t1" pathLength="1" d="M235,70 C337.5,70 337.5,70 440,70"/>
-            <path class="net-edge" data-from="b1" data-to="t2" pathLength="1" d="M235,70 C337.5,70 337.5,152 440,152"/>
-            <path class="net-edge" data-from="b2" data-to="t2" pathLength="1" d="M235,152 C337.5,152 337.5,152 440,152"/>
-            <path class="net-edge" data-from="b2" data-to="t3" pathLength="1" d="M235,152 C337.5,152 337.5,234 440,234"/>
-            <path class="net-edge" data-from="b2" data-to="t6" pathLength="1" d="M235,152 C337.5,152 337.5,480 440,480"/>
-            <path class="net-edge" data-from="b3" data-to="t4" pathLength="1" d="M235,234 C337.5,234 337.5,316 440,316"/>
-            <path class="net-edge" data-from="b3" data-to="t5" pathLength="1" d="M235,234 C337.5,234 337.5,398 440,398"/>
-            <path class="net-edge" data-from="b4" data-to="t3" pathLength="1" d="M235,316 C337.5,316 337.5,234 440,234"/>
-            <path class="net-edge" data-from="b4" data-to="t5" pathLength="1" d="M235,316 C337.5,316 337.5,398 440,398"/>
-            <path class="net-edge" data-from="b4" data-to="t6" pathLength="1" d="M235,316 C337.5,316 337.5,480 440,480"/>
-            <path class="net-edge" data-from="b5" data-to="t1" pathLength="1" d="M235,398 C337.5,398 337.5,70 440,70"/>
-            <path class="net-edge" data-from="b5" data-to="t5" pathLength="1" d="M235,398 C337.5,398 337.5,398 440,398"/>
-            <path class="net-edge" data-from="b6" data-to="t4" pathLength="1" d="M235,480 C337.5,480 337.5,316 440,316"/>
-            <path class="net-edge" data-from="b6" data-to="t6" pathLength="1" d="M235,480 C337.5,480 337.5,480 440,480"/>
-            <path class="net-edge" data-from="t1" data-to="lp" pathLength="1" d="M440,70 C585.0,70 585.0,152 730,152"/>
-            <path class="net-edge" data-from="t2" data-to="lp" pathLength="1" d="M440,152 C585.0,152 585.0,152 730,152"/>
-            <path class="net-edge" data-from="t3" data-to="lp" pathLength="1" d="M440,234 C585.0,234 585.0,152 730,152"/>
-            <path class="net-edge" data-from="t3" data-to="ls" pathLength="1" d="M440,234 C585.0,234 585.0,380 730,380"/>
-            <path class="net-edge" data-from="t4" data-to="lb" pathLength="1" d="M440,316 C585.0,316 585.0,266 730,266"/>
-            <path class="net-edge" data-from="t5" data-to="lb" pathLength="1" d="M440,398 C585.0,398 585.0,266 730,266"/>
-            <path class="net-edge" data-from="t5" data-to="ls" pathLength="1" d="M440,398 C585.0,398 585.0,380 730,380"/>
-            <path class="net-edge" data-from="t6" data-to="ls" pathLength="1" d="M440,480 C585.0,480 585.0,380 730,380"/>
-            <path class="net-edge" data-from="t6" data-to="lb" pathLength="1" d="M440,480 C585.0,480 585.0,266 730,266"/>
-            <path class="net-edge" data-from="lp" data-to="m" pathLength="1" d="M730,152 C825.0,152 825.0,266 920,266"/>
-            <path class="net-edge" data-from="lb" data-to="m" pathLength="1" d="M730,266 C825.0,266 825.0,266 920,266"/>
-            <path class="net-edge" data-from="ls" data-to="m" pathLength="1" d="M730,380 C825.0,380 825.0,266 920,266"/>
-          </g>
-          <g class="net-nodes">
-            <g class="net-node net-book" data-id="b1" tabindex="0" role="button" aria-label="01 See Yourself, The 15 Commitments">
-              <circle class="net-hit" cx="235" cy="70" r="30"/>
-              <circle class="net-dot" cx="235" cy="70" r="7"/>
-              <text class="net-label" x="219" y="67" text-anchor="end">01 · SEE YOURSELF</text>
-              <text class="net-sub" x="219" y="83" text-anchor="end">The 15 Commitments</text>
-            </g>
-            <g class="net-node net-book" data-id="b2" tabindex="0" role="button" aria-label="02 See People, Trillion Dollar Coach">
-              <circle class="net-hit" cx="235" cy="152" r="30"/>
-              <circle class="net-dot" cx="235" cy="152" r="7"/>
-              <text class="net-label" x="219" y="149" text-anchor="end">02 · SEE PEOPLE</text>
-              <text class="net-sub" x="219" y="165" text-anchor="end">Trillion Dollar Coach</text>
-            </g>
-            <g class="net-node net-book" data-id="b3" tabindex="0" role="button" aria-label="03 See Value, What the CEO Wants You to Know">
-              <circle class="net-hit" cx="235" cy="234" r="30"/>
-              <circle class="net-dot" cx="235" cy="234" r="7"/>
-              <text class="net-label" x="219" y="231" text-anchor="end">03 · SEE VALUE</text>
-              <text class="net-sub" x="219" y="247" text-anchor="end">What the CEO Wants You to Know</text>
-            </g>
-            <g class="net-node net-book" data-id="b4" tabindex="0" role="button" aria-label="04 See the System, How Google Works">
-              <circle class="net-hit" cx="235" cy="316" r="30"/>
-              <circle class="net-dot" cx="235" cy="316" r="7"/>
-              <text class="net-label" x="219" y="313" text-anchor="end">04 · SEE THE SYSTEM</text>
-              <text class="net-sub" x="219" y="329" text-anchor="end">How Google Works</text>
-            </g>
-            <g class="net-node net-book" data-id="b5" tabindex="0" role="button" aria-label="05 See the Pattern, Poor Charlie's Almanack">
-              <circle class="net-hit" cx="235" cy="398" r="30"/>
-              <circle class="net-dot" cx="235" cy="398" r="7"/>
-              <text class="net-label" x="219" y="395" text-anchor="end">05 · SEE THE PATTERN</text>
-              <text class="net-sub" x="219" y="411" text-anchor="end">Poor Charlie's Almanack</text>
-            </g>
-            <g class="net-node net-book" data-id="b6" tabindex="0" role="button" aria-label="06 See the Leverage, High Output Management">
-              <circle class="net-hit" cx="235" cy="480" r="30"/>
-              <circle class="net-dot" cx="235" cy="480" r="7"/>
-              <text class="net-label" x="219" y="477" text-anchor="end">06 · SEE THE LEVERAGE</text>
-              <text class="net-sub" x="219" y="493" text-anchor="end">High Output Management</text>
-            </g>
-            <g class="net-node net-theme" data-id="t1" tabindex="0" role="button" aria-label="Awareness: notice your own part">
-              <circle class="net-hit" cx="440" cy="70" r="30"/>
-              <circle class="net-dot" cx="440" cy="70" r="6"/>
-              <text class="net-label" x="440" y="54" text-anchor="middle">AWARENESS</text>
-              <text class="net-sub" x="440" y="92" text-anchor="middle">notice your own part</text>
-            </g>
-            <g class="net-node net-theme" data-id="t2" tabindex="0" role="button" aria-label="Trust: people do their best work">
-              <circle class="net-hit" cx="440" cy="152" r="30"/>
-              <circle class="net-dot" cx="440" cy="152" r="6"/>
-              <text class="net-label" x="440" y="136" text-anchor="middle">TRUST</text>
-              <text class="net-sub" x="440" y="174" text-anchor="middle">people do their best work</text>
-            </g>
-            <g class="net-node net-theme" data-id="t3" tabindex="0" role="button" aria-label="Conditions: design the environment">
-              <circle class="net-hit" cx="440" cy="234" r="30"/>
-              <circle class="net-dot" cx="440" cy="234" r="6"/>
-              <text class="net-label" x="440" y="218" text-anchor="middle">CONDITIONS</text>
-              <text class="net-sub" x="440" y="256" text-anchor="middle">design the environment</text>
-            </g>
-            <g class="net-node net-theme" data-id="t4" tabindex="0" role="button" aria-label="Value: how value moves">
-              <circle class="net-hit" cx="440" cy="316" r="30"/>
-              <circle class="net-dot" cx="440" cy="316" r="6"/>
-              <text class="net-label" x="440" y="300" text-anchor="middle">VALUE</text>
-              <text class="net-sub" x="440" y="338" text-anchor="middle">how value moves</text>
-            </g>
-            <g class="net-node net-theme" data-id="t5" tabindex="0" role="button" aria-label="Incentives: why people act as they do">
-              <circle class="net-hit" cx="440" cy="398" r="30"/>
-              <circle class="net-dot" cx="440" cy="398" r="6"/>
-              <text class="net-label" x="440" y="382" text-anchor="middle">INCENTIVES</text>
-              <text class="net-sub" x="440" y="420" text-anchor="middle">why people act as they do</text>
-            </g>
-            <g class="net-node net-theme" data-id="t6" tabindex="0" role="button" aria-label="Leverage: small effort, big outcome">
-              <circle class="net-hit" cx="440" cy="480" r="30"/>
-              <circle class="net-dot" cx="440" cy="480" r="6"/>
-              <text class="net-label" x="440" y="464" text-anchor="middle">LEVERAGE</text>
-              <text class="net-sub" x="440" y="502" text-anchor="middle">small effort, big outcome</text>
-            </g>
-            <g class="net-node net-lens" data-id="lp" tabindex="0" role="button" aria-label="People lens">
-              <circle class="net-hit" cx="730" cy="152" r="40"/>
-              <circle class="net-ring" cx="730" cy="152" r="24"/>
-              <text class="net-label" x="730" y="194" text-anchor="middle">PEOPLE</text>
-            </g>
-            <g class="net-node net-lens" data-id="lb" tabindex="0" role="button" aria-label="Business lens">
-              <circle class="net-hit" cx="730" cy="266" r="40"/>
-              <circle class="net-ring" cx="730" cy="266" r="24"/>
-              <text class="net-label" x="730" y="308" text-anchor="middle">BUSINESS</text>
-            </g>
-            <g class="net-node net-lens" data-id="ls" tabindex="0" role="button" aria-label="System lens">
-              <circle class="net-hit" cx="730" cy="380" r="40"/>
-              <circle class="net-ring" cx="730" cy="380" r="24"/>
-              <text class="net-label" x="730" y="422" text-anchor="middle">SYSTEM</text>
-            </g>
-            <g class="net-node net-mult" data-id="m" tabindex="0" role="button" aria-label="The Multiplier: where all three lenses meet">
-              <circle class="net-hit" cx="920" cy="266" r="50"/>
-              <circle class="net-ring net-ring-big" cx="920" cy="266" r="34"/>
-              <text class="net-label" x="920" y="261" text-anchor="middle">THE</text>
-              <text class="net-label" x="920" y="276" text-anchor="middle">MULTIPLIER</text>
-            </g>
-          </g>
-        </svg>
-      </div>
-    </div>
-  </div>
 
   <section class="close" id="contact">
     <div class="wrap">
@@ -1811,10 +1752,10 @@
 
   /* ---------- seeing-the-system list: draw the line once, on arrival ---------- */
   var seeing = document.querySelector('.seeing');
-  var seeList = seeing && seeing.querySelector('.see-list');
-  if(seeing && seeList && 'IntersectionObserver' in window && !reduced){
+  var seeNet = seeing && seeing.querySelector('.net-svg');
+  if(seeing && seeNet && 'IntersectionObserver' in window && !reduced){
     seeing.classList.add('pre-draw');
-    whenArrived(seeList, 0.35, function(){ seeing.classList.add('in'); });
+    whenArrived(seeNet, 0.35, function(){ seeing.classList.add('in'); });
   }
 
   /* ---------- nav progress + active link ---------- */
@@ -1915,7 +1856,7 @@
       lensModalEyebrow.textContent = el.dataset.eyebrow;
       lensModalHeading.textContent = el.dataset.heading;
       lensModalText.textContent = el.dataset.text;
-      lensModal.classList.toggle('lens-modal--loop', el.classList.contains('loop-card') || el.classList.contains('see-node'));
+      lensModal.classList.toggle('lens-modal--loop', el.classList.contains('loop-card') || el.classList.contains('net-book'));
       if(el.dataset.keywords){
         lensModalKeywords.textContent = el.dataset.keywords;
         lensModalKeywords.hidden = false;
@@ -1947,7 +1888,7 @@
     document.querySelectorAll('.loop-card').forEach(function(c){
       c.addEventListener('click', function(){ openLensModal(c); });
     });
-    document.querySelectorAll('.see-node').forEach(function(n){
+    document.querySelectorAll('.net-book').forEach(function(n){
       n.addEventListener('click', function(){ openLensModal(n); });
     });
     lensModalClose.addEventListener('click', closeLensModal);
@@ -1985,17 +1926,12 @@
     });
   }
 
-  /* ---------- network modal: how the six books fit together ---------- */
-  var netOverlay = document.getElementById('netModalOverlay');
-  var netOpen = document.getElementById('netOpen');
-  if(netOverlay && netOpen){
-    var netModal = netOverlay.querySelector('.book-modal');
-    var netClose = netOverlay.querySelector('.book-modal-close');
-    var netSvg = netOverlay.querySelector('.net-svg');
+  /* ---------- the network: trace a node's path; books open their modal ---------- */
+  var netSvg = document.querySelector('.seeing .net-svg');
+  if(netSvg){
     var netEdges = Array.prototype.slice.call(netSvg.querySelectorAll('.net-edge'));
     var netNodes = Array.prototype.slice.call(netSvg.querySelectorAll('.net-node'));
-    var netPinned = null, netDrawn = false;
-
+    var netPinned = null;
     // everything upstream and downstream of a node, plus the edges between
     function netTrace(id){
       var lit = {}; lit[id] = true;
@@ -2003,10 +1939,8 @@
       function walk(from, dir){
         netEdges.forEach(function(e){
           var a = e.dataset.from, b = e.dataset.to;
-          if(dir === 'down' && a === from && !lit[b]){ lit[b] = true; litEdges.push(e); walk(b, 'down'); }
-          else if(dir === 'down' && a === from){ litEdges.push(e); }
-          if(dir === 'up' && b === from && !lit[a]){ lit[a] = true; litEdges.push(e); walk(a, 'up'); }
-          else if(dir === 'up' && b === from){ litEdges.push(e); }
+          if(dir === 'down' && a === from){ litEdges.push(e); if(!lit[b]){ lit[b] = true; walk(b, 'down'); } }
+          if(dir === 'up' && b === from){ litEdges.push(e); if(!lit[a]){ lit[a] = true; walk(a, 'up'); } }
         });
       }
       walk(id, 'down'); walk(id, 'up');
@@ -2026,40 +1960,13 @@
       n.addEventListener('focus', function(){ netTrace(n.dataset.id); });
       n.addEventListener('blur', netClear);
       n.addEventListener('click', function(){
+        if(n.classList.contains('net-book')) return; // opens its modal (wired with the lens modal)
         netPinned = (netPinned === n.dataset.id) ? null : n.dataset.id;
         if(netPinned) netTrace(netPinned); else netClear();
       });
       n.addEventListener('keydown', function(e){
         if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); n.click(); }
       });
-    });
-
-    function onNetKeydown(e){
-      if(e.key === 'Escape') closeNetModal();
-    }
-    function openNetModal(){
-      netOverlay.hidden = false;
-      document.body.style.overflow = 'hidden';
-      netModal.focus();
-      document.addEventListener('keydown', onNetKeydown);
-      if(!reduced && !netDrawn){
-        netDrawn = true;
-        netSvg.classList.add('pre');
-        netSvg.getBoundingClientRect();
-        requestAnimationFrame(function(){ netSvg.classList.add('in'); });
-      }
-    }
-    function closeNetModal(){
-      netOverlay.hidden = true;
-      document.body.style.overflow = '';
-      document.removeEventListener('keydown', onNetKeydown);
-      netPinned = null; netClear();
-      netOpen.focus();
-    }
-    netOpen.addEventListener('click', openNetModal);
-    netClose.addEventListener('click', closeNetModal);
-    netOverlay.addEventListener('click', function(e){
-      if(e.target === netOverlay) closeNetModal();
     });
   }
 

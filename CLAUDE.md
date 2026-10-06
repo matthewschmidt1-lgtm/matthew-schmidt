@@ -26,7 +26,7 @@ hero `#home` → about `#about` (story, Continued Learning `#learning` with cert
 Three Lenses `#lenses` (Venn diagram) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
-Believe `#beliefs` → Reading `#reading` → The System `#seeing` (closing copy + Knowledge → Agency strip on the left; on the right one vertical list of six SEE steps, each a button opening the shared lens modal, with its lens tag inline after the book title; "See how they connect" opens `#netModalOverlay`, a wide books → shared ideas → lenses → The Multiplier network with hover/tap path tracing) → close `#contact`.
+Believe `#beliefs` → Reading `#reading` → The System `#seeing` (no rule above it, reads as the tail of Reading: the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal; then the closing copy + Knowledge → Agency strip) → close `#contact`.
 
 - The nav scroll-spy is generic: each `.topnav-links a` has a `data-id` matching a section
   id. **`id="ideas"` must stay on whichever project section comes first** so the Ideas
