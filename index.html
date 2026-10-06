@@ -535,9 +535,9 @@
   }
   .drill-mult small{ font-family:var(--font-display); font-style:italic; font-size:11px; letter-spacing:0; color:var(--bone-dim); text-transform:none; }
   .drill-stem{ width:1px; height:26px; margin:0 auto; background:var(--ground-line); }
-  .drill-lenses{ display:flex; justify-content:center; gap:14px; }
+  .drill-lenses{ display:flex; justify-content:center; gap:12px; }
   .drill-lens{
-    width:88px; height:88px; border-radius:50%; cursor:pointer;
+    flex:1 1 0; max-width:108px; aspect-ratio:1; padding:0; border-radius:50%; cursor:pointer;
     border:1.5px solid var(--verdant); background:rgba(92,152,115,.14); color:var(--bone);
     font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; transition:background .25s ease;
   }
