@@ -483,7 +483,7 @@
   .built-divider + .room{ padding-top:64px; }
 
   /* ================= SEEING THE SYSTEM ================= */
-  .seeing{ background:var(--ground); padding-top:0; }
+  .seeing{ background:var(--ground); border-top:1px solid var(--ground-line); }
   .seeing h2{ margin-top:14px; font-size:clamp(24px,3.6vw,39px); max-width:20ch; line-height:1.18; }
   .see-body{ margin-top:18px; max-width:58ch; font-size:18px; line-height:1.7; color:var(--bone-dim); }
   .see-strip{ margin-top:0; }
@@ -1400,81 +1400,6 @@
     </div>
   </div>
 
-  <section class="reading" id="reading">
-    <div class="wrap">
-      <span class="eyebrow">Reading</span>
-      <h2>Books That Shaped How I Lead:</h2>
-      <div class="book-grid">
-        <button class="book" type="button">
-          <img class="book-cover" src="images/books/how-google-works.jpg" alt="Cover of How Google Works" width="180" height="268" loading="lazy">
-          <div class="book-title">How Google Works</div>
-          <div class="book-author">Eric Schmidt &amp; Jonathan Rosenberg</div>
-          <p class="book-idea">The environments we create matter as much as who we hire. Transparency, autonomy, and context help people act without waiting for permission.</p>
-          <span class="book-hint">Read the takeaway →</span>
-          <template class="book-insight">
-            <span class="insight-heading">Culture is an operating system</span>
-            <p>How Google Works made me think more deeply about the environments we create for people. Hiring well matters, but so do transparency, autonomy, psychological safety, and giving people enough context to make good decisions without waiting for permission.</p>
-          </template>
-        </button>
-        <button class="book" type="button">
-          <img class="book-cover" src="images/books/15-commitments-conscious-leadership.jpg" alt="Cover of The 15 Commitments of Conscious Leadership" width="180" height="277" loading="lazy">
-          <div class="book-title">The 15 Commitments of Conscious Leadership</div>
-          <div class="book-author">Dethmer, Chapman &amp; Klemp</div>
-          <p class="book-idea">Leadership is as much about how you show up, staying curious and owning your reactions, as what you actually accomplish.</p>
-          <span class="book-hint">Read the takeaway →</span>
-          <template class="book-insight">
-            <span class="insight-heading">Self-awareness is a professional skill</span>
-            <p>The 15 Commitments of Conscious Leadership challenged me to look at leadership not just in terms of what gets accomplished, but how I show up while accomplishing it. Taking responsibility, staying curious, and recognizing when ego or defensiveness is driving a reaction are practical skills, not just personal-development concepts.</p>
-          </template>
-        </button>
-        <button class="book" type="button">
-          <img class="book-cover" src="images/books/trillion-dollar-coach.jpg" alt="Cover of Trillion Dollar Coach" width="180" height="271" loading="lazy">
-          <div class="book-title">Trillion Dollar Coach</div>
-          <div class="book-author">Schmidt, Rosenberg &amp; Eagle</div>
-          <p class="book-idea">The best leaders spend less time having answers and more time asking good questions and building trust.</p>
-          <span class="book-hint">Read the takeaway →</span>
-          <template class="book-insight">
-            <span class="insight-heading">Your job is to make the people around you better</span>
-            <p>Trillion Dollar Coach influenced my view of leadership as something less about having all the answers and more about asking good questions, giving honest feedback, building trust, and helping talented people perform at their best.</p>
-          </template>
-        </button>
-        <button class="book" type="button">
-          <img class="book-cover" src="images/books/what-the-ceo-wants-you-to-know.jpg" alt="Cover of What the CEO Wants You to Know" width="180" height="278" loading="lazy">
-          <div class="book-title">What the CEO Wants You to Know</div>
-          <div class="book-author">Ram Charan</div>
-          <p class="book-idea">Every function lives inside a business. Understanding how value actually gets created makes you better at almost any role.</p>
-          <span class="book-hint">Read the takeaway →</span>
-          <template class="book-insight">
-            <span class="insight-heading">Understand the business underneath the job</span>
-            <p>What the CEO Wants You to Know reinforced something I think is easy to lose sight of: every function ultimately exists within a business. Understanding customers, cash flow, margins, and the mechanics of creating value makes you better at almost any role.</p>
-          </template>
-        </button>
-        <button class="book" type="button">
-          <img class="book-cover" src="images/books/poor-charlies-almanack.jpg" alt="Cover of Poor Charlie's Almanack" width="180" height="185" loading="lazy">
-          <div class="book-title">Poor Charlie's Almanack</div>
-          <div class="book-author">Charlie Munger</div>
-          <p class="book-idea">The more disciplines you bring to a problem, the less likely you are to mistake a familiar pattern for the whole picture.</p>
-          <span class="book-hint">Read the takeaway →</span>
-          <template class="book-insight">
-            <span class="insight-heading">Think in models, not formulas</span>
-            <p>Poor Charlie's Almanack reinforced my appreciation for mental models and multidisciplinary thinking. The more perspectives you bring to a problem, whether economics, psychology, incentives, statistics, or human behavior, the less likely you are to mistake a familiar pattern for the whole picture.</p>
-          </template>
-        </button>
-        <button class="book" type="button">
-          <img class="book-cover" src="images/books/high-output-management.jpg" alt="Cover of High Output Management" width="180" height="277" loading="lazy">
-          <div class="book-title">High Output Management</div>
-          <div class="book-author">Andrew S. Grove</div>
-          <p class="book-idea">Good outcomes shouldn't depend on one person's heroics. Real leverage comes from the systems built around them.</p>
-          <span class="book-hint">Read the takeaway →</span>
-          <template class="book-insight">
-            <span class="insight-heading">Build systems, not heroics</span>
-            <p>High Output Management changed how I think about management. Strong outcomes shouldn't depend on one person constantly rescuing a broken process. Good managers create leverage through clear expectations, effective processes, useful metrics, and developing the people around them.</p>
-          </template>
-        </button>
-      </div>
-    </div>
-  </section>
-
   <section class="seeing" id="seeing">
     <div class="wrap">
       <span class="eyebrow">The System</span>
@@ -1625,6 +1550,81 @@
           <span class="path-step">Judgment</span><span class="path-arrow">→</span>
           <span class="path-step now">Agency</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reading" id="reading">
+    <div class="wrap">
+      <span class="eyebrow">Reading</span>
+      <h2>Books That Shaped How I Lead:</h2>
+      <div class="book-grid">
+        <button class="book" type="button">
+          <img class="book-cover" src="images/books/how-google-works.jpg" alt="Cover of How Google Works" width="180" height="268" loading="lazy">
+          <div class="book-title">How Google Works</div>
+          <div class="book-author">Eric Schmidt &amp; Jonathan Rosenberg</div>
+          <p class="book-idea">The environments we create matter as much as who we hire. Transparency, autonomy, and context help people act without waiting for permission.</p>
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Culture is an operating system</span>
+            <p>How Google Works made me think more deeply about the environments we create for people. Hiring well matters, but so do transparency, autonomy, psychological safety, and giving people enough context to make good decisions without waiting for permission.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
+          <img class="book-cover" src="images/books/15-commitments-conscious-leadership.jpg" alt="Cover of The 15 Commitments of Conscious Leadership" width="180" height="277" loading="lazy">
+          <div class="book-title">The 15 Commitments of Conscious Leadership</div>
+          <div class="book-author">Dethmer, Chapman &amp; Klemp</div>
+          <p class="book-idea">Leadership is as much about how you show up, staying curious and owning your reactions, as what you actually accomplish.</p>
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Self-awareness is a professional skill</span>
+            <p>The 15 Commitments of Conscious Leadership challenged me to look at leadership not just in terms of what gets accomplished, but how I show up while accomplishing it. Taking responsibility, staying curious, and recognizing when ego or defensiveness is driving a reaction are practical skills, not just personal-development concepts.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
+          <img class="book-cover" src="images/books/trillion-dollar-coach.jpg" alt="Cover of Trillion Dollar Coach" width="180" height="271" loading="lazy">
+          <div class="book-title">Trillion Dollar Coach</div>
+          <div class="book-author">Schmidt, Rosenberg &amp; Eagle</div>
+          <p class="book-idea">The best leaders spend less time having answers and more time asking good questions and building trust.</p>
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Your job is to make the people around you better</span>
+            <p>Trillion Dollar Coach influenced my view of leadership as something less about having all the answers and more about asking good questions, giving honest feedback, building trust, and helping talented people perform at their best.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
+          <img class="book-cover" src="images/books/what-the-ceo-wants-you-to-know.jpg" alt="Cover of What the CEO Wants You to Know" width="180" height="278" loading="lazy">
+          <div class="book-title">What the CEO Wants You to Know</div>
+          <div class="book-author">Ram Charan</div>
+          <p class="book-idea">Every function lives inside a business. Understanding how value actually gets created makes you better at almost any role.</p>
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Understand the business underneath the job</span>
+            <p>What the CEO Wants You to Know reinforced something I think is easy to lose sight of: every function ultimately exists within a business. Understanding customers, cash flow, margins, and the mechanics of creating value makes you better at almost any role.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
+          <img class="book-cover" src="images/books/poor-charlies-almanack.jpg" alt="Cover of Poor Charlie's Almanack" width="180" height="185" loading="lazy">
+          <div class="book-title">Poor Charlie's Almanack</div>
+          <div class="book-author">Charlie Munger</div>
+          <p class="book-idea">The more disciplines you bring to a problem, the less likely you are to mistake a familiar pattern for the whole picture.</p>
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Think in models, not formulas</span>
+            <p>Poor Charlie's Almanack reinforced my appreciation for mental models and multidisciplinary thinking. The more perspectives you bring to a problem, whether economics, psychology, incentives, statistics, or human behavior, the less likely you are to mistake a familiar pattern for the whole picture.</p>
+          </template>
+        </button>
+        <button class="book" type="button">
+          <img class="book-cover" src="images/books/high-output-management.jpg" alt="Cover of High Output Management" width="180" height="277" loading="lazy">
+          <div class="book-title">High Output Management</div>
+          <div class="book-author">Andrew S. Grove</div>
+          <p class="book-idea">Good outcomes shouldn't depend on one person's heroics. Real leverage comes from the systems built around them.</p>
+          <span class="book-hint">Read the takeaway →</span>
+          <template class="book-insight">
+            <span class="insight-heading">Build systems, not heroics</span>
+            <p>High Output Management changed how I think about management. Strong outcomes shouldn't depend on one person constantly rescuing a broken process. Good managers create leverage through clear expectations, effective processes, useful metrics, and developing the people around them.</p>
+          </template>
+        </button>
       </div>
     </div>
   </section>
