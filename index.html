@@ -567,13 +567,13 @@
   .drill-book:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; border-radius:2px; }
 
   /* ---- shared-idea pop-ups ---- */
-  .book-modal.idea-modal{ max-width:640px; padding-top:36px; padding-bottom:48px; }
-  .idea-modal-eyebrow{ font-size:12.5px; letter-spacing:.12em; }
+  .book-modal.idea-modal{ max-width:560px; padding-top:36px; padding-bottom:56px; }
+  .idea-modal-eyebrow{ font-size:12.5px; letter-spacing:.08em; line-height:1.4; color:var(--bone-dim); }
   .idea-modal-body{ margin-top:22px; padding-top:22px; border-top:1px solid var(--ground-line); }
-  .idea-block + .idea-block{ margin-top:20px; }
+  .idea-block + .idea-block{ margin-top:24px; }
   .idea-block-label{ display:block; font-family:var(--font-mono); font-size:13.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--verdant); }
-  .idea-block p{ margin-top:6px; color:var(--bone-dim); font-size:16.5px; line-height:1.7; }
-  .idea-block-ask p{ font-family:var(--font-display); font-style:italic; font-size:19px; line-height:1.5; color:var(--bone); }
+  .idea-block p{ margin-top:6px; color:var(--bone-dim); font-size:18.5px; line-height:1.7; }
+  .idea-block-ask p{ font-family:var(--font-display); font-style:italic; font-size:20px; line-height:1.5; color:var(--bone); }
   .net-theme{ cursor:pointer; }
 
   /* ================= STILLWARD (room) ================= */
@@ -2075,8 +2075,8 @@
       var d = ideaData[id];
       if(!d) return;
       ideaLastTrigger = trigger || null;
-      ideaEyebrow.textContent = 'Force';
-      ideaHeading.textContent = d.name + '. ' + d.tag;
+      ideaEyebrow.textContent = 'Force · ' + d.name;
+      ideaHeading.textContent = d.tag;
       ideaBody.innerHTML =
         ideaBlock('Healthy', d.healthy) +
         ideaBlock('Warning signs', d.warning) +
