@@ -545,8 +545,7 @@
   .drill-lens[aria-selected="true"]{ background:var(--verdant-deep); }
   .drill-lens:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; }
   .drill-tree{ margin-top:26px; }
-  .drill-lens-head{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; color:var(--bone-faint); }
-  .mn-svg{ display:block; width:100%; height:auto; margin-top:10px; overflow:visible; }
+  .mn-svg{ display:block; width:100%; height:auto; overflow:visible; }
   .mn-svg .net-label{ font-size:13px; }
   .mn-svg .mn-dot{ fill:var(--bone-dim); }
   .mn-svg .net-node:focus-visible .net-dot{ stroke:var(--bone); stroke-width:2; }
@@ -2147,8 +2146,7 @@
       });
       var lens = '<g class="net-node mn-lens" aria-hidden="true"><circle class="net-ring" cx="' + XL + '" cy="' + yL + '" r="22"/>' +
         '<text class="net-label" x="' + XL + '" y="' + (yL + 40) + '" text-anchor="middle">' + esc(nodes[lensId].label) + '</text></g>';
-      return '<div class="drill-lens-head">' + esc(nodes[lensId].label) + ' · fed by</div>' +
-        '<svg class="mn-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(nodes[lensId].label) + ' lens, the forces that feed it, and the books behind those forces">' +
+      return '<svg class="mn-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(nodes[lensId].label) + ' lens, the forces that feed it, and the books behind those forces">' +
         '<g class="net-edges">' + edges + '</g><g class="net-nodes">' + lens + nodesF + nodesB + '</g></svg>';
     }
 
