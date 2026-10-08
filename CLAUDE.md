@@ -22,7 +22,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 
 ## Page structure (top to bottom)
 
-hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy (hidden via `hidden` attribute, not removed), The Blind Spot loop cards) → `.turn` (a rust line that loops twice, hits a break point, turns green, heads down and branches into three dots numbered 1 2 3; drawn once on scroll; independent of the Venn) →
+hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards) → `.turn` (a rust line that loops twice, hits a break point, turns green, heads down and branches into three dots numbered 1 2 3; drawn once on scroll; independent of the Venn) →
 Three Lenses `#lenses` (Venn diagram) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
