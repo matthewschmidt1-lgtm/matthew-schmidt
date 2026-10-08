@@ -26,7 +26,7 @@ hero `#home` → about `#about` (story, Continued Learning `#learning` with cert
 Three Lenses `#lenses` (Venn diagram) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
-Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip). Phones: landscape fits the whole SVG; portrait hides it and shows `.net-drill`, a lens-at-a-time tree that JS builds from the SVG's edges and labels (the SVG is the no-JS fallback) → close `#contact`.
+Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip). Phones: landscape fits the whole SVG; portrait hides it and shows `.net-drill`: The Multiplier, three lens bubbles, and for the chosen lens a small lens → forces → books network (`.mn-svg`) that JS builds from the main SVG's edges and labels (the SVG is the no-JS fallback) → close `#contact`.
 
 - The nav scroll-spy is generic: each `.topnav-links a` has a `data-id` matching a section
   id. **`id="ideas"` must stay on whichever project section comes first** so the Ideas
