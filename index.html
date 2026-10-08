@@ -545,10 +545,36 @@
   .drill-lens[aria-selected="true"]{ background:var(--verdant-deep); }
   .drill-lens:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; }
   .drill-tree{ margin-top:26px; }
-  .mn-svg{ display:block; width:100%; height:auto; overflow:visible; }
-  .mn-svg .net-label{ font-size:13px; }
-  .mn-svg .mn-dot{ fill:var(--bone-dim); }
-  .mn-svg .net-node:focus-visible .net-dot{ stroke:var(--bone); stroke-width:2; }
+  .drill-lens-head{ font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--bone-faint); }
+  .drill-ideas{ list-style:none; margin:12px 0 0; padding:0 0 0 14px; border-left:1px solid var(--ground-line); }
+  .drill-ideas > li{ position:relative; padding:10px 0 10px 14px; }
+  .drill-ideas > li::before{ content:""; position:absolute; left:-14px; top:22px; width:22px; height:1px; background:var(--ground-line); }
+  .drill-idea{ display:flex; flex-direction:column; align-items:flex-start; gap:2px; width:100%; padding:0; background:none; border:0; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+  .drill-idea:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; border-radius:2px; }
+  .drill-idea-label{ font-family:var(--font-mono); font-size:15px; letter-spacing:.1em; color:var(--bone); }
+  .drill-idea-sub{ font-family:var(--font-display); font-style:italic; font-size:16px; color:var(--bone-dim); }
+  .drill-books{ list-style:none; margin:8px 0 0; padding:0 0 0 14px; border-left:1px solid var(--ground-line); }
+  .drill-books > li{ position:relative; }
+  .drill-books > li::before{ content:""; position:absolute; left:-14px; top:50%; width:14px; height:1px; background:var(--ground-line); }
+  .drill-book{
+    display:flex; align-items:center; gap:10px; width:100%; padding:8px 0 8px 12px; cursor:pointer; text-align:left;
+    background:none; border:0; color:inherit; font:inherit;
+  }
+  .drill-book::before{ content:""; flex:none; width:9px; height:9px; border-radius:50%; background:var(--verdant); }
+  .drill-book-label{ font-family:var(--font-mono); font-size:14.5px; letter-spacing:.08em; color:var(--bone); }
+  .drill-book-title{ font-family:var(--font-display); font-style:italic; font-size:16px; color:var(--bone-dim); }
+  .drill-book:hover .drill-book-title, .drill-book:focus-visible .drill-book-title{ color:var(--bone); }
+  .drill-book:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; border-radius:2px; }
+
+  /* ---- shared-idea pop-ups ---- */
+  .book-modal.idea-modal{ max-width:640px; padding-top:36px; padding-bottom:48px; }
+  .idea-modal-eyebrow{ font-size:12.5px; letter-spacing:.12em; }
+  .idea-modal-body{ margin-top:22px; padding-top:22px; border-top:1px solid var(--ground-line); }
+  .idea-block + .idea-block{ margin-top:20px; }
+  .idea-block-label{ display:block; font-family:var(--font-mono); font-size:13.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--verdant); }
+  .idea-block p{ margin-top:6px; color:var(--bone-dim); font-size:16.5px; line-height:1.7; }
+  .idea-block-ask p{ font-family:var(--font-display); font-style:italic; font-size:19px; line-height:1.5; color:var(--bone); }
+  .net-theme{ cursor:pointer; }
 
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
@@ -1895,9 +1921,9 @@
       lensModalEyebrow.textContent = el.dataset.eyebrow;
       lensModalHeading.textContent = el.dataset.heading;
       lensModalText.textContent = el.dataset.text;
-      lensModal.classList.toggle('lens-modal--loop', el.classList.contains('loop-card') || el.classList.contains('net-book') || el.classList.contains('drill-book') || el.classList.contains('mn-book'));
+      lensModal.classList.toggle('lens-modal--loop', el.classList.contains('loop-card') || el.classList.contains('net-book') || el.classList.contains('drill-book'));
       // larger top/bottom lines for the book pop-ups and the Venn (lens + overlap) pop-ups
-      lensModal.classList.toggle('lens-modal--book', el.classList.contains('net-book') || el.classList.contains('drill-book') || el.classList.contains('mn-book') || el.classList.contains('lens-hotspot') || el.classList.contains('lens-circle'));
+      lensModal.classList.toggle('lens-modal--book', el.classList.contains('net-book') || el.classList.contains('drill-book') || el.classList.contains('lens-hotspot') || el.classList.contains('lens-circle'));
       if(el.dataset.keywords){
         lensModalKeywords.textContent = el.dataset.keywords;
         lensModalKeywords.hidden = false;
@@ -1933,7 +1959,7 @@
       n.addEventListener('click', function(){ openLensModal(n); });
     });
     document.addEventListener('click', function(e){
-      var b = e.target.closest && e.target.closest('.drill-book, .mn-book');
+      var b = e.target.closest && e.target.closest('.drill-book');
       if(b) openLensModal(b);
     });
     lensModalClose.addEventListener('click', closeLensModal);
@@ -2074,7 +2100,7 @@
     });
     // the phone drill-down rebuilds its idea buttons per lens, so delegate
     document.addEventListener('click', function(e){
-      var b = e.target.closest && e.target.closest('.drill-idea, .mn-idea');
+      var b = e.target.closest && e.target.closest('.drill-idea');
       if(b && b.dataset.idea) openIdeaModal(b.dataset.idea, b);
     });
   }
@@ -2108,46 +2134,20 @@
       return Object.keys(from.dataset).filter(function(k){ return /^(eyebrow|heading|text|keywords)$/.test(k); })
         .map(function(k){ return 'data-' + k + '="' + esc(from.dataset[k]) + '"'; }).join(' ');
     }
-    // The selected lens's slice of the network, drawn as a small network that
-    // fits a vertical phone: lens | forces | books, labels at desktop size.
     function tree(lensId){
-      var forces = into[lensId] || [];
-      var bookRows = []; // unique books in first-seen order, with their forces
-      var bookIdx = {};
-      forces.forEach(function(t){
+      var html = '<div class="drill-lens-head">' + esc(nodes[lensId].label) + ' · fed by</div><ul class="drill-ideas">';
+      (into[lensId] || []).forEach(function(t){
+        html += '<li><button type="button" class="drill-idea" data-idea="' + esc(t) + '"><span class="drill-idea-label">' + esc(nodes[t].label) + '</span>' +
+                '<span class="drill-idea-sub">' + esc(nodes[t].sub) + '</span></button><ul class="drill-books">';
         (into[t] || []).forEach(function(b){
-          if(bookIdx[b] === undefined){ bookIdx[b] = bookRows.length; bookRows.push(b); }
+          var bl = nodes[b].label.split(' · ');
+          html += '<li><button type="button" class="drill-book" ' + copyData(nodes[b].el) + '>' +
+                  '<span class="drill-book-label">' + esc(bl[0]) + '</span>' +
+                  '<span class="drill-book-title">' + esc(nodes[b].sub) + '</span></button></li>';
         });
+        html += '</ul></li>';
       });
-      var W = 340, XL = 36, XF = 130, XB = 244, FR = 76, BR = 66, PAD = 34;
-      var H = Math.max(forces.length * FR, bookRows.length * BR) + PAD * 2;
-      var yL = H / 2;
-      var yF = function(i){ return H/2 - (forces.length - 1) * FR / 2 + i * FR; };
-      var yB = function(i){ return H/2 - (bookRows.length - 1) * BR / 2 + i * BR; };
-      var edges = '', nodesF = '', nodesB = '';
-      function curve(x1,y1,x2,y2){ var m=(x1+x2)/2; return 'M'+x1+','+y1+' C'+m+','+y1+' '+m+','+y2+' '+x2+','+y2; }
-      forces.forEach(function(t, i){
-        edges += '<path class="net-edge" d="' + curve(XL + 22, yL, XF, yF(i)) + '"/>'; // start at the ring's edge
-        (into[t] || []).forEach(function(b){
-          edges += '<path class="net-edge" d="' + curve(XF, yF(i), XB, yB(bookIdx[b])) + '"/>';
-        });
-        nodesF += '<g class="net-node mn-idea" data-idea="' + esc(t) + '" tabindex="0" role="button" aria-label="' + esc(nodes[t].label) + ': ' + esc(nodes[t].sub) + '">' +
-          '<circle class="net-hit" cx="' + XF + '" cy="' + yF(i) + '" r="26"/>' +
-          '<circle class="net-dot mn-dot" cx="' + XF + '" cy="' + yF(i) + '" r="6"/>' +
-          '<text class="net-label" x="' + XF + '" y="' + (yF(i) + 20) + '" text-anchor="middle">' + esc(nodes[t].label) + '</text></g>';
-      });
-      bookRows.forEach(function(b, i){
-        var bl = nodes[b].label.split(' · ');
-        nodesB += '<g class="net-node mn-book" ' + copyData(nodes[b].el) + ' tabindex="0" role="button" aria-label="' + esc(nodes[b].label) + ', ' + esc(nodes[b].sub) + '">' +
-          '<circle class="net-hit" cx="' + XB + '" cy="' + yB(i) + '" r="26"/>' +
-          '<circle class="net-dot" cx="' + XB + '" cy="' + yB(i) + '" r="7"/>' +
-          '<text class="net-label" x="' + XB + '" y="' + (yB(i) + 19) + '" text-anchor="middle">' + esc(nodes[b].label) + '</text>' +
-          '<text class="net-sub" x="' + XB + '" y="' + (yB(i) + 34) + '" text-anchor="middle">' + esc(nodes[b].sub) + '</text></g>';
-      });
-      var lens = '<g class="net-node mn-lens" aria-hidden="true"><circle class="net-ring" cx="' + XL + '" cy="' + yL + '" r="22"/>' +
-        '<text class="net-label" x="' + XL + '" y="' + (yL + 40) + '" text-anchor="middle">' + esc(nodes[lensId].label) + '</text></g>';
-      return '<svg class="mn-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(nodes[lensId].label) + ' lens, the forces that feed it, and the books behind those forces">' +
-        '<g class="net-edges">' + edges + '</g><g class="net-nodes">' + lens + nodesF + nodesB + '</g></svg>';
+      return html + '</ul>';
     }
 
     drill.innerHTML =
@@ -2167,10 +2167,6 @@
     }
     Array.prototype.forEach.call(tabs, function(t){
       t.addEventListener('click', function(){ select(t.dataset.lens); });
-    });
-    drill.addEventListener('keydown', function(e){
-      var n = e.target.closest && e.target.closest('.mn-idea, .mn-book');
-      if(n && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); n.dispatchEvent(new MouseEvent('click', { bubbles:true })); }
     });
     select(lensIds[0]);
     sec.classList.add('has-drill');
