@@ -22,7 +22,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 
 ## Page structure (top to bottom)
 
-hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards) → `.turn` (a rust line that loops twice, hits a break point, turns green, heads down and branches into three dots numbered 1 2 3; drawn once on scroll; independent of the Venn) →
+hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards) →
 Three Lenses `#lenses` (Venn diagram) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
@@ -45,7 +45,7 @@ Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip).
   adds `.pre-reveal`/`.pre-anim` only when an IntersectionObserver + a safety-net
   `setTimeout` can guarantee revealing it, and only when `prefers-reduced-motion` is off.
   A real "stuck invisible" bug came from breaking this.
-  For entrances that should be *seen* (the `.turn` line, the Venn diagram), use the
+  For entrances that should be *seen* (the Venn diagram, the Path to Agency network), use the
   `whenArrived(el, ratio, cb)` helper (IntersectionObserver + scroll-position fallback) and
   no timed fallback: a 20s timer used to play them before the visitor scrolled down.
 - **Strip `.pre-anim` after an entrance settles** — its higher-specificity rules otherwise
