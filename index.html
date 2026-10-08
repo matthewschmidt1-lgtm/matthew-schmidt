@@ -545,8 +545,7 @@
   .drill-lens[aria-selected="true"]{ background:var(--verdant-deep); }
   .drill-lens:focus-visible{ outline:2px solid var(--bone); outline-offset:2px; }
   .drill-tree{ margin-top:26px; }
-  .drill-lens-head{ font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--bone-faint); }
-  .drill-ideas{ list-style:none; margin:12px 0 0; padding:0 0 0 14px; border-left:1px solid var(--ground-line); }
+  .drill-ideas{ list-style:none; margin:0; padding:0 0 0 14px; border-left:1px solid var(--ground-line); }
   .drill-ideas > li{ position:relative; padding:10px 0 10px 14px; }
   .drill-ideas > li::before{ content:""; position:absolute; left:-14px; top:22px; width:22px; height:1px; background:var(--ground-line); }
   .drill-idea{ display:flex; flex-direction:column; align-items:flex-start; gap:2px; width:100%; padding:0; background:none; border:0; color:inherit; font:inherit; text-align:left; cursor:pointer; }
@@ -2135,7 +2134,7 @@
         .map(function(k){ return 'data-' + k + '="' + esc(from.dataset[k]) + '"'; }).join(' ');
     }
     function tree(lensId){
-      var html = '<div class="drill-lens-head">' + esc(nodes[lensId].label) + ' · fed by</div><ul class="drill-ideas">';
+      var html = '<ul class="drill-ideas">';
       (into[lensId] || []).forEach(function(t){
         html += '<li><button type="button" class="drill-idea" data-idea="' + esc(t) + '"><span class="drill-idea-label">' + esc(nodes[t].label) + '</span>' +
                 '<span class="drill-idea-sub">' + esc(nodes[t].sub) + '</span></button><ul class="drill-books">';
