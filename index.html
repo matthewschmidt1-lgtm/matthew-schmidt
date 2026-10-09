@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-contrast="high">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,8 +30,8 @@
   html{ background:#18292F; }
 </style>
 <script>
-  /* Apply a saved high-contrast choice before first paint. */
-  (function(){ try{ if(localStorage.getItem('contrast') === 'high') document.documentElement.setAttribute('data-contrast','high'); }catch(e){} })();
+  /* High contrast is the default; honour a saved 'normal' choice before first paint. */
+  (function(){ try{ if(localStorage.getItem('contrast') === 'normal') document.documentElement.setAttribute('data-contrast','normal'); }catch(e){} })();
 </script>
 
 <style>
