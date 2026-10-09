@@ -59,6 +59,11 @@ Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip).
   `animation:none !important`). SMIL ignores that media query, so the JS guard near the
   top of the script removes `<animateTransform>`/`<animate>` under
   `.aspen-scene`/`.decision-scene`/`.water-scene`/`.see-svg` when `reduced` is true — extend that selector for any new SMIL.
+- **High-contrast mode:** the "Aa" pill in the nav sets `data-contrast="high"` on `<html>`
+  (saved in localStorage, applied pre-paint by the inline script in `<head>`), and
+  `@media (prefers-contrast: more)` applies the same overrides automatically. Both only
+  redefine the `:root` tokens (text, lines, accent, nav/backdrop) and keep the slate ground.
+  Translucent surfaces must use `--nav-bg` / `--backdrop`, not hard-coded rgba, so they follow.
 - The shared modal chrome (`.book-modal-overlay`) is reused by four overlays (certificate, books,
   lenses, friction cards). Click handlers select by class (e.g. `.friction-cta`) — don't
   reuse those class names on unrelated elements; a "Try Friction" link once triggered the
