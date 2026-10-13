@@ -25,7 +25,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards) →
 Three Lenses `#lenses` (Venn diagram) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
-`#ideas`, Decision OS, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
+`#ideas`, Decision OS, Algorithm Atlas, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
 Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip). Phones: landscape fits the whole SVG; portrait hides it and shows `.net-drill`: The Multiplier, three lens bubbles, and for the chosen lens a tree of its forces and the books behind them that JS builds from the main SVG's edges and labels (the SVG is the no-JS fallback) → close `#contact`.
 
 - The nav scroll-spy is generic: each `.topnav-links a` has a `data-id` matching a section
@@ -33,10 +33,10 @@ Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip).
   link and its active state land at the top of the projects.
 - Section spacing uses order-independent adjacent-sibling selectors
   (`.shift + .room`, `.built-divider + .room`) so project sections can be reordered
-  without touching CSS. The four `.built-divider` signal lines shift their blip
-  left → right down the list (H120 / H353 / H587 / H820).
+  without touching CSS. The five `.built-divider` signal lines shift their blip
+  left → right down the list (H120 / H295 / H470 / H645 / H820).
 - Each project preview scopes its own product palette as custom properties on the
-  section (`.friction-room{--fr-*}`, `.decision-room{--do-*}`, `.aspen-room{--as-*}`, `.water-room{--wa-*}`),
+  section (`.friction-room{--fr-*}`, `.decision-room{--do-*}`, `.atlas-room{--at-*}`, `.aspen-room{--as-*}`, `.water-room{--wa-*}`),
   pulled from that project's source. Don't leak them into `:root`.
 
 ## Conventions that are easy to break

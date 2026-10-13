@@ -586,6 +586,36 @@
   .idea-block-ask p{ font-family:var(--font-display); font-style:italic; font-size:20px; line-height:1.5; color:var(--bone); }
   .net-theme{ cursor:pointer; }
 
+  /* ---------- Algorithm Atlas preview (pulls its own field-guide palette) ---------- */
+  .atlas-room{
+    --at-linen:#F4F0E7; --at-surface:#FAF7F1; --at-charcoal:#292D27; --at-forest:#34483B;
+    --at-moss:#66765A; --at-sage:#899780; --at-sand:#D8C6A5; --at-terracotta:#B86F52; --at-stone:#A5A398;
+    --at-line:rgba(41,45,39,.14);
+  }
+  .atlas-room .eyebrow{ color:var(--at-forest); }
+  .room.atlas-room h2{ font-size:clamp(22px,2.8vw,32px); max-width:24ch; } /* .room h2 is declared later */
+  .atlas-room .room-cta{ color:var(--at-forest); border-bottom-color:var(--at-forest); }
+  .atlas-mock{
+    display:block; max-width:300px; margin:0 auto; background:var(--at-linen);
+    border:1px solid var(--at-line); border-radius:20px; padding:24px 22px 18px;
+    box-shadow:0 24px 44px rgba(41,45,39,.14);
+    text-decoration:none; color:inherit; cursor:pointer;
+    transition:transform 1.6s cubic-bezier(.37,0,.24,1);
+  }
+  .atlas-mock:hover{ transform:scale(1.03); }
+  .atlas-mock-top{
+    display:flex; align-items:center; gap:8px; margin-bottom:14px;
+    font-family:var(--font-display); font-weight:500; font-size:15px; color:var(--at-charcoal);
+  }
+  .atlas-mark{ width:16px; height:16px; display:block; }
+  .atlas-scene{ width:100%; height:auto; display:block; }
+  .atlas-scene .at-trunk{ stroke:var(--at-charcoal); stroke-opacity:.22; stroke-width:1; fill:none; }
+  .atlas-scene .at-edge{ stroke:var(--at-charcoal); stroke-opacity:.12; stroke-width:.8; }
+  .atlas-scene .at-lesson{ opacity:.75; }
+  .atlas-scene .at-disc{ stroke:var(--at-linen); stroke-width:1.5; }
+  .atlas-scene .at-label{ font-family:var(--font-display); font-size:9.5px; fill:var(--at-charcoal); opacity:.8; }
+  .atlas-scene .at-traveller{ fill:var(--at-terracotta); opacity:.9; }
+
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
   .room .eyebrow{ color:var(--verdant-deep); }
@@ -1305,7 +1335,41 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H353 L359,5 L368,19 L377,12 L386,12 L392,7 L401,17 L410,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H295 L301,5 L310,19 L319,12 L328,12 L334,7 L343,17 L352,12 H1000"/></svg>
+  </div>
+
+  <section class="room atlas-room" id="atlas-project">
+    <div class="wrap">
+      <span class="eyebrow">Algorithm Atlas</span>
+      <h2>A field guide to the algorithms behind AI and business decisions.</h2>
+      <div class="stillward-layout">
+        <a class="atlas-mock" href="https://algorithm-atlas-production.up.railway.app/" target="_blank" rel="noopener" aria-label="Open Algorithm Atlas (opens in a new tab)">
+          <div class="atlas-mock-top">
+            <svg class="atlas-mark" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="#34483B" stroke-width="1.3"/><path d="M8 3.2 L9.6 8 L8 12.8 L6.4 8 Z" fill="#B86F52"/></svg>
+            <span>Algorithm Atlas</span>
+          </div>
+          <!-- A quiet field sketch, like the real site's hero: disciplines as larger
+               marks, lessons as small ones, and a few dots travelling the lines
+               between fields. SMIL only, removed under reduced motion. -->
+          <svg class="atlas-scene" viewBox="0 0 300 200" role="img" aria-label="A field sketch of the atlas as a network: larger marks are disciplines, small marks are lessons, and tiny dots travel the lines between them.">
+            <defs><path id="atT0" d="M70,72 L192,56"/><path id="atT1" d="M70,72 L128,150"/><path id="atT2" d="M192,56 L238,146"/><path id="atT3" d="M128,150 L238,146"/><path id="atT4" d="M192,56 L128,150"/></defs>
+            <use href="#atT0" class="at-trunk"/><use href="#atT1" class="at-trunk"/><use href="#atT2" class="at-trunk"/><use href="#atT3" class="at-trunk"/><use href="#atT4" class="at-trunk"/><line class="at-edge" x1="70" y1="72" x2="47.8" y2="54.8"/><line class="at-edge" x1="70" y1="72" x2="79.3" y2="46.4"/><line class="at-edge" x1="70" y1="72" x2="67.8" y2="45.6"/><line class="at-edge" x1="70" y1="72" x2="97.1" y2="76.0"/><line class="at-edge" x1="192" y1="56" x2="219.9" y2="47.6"/><line class="at-edge" x1="192" y1="56" x2="210.9" y2="45.1"/><line class="at-edge" x1="192" y1="56" x2="167.5" y2="59.9"/><line class="at-edge" x1="192" y1="56" x2="164.2" y2="49.8"/><line class="at-edge" x1="128" y1="150" x2="152.5" y2="151.6"/><line class="at-edge" x1="128" y1="150" x2="122.0" y2="175.9"/><line class="at-edge" x1="128" y1="150" x2="130.3" y2="131.0"/><line class="at-edge" x1="128" y1="150" x2="134.9" y2="131.9"/><line class="at-edge" x1="238" y1="146" x2="220.6" y2="133.4"/><line class="at-edge" x1="238" y1="146" x2="270.5" y2="146.3"/><line class="at-edge" x1="238" y1="146" x2="244.2" y2="165.0"/><line class="at-edge" x1="238" y1="146" x2="270.3" y2="143.1"/>
+            <circle class="at-lesson" cx="47.8" cy="54.8" r="2.6" fill="#34483B"/><circle class="at-lesson" cx="79.3" cy="46.4" r="2.6" fill="#34483B"/><circle class="at-lesson" cx="67.8" cy="45.6" r="2.6" fill="#34483B"/><circle class="at-lesson" cx="97.1" cy="76.0" r="2.6" fill="#34483B"/><circle class="at-lesson" cx="219.9" cy="47.6" r="2.6" fill="#B86F52"/><circle class="at-lesson" cx="210.9" cy="45.1" r="2.6" fill="#B86F52"/><circle class="at-lesson" cx="167.5" cy="59.9" r="2.6" fill="#B86F52"/><circle class="at-lesson" cx="164.2" cy="49.8" r="2.6" fill="#B86F52"/><circle class="at-lesson" cx="152.5" cy="151.6" r="2.6" fill="#66765A"/><circle class="at-lesson" cx="122.0" cy="175.9" r="2.6" fill="#66765A"/><circle class="at-lesson" cx="130.3" cy="131.0" r="2.6" fill="#66765A"/><circle class="at-lesson" cx="134.9" cy="131.9" r="2.6" fill="#66765A"/><circle class="at-lesson" cx="220.6" cy="133.4" r="2.6" fill="#34483B"/><circle class="at-lesson" cx="270.5" cy="146.3" r="2.6" fill="#34483B"/><circle class="at-lesson" cx="244.2" cy="165.0" r="2.6" fill="#34483B"/><circle class="at-lesson" cx="270.3" cy="143.1" r="2.6" fill="#34483B"/>
+            <circle class="at-disc" cx="70" cy="72" r="9" fill="#34483B"/><text class="at-label" x="70" y="93" text-anchor="middle">Search</text><circle class="at-disc" cx="192" cy="56" r="8" fill="#B86F52"/><text class="at-label" x="192" y="76" text-anchor="middle">Graphs</text><circle class="at-disc" cx="128" cy="150" r="9" fill="#66765A"/><text class="at-label" x="128" y="171" text-anchor="middle">Learning</text><circle class="at-disc" cx="238" cy="146" r="7" fill="#34483B"/><text class="at-label" x="238" y="165" text-anchor="middle">Decisions</text>
+            <circle class="at-traveller" r="2.2"><animateMotion dur="11s" begin="0s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#atT0"/></animateMotion></circle><circle class="at-traveller" r="2.2"><animateMotion dur="13s" begin="-4s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#atT1"/></animateMotion></circle><circle class="at-traveller" r="2.2"><animateMotion dur="12s" begin="-7s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#atT3"/></animateMotion></circle><circle class="at-traveller" r="2.2"><animateMotion dur="14s" begin="-2s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#atT4"/></animateMotion></circle>
+          </svg>
+        </a>
+        <div>
+          <p class="quote atlas-quote">"For my dad, who taught me to think in algorithms."</p>
+          <p class="room-body">An interactive field guide. Every lesson starts in plain language, runs a real implementation you can step through, and goes as deep as you want to go.</p>
+          <a class="room-cta" href="https://algorithm-atlas-production.up.railway.app/" target="_blank" rel="noopener">Open the Atlas →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H470 L476,5 L485,19 L494,12 L503,12 L509,7 L518,17 L527,12 H1000"/></svg>
   </div>
 
   <section class="room" id="stillward-project">
@@ -1331,7 +1395,7 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H587 L593,5 L602,19 L611,12 L620,12 L626,7 L635,17 L644,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H645 L651,5 L660,19 L669,12 L678,12 L684,7 L693,17 L702,12 H1000"/></svg>
   </div>
 
   <section class="room water-room" id="water-project">
@@ -1656,7 +1720,7 @@
   /* SMIL ignores the CSS reduced-motion override, so remove it explicitly.
      Each scene's static attributes are its settled first frame. */
   if(reduced){
-    document.querySelectorAll('.aspen-scene animate, .decision-scene animate, .water-scene animateTransform, .water-scene animate').forEach(function(a){ a.remove(); });
+    document.querySelectorAll('.aspen-scene animate, .decision-scene animate, .water-scene animateTransform, .water-scene animate, .atlas-scene animateMotion').forEach(function(a){ a.remove(); });
   }
 
   /* ---------- signal line: hero (interactive) ---------- */
