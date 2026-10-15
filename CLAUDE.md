@@ -22,7 +22,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 
 ## Page structure (top to bottom)
 
-hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards) →
+hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards, which open `#loopModalOverlay`: one panel, three stages Activity → Learning → Insight swapped in place, content in `loopStages`) →
 Three Lenses `#lenses` (Venn diagram) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (three cards + modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Algorithm Atlas, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
@@ -64,7 +64,7 @@ Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip).
   `@media (prefers-contrast: more)` applies the same overrides automatically. Both only
   redefine the `:root` tokens (text, lines, accent, nav/backdrop) and keep the slate ground.
   Translucent surfaces must use `--nav-bg` / `--backdrop`, not hard-coded rgba, so they follow.
-- The shared modal chrome (`.book-modal-overlay`) is reused by four overlays (certificate, books,
+- The shared modal chrome (`.book-modal-overlay`) is reused by the certificate, book, lens, friction, force and Blind Spot overlays (
   lenses, friction cards). Click handlers select by class (e.g. `.friction-cta`) — don't
   reuse those class names on unrelated elements; a "Try Friction" link once triggered the
   wrong modal that way.
