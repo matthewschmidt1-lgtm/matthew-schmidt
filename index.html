@@ -482,54 +482,44 @@
   .friction .wrap{ position:relative; z-index:1; }
   .friction .eyebrow{ color:var(--ink); }
   .friction h2{ margin-top:14px; font-size:clamp(27px,4vw,44px); max-width:19ch; line-height:1.18; color:var(--ink); }
-  .friction-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.3; color:var(--ink); }
-  /* ---- the story spine ---- */
-  .fstory{ position:relative; margin-top:56px; padding-left:72px; max-width:760px; }
-  .fspine{ position:absolute; left:19px; top:10px; bottom:18px; width:2px; background:rgba(25,34,28,.22); }
-  .fspine-fill{ position:absolute; left:0; top:0; width:100%; height:100%; background:var(--ink); transform-origin:top; }
-  .fstory.pre-draw .fspine-fill{ transform:scaleY(var(--p, 0)); transition:transform .35s ease-out; }
-  .fbeat{ position:relative; padding-bottom:72px; }
-  .fbeat:last-child{ padding-bottom:0; }
-  .fbeat::before{
-    content:''; position:absolute; left:-61px; top:2px; width:16px; height:16px; border-radius:50%;
-    background:var(--sage-mist); border:2px solid var(--ink); box-sizing:border-box;
+  .friction-body{ margin-top:16px; max-width:52ch; color:var(--ink-dim); font-size:18px; line-height:1.7; }
+  .friction h2 + .friction-body{ margin-top:22px; color:var(--ink); }
+  .friction-body-last{ color:var(--ink); }
+  /* ---- the broken connection ---- */
+  .fgap{ position:relative; margin:64px auto 8px; max-width:880px; }
+  .fgap-labels{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); }
+  .fgap-label-r{ opacity:.45; }
+  .fgap-track{ position:relative; margin-top:14px; display:flex; align-items:center; height:40px; }
+  .fgap-end{ flex:none; width:12px; height:12px; border-radius:50%; border:2px solid var(--ink); box-sizing:border-box; }
+  .fgap-end-l{ background:var(--ink); }
+  .fgap-end-r{ opacity:.45; }
+  .fgap-seg{ flex:1 1 0; height:2px; background:var(--ink); }
+  .fgap-seg-r{ opacity:.3; }
+  .fgap-break{ flex:none; width:90px; height:40px; display:block; }
+  .fgap-break path{ fill:none; stroke:var(--rust); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
+  .fgap-caption{ display:block; margin-top:6px; text-align:center; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--rust); }
+  /* pulses: leave intention, dissipate at the gap */
+  .fgap-pulse{
+    position:absolute; top:50%; left:6px; width:10px; height:10px; margin:-5px 0 0 -5px; border-radius:50%;
+    background:var(--ink); opacity:0; pointer-events:none;
+    animation:fgapPulse 5.2s cubic-bezier(.3,0,.7,1) infinite;
   }
-  .fbeat-eyebrow{ display:block; font-family:var(--font-mono); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--verdant-deep); }
-  .fbeat-heading{ margin-top:10px; font-family:var(--font-display); font-weight:400; font-size:clamp(22px,2.8vw,30px); line-height:1.25; color:var(--ink); max-width:24ch; }
-  .fbeat-body{ margin-top:12px; max-width:56ch; color:var(--ink-dim); font-size:17.5px; line-height:1.7; }
-  .fbeat-final{ margin-top:22px; font-family:var(--font-display); font-style:italic; font-size:22px; line-height:1.4; color:var(--ink); }
-  .friction-product-line{ margin-top:34px; font-family:var(--font-body); font-weight:600; font-size:20px; color:var(--verdant-deep); }
-  /* the break: a jagged gap drawn over the spine at the second beat */
-  .fbeat-break::before{ border-color:var(--rust); }
-  .fbreak{ position:absolute; left:-72px; top:24px; width:40px; height:110px; background:var(--sage-mist); }
-  .fbreak-end{ fill:none; stroke:var(--rust); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
-  /* the three sources attach to the break */
-  .fsources{ list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:12px; }
-  .fsource{
-    position:relative; padding:14px 18px; background:rgba(229,227,208,.6); border:1px solid var(--paper-line); border-radius:3px;
-    display:grid; grid-template-columns:auto auto; column-gap:12px; row-gap:4px; align-items:baseline; max-width:60ch;
+  .fgap-pulse-2{ animation-delay:-2.6s; }
+  @keyframes fgapPulse{
+    0%{ left:6px; opacity:0; transform:scale(.6); }
+    8%{ opacity:1; transform:scale(1); }
+    78%{ opacity:1; transform:scale(1); }
+    100%{ left:calc(50% - 44px); opacity:0; transform:scale(.4); }
   }
-  .fsource::before{ content:''; position:absolute; left:-52px; top:50%; width:52px; height:1px; background:var(--rust); opacity:.7; }
-  .fsource-lens{ font-family:var(--font-mono); font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--verdant-deep); }
-  .fsource-what{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--rust); }
-  .fsource-note{ grid-column:1 / -1; color:var(--ink-dim); font-size:15.5px; line-height:1.6; }
-  /* draw-in on arrival (JS adds .pre-draw only when it can guarantee .in; never under reduced motion) */
-  .fstory.pre-draw .fbeat{ opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
-  .fstory.pre-draw .fbeat.in{ opacity:1; transform:none; }
-  .fstory.pre-draw .fsource{ opacity:0; transform:translateX(-8px); transition:opacity .5s ease, transform .5s ease; }
-  .fstory.pre-draw .fbeat.in .fsource{ opacity:1; transform:none; }
-  .fstory.pre-draw .fbeat.in .fsource:nth-child(1){ transition-delay:.35s; }
-  .fstory.pre-draw .fbeat.in .fsource:nth-child(2){ transition-delay:.6s; }
-  .fstory.pre-draw .fbeat.in .fsource:nth-child(3){ transition-delay:.85s; }
-  .fstory.pre-draw .fbreak-end{ stroke-dasharray:1 2; stroke-dashoffset:1.02; transition:stroke-dashoffset .9s ease-out .2s; }
-  .fstory.pre-draw .fbeat.in .fbreak-end{ stroke-dashoffset:0; }
   @media (max-width:640px){
-    .fstory{ padding-left:48px; }
-    .fbeat::before{ left:-37px; }
-    .fspine{ left:7px; }
-    .fbreak{ left:-48px; }
-    .fsource::before{ left:-28px; width:28px; }
-    .fsource{ grid-template-columns:1fr; }
+    .fgap{ margin-top:48px; }
+    .fgap-break{ width:60px; }
+    @keyframes fgapPulse{
+      0%{ left:6px; opacity:0; transform:scale(.6); }
+      8%{ opacity:1; transform:scale(1); }
+      78%{ opacity:1; transform:scale(1); }
+      100%{ left:calc(50% - 30px); opacity:0; transform:scale(.4); }
+    }
   }
 
   /* ================= SHIFT ================= */
@@ -882,6 +872,7 @@
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
     .belief-row, .book{ opacity:1 !important; transform:none !important; }
     .breath-ring{ animation:none !important; }
+    .fgap-pulse{ animation:none !important; opacity:0 !important; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
   }
@@ -1210,44 +1201,32 @@
         <path d="M0,10 L20,10 L30,10 L36,3 L45,17 L54,10 L63,10 L69,5 L78,15 L87,10 L96,10 L120,10"/>
       </svg>
       <span class="eyebrow">The Friction</span>
-      <h2>The problem usually isn't one of the three.</h2>
-      <p class="friction-lede">It's the gap between them.</p>
+      <h2>The strategy is sound. So why aren't the results there?</h2>
+      <p class="friction-body">The priorities are set. The processes are in place. The people are capable.</p>
+      <p class="friction-body">And yet, progress stalls. The same problems return. Results depend on constant intervention.</p>
+      <p class="friction-body friction-body-last">Something is getting lost between what the organization intends and what it actually delivers.</p>
 
-      <!-- The story: one process line runs down the section. Intent flows toward
-           execution, the line breaks, the three sources of friction attach to the
-           break, and the line resumes into the realization. Everything is visible
-           by default; JS only adds the draw-in (and not under reduced motion). -->
-      <div class="fstory" id="fstory">
-        <div class="fspine" aria-hidden="true"><div class="fspine-fill" id="fspineFill"></div></div>
-
-        <div class="fbeat fbeat-intent">
-          <span class="fbeat-eyebrow">1 · The intent</span>
-          <h3 class="fbeat-heading">The business knows what it wants to achieve.</h3>
-          <p class="fbeat-body">The process begins with a clear intention: create value, improve performance, deliver results. But something happens along the way.</p>
+      <!-- One visual: the line from intention to results, broken in the middle.
+           Pulses leave intention and dissipate at the gap; nothing arrives.
+           Built from HTML so it stays responsive; the loop stops under reduced motion. -->
+      <div class="fgap" role="img" aria-label="A line running from intention to results, broken in the middle. Pulses set out from intention and fade at the break; nothing reaches results.">
+        <div class="fgap-labels">
+          <span class="fgap-label">Intention</span>
+          <span class="fgap-label fgap-label-r">Results</span>
         </div>
-
-        <div class="fbeat fbeat-break">
-          <svg class="fbreak" viewBox="0 0 40 110" aria-hidden="true">
-            <path class="fbreak-end" pathLength="1" d="M20,0 V26 L13,34 L27,42 L20,50"/>
-            <path class="fbreak-end" pathLength="1" d="M20,60 L13,68 L27,76 L20,84 V110"/>
+        <div class="fgap-track">
+          <span class="fgap-end fgap-end-l"></span>
+          <div class="fgap-seg fgap-seg-l"></div>
+          <svg class="fgap-break" viewBox="0 0 90 40" aria-hidden="true">
+            <path d="M0,20 H14 L22,10 L30,30 L37,20"/>
+            <path d="M53,20 L60,10 L68,30 L76,20 H90"/>
           </svg>
-          <span class="fbeat-eyebrow">2 · The breakdown</span>
-          <h3 class="fbeat-heading">The system doesn't translate intent into effective execution.</h3>
-          <p class="fbeat-body">Priorities compete. Processes create obstacles. People lack the clarity or authority to act.</p>
-          <ul class="fsources" aria-label="The three sources of friction">
-            <li class="fsource"><span class="fsource-lens">Business</span><span class="fsource-what">Misaligned value</span><span class="fsource-note">Activity and metrics multiply while priorities stay misaligned.</span></li>
-            <li class="fsource"><span class="fsource-lens">System</span><span class="fsource-what">Broken execution</span><span class="fsource-note">The organization knows what it wants, but the way work gets done works against it.</span></li>
-            <li class="fsource"><span class="fsource-lens">People</span><span class="fsource-what">Blocked action</span><span class="fsource-note">Knowing what needs to happen doesn't mean people are equipped or empowered to do it.</span></li>
-          </ul>
+          <div class="fgap-seg fgap-seg-r"></div>
+          <span class="fgap-end fgap-end-r"></span>
+          <span class="fgap-pulse" aria-hidden="true"></span>
+          <span class="fgap-pulse fgap-pulse-2" aria-hidden="true"></span>
         </div>
-
-        <div class="fbeat fbeat-real">
-          <span class="fbeat-eyebrow">3 · The realization</span>
-          <h3 class="fbeat-heading">The gap is where results get lost.</h3>
-          <p class="fbeat-body">The problem isn't necessarily the business, the system, or the people. It's the way they work together.</p>
-          <p class="fbeat-final">The details change. The friction doesn't.</p>
-          <p class="friction-product-line">Friction makes the gaps visible.</p>
-        </div>
+        <span class="fgap-caption">The gap</span>
       </div>
     </div>
   </section>
@@ -1948,32 +1927,6 @@
       try{ localStorage.setItem('contrast', on ? 'high' : 'normal'); }catch(e){}
       syncContrast();
     });
-  }
-
-  /* ---------- The Friction: the breakdown unfolds as the visitor scrolls ----------
-     The spine fills with scroll progress; each beat (and the break, and the three
-     sources) reveals on arrival. Only when JS can guarantee it, never under reduced
-     motion: the full story is visible and readable without any of this. */
-  var fstory = document.getElementById('fstory');
-  var fspineFill = document.getElementById('fspineFill');
-  if(fstory && fspineFill && 'IntersectionObserver' in window && !reduced){
-    fstory.classList.add('pre-draw');
-    Array.prototype.forEach.call(fstory.querySelectorAll('.fbeat'), function(beat){
-      whenArrived(beat, 0.25, function(){ beat.classList.add('in'); });
-    });
-    var fTicking = false;
-    function fspineUpdate(){
-      fTicking = false;
-      var r = fstory.getBoundingClientRect();
-      var vh = window.innerHeight;
-      // 0 when the story's top reaches the lower third of the screen, 1 when its bottom does
-      var p = (vh * 0.7 - r.top) / r.height;
-      p = Math.max(0, Math.min(1, p));
-      fstory.style.setProperty('--p', p.toFixed(3));
-    }
-    window.addEventListener('scroll', function(){ if(!fTicking){ fTicking = true; requestAnimationFrame(fspineUpdate); } }, { passive:true });
-    window.addEventListener('resize', fspineUpdate);
-    fspineUpdate();
   }
 
   /* ---------- nav progress + active link ---------- */
