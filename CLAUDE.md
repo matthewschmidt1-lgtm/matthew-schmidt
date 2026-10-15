@@ -23,7 +23,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 ## Page structure (top to bottom)
 
 hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards, which open `#loopModalOverlay`: three stages Activity → Learning → Insight, content in `loopStages`) →
-Three Lenses `#lenses` (Venn diagram; circles and overlaps open `#vennModalOverlay`, seven stages Business → System → People → Leadership → Capability → Scale → The Multiplier, content in `vennStages`) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (three cards + modal) →
+Three Lenses `#lenses` (Venn diagram; circles and overlaps open `#vennModalOverlay`, seven stages Business → System → People → Leadership → Capability → Scale → The Multiplier, content in `vennStages`) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (flow strip, three card buttons that open an inline panel `#frictionPanel` beneath them and mark the break, converging lines, then the synthesis ending 'Friction makes the gaps visible.'; no modal) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Algorithm Atlas, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
 Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip). Phones: landscape fits the whole SVG; portrait hides it and shows `.net-drill`: The Multiplier, three lens bubbles, and for the chosen lens a tree of its forces and the books behind them that JS builds from the main SVG's edges and labels (the SVG is the no-JS fallback) → close `#contact`.
@@ -68,10 +68,9 @@ Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip).
   `.loop-progress` / `.loop-stage` / `.loop-nav` structure: content swaps in place with a fade,
   progress steps are clickable, Back/Next and arrow keys move between stages, and a stage with
   `end:'#selector'` closes and scrolls there. Used by The Blind Spot and The Three Lenses.
-- The shared modal chrome (`.book-modal-overlay`) is reused by the certificate, book, lens, friction, force and Blind Spot overlays (
-  lenses, friction cards). Click handlers select by class (e.g. `.friction-cta`) — don't
-  reuse those class names on unrelated elements; a "Try Friction" link once triggered the
-  wrong modal that way.
+- The shared modal chrome (`.book-modal-overlay`) is reused by the certificate, book, force, Blind Spot and Three Lenses overlays (
+  lenses, friction cards). Click handlers select by class — don't reuse those class names on unrelated elements; a
+  "Try Friction" link once triggered the wrong modal that way.
 - Interactive non-button SVG elements need `tabindex="0" role="button"` + `aria-label`;
   prefer real `<button>`/`<a>` where possible. Project mock cards that link out are `<a>`;
   a non-live one would be a plain `<div>`/`<span>` with a "Coming Soon" label (Clarity was, before it was removed).
