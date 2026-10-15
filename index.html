@@ -483,69 +483,53 @@
   .friction .eyebrow{ color:var(--ink); }
   .friction h2{ margin-top:14px; font-size:clamp(27px,4vw,44px); max-width:19ch; line-height:1.18; color:var(--ink); }
   .friction-lede{ margin-top:16px; max-width:44ch; font-family:var(--font-display); font-style:italic; font-size:26px; line-height:1.3; color:var(--ink); }
-  .friction-grid{ margin-top:52px; display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
-  @media (max-width:820px){
-    .friction-grid{ grid-template-columns:1fr; }
+  /* ---- the story spine ---- */
+  .fstory{ position:relative; margin-top:56px; padding-left:72px; max-width:760px; }
+  .fspine{ position:absolute; left:19px; top:10px; bottom:18px; width:2px; background:rgba(25,34,28,.22); }
+  .fspine-fill{ position:absolute; left:0; top:0; width:100%; height:100%; background:var(--ink); transform-origin:top; }
+  .fstory.pre-draw .fspine-fill{ transform:scaleY(var(--p, 0)); transition:transform .35s ease-out; }
+  .fbeat{ position:relative; padding-bottom:72px; }
+  .fbeat:last-child{ padding-bottom:0; }
+  .fbeat::before{
+    content:''; position:absolute; left:-61px; top:2px; width:16px; height:16px; border-radius:50%;
+    background:var(--sage-mist); border:2px solid var(--ink); box-sizing:border-box;
   }
-  .friction-card{
-    background:var(--paper); border-radius:3px; box-shadow:0 16px 30px rgba(25,34,28,.16);
-    padding:32px 30px; min-height:290px;
-    display:flex; flex-direction:column; justify-content:flex-start; gap:12px;
-    opacity:1; transform:translateY(0);
-    transition:opacity .6s ease, transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s ease;
+  .fbeat-eyebrow{ display:block; font-family:var(--font-mono); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--verdant-deep); }
+  .fbeat-heading{ margin-top:10px; font-family:var(--font-display); font-weight:400; font-size:clamp(22px,2.8vw,30px); line-height:1.25; color:var(--ink); max-width:24ch; }
+  .fbeat-body{ margin-top:12px; max-width:56ch; color:var(--ink-dim); font-size:17.5px; line-height:1.7; }
+  .fbeat-final{ margin-top:22px; font-family:var(--font-display); font-style:italic; font-size:22px; line-height:1.4; color:var(--ink); }
+  .friction-product-line{ margin-top:34px; font-family:var(--font-body); font-weight:600; font-size:20px; color:var(--verdant-deep); }
+  /* the break: a jagged gap drawn over the spine at the second beat */
+  .fbeat-break::before{ border-color:var(--rust); }
+  .fbreak{ position:absolute; left:-72px; top:24px; width:40px; height:110px; background:var(--sage-mist); }
+  .fbreak-end{ fill:none; stroke:var(--rust); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
+  /* the three sources attach to the break */
+  .fsources{ list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .fsource{
+    position:relative; padding:14px 18px; background:rgba(229,227,208,.6); border:1px solid var(--paper-line); border-radius:3px;
+    display:grid; grid-template-columns:auto auto; column-gap:12px; row-gap:4px; align-items:baseline; max-width:60ch;
   }
-  .friction-card.pre-reveal{ opacity:0; transform:translateY(14px); }
-  .friction-card.pre-reveal.in{ opacity:1; }
-  .friction-card:hover{ transform:translateY(-6px); box-shadow:0 26px 44px rgba(25,34,28,.24); }
-  .friction-card .tag{ font-family:var(--font-mono); font-size:15px; font-weight:700; color:var(--verdant-deep); letter-spacing:.1em; text-transform:uppercase; }
-  .friction-card h3{ font-family:var(--font-display); font-style:italic; font-weight:400; font-size:21px; color:var(--ink); line-height:1.3; }
-  .friction-card p{ color:var(--ink-dim); font-size:14.5px; line-height:1.6; }
-  .friction-card{ text-align:left; border:2px solid transparent; font:inherit; color:inherit; cursor:pointer; }
-  .friction-symptom{ margin-top:auto; padding-top:10px; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--rust); }
-  .friction-card:focus-visible{ outline:none; border-color:var(--ink); }
-  .friction-card.is-on{ border-color:var(--ink); transform:translateY(-6px); box-shadow:0 26px 44px rgba(25,34,28,.24); }
-  .friction-grid.has-on .friction-card:not(.is-on){ opacity:.6; }
-  .friction-grid.has-on .friction-card:not(.is-on):hover{ opacity:1; }
-  /* flow strip above the cards */
-  .friction-flow{ display:block; width:100%; height:auto; margin:40px 0 -16px; overflow:visible; }
-  .ff-seg{ stroke:var(--ink); stroke-opacity:.35; stroke-width:1.5; transition:stroke .3s ease, stroke-opacity .3s ease; }
-  .ff-node{ fill:var(--ink); fill-opacity:.7; transition:fill .3s ease, fill-opacity .3s ease; }
-  .ff-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em; fill:var(--ink); opacity:.65; }
-  .ff-results{ transition:opacity .3s ease; }
-  .friction-flow[data-break="business"] .ff-seg-business, .friction-flow[data-break="system"] .ff-seg-system, .friction-flow[data-break="people"] .ff-seg-people{ stroke:var(--rust); stroke-opacity:1; stroke-dasharray:6 6; }
-  .friction-flow[data-break="business"] .ff-node-business, .friction-flow[data-break="system"] .ff-node-system, .friction-flow[data-break="people"] .ff-node-people{ fill:var(--rust); fill-opacity:1; }
-  .friction-flow[data-break] .ff-results{ opacity:.25; }
-  /* the explanatory panel beneath the cards */
-  .friction-panel{ margin-top:26px; }
-  .friction-panel-inner{
-    background:rgba(229,227,208,.55); border:1px solid var(--paper-line); border-radius:3px; padding:30px 32px;
-    opacity:0; transform:translateY(6px); transition:opacity .3s ease, transform .3s ease;
-  }
-  .friction-panel.in .friction-panel-inner{ opacity:1; transform:none; }
-  .friction-panel-eyebrow{ font-family:var(--font-mono); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--verdant-deep); }
-  .friction-panel-eyebrow em{ font-style:normal; font-weight:400; color:var(--rust); }
-  .friction-panel-heading{ margin-top:10px; font-family:var(--font-display); font-style:italic; font-weight:400; font-size:24px; line-height:1.3; color:var(--ink); }
-  .friction-panel-desc{ margin-top:12px; max-width:62ch; color:var(--ink-dim); font-size:17px; line-height:1.7; }
-  .friction-panel-block{ margin-top:18px; padding-top:16px; border-top:1px solid var(--paper-line); max-width:62ch; }
-  .friction-panel-label{ display:block; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--rust); }
-  .friction-panel-block p{ margin-top:6px; color:var(--ink); font-size:17px; line-height:1.7; }
-  /* convergence and synthesis */
-  .friction-converge{ display:block; width:100%; height:auto; margin-top:28px; overflow:visible; }
-  .fc-line{ fill:none; stroke:var(--ink); stroke-opacity:.22; stroke-width:1.2; transition:stroke .3s ease, stroke-opacity .3s ease; }
-  .fc-point{ fill:var(--ink); }
-  .friction.has-on .fc-line{ stroke-opacity:.14; }
-  .friction[data-on="business"] .fc-line-business, .friction[data-on="system"] .fc-line-system, .friction[data-on="people"] .fc-line-people{ stroke:var(--rust); stroke-opacity:1; }
-  .friction-synthesis{ margin-top:18px; max-width:62ch; margin-left:auto; margin-right:auto; text-align:center; }
-  .friction-converge-line{ font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); }
-  .friction-synthesis .eyebrow{ margin-top:36px; }
-  .friction-synth-heading{ margin-top:12px; font-family:var(--font-display); font-weight:400; font-size:clamp(24px,3.4vw,36px); line-height:1.2; color:var(--ink); }
-  .friction-synth-body{ margin-top:16px; color:var(--ink-dim); font-size:17.5px; line-height:1.7; }
-  .friction-synth-final{ margin-top:22px; font-family:var(--font-display); font-style:italic; font-size:22px; line-height:1.4; color:var(--ink); }
-  .friction-product-line{ margin-top:40px; font-family:var(--font-body); font-weight:600; font-size:20px; color:var(--verdant-deep); }
-  @media (max-width:820px){
-    .friction-flow, .friction-converge{ display:none; }
-    .friction-panel-inner{ padding:24px 22px; }
-    .friction-synthesis{ text-align:left; margin-top:40px; }
+  .fsource::before{ content:''; position:absolute; left:-52px; top:50%; width:52px; height:1px; background:var(--rust); opacity:.7; }
+  .fsource-lens{ font-family:var(--font-mono); font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--verdant-deep); }
+  .fsource-what{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--rust); }
+  .fsource-note{ grid-column:1 / -1; color:var(--ink-dim); font-size:15.5px; line-height:1.6; }
+  /* draw-in on arrival (JS adds .pre-draw only when it can guarantee .in; never under reduced motion) */
+  .fstory.pre-draw .fbeat{ opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
+  .fstory.pre-draw .fbeat.in{ opacity:1; transform:none; }
+  .fstory.pre-draw .fsource{ opacity:0; transform:translateX(-8px); transition:opacity .5s ease, transform .5s ease; }
+  .fstory.pre-draw .fbeat.in .fsource{ opacity:1; transform:none; }
+  .fstory.pre-draw .fbeat.in .fsource:nth-child(1){ transition-delay:.35s; }
+  .fstory.pre-draw .fbeat.in .fsource:nth-child(2){ transition-delay:.6s; }
+  .fstory.pre-draw .fbeat.in .fsource:nth-child(3){ transition-delay:.85s; }
+  .fstory.pre-draw .fbreak-end{ stroke-dasharray:1 2; stroke-dashoffset:1.02; transition:stroke-dashoffset .9s ease-out .2s; }
+  .fstory.pre-draw .fbeat.in .fbreak-end{ stroke-dashoffset:0; }
+  @media (max-width:640px){
+    .fstory{ padding-left:48px; }
+    .fbeat::before{ left:-37px; }
+    .fspine{ left:7px; }
+    .fbreak{ left:-48px; }
+    .fsource::before{ left:-28px; width:28px; }
+    .fsource{ grid-template-columns:1fr; }
   }
 
   /* ================= SHIFT ================= */
@@ -896,7 +880,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
-    .belief-row, .book, .friction-card{ opacity:1 !important; transform:none !important; }
+    .belief-row, .book{ opacity:1 !important; transform:none !important; }
     .breath-ring{ animation:none !important; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
@@ -1229,71 +1213,41 @@
       <h2>The problem usually isn't one of the three.</h2>
       <p class="friction-lede">It's the gap between them.</p>
 
-      <!-- The flow from business intent to execution to action to results. Selecting a
-           card marks where that flow breaks. Hidden on narrow screens where the cards stack. -->
-      <svg class="friction-flow" viewBox="0 0 1000 56" aria-hidden="true">
-        <line class="ff-seg ff-seg-business" x1="167" y1="38" x2="500" y2="38"/>
-        <line class="ff-seg ff-seg-system" x1="500" y1="38" x2="833" y2="38"/>
-        <line class="ff-seg ff-seg-people" x1="833" y1="38" x2="905" y2="38"/>
-        <circle class="ff-node ff-node-business" cx="167" cy="38" r="5"/>
-        <circle class="ff-node ff-node-system" cx="500" cy="38" r="5"/>
-        <circle class="ff-node ff-node-people" cx="833" cy="38" r="5"/>
-        <text class="ff-label" x="167" y="18" text-anchor="middle">INTENT</text>
-        <text class="ff-label" x="500" y="18" text-anchor="middle">EXECUTION</text>
-        <text class="ff-label" x="833" y="18" text-anchor="middle">ACTION</text>
-        <text class="ff-label ff-results" x="915" y="42" text-anchor="start">RESULTS</text>
-      </svg>
+      <!-- The story: one process line runs down the section. Intent flows toward
+           execution, the line breaks, the three sources of friction attach to the
+           break, and the line resumes into the realization. Everything is visible
+           by default; JS only adds the draw-in (and not under reduced motion). -->
+      <div class="fstory" id="fstory">
+        <div class="fspine" aria-hidden="true"><div class="fspine-fill" id="fspineFill"></div></div>
 
-      <div class="friction-grid">
-        <button class="friction-card" type="button" data-key="business" aria-expanded="false" aria-controls="frictionPanel"
-          data-symptom="Misaligned value" data-question="Do you know what matters?" data-desc="Everything gets measured. Not everyone agrees on what actually drives value." data-friction="Activity and metrics can multiply while priorities remain misaligned.">
-          <span class="tag">Business</span>
-          <h3>Do you know what matters?</h3>
-          <p>Everything gets measured. Not everyone agrees on what actually drives value.</p>
-          <span class="friction-symptom">Misaligned value</span>
-        </button>
-        <button class="friction-card" type="button" data-key="system" aria-expanded="false" aria-controls="frictionPanel"
-          data-symptom="Broken execution" data-question="Can the organization execute?" data-desc="The strategy makes sense. The systems, processes, and decisions around it don't support it." data-friction="The organization knows what it wants to achieve, but the way work gets done works against it.">
-          <span class="tag">System</span>
-          <h3>Can the organization execute?</h3>
-          <p>The strategy makes sense. The systems, processes, and decisions around it don't support it.</p>
-          <span class="friction-symptom">Broken execution</span>
-        </button>
-        <button class="friction-card" type="button" data-key="people" aria-expanded="false" aria-controls="frictionPanel"
-          data-symptom="Blocked action" data-question="Can people act on it?" data-desc="The answer exists. People lack the clarity, authority, or incentives to act on it." data-friction="Knowing what needs to happen doesn't mean people are equipped or empowered to make it happen.">
-          <span class="tag">People</span>
-          <h3>Can people act on it?</h3>
-          <p>The answer exists. People lack the clarity, authority, or incentives to act on it.</p>
-          <span class="friction-symptom">Blocked action</span>
-        </button>
-      </div>
-
-      <div class="friction-panel" id="frictionPanel" hidden>
-        <div class="friction-panel-inner">
-          <span class="friction-panel-eyebrow" id="frictionPanelEyebrow"></span>
-          <h3 class="friction-panel-heading" id="frictionPanelHeading"></h3>
-          <p class="friction-panel-desc" id="frictionPanelDesc"></p>
-          <div class="friction-panel-block"><span class="friction-panel-label">The friction</span><p id="frictionPanelFriction"></p></div>
+        <div class="fbeat fbeat-intent">
+          <span class="fbeat-eyebrow">1 · The intent</span>
+          <h3 class="fbeat-heading">The business knows what it wants to achieve.</h3>
+          <p class="fbeat-body">The process begins with a clear intention: create value, improve performance, deliver results. But something happens along the way.</p>
         </div>
-      </div>
 
-      <!-- Three entry points, one problem: the lines converge on the synthesis. -->
-      <svg class="friction-converge" viewBox="0 0 1000 72" aria-hidden="true">
-        <path class="fc-line fc-line-business" d="M167,0 C167,48 500,30 500,72"/>
-        <path class="fc-line fc-line-system" d="M500,0 L500,72"/>
-        <path class="fc-line fc-line-people" d="M833,0 C833,48 500,30 500,72"/>
-        <circle class="fc-point" cx="500" cy="72" r="4"/>
-      </svg>
+        <div class="fbeat fbeat-break">
+          <svg class="fbreak" viewBox="0 0 40 110" aria-hidden="true">
+            <path class="fbreak-end" pathLength="1" d="M20,0 V26 L13,34 L27,42 L20,50"/>
+            <path class="fbreak-end" pathLength="1" d="M20,60 L13,68 L27,76 L20,84 V110"/>
+          </svg>
+          <span class="fbeat-eyebrow">2 · The breakdown</span>
+          <h3 class="fbeat-heading">The system doesn't translate intent into effective execution.</h3>
+          <p class="fbeat-body">Priorities compete. Processes create obstacles. People lack the clarity or authority to act.</p>
+          <ul class="fsources" aria-label="The three sources of friction">
+            <li class="fsource"><span class="fsource-lens">Business</span><span class="fsource-what">Misaligned value</span><span class="fsource-note">Activity and metrics multiply while priorities stay misaligned.</span></li>
+            <li class="fsource"><span class="fsource-lens">System</span><span class="fsource-what">Broken execution</span><span class="fsource-note">The organization knows what it wants, but the way work gets done works against it.</span></li>
+            <li class="fsource"><span class="fsource-lens">People</span><span class="fsource-what">Blocked action</span><span class="fsource-note">Knowing what needs to happen doesn't mean people are equipped or empowered to do it.</span></li>
+          </ul>
+        </div>
 
-      <div class="friction-synthesis">
-        <p class="friction-converge-line">Different symptoms. A connected problem.</p>
-        <span class="eyebrow">The Underlying Problem</span>
-        <h3 class="friction-synth-heading">The gap is where results get lost.</h3>
-        <p class="friction-synth-body">A business can have the right priorities. A system can have the right processes. People can have the right capabilities.</p>
-        <p class="friction-synth-body">And the organization can still struggle to deliver.</p>
-        <p class="friction-synth-body">Because results depend on how these elements work together, not simply on how well each works alone.</p>
-        <p class="friction-synth-final">The details change. The friction doesn't.</p>
-        <p class="friction-product-line">Friction makes the gaps visible.</p>
+        <div class="fbeat fbeat-real">
+          <span class="fbeat-eyebrow">3 · The realization</span>
+          <h3 class="fbeat-heading">The gap is where results get lost.</h3>
+          <p class="fbeat-body">The problem isn't necessarily the business, the system, or the people. It's the way they work together.</p>
+          <p class="fbeat-final">The details change. The friction doesn't.</p>
+          <p class="friction-product-line">Friction makes the gaps visible.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1935,7 +1889,7 @@
      hidden pre-reveal state once we can also guarantee it gets revealed:
      via IntersectionObserver, or a safety-net timeout if that somehow
      never fires. Content should never depend on JS succeeding to be seen. */
-  var revealTargets = document.querySelectorAll('.belief-row, .book, .friction-card');
+  var revealTargets = document.querySelectorAll('.belief-row, .book');
   if('IntersectionObserver' in window && revealTargets.length && !reduced){
     revealTargets.forEach(function(el){ el.classList.add('pre-reveal'); });
 
@@ -1996,66 +1950,30 @@
     });
   }
 
-  /* ---------- The Friction: three entry points into one problem ----------
-     Selecting a card marks the break in the flow above, opens the explanatory
-     panel beneath the cards (same space, no modal), and lights that card's line
-     into the shared synthesis. Any order; all paths end at the same place. */
-  var frictionSec = document.getElementById('friction');
-  var frictionPanel = document.getElementById('frictionPanel');
-  if(frictionSec && frictionPanel){
-    var frictionGrid = frictionSec.querySelector('.friction-grid');
-    var frictionFlow = frictionSec.querySelector('.friction-flow');
-    var fCards = Array.prototype.slice.call(frictionSec.querySelectorAll('.friction-card'));
-    var fEyebrow = document.getElementById('frictionPanelEyebrow');
-    var fHeading = document.getElementById('frictionPanelHeading');
-    var fDesc = document.getElementById('frictionPanelDesc');
-    var fFriction = document.getElementById('frictionPanelFriction');
-    var fTimer = null;
-    function escF(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
-    function fillFriction(card){
-      fEyebrow.innerHTML = escF(card.querySelector('.tag').textContent) + ' <em>· ' + escF(card.dataset.symptom) + '</em>';
-      fHeading.textContent = card.dataset.question;
-      fDesc.textContent = card.dataset.desc;
-      fFriction.textContent = card.dataset.friction;
+  /* ---------- The Friction: the breakdown unfolds as the visitor scrolls ----------
+     The spine fills with scroll progress; each beat (and the break, and the three
+     sources) reveals on arrival. Only when JS can guarantee it, never under reduced
+     motion: the full story is visible and readable without any of this. */
+  var fstory = document.getElementById('fstory');
+  var fspineFill = document.getElementById('fspineFill');
+  if(fstory && fspineFill && 'IntersectionObserver' in window && !reduced){
+    fstory.classList.add('pre-draw');
+    Array.prototype.forEach.call(fstory.querySelectorAll('.fbeat'), function(beat){
+      whenArrived(beat, 0.25, function(){ beat.classList.add('in'); });
+    });
+    var fTicking = false;
+    function fspineUpdate(){
+      fTicking = false;
+      var r = fstory.getBoundingClientRect();
+      var vh = window.innerHeight;
+      // 0 when the story's top reaches the lower third of the screen, 1 when its bottom does
+      var p = (vh * 0.7 - r.top) / r.height;
+      p = Math.max(0, Math.min(1, p));
+      fstory.style.setProperty('--p', p.toFixed(3));
     }
-    function selectFriction(card){
-      var key = card.dataset.key;
-      var same = frictionSec.getAttribute('data-on') === key;
-      clearTimeout(fTimer);
-      if(same){
-        // second click on the open card closes the panel
-        frictionSec.removeAttribute('data-on');
-        frictionSec.classList.remove('has-on');
-        frictionGrid.classList.remove('has-on');
-        frictionFlow.removeAttribute('data-break');
-        fCards.forEach(function(c){ c.classList.remove('is-on'); c.setAttribute('aria-expanded','false'); });
-        frictionPanel.classList.remove('in');
-        fTimer = setTimeout(function(){ frictionPanel.hidden = true; }, 300);
-        return;
-      }
-      // on narrow screens the cards stack, so the panel sits right under the chosen card
-      if(window.matchMedia('(max-width:820px)').matches) card.insertAdjacentElement('afterend', frictionPanel);
-      else if(frictionPanel.parentNode !== frictionGrid.parentNode || frictionPanel.previousElementSibling !== frictionGrid) frictionGrid.insertAdjacentElement('afterend', frictionPanel);
-      frictionSec.setAttribute('data-on', key);
-      frictionSec.classList.add('has-on');
-      frictionGrid.classList.add('has-on');
-      frictionFlow.setAttribute('data-break', key);
-      fCards.forEach(function(c){
-        var on = c === card;
-        c.classList.toggle('is-on', on);
-        c.setAttribute('aria-expanded', String(on));
-      });
-      if(frictionPanel.hidden){
-        fillFriction(card);
-        frictionPanel.hidden = false;
-        frictionPanel.getBoundingClientRect();
-        frictionPanel.classList.add('in');
-      } else {
-        frictionPanel.classList.remove('in');
-        fTimer = setTimeout(function(){ fillFriction(card); frictionPanel.classList.add('in'); }, 200);
-      }
-    }
-    fCards.forEach(function(c){ c.addEventListener('click', function(){ selectFriction(c); }); });
+    window.addEventListener('scroll', function(){ if(!fTicking){ fTicking = true; requestAnimationFrame(fspineUpdate); } }, { passive:true });
+    window.addEventListener('resize', fspineUpdate);
+    fspineUpdate();
   }
 
   /* ---------- nav progress + active link ---------- */
