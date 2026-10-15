@@ -371,6 +371,12 @@
   .loop-step{ font:inherit; letter-spacing:inherit; text-transform:inherit; color:inherit; background:none; border:0; padding:4px 0; cursor:pointer; border-bottom:1px solid transparent; }
   .loop-step[aria-current="step"]{ color:var(--verdant); border-bottom-color:var(--verdant); }
   .loop-step:hover, .loop-step:focus-visible{ color:var(--bone); outline:none; }
+  .loop-progress{ flex-wrap:wrap; row-gap:6px; }
+  .loop-progress + .loop-progress{ margin-top:-14px; }
+  .loop-progress-label{ color:var(--verdant); margin-right:4px; }
+  .stage-sub{ display:block; margin-top:6px; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-faint); }
+  .loop-modal-body .idea-block + .idea-block, .loop-modal-body p + .idea-block{ margin-top:20px; }
+  .loop-modal-body .idea-block p{ margin-top:6px; }
   .loop-stage{ transition:opacity .22s ease, transform .22s ease; }
   .loop-stage.out{ opacity:0; transform:translateY(6px); }
   .loop-modal-body{ margin-top:20px; padding-top:22px; border-top:1px solid var(--ground-line); }
@@ -1233,26 +1239,37 @@
     </div>
   </div>
 
-  <!-- The Blind Spot: one continuous thought in three stages (Activity -> Learning -> Insight),
-       swapped inside the same panel. Content lives in loopStages in the script. -->
+  <!-- Staged panels: one modal whose content is swapped in place (The Blind Spot,
+       The Three Lenses). Stages live in the script (loopStages, vennStages). -->
   <div class="book-modal-overlay" id="loopModalOverlay" hidden>
-    <div class="book-modal loop-modal" role="dialog" aria-modal="true" aria-labelledby="loopModalHeading" tabindex="-1">
+    <div class="book-modal loop-modal" role="dialog" aria-modal="true" aria-label="The Blind Spot" tabindex="-1">
       <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
-      <ol class="loop-progress" aria-label="Progress">
-        <li><button type="button" class="loop-step" data-step="0">Activity</button></li>
-        <li aria-hidden="true">→</li>
-        <li><button type="button" class="loop-step" data-step="1">Learning</button></li>
-        <li aria-hidden="true">→</li>
-        <li><button type="button" class="loop-step" data-step="2">Insight</button></li>
-      </ol>
-      <div class="loop-stage" id="loopStage">
-        <span class="lens-modal-eyebrow" id="loopModalEyebrow"></span>
-        <span class="lens-modal-heading" id="loopModalHeading"></span>
-        <div class="loop-modal-body" id="loopModalBody"></div>
+      <ol class="loop-progress" aria-label="Progress"><li><button type="button" class="loop-step" data-step="0">Activity</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="1">Learning</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="2">Insight</button></li></ol>
+      <div class="loop-stage">
+        <span class="lens-modal-eyebrow stage-eyebrow"></span>
+        <span class="lens-modal-heading stage-heading"></span>
+        <div class="loop-modal-body stage-body"></div>
       </div>
       <div class="loop-nav">
-        <button type="button" class="loop-back" id="loopBack">← Back</button>
-        <button type="button" class="loop-next" id="loopNext"></button>
+        <button type="button" class="loop-back">← Back</button>
+        <button type="button" class="loop-next"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-modal-overlay" id="vennModalOverlay" hidden>
+    <div class="book-modal loop-modal venn-modal" role="dialog" aria-modal="true" aria-label="The Three Lenses" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <ol class="loop-progress" aria-label="Lenses"><li class="loop-progress-label">Lenses</li><li><button type="button" class="loop-step" data-step="0">Business</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="1">System</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="2">People</button></li></ol>
+      <ol class="loop-progress" aria-label="Together"><li class="loop-progress-label">Together</li><li><button type="button" class="loop-step" data-step="3">Leadership</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="4">Capability</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="5">Scale</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="6">The Multiplier</button></li></ol>
+      <div class="loop-stage">
+        <span class="lens-modal-eyebrow stage-eyebrow"></span>
+        <span class="lens-modal-heading stage-heading"></span>
+        <div class="loop-modal-body stage-body"></div>
+      </div>
+      <div class="loop-nav">
+        <button type="button" class="loop-back">← Back</button>
+        <button type="button" class="loop-next"></button>
       </div>
     </div>
   </div>
@@ -2043,12 +2060,6 @@
       if(lensLastTrigger && lensLastTrigger.focus) lensLastTrigger.focus();
     }
 
-    document.querySelectorAll('.lens-hotspot, .lens-circle').forEach(function(h){
-      h.addEventListener('click', function(){ openLensModal(h); });
-      h.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLensModal(h); }
-      });
-    });
     document.querySelectorAll('.net-book').forEach(function(n){
       n.addEventListener('click', function(){ openLensModal(n); });
     });
@@ -2311,97 +2322,149 @@
     });
   }
 
-  /* ---------- The Blind Spot: Activity -> Learning -> Insight in one panel ---------- */
-  var loopOverlay = document.getElementById('loopModalOverlay');
-  if(loopOverlay){
-    var loopModal = loopOverlay.querySelector('.book-modal');
-    var loopClose = loopOverlay.querySelector('.book-modal-close');
-    var loopStage = document.getElementById('loopStage');
-    var loopEyebrow = document.getElementById('loopModalEyebrow');
-    var loopHeading = document.getElementById('loopModalHeading');
-    var loopBody = document.getElementById('loopModalBody');
-    var loopBack = document.getElementById('loopBack');
-    var loopNext = document.getElementById('loopNext');
-    var loopSteps = Array.prototype.slice.call(loopOverlay.querySelectorAll('.loop-step'));
-    var loopIndex = 0, loopLastTrigger = null, loopTimer = null;
-    var loopStages = [
-      { eyebrow:'The Activity Loop', heading:'More activity. Same problem.',
-        paras:['More data, more decks, more meetings. Information moves, presentations multiply, meetings repeat. Yet decisions stall, the same issues return, and the organization risks confusing the visibility of work with its impact.',
-               'The blind spot: Activity can look like progress yet results remain unchanged.'],
-        next:'Explore the Learning Loop →' },
-      { eyebrow:'The Learning Loop', heading:'Signal becomes understanding.',
-        paras:['A loop where every decision makes the next one better. Actions generate outcomes, and outcomes create learning that shapes what happens next.',
-               'The advantage: Each cycle builds on the last, turning better decisions into better results over time.'],
-        next:'Reveal the insight →' },
-      { eyebrow:'The Insight', heading:'The Difference Is What Happens Next.',
-        paras:["It's not the amount of activity that creates progress. It's whether that activity changes what happens next. Information must change understanding. Understanding must inform decisions. Decisions must lead to action. And action must generate learning that improves the next cycle. One loop repeats the work. The other builds on it.",
-               "That's the difference between staying busy and getting better."],
-        final:true, next:'See where to look →', end:'#lenses' }
-    ];
-    function escLoop(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
-    function renderLoop(i){
-      var st = loopStages[i];
-      loopIndex = i;
-      loopEyebrow.textContent = st.eyebrow;
-      loopHeading.textContent = st.heading;
-      loopBody.innerHTML = st.paras.map(function(t, k){
-        var last = st.final && k === st.paras.length - 1;
-        return '<p' + (last ? ' class="loop-final"' : '') + '>' + escLoop(t) + '</p>';
+  /* ---------- staged panels: one modal, content swapped in place ----------
+     stage = { eyebrow, sub?, heading, blocks:[ string | {label, text} | {final:text} ], next, end? }
+     'end' is a selector: the last Next closes the panel and scrolls there. */
+  function stagePanel(overlayId, stages){
+    var overlay = document.getElementById(overlayId);
+    if(!overlay) return null;
+    var modal = overlay.querySelector('.book-modal');
+    var closeBtn = overlay.querySelector('.book-modal-close');
+    var stageEl = overlay.querySelector('.loop-stage');
+    var eyebrowEl = overlay.querySelector('.stage-eyebrow');
+    var headingEl = overlay.querySelector('.stage-heading');
+    var bodyEl = overlay.querySelector('.stage-body');
+    var backBtn = overlay.querySelector('.loop-back');
+    var nextBtn = overlay.querySelector('.loop-next');
+    var steps = Array.prototype.slice.call(overlay.querySelectorAll('.loop-step'));
+    var index = 0, lastTrigger = null, timer = null;
+    function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+    function render(i){
+      var st = stages[i]; index = i;
+      eyebrowEl.innerHTML = esc(st.eyebrow) + (st.sub ? '<span class="stage-sub">' + esc(st.sub) + '</span>' : '');
+      headingEl.textContent = st.heading;
+      bodyEl.innerHTML = st.blocks.map(function(bk){
+        if(typeof bk === 'string') return '<p>' + esc(bk) + '</p>';
+        if(bk.final) return '<p class="loop-final">' + esc(bk.final) + '</p>';
+        return '<div class="idea-block"><span class="idea-block-label">' + esc(bk.label) + '</span><p>' + esc(bk.text) + '</p></div>';
       }).join('');
-      loopSteps.forEach(function(b, k){
-        if(k === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+      steps.forEach(function(b){
+        if(+b.dataset.step === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
       });
-      loopBack.hidden = (i === 0);
-      loopNext.textContent = st.next;
+      backBtn.hidden = (i === 0);
+      nextBtn.textContent = st.next;
     }
-    function goLoop(i){
-      if(i < 0 || i >= loopStages.length) return;
-      clearTimeout(loopTimer);
-      loopStage.classList.add('out');
-      loopTimer = setTimeout(function(){
-        renderLoop(i);
-        loopStage.classList.remove('out');
-        loopModal.scrollTop = 0;
-      }, 220);
+    function go(i){
+      if(i < 0 || i >= stages.length) return;
+      clearTimeout(timer);
+      stageEl.classList.add('out');
+      timer = setTimeout(function(){ render(i); stageEl.classList.remove('out'); modal.scrollTop = 0; }, 220);
     }
-    function onLoopKeydown(e){
-      if(e.key === 'Escape') closeLoopModal();
-      else if(e.key === 'ArrowRight' && loopIndex < loopStages.length - 1) goLoop(loopIndex + 1);
-      else if(e.key === 'ArrowLeft' && loopIndex > 0) goLoop(loopIndex - 1);
+    function onKey(e){
+      if(e.key === 'Escape') close();
+      else if(e.key === 'ArrowRight' && index < stages.length - 1) go(index + 1);
+      else if(e.key === 'ArrowLeft' && index > 0) go(index - 1);
     }
-    function openLoopModal(i, trigger){
-      loopLastTrigger = trigger || null;
-      loopStage.classList.remove('out');
-      renderLoop(i);
-      loopOverlay.hidden = false;
+    function open(i, trigger){
+      lastTrigger = trigger || null;
+      clearTimeout(timer); stageEl.classList.remove('out');
+      render(i);
+      overlay.hidden = false;
       document.body.style.overflow = 'hidden';
-      loopModal.focus();
-      document.addEventListener('keydown', onLoopKeydown);
+      modal.focus();
+      document.addEventListener('keydown', onKey);
     }
-    function closeLoopModal(){
-      loopOverlay.hidden = true;
+    function close(){
+      overlay.hidden = true;
       document.body.style.overflow = '';
-      document.removeEventListener('keydown', onLoopKeydown);
-      if(loopLastTrigger && loopLastTrigger.focus) loopLastTrigger.focus();
+      document.removeEventListener('keydown', onKey);
+      if(lastTrigger && lastTrigger.focus) lastTrigger.focus();
     }
-    document.querySelectorAll('.loop-card').forEach(function(c, k){
-      c.addEventListener('click', function(){ openLoopModal(c.classList.contains('loop-card-learning') ? 1 : 0, c); });
-    });
-    loopSteps.forEach(function(b){ b.addEventListener('click', function(){ goLoop(+b.dataset.step); }); });
-    loopBack.addEventListener('click', function(){ goLoop(loopIndex - 1); });
-    loopNext.addEventListener('click', function(){
-      var st = loopStages[loopIndex];
+    steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.step); }); });
+    backBtn.addEventListener('click', function(){ go(index - 1); });
+    nextBtn.addEventListener('click', function(){
+      var st = stages[index];
       if(st.end){
-        closeLoopModal();
+        close();
         var target = document.querySelector(st.end);
         if(target) target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
-      } else {
-        goLoop(loopIndex + 1);
-      }
+      } else { go(index + 1); }
     });
-    loopClose.addEventListener('click', closeLoopModal);
-    loopOverlay.addEventListener('click', function(e){
-      if(e.target === loopOverlay) closeLoopModal();
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function(e){ if(e.target === overlay) close(); });
+    return { open: open, close: close };
+  }
+
+  /* ---------- The Blind Spot: Activity -> Learning -> Insight ---------- */
+  var loopStages = [
+    { eyebrow:'The Activity Loop', heading:'More activity. Same problem.',
+      blocks:['More data, more decks, more meetings. Information moves, presentations multiply, meetings repeat. Yet decisions stall, the same issues return, and the organization risks confusing the visibility of work with its impact.',
+              'The blind spot: Activity can look like progress yet results remain unchanged.'],
+      next:'Explore the Learning Loop →' },
+    { eyebrow:'The Learning Loop', heading:'Signal becomes understanding.',
+      blocks:['A loop where every decision makes the next one better. Actions generate outcomes, and outcomes create learning that shapes what happens next.',
+              'The advantage: Each cycle builds on the last, turning better decisions into better results over time.'],
+      next:'Reveal the insight →' },
+    { eyebrow:'The Insight', heading:'The Difference Is What Happens Next.',
+      blocks:["It's not the amount of activity that creates progress. It's whether that activity changes what happens next. Information must change understanding. Understanding must inform decisions. Decisions must lead to action. And action must generate learning that improves the next cycle. One loop repeats the work. The other builds on it.",
+              { final:"That's the difference between staying busy and getting better." }],
+      next:'See where to look →', end:'#lenses' }
+  ];
+  var loopPanel = stagePanel('loopModalOverlay', loopStages);
+  if(loopPanel){
+    document.querySelectorAll('.loop-card').forEach(function(c){
+      c.addEventListener('click', function(){ loopPanel.open(c.classList.contains('loop-card-learning') ? 1 : 0, c); });
+    });
+  }
+
+  /* ---------- The Three Lenses: three lenses, three intersections, The Multiplier ---------- */
+  var vennStages = [
+    { eyebrow:'Business', heading:'Create Value',
+      blocks:['Every organization exists to create value. The question is whether its strategy, priorities, and measures of success are aligned around the value that matters most.',
+              { label:'The blind spot', text:'Optimizing individual results without understanding how they contribute to the whole.' },
+              { label:'The connection', text:'Business defines the value to pursue. Systems determine how that value can be delivered, and people bring it to life.' }],
+      next:'See the system →' },
+    { eyebrow:'System', heading:'Create Leverage',
+      blocks:['A system determines how work flows, how decisions get made, and how effort translates into results. The right system makes it easier for people to create value consistently.',
+              { label:'The blind spot', text:'Expecting better results from people while leaving the conditions that shape their work unchanged.' },
+              { label:'The connection', text:'Systems turn business intent into an operating reality. Their effectiveness depends on both the value they serve and the people working within them.' }],
+      next:'See the people →' },
+    { eyebrow:'People', heading:'Create Capability',
+      blocks:['People bring the judgment, knowledge, creativity, and ability that turn strategy and systems into real outcomes. Their potential is realized when they have the clarity, support, and conditions to do their best work.',
+              { label:'The blind spot', text:'Expecting people to compensate indefinitely for systems that make good performance difficult.' },
+              { label:'The connection', text:'People give the organization its capability to act, adapt, and improve. What they can accomplish depends on how the business and system enable them.' }],
+      next:'Where the lenses overlap →' },
+    { eyebrow:'Leadership', sub:'Business + People', heading:'A clear direction only matters when it changes what the organization does.',
+      blocks:['Connecting business direction with the systems and decisions that turn intent into action.'],
+      next:'Capability →' },
+    { eyebrow:'Capability', sub:'System + People', heading:'Potential becomes performance when people have the conditions to apply what they know.',
+      blocks:["Connecting people's abilities with the systems, tools, and conditions that enable effective performance."],
+      next:'Scale →' },
+    { eyebrow:'Scale', sub:'Business + System', heading:'Growth becomes sustainable when the organization can reproduce results without reproducing the same problems.',
+      blocks:['Connecting value creation, repeatable systems, and human capability so results can grow without depending on heroic individual effort.'],
+      next:'The Multiplier →' },
+    { eyebrow:'The Multiplier', sub:'Business + System + People', heading:'The whole is greater when the parts work together.',
+      blocks:['Business defines the value worth creating. Systems make that value repeatable. People bring the capability to deliver it.',
+              'Leadership connects direction to action. Capability turns potential into performance. Scale extends what works.',
+              "But the real advantage emerges when all three lenses reinforce one another, so that the organization doesn't just work harder, but becomes better at producing results.",
+              { final:"The question isn't whether your business, systems, and people are strong individually. It's whether they're making one another stronger." }],
+      next:'See where the friction lives →', end:'#friction' }
+  ];
+  var vennPanel = stagePanel('vennModalOverlay', vennStages);
+  if(vennPanel){
+    var vennIndex = { business:0, system:1, people:2, bp:3, sp:4, bs:5 };
+    document.querySelectorAll('.lens-hotspot, .lens-circle').forEach(function(h){
+      var i = h.dataset.lens !== undefined ? vennIndex[h.dataset.lens]
+            : h.dataset.previewKey !== undefined ? vennIndex[h.dataset.previewKey] : 6;
+      function openIt(){
+        var mapEl = document.querySelector('.lens-map');
+        if(mapEl){ mapEl.removeAttribute('data-active-hotspot'); mapEl.removeAttribute('data-active'); }
+        vennPanel.open(i, h);
+      }
+      h.addEventListener('click', openIt);
+      h.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openIt(); }
+      });
     });
   }
 
