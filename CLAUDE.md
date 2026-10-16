@@ -22,7 +22,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 
 ## Page structure (top to bottom)
 
-hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal, Operating Philosophy, The Blind Spot loop cards, which open `#loopModalOverlay`: three stages Activity → Learning → Insight, content in `loopStages`) →
+hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal and a My Reflections modal (`#reflectModalOverlay`), Operating Philosophy, The Blind Spot loop cards, which open `#loopModalOverlay`: three stages Activity → Learning → Insight, content in `loopStages`) →
 Three Lenses `#lenses` (Venn diagram; circles and overlaps open `#vennModalOverlay`, seven stages Business → System → People → Leadership → Capability → Scale → The Multiplier, content in `vennStages`) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (one question, three short lines, one visual `.fgap`: a line from Intention to Results broken in the middle, pulses leave Intention and fade at the rust gap; HTML + CSS keyframes, no JS, pulses stop under reduced motion; no cards, no modal, no scroll choreography) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Algorithm Atlas, Stillward, Water, Night Night, separated by `.built-divider`) → Things I

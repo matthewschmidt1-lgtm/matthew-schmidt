@@ -282,6 +282,17 @@
   .learning-body + .learning-body{ margin-top:14px; }
   /* .book-modal is declared later, so these need the extra class to win */
   .book-modal.cert-modal{ max-width:780px; padding:52px 24px 24px; }
+  .reflect-link{
+    font:inherit; color:var(--verdant); background:none; border:none; padding:0 0 1px; cursor:pointer;
+    border-bottom:1px solid var(--verdant); transition:color .2s ease, border-color .2s ease; white-space:nowrap;
+  }
+  .reflect-link:hover, .reflect-link:focus-visible{ color:var(--bone); border-bottom-color:var(--bone); outline:none; }
+  .book-modal.reflect-modal{ max-width:600px; padding-top:36px; padding-bottom:48px; }
+  .reflect-eyebrow{ font-size:12.5px; letter-spacing:.1em; color:var(--bone-dim); }
+  .reflect-body{ margin-top:20px; padding-top:22px; border-top:1px solid var(--ground-line); }
+  .reflect-body p{ color:var(--bone-dim); font-size:17.5px; line-height:1.7; }
+  .reflect-body p + p{ margin-top:16px; }
+  .reflect-body .reflect-final{ font-family:var(--font-display); font-style:italic; font-size:20px; line-height:1.5; color:var(--bone); }
   .cert-modal-title{
     display:block; margin-bottom:16px; padding-right:36px;
     font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--bone-faint);
@@ -963,7 +974,7 @@
         <span class="eyebrow">Continued Learning</span>
         <h3 class="learning-title">AI Adoption: Driving Business Value and Impact</h3>
         <p class="learning-meta">MIT Sloan Executive Education · <button class="cert-link" type="button" id="certOpen" aria-haspopup="dialog">Professional Certificate</button></p>
-        <p class="learning-body">Exploring how organizations can move beyond siloed AI initiatives to deliver sustained business value and align people, systems, and strategy to make adoption stick.</p>
+        <p class="learning-body">Exploring how organizations can move beyond siloed AI initiatives to deliver sustained business value and align people, systems, and strategy to make adoption stick. <button class="reflect-link" type="button" id="reflectOpen" aria-haspopup="dialog">My Reflections →</button></p>
       </div>
 
       <div class="section-break" aria-hidden="true">· · ·</div>
@@ -1672,6 +1683,20 @@
     </div>
   </section>
 
+  <div class="book-modal-overlay" id="reflectModalOverlay" hidden>
+    <div class="book-modal reflect-modal" role="dialog" aria-modal="true" aria-labelledby="reflectModalHeading" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="lens-modal-eyebrow reflect-eyebrow">My Reflections</span>
+      <span class="lens-modal-heading" id="reflectModalHeading">AI Adoption: Driving Business Value and Impact</span>
+      <div class="reflect-body">
+        <p>AI adoption is not simply about deploying technology. It's about translating AI capabilities into meaningful, measurable business outcomes. The goal isn't to give people another tool to use, but to start with the problems worth solving and identify where AI can create genuine value.</p>
+        <p>Effective adoption goes beyond successful pilots. It requires defining the right problems, measuring outcomes, integrating solutions into workflows, and aligning business strategy, systems, and human capabilities to scale what works.</p>
+        <p>As AI reshapes how work gets done, organizations must rethink how decisions are made, how trust and accountability are maintained, and where human judgment matters most. The opportunity isn't just to automate existing work, but to reimagine what people and AI can accomplish together.</p>
+        <p class="reflect-final">The goal isn't to adopt more AI. It's to build the organizational capability to turn AI into sustained business value.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="book-modal-overlay" id="certModalOverlay" hidden>
     <div class="book-modal cert-modal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" tabindex="-1">
       <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
@@ -2086,6 +2111,33 @@
     lensOverlay.addEventListener('click', function(e){
       if(e.target === lensOverlay) closeLensModal();
     });
+  }
+
+  /* ---------- Continued Learning: My Reflections ---------- */
+  var reflectOverlay = document.getElementById('reflectModalOverlay');
+  var reflectOpen = document.getElementById('reflectOpen');
+  if(reflectOverlay && reflectOpen){
+    var reflectModal = reflectOverlay.querySelector('.book-modal');
+    var reflectClose = reflectOverlay.querySelector('.book-modal-close');
+    function onReflectKeydown(e){
+      if(e.key === 'Escape') closeReflectModal();
+      else if(e.key === 'Tab'){ e.preventDefault(); reflectClose.focus(); }
+    }
+    function openReflectModal(){
+      reflectOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      reflectModal.focus();
+      document.addEventListener('keydown', onReflectKeydown);
+    }
+    function closeReflectModal(){
+      reflectOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onReflectKeydown);
+      reflectOpen.focus();
+    }
+    reflectOpen.addEventListener('click', openReflectModal);
+    reflectClose.addEventListener('click', closeReflectModal);
+    reflectOverlay.addEventListener('click', function(e){ if(e.target === reflectOverlay) closeReflectModal(); });
   }
 
   /* ---------- certificate modal ---------- */
