@@ -840,7 +840,7 @@
   .aspen-room{
     --as-stage:#080e1c; --as-sky-top:#141d3f; --as-ink:#f5f5f7;
     --as-bark:#ece8da; --as-leaf-green:#9cd870; --as-leaf-gold:#f4bc4a;
-    --as-leaf-fallen:#ccab78; --as-gold-deep:#b8862e;
+    --as-leaf-fallen:#ccab78; --as-gold-deep:#7A5A1C;
   }
   .aspen-room .eyebrow{ color:var(--as-gold-deep); }
   .aspen-room .room-cta{ color:var(--as-gold-deep); border-bottom-color:var(--as-gold-deep); }
@@ -1012,7 +1012,7 @@
         <p class="lens-lede">Three Places To Look.</p>
         <p class="lens-body">When you want to understand what's really happening, look at it three ways:</p>
         <p class="lens-body lens-questions">1) How does the business create value?<br>2) How does the system create leverage?<br>3) How do we help people do their best work?</p>
-        <svg class="lens-diagram" viewBox="0 0 540 460" role="img" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier. Click a circle or an overlap for more detail.">
+        <svg class="lens-diagram" viewBox="0 0 540 460" role="group" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier. Click a circle or an overlap for more detail.">
           <circle class="lens-circle lens-circle-business" cx="220" cy="180" r="130" tabindex="0" role="button"
             aria-label="Business: Create value"
             data-lens="business" data-eyebrow="Business" data-heading="Create value"
@@ -1077,7 +1077,7 @@
       <p class="net-intro net-intro-2">Complexity becomes clearer when we learn to see the patterns and relationships that shape it. Complex problems rarely yield to a single perspective. The lenses help us see, the forces help us understand, the ideas that follow help us develop better judgment, and judgment is what turns knowledge into agency.</p>
       <p class="net-intro net-intro-3">Explore the connections:</p>
       <div class="net-scroll">
-        <svg class="net-svg" viewBox="0 0 1040 530" role="img" aria-label="A network: The Multiplier on the left, fed by the People, Business, and System lenses, which are fed by six forces, which are fed by six books on the right.">
+        <svg class="net-svg" viewBox="0 0 1040 530" role="group" aria-label="A network: The Multiplier on the left, fed by the People, Business, and System lenses, which are fed by six forces, which are fed by six books on the right.">
           <g class="net-heads" aria-hidden="true">
             <text x="290" y="24" text-anchor="middle">LENSES</text>
             <text x="580" y="24" text-anchor="middle">FORCES</text>
@@ -2380,7 +2380,7 @@
         if(netPinned) netTrace(netPinned); else netClear();
       });
       n.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); n.click(); }
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); n.dispatchEvent(new MouseEvent('click', { bubbles:true })); }
       });
     });
   }
