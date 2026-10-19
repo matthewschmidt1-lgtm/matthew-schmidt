@@ -416,7 +416,7 @@
   .lens-questions{ margin-top:var(--s5); }
   .lens-diagram{ display:block; width:100%; max-width:540px; height:auto; margin:var(--s7) auto 0; }
   @media (max-width:520px){
-    .lens-diagram{ max-width:none; width:calc(100% + 52px); margin-left:-26px; margin-right:-26px; }
+    .lens-diagram{ max-width:none; width:calc(100% + 2 * var(--s5)); margin-left:calc(-1 * var(--s5)); margin-right:calc(-1 * var(--s5)); }
   }
   .lens-circle{
     fill:var(--verdant); fill-opacity:.22; stroke:var(--verdant); stroke-opacity:.7; stroke-width:1.5; mix-blend-mode:screen;
@@ -834,7 +834,7 @@
   .water-mark{ width:16px; height:16px; display:block; fill:var(--wa-cyan); }
   /* The tide bleeds to the card edges: negative side margins cancel the
      card padding so the water meets the rounded corners, not an inset box. */
-  .water-scene{ width:calc(100% + 44px); margin:0 -22px 0; height:auto; display:block; }
+  .water-scene{ width:calc(100% + 2 * var(--s5)); margin:0 calc(-1 * var(--s5)) 0; height:auto; display:block; }
   .water-scene .wa-bubble{ fill:var(--wa-cyan); }
 
   /* ---------- Night Night preview (pulls its own night-sky palette) ---------- */
