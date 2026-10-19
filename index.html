@@ -886,9 +886,16 @@
   }
   .cta-btn:hover{ transform:translateX(6px); background:var(--verdant); color:var(--ground); }
   .cta-btn:disabled{ opacity:.55; pointer-events:none; transform:none; }
-  .cta-links{ margin-top:var(--s5); display:flex; flex-wrap:wrap; gap:var(--s3) var(--s5); font-family:var(--font-body); font-weight:600; font-size:var(--fs-small); }
-  .cta-links a{ color:var(--bone-dim); text-decoration:none; border-bottom:1px solid var(--ground-line); padding-bottom:2px; transition:color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); }
-  .cta-links a:hover, .cta-links a:focus-visible{ color:var(--verdant); border-bottom-color:var(--verdant); outline:none; }
+  .cta-btn.friction-btn{ background:#2C8C9E; color:#F7F3EA; }
+  .cta-btn.friction-btn:hover{ background:#F08A3E; color:#123F5A; }
+  .cta-btn.atlas-btn{ background:#34483B; color:#F4F0E7; }
+  .cta-btn.atlas-btn:hover{ background:#B86F52; color:#F4F0E7; }
+  .cta-btn.stillward-btn{ background:var(--sage); color:var(--ground); }
+  .cta-btn.stillward-btn:hover{ background:var(--verdant-deep); color:var(--ground); }
+  .cta-btn.decision-btn{ background:#2457D6; color:#F5F5F0; }
+  .cta-btn.decision-btn:hover{ background:#183F9E; color:#F5F5F0; }
+  .cta-btn.water-btn{ background:#0b3352; color:#f4f9fb; }
+  .cta-btn.water-btn:hover{ background:#2a7fae; color:#f4f9fb; }
 
   footer{ border-top:1px solid var(--ground-line); padding:var(--s7) 0; }
   .foot-row{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:var(--s3); font-family:var(--font-mono); font-size:var(--fs-label); color:var(--bone-faint); letter-spacing:.06em; }
@@ -1785,14 +1792,12 @@
       </div>
       <div class="cta-row">
         <a class="cta-btn" href="https://www.linkedin.com/in/matthew-schmidt-2349795" target="_blank" rel="noopener">Connect on LinkedIn</a>
+        <a class="cta-btn decision-btn" href="https://decision-os-production-5b4a.up.railway.app/" target="_blank" rel="noopener">Try Decision OS →</a>
+        <a class="cta-btn friction-btn" href="https://friction-production.up.railway.app" target="_blank" rel="noopener">Try Friction →</a>
+        <a class="cta-btn atlas-btn" href="https://algorithm-atlas-production.up.railway.app/" target="_blank" rel="noopener">Try Algorithm Atlas →</a>
+        <a class="cta-btn stillward-btn" href="https://stillward-production.up.railway.app" target="_blank" rel="noopener">Try Stillward →</a>
+        <a class="cta-btn water-btn" href="https://water-production-4036.up.railway.app/" target="_blank" rel="noopener">Watch the Water →</a>
       </div>
-      <p class="cta-links" aria-label="Things I've built">
-        <a href="https://decision-os-production-5b4a.up.railway.app/" target="_blank" rel="noopener">Try Decision OS →</a>
-        <a href="https://friction-production.up.railway.app" target="_blank" rel="noopener">Try Friction →</a>
-        <a href="https://algorithm-atlas-production.up.railway.app/" target="_blank" rel="noopener">Try Algorithm Atlas →</a>
-        <a href="https://stillward-production.up.railway.app" target="_blank" rel="noopener">Try Stillward →</a>
-        <a href="https://water-production-4036.up.railway.app/" target="_blank" rel="noopener">Watch the Water →</a>
-      </p>
     </div>
   </section>
 
