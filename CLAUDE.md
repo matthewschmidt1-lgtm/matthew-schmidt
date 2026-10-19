@@ -39,6 +39,19 @@ Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip).
   section (`.friction-room{--fr-*}`, `.decision-room{--do-*}`, `.atlas-room{--at-*}`, `.aspen-room{--as-*}`, `.water-room{--wa-*}`),
   pulled from that project's source. Don't leak them into `:root`.
 
+## Design scales (pass 1, 2026-10-18)
+
+All sizes, spacing and motion read from named tokens on `:root`; don't add raw values.
+- Type: `--fs-micro` 10.5, `--fs-label` 12, `--fs-label-l` 13, `--fs-small` 15, `--fs-body-s` 16.5,
+  `--fs-body` 18, `--fs-body-l` 20, `--fs-lede` 24, `--fs-lede-l` 28, and fluid `--fs-lede-fluid`,
+  `--fs-h3`, `--fs-h2-s`, `--fs-h2`, `--fs-h1`, `--fs-display`.
+- Spacing: `--s1` 4 … `--s12` 128 (4, 8, 12, 16, 24, 32, 40, 48, 56, 64, 96, 128). Nudges under
+  6px and negative margins stay raw.
+- Motion: `--t-fast` .2s, `--t-base` .4s, `--t-slow` .8s, `--t-reveal` 1.2s, `--t-hover` 1.6s;
+  `--ease`, `--ease-out`, `--ease-inout`. Ambient loop durations and stagger delays are raw on purpose.
+- Product card palettes (`--fr-*`, `--do-*`, `--at-*`, `--as-*`, `--wa-*`) and the high-contrast
+  overrides are the only places hard-coded colors belong.
+
 ## Conventions that are easy to break
 
 - **Visible by default, JS only hides.** Reveal-on-scroll content is visible in CSS; JS
