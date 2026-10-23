@@ -712,26 +712,40 @@
   .atlas-scene .at-label{ font-family:var(--font-display); font-size:var(--fs-micro); fill:var(--at-charcoal); opacity:.8; }
   .atlas-scene .at-traveller{ fill:var(--at-terracotta); opacity:.9; }
 
-  /* ---------- Código 1530 preview (the store's own ink, terracotta, agave greens) ---------- */
-  .codigo-room{ --cg-ink:#1E2021; --cg-terra:#8F3F26; --cg-linen:#F6F1E6; --cg-rind:#8A9C76; --cg-line:rgba(30,32,33,.14); }
+  /* ---------- Código 1530 preview (the store's own ink, terracotta, moss, agave greens) ---------- */
+  .codigo-room{ --cg-ink:#1E2021; --cg-terra:#8F3F26; --cg-moss:#3F4A3A; --cg-linen:#F6F1E6; --cg-sage:#A5AF9C; --cg-line:rgba(30,32,33,.14); }
   .codigo-room .eyebrow{ color:var(--cg-terra); }
-  .room.codigo-room h2{ font-size:var(--fs-h3); max-width:22ch; }
-  .codigo-room .room-cta{ color:var(--cg-terra); border-bottom-color:var(--cg-terra); }
+  .codigo-room .room-cta{ color:var(--cg-terra); border-bottom-color:var(--cg-terra); margin-top:0; }
+  .codigo-layout{ margin-top:var(--s6); }
   .codigo-mock{
     display:block; max-width:300px; margin:0 auto; background:var(--cg-linen); overflow:hidden;
-    border:1px solid var(--cg-line); border-radius:20px; padding:0 0 var(--s4);
+    border:1px solid var(--cg-line); border-radius:20px; padding:0;
     box-shadow:0 24px 44px rgba(30,32,33,.16);
     text-decoration:none; color:inherit; cursor:pointer;
     transition:transform var(--t-hover) var(--ease-out);
   }
   .codigo-mock:hover{ transform:scale(1.03); }
-  .codigo-banner{ display:block; width:100%; height:92px; object-fit:cover; }
-  .codigo-mock-top{
-    display:flex; align-items:center; gap:var(--s2); padding:var(--s4) var(--s5) 0;
-    font-family:var(--font-display); font-weight:500; font-size:var(--fs-small); color:var(--cg-ink);
-  }
-  .codigo-mark{ width:12px; height:12px; display:block; background:var(--cg-terra); clip-path:polygon(35% 0,65% 0,65% 35%,100% 35%,100% 65%,65% 65%,65% 100%,35% 100%,35% 65%,0 65%,0 35%,35% 35%); }
-  .codigo-scene{ width:100%; height:auto; display:block; margin-top:var(--s1); }
+  .codigo-banner{ display:block; width:100%; height:84px; object-fit:cover; }
+  .codigo-reel{ position:relative; height:200px; background:var(--cg-sage); overflow:hidden; }
+  .codigo-frame{ position:absolute; inset:0; opacity:0; animation:cgReel 18s var(--ease-inout) infinite; }
+  .codigo-frame-hero{ opacity:1; animation-name:cgReelFirst; }
+  .codigo-frame-divider{ animation-delay:6s; }
+  .codigo-frame-agave{ animation-delay:12s; }
+  @keyframes cgReelFirst{ 0%,30%{ opacity:1; } 36%,94%{ opacity:0; } 100%{ opacity:1; } }
+  @keyframes cgReel{ 0%{ opacity:0; } 4%,30%{ opacity:1; } 36%,100%{ opacity:0; } }
+  /* 1. the homepage hero, drifting slowly */
+  .codigo-frame-hero img{ position:absolute; top:0; left:0; width:135%; height:100%; object-fit:cover; animation:cgDrift 18s linear infinite; }
+  @keyframes cgDrift{ 0%{ transform:translateX(0); } 100%{ transform:translateX(-26%); } }
+  /* 2. the divider: line, diamond, cross, diamond, line; moss turns terracotta */
+  .codigo-frame-divider{ display:flex; align-items:center; gap:10px; padding:0 22px; color:var(--cg-moss); animation-name:cgReel, cgCross; animation-duration:18s, 18s; animation-delay:6s, 6s; }
+  @keyframes cgCross{ 0%,8%{ color:var(--cg-moss); } 20%,100%{ color:var(--cg-terra); } }
+  .cg-line{ flex:1; height:2px; opacity:.7; background:linear-gradient(to right, transparent, currentColor); }
+  .cg-line-r{ background:linear-gradient(to left, transparent, currentColor); }
+  .cg-diamond{ width:8px; height:8px; background:currentColor; transform:rotate(45deg); opacity:.75; }
+  .cg-cross{ width:56px; height:56px; flex:none; }
+  /* 3. the piña */
+  .codigo-scene{ display:block; width:100%; height:100%; }
+  .codigo-room .cta-row{ margin:0; }
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
   .room .eyebrow{ color:var(--verdant-deep); }
@@ -944,6 +958,7 @@
     .breath-ring{ animation:none !important; }
     .fgap-pulse{ animation:none !important; opacity:0 !important; }
     .net-halo, .net-ring-big, .drill-mult::after{ animation:none !important; }
+    .codigo-frame, .codigo-frame-hero img{ animation:none !important; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
   }
@@ -1510,55 +1525,59 @@
 
   <section class="room codigo-room" id="codigo-project">
     <div class="wrap">
-      <span class="eyebrow">Código 1530</span>
-      <h2>An agave piña that opens as you scroll.</h2>
-      <div class="stillward-layout">
-        <a class="codigo-mock" href="https://codigo1530shop.com/" target="_blank" rel="noopener" aria-label="Visit Código 1530 (opens in a new tab)">
+      <span class="eyebrow">Código 1530 Merch Site</span>
+      <div class="stillward-layout codigo-layout">
+        <a class="codigo-mock" href="https://codigo1530shop.com/" target="_blank" rel="noopener" aria-label="Visit the Código 1530 merch site (opens in a new tab)">
           <img class="codigo-banner" src="images/codigo/agave-banner.jpg" alt="" width="1200" height="375" loading="lazy">
-          <div class="codigo-mock-top">
-            <span class="codigo-mark" aria-hidden="true"></span>
-            <span>Código 1530</span>
+          <!-- A reel of three parts of the store, 6 seconds each: the homepage hero,
+               the divider whose cross turns terracotta, and the piña that opens.
+               CSS crossfades + SMIL for the piña; static first frame under reduced motion. -->
+          <div class="codigo-reel" role="img" aria-label="Three moments from the Código 1530 merch site: the homepage hero, the divider whose cross turns from moss to terracotta, and the hand-drawn agave piña that opens to reveal the cross.">
+            <div class="codigo-frame codigo-frame-hero"><img src="images/codigo/hero.jpg" alt="" width="1200" height="480" loading="lazy"></div>
+            <div class="codigo-frame codigo-frame-divider">
+              <span class="cg-line"></span><span class="cg-diamond"></span>
+              <svg class="cg-cross" viewBox="0 0 500 500" aria-hidden="true"><g fill="currentColor"><rect x="144" y="0" width="212" height="53"/><rect x="144" y="447" width="212" height="53"/><rect x="0" y="144" width="53" height="212"/><rect x="447" y="144" width="53" height="212"/><rect x="223" y="0" width="54" height="500"/><rect x="0" y="223" width="500" height="54"/><rect x="127.5" y="81" width="21" height="112"/><rect x="81" y="126.5" width="114" height="21"/><rect x="351.5" y="81" width="21" height="112"/><rect x="305" y="126.5" width="114" height="21"/><rect x="127.5" y="307" width="21" height="112"/><rect x="81" y="352.5" width="114" height="21"/><rect x="351.5" y="307" width="21" height="112"/><rect x="305" y="352.5" width="114" height="21"/></g></svg>
+              <span class="cg-diamond"></span><span class="cg-line cg-line-r"></span>
+            </div>
+            <div class="codigo-frame codigo-frame-agave">
+              <svg class="codigo-scene" viewBox="0 0 300 180" aria-hidden="true">
+                <ellipse cx="150" cy="138" rx="118" ry="40" fill="#1E2021" fill-opacity=".06"/>
+                <g fill="#8F3F26" opacity="0" transform="translate(121 75) scale(.116)">
+                  <animate attributeName="opacity" values="0;0;0;.95;.95;0" keyTimes="0;.72;.78;.86;.96;1" dur="18s" repeatCount="indefinite"/>
+                  <rect x="144" y="0" width="212" height="53"/><rect x="144" y="447" width="212" height="53"/><rect x="0" y="144" width="53" height="212"/><rect x="447" y="144" width="53" height="212"/><rect x="223" y="0" width="54" height="500"/><rect x="0" y="223" width="500" height="54"/><rect x="127.5" y="81" width="21" height="112"/><rect x="81" y="126.5" width="114" height="21"/><rect x="351.5" y="81" width="21" height="112"/><rect x="305" y="126.5" width="114" height="21"/><rect x="127.5" y="307" width="21" height="112"/><rect x="81" y="352.5" width="114" height="21"/><rect x="351.5" y="307" width="21" height="112"/><rect x="305" y="352.5" width="114" height="21"/>
+                </g>
+                <g transform="translate(150 104)">
+              <g>
+                <animateTransform attributeName="transform" type="translate" values="0 0;0 0;-50 -22;-50 -22;0 0;0 0" keyTimes="0;.72;.82;.95;.995;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
+                <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
+                <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
+              </g>
+              <g>
+                <animateTransform attributeName="transform" type="translate" values="0 0;0 0;50 -22;50 -22;0 0;0 0" keyTimes="0;.72;.82;.95;.995;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
+                <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
+                <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
+              </g>
+              <g>
+                <animateTransform attributeName="transform" type="translate" values="0 0;0 0;-50 22;-50 22;0 0;0 0" keyTimes="0;.72;.82;.95;.995;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
+                <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
+                <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
+              </g>
+              <g>
+                <animateTransform attributeName="transform" type="translate" values="0 0;0 0;50 22;50 22;0 0;0 0" keyTimes="0;.72;.82;.95;.995;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
+                <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
+                <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
+              </g>
+                </g>
+              </svg>
+            </div>
           </div>
-          <!-- The store's shop-by-collection block, in miniature: the piña opens into
-               four pieces, the cross shows in the gap, and it closes again. SMIL only. -->
-          <svg class="codigo-scene" viewBox="0 0 300 200" role="img" aria-label="A hand-drawn agave piña that splits into four pieces as you scroll, revealing a terracotta Jerusalem cross, then closes again.">
-            <ellipse cx="150" cy="152" rx="118" ry="40" fill="#1E2021" fill-opacity=".06"/>
-            <g class="codigo-cross" fill="#8F3F26" opacity="0" transform="translate(121 89) scale(.116)">
-              <animate attributeName="opacity" values="0;0;0;.95;.95;0;0" keyTimes="0;.18;.3;.44;.68;.84;1" dur="11s" repeatCount="indefinite"/>
-              <rect x="144" y="0" width="212" height="53"/><rect x="144" y="447" width="212" height="53"/><rect x="0" y="144" width="53" height="212"/><rect x="447" y="144" width="53" height="212"/><rect x="223" y="0" width="54" height="500"/><rect x="0" y="223" width="500" height="54"/><rect x="127.5" y="81" width="21" height="112"/><rect x="81" y="126.5" width="114" height="21"/><rect x="351.5" y="81" width="21" height="112"/><rect x="305" y="126.5" width="114" height="21"/><rect x="127.5" y="307" width="21" height="112"/><rect x="81" y="352.5" width="114" height="21"/><rect x="351.5" y="307" width="21" height="112"/><rect x="305" y="352.5" width="114" height="21"/>
-            </g>
-            <g transform="translate(150 118)">
-            <g>
-              <animateTransform attributeName="transform" type="translate" values="0 0;0 0;-50 -22;-50 -22;0 0;0 0" keyTimes="0;.18;.42;.68;.9;1" dur="11s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
-              <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
-              <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
-            </g>
-            <g>
-              <animateTransform attributeName="transform" type="translate" values="0 0;0 0;50 -22;50 -22;0 0;0 0" keyTimes="0;.18;.42;.68;.9;1" dur="11s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
-              <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
-              <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
-            </g>
-            <g>
-              <animateTransform attributeName="transform" type="translate" values="0 0;0 0;-50 22;-50 22;0 0;0 0" keyTimes="0;.18;.42;.68;.9;1" dur="11s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
-              <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
-              <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
-            </g>
-            <g>
-              <animateTransform attributeName="transform" type="translate" values="0 0;0 0;50 22;50 22;0 0;0 0" keyTimes="0;.18;.42;.68;.9;1" dur="11s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
-              <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
-              <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
-            </g>
-            </g>
-          </svg>
         </a>
         <div>
-          <p class="quote codigo-quote">Shop by collection, drawn by hand.</p>
-          <p class="room-body">A banner and a scroll-driven piece for the Código 1530 store. As the visitor scrolls, a hand-drawn agave piña splits into four collections and the Jerusalem cross appears in the cut.</p>
-          <a class="room-cta" href="https://codigo1530shop.com/" target="_blank" rel="noopener">Visit Código 1530 →</a>
+          <a class="room-cta" href="https://codigo1530shop.com/" target="_blank" rel="noopener">Visit the merch site →</a>
         </div>
       </div>
     </div>
