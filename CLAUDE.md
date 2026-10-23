@@ -23,7 +23,7 @@ Book cover images under `images/books/` are not in the local checkout — the si
 ## Page structure (top to bottom)
 
 hero `#home` → about `#about` (story, Continued Learning `#learning` with certificate modal and a My Reflections modal (`#reflectModalOverlay`), Operating Philosophy, The Blind Spot loop cards, which open `#loopModalOverlay`: three stages Activity → Learning → Insight, content in `loopStages`) →
-Three Lenses `#lenses` (Venn diagram; circles and overlaps open `#vennModalOverlay`, seven stages Business → System → People → Leadership → Capability → Scale → The Multiplier, content in `vennStages`) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, shared-idea nodes open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`) → The Friction `#friction` (one question, three short lines, one visual `.fgap`: a line from Intention to Results broken in the middle, pulses leave Intention and fade at the rust gap; HTML + CSS keyframes, no JS, pulses stop under reduced motion; no cards, no modal, no scroll choreography) →
+Three Lenses `#lenses` (Venn diagram; circles and overlaps open `#vennModalOverlay`, seven stages Business → System → People → Leadership → Capability → Scale → The Multiplier, content in `vennStages`) → The Path to Agency `#seeing` (the books network, The Multiplier on the left → lenses → shared ideas → six books on the right, hover/tap traces a path, book nodes open the shared lens modal, force nodes (seven: Awareness, Trust, Conditions, Value, Incentives, Leverage, Excellence) open `#ideaModalOverlay` (Healthy / Warning signs / The pattern / The move / Ask, data in `ideaData`); The Multiplier node (and the phone bubble) opens `#multModalOverlay`, the one card styled differently, and gets a slow halo once the network has drawn in → The Friction `#friction` (one question, three short lines, one visual `.fgap`: a line from Intention to Results broken in the middle, pulses leave Intention and fade at the rust gap; HTML + CSS keyframes, no JS, pulses stop under reduced motion; no cards, no modal, no scroll choreography) →
 `.shift` "Things I've Built:" heading → project previews (`.room` sections: Friction
 `#ideas`, Decision OS, Algorithm Atlas, Stillward, Water, Night Night, separated by `.built-divider`) → Things I
 Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip). Phones: landscape fits the whole SVG; portrait hides it and shows `.net-drill`: The Multiplier, three lens bubbles, and for the chosen lens a tree of its forces and the books behind them that JS builds from the main SVG's edges and labels (the SVG is the no-JS fallback) → close `#contact`.
@@ -53,6 +53,13 @@ All sizes, spacing and motion read from named tokens on `:root`; don't add raw v
   overrides are the only places hard-coded colors belong.
 
 ## Conventions that are easy to break
+
+- **Apostrophes in JS strings.** Copy in `loopStages`, `vennStages` and similar arrays lives in
+  single-quoted strings; a bare `'s` broke the whole script once (live, for a few hours). Escape it
+  (`\'`) or use double quotes, and run the syntax check before pushing:
+  `jsc` at `/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc` on the
+  extracted `<script>` reports the line. The network entrance block was also lost once by deleting
+  between two comment markers; check `whenArrived(seeNet` still exists after removing JS.
 
 - **Visible by default, JS only hides.** Reveal-on-scroll content is visible in CSS; JS
   adds `.pre-reveal`/`.pre-anim` only when an IntersectionObserver + a safety-net
