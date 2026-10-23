@@ -674,6 +674,9 @@
   .idea-block-label{ display:block; font-family:var(--font-mono); font-size:var(--fs-label-l); letter-spacing:.12em; text-transform:uppercase; color:var(--verdant); }
   .idea-block p{ margin-top:var(--s1); color:var(--bone-dim); font-size:var(--fs-body); line-height:1.7; }
   .idea-block-ask p{ font-family:var(--font-display); font-style:italic; font-size:var(--fs-body-l); line-height:1.5; color:var(--bone); }
+  .idea-next{ margin-top:var(--s6); padding-top:var(--s5); border-top:1px solid var(--ground-line); display:flex; justify-content:space-between; align-items:baseline; gap:var(--s4); flex-wrap:wrap; }
+  .idea-next-count{ font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.12em; text-transform:uppercase; color:var(--bone-faint); }
+  .idea-next .mult-link{ font-size:var(--fs-small); }
 
   /* ---- one phone layout for every pop-up card (Blind Spot, Three Lenses, forces, books, certificate) ----
      Declared after all the card rules so the single source of truth for small screens lives here.
@@ -2485,14 +2488,27 @@
     function ideaBlock(label, text, cls){
       return '<div class="idea-block' + (cls ? ' ' + cls : '') + '"><span class="idea-block-label">' + label + '</span><p>' + escText(text) + '</p></div>';
     }
+    var ideaOrder = ['t1','t2','t3','t4','t5','t6','t7'];
     function onIdeaKeydown(e){
-      if(e.key === 'Escape') closeIdeaModal();
-      else if(e.key === 'Tab'){ e.preventDefault(); ideaClose.focus(); }
+      if(e.key === 'Escape'){ closeIdeaModal(); return; }
+      if(e.key !== 'Tab') return;
+      var items = Array.prototype.slice.call(ideaModal.querySelectorAll('button'));
+      var i = items.indexOf(document.activeElement);
+      var next = e.shiftKey ? (i <= 0 ? items.length - 1 : i - 1) : (i < 0 || i === items.length - 1 ? 0 : i + 1);
+      e.preventDefault(); items[next].focus();
     }
     openIdeaModal = function(id, trigger){
       var d = ideaData[id];
       if(!d) return;
       ideaLastTrigger = trigger || null;
+      var pos = ideaOrder.indexOf(id);
+      var nextId = pos > -1 ? ideaOrder[pos + 1] : null;
+      var footer = '<div class="idea-next">' +
+        (pos > -1 ? '<span class="idea-next-count">Force ' + (pos + 1) + ' of ' + ideaOrder.length + '</span>' : '') +
+        (nextId
+          ? '<button class="mult-link" type="button" data-next-idea="' + nextId + '">Next force: ' + escText(ideaData[nextId].name) + ' &rarr;</button>'
+          : '<button class="mult-link" type="button" data-next-mult="1">Explore The Multiplier &rarr;</button>') +
+        '</div>';
       ideaEyebrow.textContent = 'Force · ' + d.name;
       ideaHeading.textContent = d.tag;
       ideaBody.innerHTML =
@@ -2500,7 +2516,9 @@
         ideaBlock('Warning signs', d.warning) +
         ideaBlock('The pattern', d.pattern) +
         ideaBlock('The move', d.move) +
-        ideaBlock('Ask', d.ask, 'idea-block-ask');
+        ideaBlock('Ask', d.ask, 'idea-block-ask') +
+        footer;
+      ideaModal.scrollTop = 0;
       ideaOverlay.hidden = false;
       document.body.style.overflow = 'hidden';
       ideaModal.focus();
@@ -2515,6 +2533,12 @@
     ideaClose.addEventListener('click', closeIdeaModal);
     ideaOverlay.addEventListener('click', function(e){
       if(e.target === ideaOverlay) closeIdeaModal();
+    });
+    ideaModal.addEventListener('click', function(e){
+      var n = e.target.closest && e.target.closest('[data-next-idea]');
+      if(n){ openIdeaModal(n.getAttribute('data-next-idea'), ideaLastTrigger); return; }
+      var m = e.target.closest && e.target.closest('[data-next-mult]');
+      if(m && openMultModal){ var t = ideaLastTrigger; closeIdeaModal(); openMultModal(t); }
     });
     // the phone drill-down rebuilds its idea buttons per lens, so delegate
     document.addEventListener('click', function(e){
