@@ -299,6 +299,22 @@
   .mult-body p + p{ margin-top:var(--s4); }
   .mult-body .mult-final{ font-family:var(--font-display); font-style:italic; font-weight:600; font-size:var(--fs-body-l); line-height:1.5; color:var(--verdant); }
   .mult-forces{ margin-top:var(--s5); text-align:center; font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.12em; text-transform:uppercase; color:var(--bone-faint); }
+  .mult-more{ margin-top:var(--s6); text-align:center; }
+  .mult-link{
+    font:inherit; font-size:var(--fs-body-s); font-weight:600; color:var(--verdant); background:none; border:none; padding:0 0 2px; cursor:pointer;
+    border-bottom:1px solid var(--verdant); transition:color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  }
+  .mult-link:hover, .mult-link:focus-visible{ color:var(--bone); border-bottom-color:var(--bone); outline:none; }
+  .mult-view[hidden]{ display:none; }
+  .mult-system{ text-align:left; }
+  .mult-system-list{ list-style:none; padding:0; margin:var(--s5) 0 0; }
+  .mult-system-list li{ position:relative; padding-left:var(--s5); color:var(--bone-dim); font-size:var(--fs-body); line-height:1.7; }
+  .mult-system-list li + li{ margin-top:var(--s4); }
+  .mult-system-list li::before{ content:""; position:absolute; left:2px; top:.72em; width:8px; height:8px; border-radius:50%; background:var(--verdant); }
+  .mult-system-list strong{ color:var(--bone); font-weight:600; }
+  .mult-system-list + p{ margin-top:var(--s6); }
+  .mult-back{ margin-top:var(--s6); text-align:center; }
+  .mult-back .mult-link{ font-weight:500; font-size:var(--fs-small); }
   /* the Multiplier node draws the eye once the network has settled: a slow halo */
   .net-halo{ fill:var(--verdant); opacity:0; transform-box:fill-box; transform-origin:center; }
   .seeing.in .net-halo{ animation:netHalo 4.8s var(--ease-inout) infinite 3s; }
@@ -1828,6 +1844,7 @@
   <div class="book-modal-overlay" id="multModalOverlay" hidden>
     <div class="book-modal mult-modal" role="dialog" aria-modal="true" aria-labelledby="multModalHeading" tabindex="-1">
       <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <div class="mult-view" id="multViewMain">
       <span class="lens-modal-eyebrow mult-eyebrow">The Multiplier · Business + System + People</span>
       <span class="mult-heading" id="multModalHeading">The multiplier is the compounding effect of business, systems, and people working together.</span>
       <div class="mult-body">
@@ -1836,6 +1853,23 @@
         <p>Together, these forces turn individual talent into collective performance that exceeds the sum of its parts.</p>
         <p class="mult-final">Culture isn't what a company says it values. It's what its everyday decisions, feedback, incentives, and leadership behaviors consistently reinforce.</p>
         <p class="mult-forces" aria-label="The seven forces">Awareness · Trust · Conditions · Value · Incentives · Leverage · Excellence</p>
+        <p class="mult-more"><button class="mult-link" type="button" data-mult-view="system">The System Behind The Multiplier &rarr;</button></p>
+      </div>
+      </div>
+      <div class="mult-view mult-system" id="multViewSystem" hidden>
+      <span class="lens-modal-eyebrow mult-eyebrow">The Multiplier · The System</span>
+      <span class="mult-heading" id="multSystemHeading">The System Behind the Multiplier</span>
+      <div class="mult-body">
+        <p>Organizational performance isn't simply the sum of individual contributions. It emerges from how people, systems, and business priorities interact, and how those interactions reinforce or undermine one another over time.</p>
+        <ul class="mult-system-list">
+          <li><strong>Interdependence:</strong> Every force influences the others. A change in one part of the organization can affect the performance of the whole.</li>
+          <li><strong>Feedback:</strong> Outcomes shape future behaviors, decisions, expectations, and standards. Excellence is both a product of the system and a force that strengthens it.</li>
+          <li><strong>Emergence:</strong> When the forces work in alignment, they create collective capabilities and performance that no individual could achieve alone.</li>
+          <li><strong>Reinforcement:</strong> Aligned forces compound positive outcomes; misaligned forces can compound dysfunction. The same system dynamics that accelerate excellence can also perpetuate underperformance.</li>
+        </ul>
+        <p class="mult-final"><strong>The central idea:</strong> The multiplier isn't just about improving individual parts. It's about understanding how the whole system produces the outcomes it gets, and how changing the relationships between its forces can transform those outcomes.</p>
+        <p class="mult-back"><button class="mult-link" type="button" data-mult-view="main">&larr; Back to The Multiplier</button></p>
+      </div>
       </div>
     </div>
   </div>
@@ -2330,12 +2364,29 @@
     var multModal = multOverlay.querySelector('.book-modal');
     var multClose = multOverlay.querySelector('.book-modal-close');
     var multLast = null;
+    var multViews = { main: document.getElementById('multViewMain'), system: document.getElementById('multViewSystem') };
+    function showMultView(name){
+      Object.keys(multViews).forEach(function(k){ multViews[k].hidden = (k !== name); });
+      multModal.setAttribute('aria-labelledby', name === 'system' ? 'multSystemHeading' : 'multModalHeading');
+      multModal.scrollTop = 0;
+      multModal.focus();
+    }
+    multModal.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('[data-mult-view]');
+      if(b) showMultView(b.getAttribute('data-mult-view'));
+    });
     function onMultKeydown(e){
-      if(e.key === 'Escape') closeMultModal();
-      else if(e.key === 'Tab'){ e.preventDefault(); multClose.focus(); }
+      if(e.key === 'Escape'){ closeMultModal(); return; }
+      if(e.key !== 'Tab') return;
+      var items = Array.prototype.filter.call(multModal.querySelectorAll('button'), function(b){ return b.offsetParent !== null; });
+      if(!items.length) return;
+      var i = items.indexOf(document.activeElement);
+      var next = e.shiftKey ? (i <= 0 ? items.length - 1 : i - 1) : (i < 0 || i === items.length - 1 ? 0 : i + 1);
+      e.preventDefault(); items[next].focus();
     }
     openMultModal = function(trigger){
       multLast = trigger || null;
+      showMultView('main');
       multOverlay.hidden = false;
       document.body.style.overflow = 'hidden';
       multModal.focus();
