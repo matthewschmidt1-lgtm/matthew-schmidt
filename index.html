@@ -729,14 +729,18 @@
   .codigo-reel{ position:relative; height:200px; background:var(--cg-sage); overflow:hidden; }
   .codigo-frame{ position:absolute; inset:0; opacity:0; animation-duration:18s; animation-timing-function:var(--ease-inout); animation-iteration-count:infinite; }
   /* one 18s timeline, no delays, so nothing overlaps at the loop: hero 0-6s, divider 6-12s, piña 12-18s */
-  .codigo-frame-hero{ opacity:1; animation-name:cgHero; }
-  .codigo-frame-divider{ animation-name:cgDivider, cgCross; }
-  .codigo-frame-agave{ animation-name:cgAgave; }
+  /* the reel only runs once JS adds .is-live (hero image loaded and the card on screen);
+     until then, and without JS, the hero frame simply shows */
+  .codigo-frame-hero{ opacity:1; }
+  .codigo-reel.is-live .codigo-frame-hero{ animation-name:cgHero; }
+  .codigo-reel.is-live .codigo-frame-divider{ animation-name:cgDivider, cgCross; }
+  .codigo-reel.is-live .codigo-frame-agave{ animation-name:cgAgave; }
   @keyframes cgHero{ 0%,30.5%{ opacity:1; } 33.5%,96%{ opacity:0; } 100%{ opacity:1; } }
   @keyframes cgDivider{ 0%,30.5%{ opacity:0; } 34.5%,63.5%{ opacity:1; } 66.5%,100%{ opacity:0; } }
   @keyframes cgAgave{ 0%,63.5%{ opacity:0; } 67.5%,94.5%{ opacity:1; } 97.5%,100%{ opacity:0; } }
   /* 1. the homepage hero, drifting slowly */
-  .codigo-frame-hero img{ position:absolute; top:0; left:0; width:135%; height:100%; object-fit:cover; animation:cgDrift 18s linear infinite; }
+  .codigo-frame-hero img{ position:absolute; top:0; left:0; width:135%; height:100%; object-fit:cover; }
+  .codigo-reel.is-live .codigo-frame-hero img{ animation:cgDrift 18s linear infinite; }
   @keyframes cgDrift{ 0%{ transform:translateX(0); } 33%{ transform:translateX(-24%); } 50%,100%{ transform:translateX(0); } } /* resets while the hero is hidden */
   /* 2. the divider: line, diamond, cross, diamond, line; moss turns terracotta */
   .codigo-frame-divider{ display:flex; align-items:center; gap:10px; padding:0 22px; color:var(--cg-moss); }
@@ -1530,12 +1534,12 @@
       <span class="eyebrow">Código 1530 Merch Site</span>
       <div class="stillward-layout codigo-layout">
         <a class="codigo-mock" href="https://codigo1530shop.com/" target="_blank" rel="noopener" aria-label="Visit the Código 1530 merch site (opens in a new tab)">
-          <img class="codigo-banner" src="images/codigo/agave-banner.jpg" alt="" width="1200" height="375" loading="lazy">
+          <img class="codigo-banner" src="images/codigo/agave-banner.jpg" alt="" width="900" height="281" decoding="async">
           <!-- A reel of three parts of the store, 6 seconds each: the homepage hero,
                the divider whose cross turns terracotta, and the piña that opens.
                CSS crossfades + SMIL for the piña; static first frame under reduced motion. -->
           <div class="codigo-reel" role="img" aria-label="Three moments from the Código 1530 merch site: the homepage hero, the divider whose cross turns from moss to terracotta, and the hand-drawn agave piña that opens to reveal the cross.">
-            <div class="codigo-frame codigo-frame-hero"><img src="images/codigo/hero.jpg" alt="" width="1200" height="480" loading="lazy"></div>
+            <div class="codigo-frame codigo-frame-hero"><img src="images/codigo/hero.jpg" alt="" width="900" height="360" decoding="async"></div>
             <div class="codigo-frame codigo-frame-divider">
               <span class="cg-line"></span><span class="cg-diamond"></span>
               <svg class="cg-cross" viewBox="0 0 500 500" aria-hidden="true"><g fill="currentColor"><rect x="144" y="0" width="212" height="53"/><rect x="144" y="447" width="212" height="53"/><rect x="0" y="144" width="53" height="212"/><rect x="447" y="144" width="53" height="212"/><rect x="223" y="0" width="54" height="500"/><rect x="0" y="223" width="500" height="54"/><rect x="127.5" y="81" width="21" height="112"/><rect x="81" y="126.5" width="114" height="21"/><rect x="351.5" y="81" width="21" height="112"/><rect x="305" y="126.5" width="114" height="21"/><rect x="127.5" y="307" width="21" height="112"/><rect x="81" y="352.5" width="114" height="21"/><rect x="351.5" y="307" width="21" height="112"/><rect x="305" y="352.5" width="114" height="21"/></g></svg>
@@ -2107,6 +2111,24 @@
   if(seeing && seeNet && 'IntersectionObserver' in window && !reduced){
     seeing.classList.add('pre-draw');
     whenArrived(seeNet, 0.35, function(){ seeing.classList.add('in'); });
+  }
+
+  /* ---------- Código reel: start from the hero, once its image is in and the card is on screen ---------- */
+  var cgReel = document.querySelector('.codigo-reel');
+  if(cgReel && 'IntersectionObserver' in window && !reduced){
+    var cgHero = cgReel.querySelector('.codigo-frame-hero img');
+    var cgScene = cgReel.querySelector('.codigo-scene');
+    var cgArrived = false, cgLoaded = false;
+    if(cgScene && cgScene.pauseAnimations) cgScene.pauseAnimations();
+    function cgGo(){
+      if(!(cgArrived && cgLoaded) || cgReel.classList.contains('is-live')) return;
+      cgReel.classList.add('is-live');
+      if(cgScene && cgScene.setCurrentTime){ cgScene.setCurrentTime(0); cgScene.unpauseAnimations(); }
+    }
+    whenArrived(cgReel, 0.5, function(){ cgArrived = true; cgGo(); });
+    // wait for the hero to be decoded, not just fetched, so the first frame is never blank
+    var cgReady = (cgHero && cgHero.decode) ? cgHero.decode() : Promise.resolve();
+    cgReady.catch(function(){}).then(function(){ cgLoaded = true; cgGo(); });
   }
 
   /* ---------- nav progress + active link ---------- */
