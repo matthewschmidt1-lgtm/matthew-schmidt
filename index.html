@@ -712,6 +712,26 @@
   .atlas-scene .at-label{ font-family:var(--font-display); font-size:var(--fs-micro); fill:var(--at-charcoal); opacity:.8; }
   .atlas-scene .at-traveller{ fill:var(--at-terracotta); opacity:.9; }
 
+  /* ---------- Código 1530 preview (the store's own ink, terracotta, agave greens) ---------- */
+  .codigo-room{ --cg-ink:#1E2021; --cg-terra:#8F3F26; --cg-linen:#F6F1E6; --cg-rind:#8A9C76; --cg-line:rgba(30,32,33,.14); }
+  .codigo-room .eyebrow{ color:var(--cg-terra); }
+  .room.codigo-room h2{ font-size:var(--fs-h3); max-width:22ch; }
+  .codigo-room .room-cta{ color:var(--cg-terra); border-bottom-color:var(--cg-terra); }
+  .codigo-mock{
+    display:block; max-width:300px; margin:0 auto; background:var(--cg-linen); overflow:hidden;
+    border:1px solid var(--cg-line); border-radius:20px; padding:0 0 var(--s4);
+    box-shadow:0 24px 44px rgba(30,32,33,.16);
+    text-decoration:none; color:inherit; cursor:pointer;
+    transition:transform var(--t-hover) var(--ease-out);
+  }
+  .codigo-mock:hover{ transform:scale(1.03); }
+  .codigo-banner{ display:block; width:100%; height:92px; object-fit:cover; }
+  .codigo-mock-top{
+    display:flex; align-items:center; gap:var(--s2); padding:var(--s4) var(--s5) 0;
+    font-family:var(--font-display); font-weight:500; font-size:var(--fs-small); color:var(--cg-ink);
+  }
+  .codigo-mark{ width:12px; height:12px; display:block; background:var(--cg-terra); clip-path:polygon(35% 0,65% 0,65% 35%,100% 35%,100% 65%,65% 65%,65% 100%,35% 100%,35% 65%,0 65%,0 35%,35% 35%); }
+  .codigo-scene{ width:100%; height:auto; display:block; margin-top:var(--s1); }
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
   .room .eyebrow{ color:var(--verdant-deep); }
@@ -1451,7 +1471,7 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H295 L301,5 L310,19 L319,12 L328,12 L334,7 L343,17 L352,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H260 L266,5 L275,19 L284,12 L293,12 L299,7 L308,17 L317,12 H1000"/></svg>
   </div>
 
   <section class="room atlas-room" id="atlas-project">
@@ -1485,7 +1505,67 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H470 L476,5 L485,19 L494,12 L503,12 L509,7 L518,17 L527,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H400 L406,5 L415,19 L424,12 L433,12 L439,7 L448,17 L457,12 H1000"/></svg>
+  </div>
+
+  <section class="room codigo-room" id="codigo-project">
+    <div class="wrap">
+      <span class="eyebrow">Código 1530</span>
+      <h2>An agave piña that opens as you scroll.</h2>
+      <div class="stillward-layout">
+        <a class="codigo-mock" href="https://www.codigo1530.com/" target="_blank" rel="noopener" aria-label="Visit Código 1530 (opens in a new tab)">
+          <img class="codigo-banner" src="images/codigo/agave-banner.jpg" alt="" width="1200" height="375" loading="lazy">
+          <div class="codigo-mock-top">
+            <span class="codigo-mark" aria-hidden="true"></span>
+            <span>Código 1530</span>
+          </div>
+          <!-- The store's shop-by-collection block, in miniature: the piña opens into
+               four pieces, the cross shows in the gap, and it closes again. SMIL only. -->
+          <svg class="codigo-scene" viewBox="0 0 300 200" role="img" aria-label="A hand-drawn agave piña that splits into four pieces as you scroll, revealing a terracotta Jerusalem cross, then closes again.">
+            <ellipse cx="150" cy="152" rx="118" ry="40" fill="#1E2021" fill-opacity=".06"/>
+            <g class="codigo-cross" fill="#8F3F26" opacity="0" transform="translate(121 89) scale(.116)">
+              <animate attributeName="opacity" values="0;0;0;.95;.95;0;0" keyTimes="0;.18;.3;.44;.68;.84;1" dur="11s" repeatCount="indefinite"/>
+              <rect x="144" y="0" width="212" height="53"/><rect x="144" y="447" width="212" height="53"/><rect x="0" y="144" width="53" height="212"/><rect x="447" y="144" width="53" height="212"/><rect x="223" y="0" width="54" height="500"/><rect x="0" y="223" width="500" height="54"/><rect x="127.5" y="81" width="21" height="112"/><rect x="81" y="126.5" width="114" height="21"/><rect x="351.5" y="81" width="21" height="112"/><rect x="305" y="126.5" width="114" height="21"/><rect x="127.5" y="307" width="21" height="112"/><rect x="81" y="352.5" width="114" height="21"/><rect x="351.5" y="307" width="21" height="112"/><rect x="305" y="352.5" width="114" height="21"/>
+            </g>
+            <g transform="translate(150 118)">
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="0 0;0 0;-50 -22;-50 -22;0 0;0 0" keyTimes="0;.18;.42;.68;.9;1" dur="11s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
+              <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
+              <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M0,0 L-66.0,0.0 A66,47.5 0 0 1 -0.0,-47.5 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
+            </g>
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="0 0;0 0;50 -22;50 -22;0 0;0 0" keyTimes="0;.18;.42;.68;.9;1" dur="11s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
+              <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
+              <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M0,0 L-0.0,-47.5 A66,47.5 0 0 1 66.0,-0.0 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
+            </g>
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="0 0;0 0;-50 22;-50 22;0 0;0 0" keyTimes="0;.18;.42;.68;.9;1" dur="11s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
+              <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
+              <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M0,0 L0.0,47.5 A66,47.5 0 0 1 -66.0,0.0 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
+            </g>
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="0 0;0 0;50 22;50 22;0 0;0 0" keyTimes="0;.18;.42;.68;.9;1" dur="11s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/>
+              <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" transform="translate(0 13)" fill="#8A9C76" stroke="#1E2021" stroke-width="1.1" stroke-linejoin="round"/>
+              <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" fill="#BFCBA9" stroke="#1E2021" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M0,0 L66.0,0.0 A66,47.5 0 0 1 0.0,47.5 Z" fill="none" stroke="#DCE4C8" stroke-width="5" stroke-opacity=".35" stroke-linejoin="round" transform="scale(.82)"/>
+            </g>
+            </g>
+          </svg>
+        </a>
+        <div>
+          <p class="quote codigo-quote">Shop by collection, drawn by hand.</p>
+          <p class="room-body">A banner and a scroll-driven piece for the Código 1530 store. As the visitor scrolls, a hand-drawn agave piña splits into four collections and the Jerusalem cross appears in the cut.</p>
+          <a class="room-cta" href="https://www.codigo1530.com/" target="_blank" rel="noopener">Visit Código 1530 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H540 L546,5 L555,19 L564,12 L573,12 L579,7 L588,17 L597,12 H1000"/></svg>
   </div>
 
   <section class="room" id="stillward-project">
@@ -1511,7 +1591,7 @@
   </section>
 
   <div class="built-divider" aria-hidden="true">
-    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H645 L651,5 L660,19 L669,12 L678,12 L684,7 L693,17 L702,12 H1000"/></svg>
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H680 L686,5 L695,19 L704,12 L713,12 L719,7 L728,17 L737,12 H1000"/></svg>
   </div>
 
   <section class="room water-room" id="water-project">
@@ -1866,7 +1946,7 @@
   /* SMIL ignores the CSS reduced-motion override, so remove it explicitly.
      Each scene's static attributes are its settled first frame. */
   if(reduced){
-    document.querySelectorAll('.aspen-scene animate, .decision-scene animate, .water-scene animateTransform, .water-scene animate, .atlas-scene animateMotion').forEach(function(a){ a.remove(); });
+    document.querySelectorAll('.aspen-scene animate, .decision-scene animate, .water-scene animateTransform, .water-scene animate, .atlas-scene animateMotion, .codigo-scene animateTransform, .codigo-scene animate').forEach(function(a){ a.remove(); });
   }
 
   /* ---------- signal line: hero (interactive) ---------- */
