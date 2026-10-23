@@ -29,10 +29,6 @@
   /* critical: paint ground immediately, no white flash before CSS/fonts settle */
   html{ background:#18292F; }
 </style>
-<script>
-  /* High contrast is the default; honour a saved 'normal' choice before first paint. */
-  (function(){ try{ if(localStorage.getItem('contrast') === 'normal') document.documentElement.setAttribute('data-contrast','normal'); }catch(e){} })();
-</script>
 
 <style>
   :root{
@@ -154,14 +150,6 @@
     color:var(--verdant); border-bottom-color:var(--verdant);
   }
   .topnav-sep{ color:var(--bone-faint); font-family:var(--font-mono); font-size:var(--fs-label-l); }
-  .contrast-toggle{
-    margin-left:var(--s1); height:28px; padding:0 var(--s2); display:inline-flex; align-items:center;
-    font-family:var(--font-mono); font-size:var(--fs-label); letter-spacing:.06em;
-    background:none; border:1px solid var(--ground-line); border-radius:14px; cursor:pointer; color:var(--bone-faint);
-    transition:color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
-  }
-  .contrast-toggle:hover, .contrast-toggle:focus-visible{ color:var(--bone); border-color:var(--bone-faint); outline:none; }
-  .contrast-toggle[aria-pressed="true"]{ background:var(--bone); color:var(--ground); border-color:var(--bone); }
   @media (max-width:640px){
     .topnav{ padding:0 var(--s4); }
     .topnav-mark{ display:none; }
@@ -928,7 +916,6 @@
     <a href="#ideas" data-id="ideas">Ideas</a>
     <span class="topnav-sep" aria-hidden="true">·</span>
     <a href="#contact" data-id="contact">Contact</a>
-    <button class="contrast-toggle" type="button" id="contrastToggle" aria-pressed="false" aria-label="High contrast" title="High contrast">Aa</button>
   </div>
 </nav>
 
@@ -1955,22 +1942,6 @@
     }, { threshold:ratio });
     io.observe(el);
     window.addEventListener('scroll', check, { passive:true });
-  }
-
-  /* ---------- high-contrast toggle ---------- */
-  var contrastToggle = document.getElementById('contrastToggle');
-  if(contrastToggle){
-    function syncContrast(){
-      var on = document.documentElement.getAttribute('data-contrast') === 'high';
-      contrastToggle.setAttribute('aria-pressed', String(on));
-    }
-    syncContrast();
-    contrastToggle.addEventListener('click', function(){
-      var on = document.documentElement.getAttribute('data-contrast') !== 'high';
-      document.documentElement.setAttribute('data-contrast', on ? 'high' : 'normal');
-      try{ localStorage.setItem('contrast', on ? 'high' : 'normal'); }catch(e){}
-      syncContrast();
-    });
   }
 
   /* ---------- nav progress + active link ---------- */

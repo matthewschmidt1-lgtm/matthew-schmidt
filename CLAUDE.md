@@ -72,11 +72,10 @@ All sizes, spacing and motion read from named tokens on `:root`; don't add raw v
   `animation:none !important`). SMIL ignores that media query, so the JS guard near the
   top of the script removes `<animateTransform>`/`<animate>` under
   `.aspen-scene`/`.decision-scene`/`.water-scene`/`.see-svg` when `reduced` is true — extend that selector for any new SMIL.
-- **High-contrast mode:** **on by default** (`<html data-contrast="high">`); the "Aa" pill in the nav toggles it
-  (a saved "normal" choice is applied pre-paint by the inline script in `<head>`), and
-  `@media (prefers-contrast: more)` applies the same overrides automatically. Both only
-  redefine the `:root` tokens (text, lines, accent, nav/backdrop) and keep the slate ground.
-  Translucent surfaces must use `--nav-bg` / `--backdrop`, not hard-coded rgba, so they follow.
+- **High contrast is the palette:** `<html data-contrast="high">` selects the brighter text, stronger
+  lines and brighter accent on the slate ground. There is no toggle any more (removed 2026-10-22);
+  the `:root[data-contrast="high"]` block is simply the site's colors. Translucent surfaces use
+  `--nav-bg` / `--backdrop`.
 - **Staged panels:** `stagePanel(overlayId, stages)` in the script drives any modal with the
   `.loop-progress` / `.loop-stage` / `.loop-nav` structure: content swaps in place with a fade,
   progress steps are clickable, Back/Next and arrow keys move between stages, and a stage with
