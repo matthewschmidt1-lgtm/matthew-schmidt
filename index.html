@@ -301,14 +301,8 @@
   .mult-forces{ margin-top:var(--s5); text-align:center; font-family:var(--font-mono); font-size:var(--fs-label); letter-spacing:.12em; text-transform:uppercase; color:var(--verdant); }
   /* the Multiplier node draws the eye once the network has settled: a slow halo */
   .net-halo{ fill:var(--verdant); opacity:0; transform-box:fill-box; transform-origin:center; }
-  .net-mult.pulse .net-halo{ animation:netHalo 1.8s var(--ease-out); }
-  @keyframes netHalo{ 0%{ transform:scale(.9); opacity:0; } 20%{ opacity:.55; } 100%{ transform:scale(1.7); opacity:0; } }
-  .net-mult.pulse .net-ring-big{ fill-opacity:.5; }
-  /* the wave: from The Multiplier out through a lens, its forces, their books */
-  .net-edge.wave{ stroke:var(--verdant); stroke-opacity:.95; stroke-width:1.8; }
-  .net-node.wave .net-dot{ fill:var(--verdant); }
-  .net-node.wave .net-ring{ fill-opacity:.5; }
-  .net-node.wave .net-label{ fill:var(--bone); }
+  .seeing.in .net-halo{ animation:netHalo 4.8s var(--ease-inout) infinite 3s; }
+  @keyframes netHalo{ 0%{ transform:scale(.96); opacity:0; } 35%{ opacity:.28; } 100%{ transform:scale(1.45); opacity:0; } }
   .seeing.in .net-ring-big{ animation:netRingBreathe 4.8s var(--ease-inout) infinite 3s; }
   @keyframes netRingBreathe{ 0%,100%{ fill-opacity:.14; } 40%{ fill-opacity:.34; } }
   .net-mult:hover .net-ring-big, .net-mult:focus-visible .net-ring-big{ fill-opacity:.4; }
@@ -930,7 +924,6 @@
     .breath-ring{ animation:none !important; }
     .fgap-pulse{ animation:none !important; opacity:0 !important; }
     .net-halo, .net-ring-big, .drill-mult::after{ animation:none !important; }
-    .net-edge.wave, .net-node.wave .net-dot{ transition:none !important; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
   }
@@ -2451,44 +2444,9 @@
       netNodes.forEach(function(n){ n.classList.remove('lit'); });
       netEdges.forEach(function(e){ e.classList.remove('lit'); });
     }
-    /* ---- the wave: pulse, then light People, Business, System outward ---- */
-    var waveTimers = [], waveTracing = false;
-    function edgesWhere(fn){ return netEdges.filter(fn); }
-    function nodeEl(id){ return netNodes.find(function(n){ return n.dataset.id === id; }); }
-    function setWave(els, on){ els.forEach(function(e){ if(e) e.classList.toggle('wave', on); }); }
-    function later(ms, fn){ waveTimers.push(setTimeout(fn, ms)); }
-    function runWave(){
-      waveTimers.forEach(clearTimeout); waveTimers = [];
-      if(document.hidden || waveTracing || reduced) { later(2000, runWave); return; }
-      var mult = nodeEl('m');
-      mult.classList.remove('pulse'); void mult.getBoundingClientRect(); mult.classList.add('pulse');
-      later(1800, function(){ mult.classList.remove('pulse'); });
-      var order = ['lp','lb','ls'], step = 3400, t0 = 500;
-      order.forEach(function(lens, i){
-        var base = t0 + i * step;
-        var lensEdge = edgesWhere(function(e){ return e.dataset.from === lens && e.dataset.to === 'm'; });
-        var forceEdges = edgesWhere(function(e){ return e.dataset.to === lens; });
-        var forces = forceEdges.map(function(e){ return e.dataset.from; });
-        var bookEdges = edgesWhere(function(e){ return forces.indexOf(e.dataset.to) !== -1; });
-        var forceNodes = forces.map(nodeEl), bookNodes = bookEdges.map(function(e){ return nodeEl(e.dataset.from); });
-        later(base,        function(){ setWave(lensEdge.concat([nodeEl(lens)]), true); });
-        later(base + 650,  function(){ setWave(forceEdges.concat(forceNodes), true); });
-        later(base + 1300, function(){ setWave(bookEdges.concat(bookNodes), true); });
-        later(base + 2600, function(){ setWave(lensEdge.concat(forceEdges, bookEdges, [nodeEl(lens)], forceNodes, bookNodes), false); });
-      });
-      later(t0 + order.length * step + 2200, runWave);
-    }
-    if(!reduced && seeing){
-      var waveStarted = false;
-      var waveObs = new MutationObserver(function(){
-        if(!waveStarted && seeing.classList.contains('in')){ waveStarted = true; later(3600, runWave); }
-      });
-      waveObs.observe(seeing, { attributes:true, attributeFilter:['class'] });
-      if(seeing.classList.contains('in')){ waveStarted = true; later(3600, runWave); }
-    }
     netNodes.forEach(function(n){
-      n.addEventListener('mouseenter', function(){ waveTracing = true; netTrace(n.dataset.id); });
-      n.addEventListener('mouseleave', function(){ waveTracing = false; netClear(); });
+      n.addEventListener('mouseenter', function(){ netTrace(n.dataset.id); });
+      n.addEventListener('mouseleave', netClear);
       n.addEventListener('focus', function(){ netTrace(n.dataset.id); });
       n.addEventListener('blur', netClear);
       n.addEventListener('click', function(){
