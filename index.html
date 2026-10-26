@@ -754,13 +754,28 @@
   .codigo-reel.is-live .codigo-frame-hero{ animation-name:cgHero; }
   .codigo-reel.is-live .codigo-frame-divider{ animation-name:cgDivider, cgCross; }
   .codigo-reel.is-live .codigo-frame-agave{ animation-name:cgAgave; }
-  @keyframes cgHero{ 0%,30.5%{ opacity:1; } 33.5%,96%{ opacity:0; } 100%{ opacity:1; } }
-  @keyframes cgDivider{ 0%,30.5%{ opacity:0; } 34.5%,63.5%{ opacity:1; } 66.5%,100%{ opacity:0; } }
-  @keyframes cgAgave{ 0%,63.5%{ opacity:0; } 67.5%,94.5%{ opacity:1; } 97.5%,100%{ opacity:0; } }
-  /* 1. the homepage hero, drifting slowly */
-  .codigo-frame-hero img{ position:absolute; top:0; left:0; width:135%; height:100%; object-fit:cover; }
-  .codigo-reel.is-live .codigo-frame-hero img{ animation:cgDrift 18s linear infinite; }
-  @keyframes cgDrift{ 0%{ transform:translateX(0); } 33%{ transform:translateX(-24%); } 50%,100%{ transform:translateX(0); } } /* resets while the hero is hidden */
+  @keyframes cgHero{ 0%,30%{ opacity:1; } 35.5%,95.5%{ opacity:0; } 100%{ opacity:1; } }
+  @keyframes cgDivider{ 0%,30%{ opacity:0; } 35.5%,62%{ opacity:1; } 67.5%,100%{ opacity:0; } }
+  @keyframes cgAgave{ 0%,62%{ opacity:0; } 67.5%,92.5%{ opacity:1; } 96.5%,100%{ opacity:0; } }
+  /* 1. the homepage hero: a slow push-in on the bottles, a vignette, and one soft key-light sweep.
+        The image always covers the frame, so the reel background never shows through. */
+  .codigo-frame-hero{ background:#1a1410; }
+  .codigo-frame-hero img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 58%; transform:scale(1.12) translateX(0); transform-origin:52% 60%; }
+  .codigo-reel.is-live .codigo-frame-hero img{ animation:cgPush 18s cubic-bezier(.33,0,.2,1) infinite; }
+  @keyframes cgPush{ 0%{ transform:scale(1.12) translateX(0); } 34%{ transform:scale(1.26) translateX(-1.5%); } 50%,100%{ transform:scale(1.12) translateX(0); } } /* resets while the hero is hidden */
+  .codigo-frame-hero::before{
+    content:""; position:absolute; z-index:1; top:-30%; bottom:-30%; left:-45%; width:34%;
+    background:linear-gradient(100deg, transparent 0%, rgba(255,236,200,.10) 40%, rgba(255,236,200,.22) 50%, rgba(255,236,200,.10) 60%, transparent 100%);
+    transform:skewX(-14deg); opacity:0;
+  }
+  .codigo-reel.is-live .codigo-frame-hero::before{ animation:cgSweep 18s cubic-bezier(.4,0,.3,1) infinite; }
+  @keyframes cgSweep{ 0%,5%{ left:-45%; opacity:0; } 8%{ opacity:1; } 24%{ opacity:1; } 27%,100%{ left:125%; opacity:0; } }
+  .codigo-frame-hero::after{
+    content:""; position:absolute; z-index:2; inset:0; pointer-events:none;
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,.30), transparent 28%, transparent 68%, rgba(0,0,0,.42)),
+      radial-gradient(ellipse 70% 65% at 50% 52%, transparent 55%, rgba(0,0,0,.38) 100%);
+  }
   /* 2. the divider: line, diamond, cross, diamond, line; moss turns terracotta */
   .codigo-frame-divider{ display:flex; align-items:center; gap:10px; padding:0 22px; color:var(--cg-moss); }
   @keyframes cgCross{ 0%,38%{ color:var(--cg-moss); } 46%,66%{ color:var(--cg-terra); } 67%,100%{ color:var(--cg-moss); } }
@@ -983,7 +998,7 @@
     .breath-ring{ animation:none !important; }
     .fgap-pulse{ animation:none !important; opacity:0 !important; }
     .net-halo, .net-ring-big, .drill-mult::after{ animation:none !important; }
-    .codigo-frame, .codigo-frame-hero img{ animation:none !important; }
+    .codigo-frame, .codigo-frame-hero img, .codigo-frame-hero::before{ animation:none !important; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
   }
@@ -1636,14 +1651,14 @@
                 </defs>
                 <ellipse cx="150" cy="158" rx="70" ry="8" fill="#1E2021" fill-opacity=".10"/>
                 <g fill="#8F3F26" opacity="0" transform="translate(121 75) scale(.116)">
-                  <animate attributeName="opacity" values="0;0;0;.95;.95;0;0" keyTimes="0;.70;.745;.80;.90;.945;1" dur="18s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0;0;0;.95;.95;0;0" keyTimes="0;.70;.76;.85;.895;.945;1" dur="18s" repeatCount="indefinite"/>
                   <rect x="144" y="0" width="212" height="53"/><rect x="144" y="447" width="212" height="53"/><rect x="0" y="144" width="53" height="212"/><rect x="447" y="144" width="53" height="212"/><rect x="223" y="0" width="54" height="500"/><rect x="0" y="223" width="500" height="54"/><rect x="127.5" y="81" width="21" height="112"/><rect x="81" y="126.5" width="114" height="21"/><rect x="351.5" y="81" width="21" height="112"/><rect x="305" y="126.5" width="114" height="21"/><rect x="127.5" y="307" width="21" height="112"/><rect x="81" y="352.5" width="114" height="21"/><rect x="351.5" y="307" width="21" height="112"/><rect x="305" y="352.5" width="114" height="21"/>
                 </g>
                 <g transform="translate(150 96)">
-                  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;-46 -20;-46 -20;0 0;0 0" keyTimes="0;.70;.78;.90;.955;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/><g clip-path="url(#cgQ1)"><use href="#cgPina"/></g></g>
-                  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;46 -20;46 -20;0 0;0 0" keyTimes="0;.70;.78;.90;.955;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/><g clip-path="url(#cgQ2)"><use href="#cgPina"/></g></g>
-                  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;-46 20;-46 20;0 0;0 0" keyTimes="0;.70;.78;.90;.955;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/><g clip-path="url(#cgQ3)"><use href="#cgPina"/></g></g>
-                  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;46 20;46 20;0 0;0 0" keyTimes="0;.70;.78;.90;.955;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.3 0 .2 1;0 0 1 1;.3 0 .2 1;0 0 1 1" repeatCount="indefinite"/><g clip-path="url(#cgQ4)"><use href="#cgPina"/></g></g>
+                  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;-46 -20;-46 -20;0 0;0 0" keyTimes="0;.70;.83;.885;.955;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.45 0 .15 1;0 0 1 1;.45 0 .2 1;0 0 1 1" repeatCount="indefinite"/><g clip-path="url(#cgQ1)"><use href="#cgPina"/></g></g>
+                  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;46 -20;46 -20;0 0;0 0" keyTimes="0;.70;.83;.885;.955;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.45 0 .15 1;0 0 1 1;.45 0 .2 1;0 0 1 1" repeatCount="indefinite"/><g clip-path="url(#cgQ2)"><use href="#cgPina"/></g></g>
+                  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;-46 20;-46 20;0 0;0 0" keyTimes="0;.70;.83;.885;.955;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.45 0 .15 1;0 0 1 1;.45 0 .2 1;0 0 1 1" repeatCount="indefinite"/><g clip-path="url(#cgQ3)"><use href="#cgPina"/></g></g>
+                  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;46 20;46 20;0 0;0 0" keyTimes="0;.70;.83;.885;.955;1" dur="18s" calcMode="spline" keySplines="0 0 1 1;.45 0 .15 1;0 0 1 1;.45 0 .2 1;0 0 1 1" repeatCount="indefinite"/><g clip-path="url(#cgQ4)"><use href="#cgPina"/></g></g>
                 </g>
               </svg>
             </div>
