@@ -760,16 +760,29 @@
   /* 1. the homepage hero: a slow push-in on the bottles, a vignette, and one soft key-light sweep.
         The image always covers the frame, so the reel background never shows through. */
   .codigo-frame-hero{ background:#1a1410; }
-  .codigo-frame-hero img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 58%; transform:scale(1.12) translateX(0); transform-origin:52% 60%; }
-  .codigo-reel.is-live .codigo-frame-hero img{ animation:cgPush 18s cubic-bezier(.33,0,.2,1) infinite; }
+  .cg-stage{ position:absolute; inset:0; transform:scale(1.12) translateX(0); transform-origin:52% 60%; }
+  .codigo-reel.is-live .cg-stage{ animation:cgPush 18s cubic-bezier(.33,0,.2,1) infinite; }
   @keyframes cgPush{ 0%{ transform:scale(1.12) translateX(0); } 34%{ transform:scale(1.26) translateX(-1.5%); } 50%,100%{ transform:scale(1.12) translateX(0); } } /* resets while the hero is hidden */
-  .codigo-frame-hero::before{
-    content:""; position:absolute; z-index:1; top:-30%; bottom:-30%; left:-45%; width:34%;
-    background:linear-gradient(100deg, transparent 0%, rgba(255,236,200,.10) 40%, rgba(255,236,200,.22) 50%, rgba(255,236,200,.10) 60%, transparent 100%);
-    transform:skewX(-14deg); opacity:0;
+  .codigo-frame-hero img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
+  /* light from the liquid: five soft glows pinned to the bright spots in the bottles.
+     The image is 900x360 shown at 200px tall, so image x,y maps to calc(50% + (x-450)*.5556px), y*.5556px */
+  .cg-glow{
+    position:absolute; border-radius:50%; pointer-events:none; opacity:0; mix-blend-mode:overlay; filter:blur(5px);
+    background:radial-gradient(circle, rgba(255,196,110,.5) 0%, rgba(255,170,80,.22) 38%, rgba(255,150,60,0) 68%);
+    transform:translate(-50%,-50%);
   }
-  .codigo-reel.is-live .codigo-frame-hero::before{ animation:cgSweep 18s cubic-bezier(.4,0,.3,1) infinite; }
-  @keyframes cgSweep{ 0%,5%{ left:-45%; opacity:0; } 8%{ opacity:1; } 24%{ opacity:1; } 27%,100%{ left:125%; opacity:0; } }
+  .cg-glow-1{ left:calc(50% - 10px); top:71px; width:64px; height:64px; }
+  .cg-glow-2{ left:calc(50% + 4px); top:92px; width:54px; height:54px; }
+  .cg-glow-3{ left:calc(50% + 31px); top:66px; width:76px; height:76px; }
+  .cg-glow-4{ left:calc(50% + 23px); top:92px; width:60px; height:60px; }
+  .cg-glow-5{ left:calc(50% - 33px); top:83px; width:52px; height:52px; background:radial-gradient(circle, rgba(236,244,255,.5) 0%, rgba(220,235,255,.2) 40%, rgba(220,235,255,0) 68%); }
+  .codigo-reel.is-live .cg-glow{ animation:cgGlow 18s ease-in-out infinite; }
+  .codigo-reel.is-live .cg-glow-2{ animation-delay:.7s; }
+  .codigo-reel.is-live .cg-glow-3{ animation-delay:.3s; }
+  .codigo-reel.is-live .cg-glow-4{ animation-delay:1.1s; }
+  .codigo-reel.is-live .cg-glow-5{ animation-delay:.5s; animation-name:cgGlowSoft; }
+  @keyframes cgGlow{ 0%,2%{ opacity:0; } 9%{ opacity:.95; } 16%{ opacity:.5; } 23%{ opacity:.9; } 31%,100%{ opacity:0; } }
+  @keyframes cgGlowSoft{ 0%,3%{ opacity:0; } 11%{ opacity:.6; } 18%{ opacity:.3; } 25%{ opacity:.55; } 31%,100%{ opacity:0; } }
   .codigo-frame-hero::after{
     content:""; position:absolute; z-index:2; inset:0; pointer-events:none;
     background:
@@ -998,7 +1011,7 @@
     .breath-ring{ animation:none !important; }
     .fgap-pulse{ animation:none !important; opacity:0 !important; }
     .net-halo, .net-ring-big, .drill-mult::after{ animation:none !important; }
-    .codigo-frame, .codigo-frame-hero img, .codigo-frame-hero::before{ animation:none !important; }
+    .codigo-frame, .cg-stage, .cg-glow{ animation:none !important; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
   }
@@ -1574,7 +1587,7 @@
                the divider whose cross turns terracotta, and the piña that opens.
                CSS crossfades + SMIL for the piña; static first frame under reduced motion. -->
           <div class="codigo-reel" role="img" aria-label="Three moments from the Código 1530 merch site: the homepage hero, the divider whose cross turns from moss to terracotta, and the hand-drawn agave piña that opens to reveal the cross.">
-            <div class="codigo-frame codigo-frame-hero"><img src="images/codigo/hero.jpg" alt="" width="900" height="360" decoding="async"></div>
+            <div class="codigo-frame codigo-frame-hero"><div class="cg-stage"><img src="images/codigo/hero.jpg" alt="" width="900" height="360" decoding="async"><i class="cg-glow cg-glow-1"></i><i class="cg-glow cg-glow-2"></i><i class="cg-glow cg-glow-3"></i><i class="cg-glow cg-glow-4"></i><i class="cg-glow cg-glow-5"></i></div></div>
             <div class="codigo-frame codigo-frame-divider">
               <span class="cg-line"></span><span class="cg-diamond"></span>
               <svg class="cg-cross" viewBox="0 0 500 500" aria-hidden="true"><g fill="currentColor"><rect x="144" y="0" width="212" height="53"/><rect x="144" y="447" width="212" height="53"/><rect x="0" y="144" width="53" height="212"/><rect x="447" y="144" width="53" height="212"/><rect x="223" y="0" width="54" height="500"/><rect x="0" y="223" width="500" height="54"/><rect x="127.5" y="81" width="21" height="112"/><rect x="81" y="126.5" width="114" height="21"/><rect x="351.5" y="81" width="21" height="112"/><rect x="305" y="126.5" width="114" height="21"/><rect x="127.5" y="307" width="21" height="112"/><rect x="81" y="352.5" width="114" height="21"/><rect x="351.5" y="307" width="21" height="112"/><rect x="305" y="352.5" width="114" height="21"/></g></svg>
