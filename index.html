@@ -797,9 +797,16 @@
   .codigo-reel.is-live .cg-line, .codigo-reel.is-live .cg-diamond{ animation:cgDeco 18s var(--ease-inout) infinite; }
   .codigo-reel.is-live .cg-cross{ animation:cgCross 18s var(--ease-inout) infinite; }
   @keyframes cgCross{ 0%,78%{ color:var(--cg-moss); } 86%,100%{ color:var(--cg-terra); } }
-  .cg-line{ flex:1; height:2px; background:linear-gradient(to right, transparent, rgba(63,74,58,.7)); }
+  .cg-line{ position:relative; flex:1; height:2px; background:linear-gradient(to right, transparent, rgba(63,74,58,.7)); }
   .cg-line-r{ background:linear-gradient(to left, transparent, rgba(63,74,58,.7)); }
+  /* the terracotta beams out from the cross: each line carries an overlay that grows from the cross end outward */
+  .cg-line::after{ content:""; position:absolute; inset:0; background:linear-gradient(to right, transparent, rgba(143,63,38,.9)); transform:scaleX(0); transform-origin:right center; }
+  .cg-line-r::after{ background:linear-gradient(to left, transparent, rgba(143,63,38,.9)); transform-origin:left center; }
+  .codigo-reel.is-live .cg-line::after{ animation:cgBeam 18s cubic-bezier(.3,0,.2,1) infinite; }
+  @keyframes cgBeam{ 0%,82%{ transform:scaleX(0); } 92%,100%{ transform:scaleX(1); } }
   .cg-diamond{ width:8px; height:8px; background:rgba(63,74,58,.75); transform:rotate(45deg); }
+  .codigo-reel.is-live .cg-diamond{ animation:cgDeco 18s var(--ease-inout) infinite, cgDiamond 18s var(--ease-inout) infinite; }
+  @keyframes cgDiamond{ 0%,80%{ background:rgba(63,74,58,.75); } 85%,100%{ background:var(--cg-terra); } }
   .cg-cross{ width:18.67%; aspect-ratio:1; height:auto; flex:none; }
   /* 3. the piña */
   .codigo-scene{ display:block; width:100%; height:100%; }
@@ -1016,7 +1023,7 @@
     .breath-ring{ animation:none !important; }
     .fgap-pulse{ animation:none !important; opacity:0 !important; }
     .net-halo, .net-ring-big, .drill-mult::after{ animation:none !important; }
-    .codigo-frame, .cg-stage, .cg-glow, .cg-cross, .cg-line, .cg-diamond{ animation:none !important; }
+    .codigo-frame, .cg-stage, .cg-glow, .cg-cross, .cg-line, .cg-line::after, .cg-diamond{ animation:none !important; }
     .cg-line, .cg-diamond{ opacity:1; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
@@ -1917,7 +1924,7 @@
         <p>AI adoption is not just about deploying technology. It's about translating AI capabilities into meaningful, measurable business outcomes. The goal isn't to give people another tool to use, but to start with the problems worth solving and identify where AI can create genuine value.</p>
         <p>Effective adoption goes beyond successful pilots. It requires defining the right problems, measuring outcomes, integrating solutions into workflows, and aligning business strategy, systems, and human capabilities to scale what works.</p>
         <p>As AI reshapes how work gets done, organizations must rethink how decisions are made, how trust and accountability are maintained, and where human judgment matters most. The opportunity isn't just to automate existing work, but to reimagine what people and AI can accomplish together.</p>
-        <p class="reflect-final">The goal isn't to adopt more AI. It's to build the organizational capability to turn AI into sustained business value.</p>
+        <p class="reflect-final">Successful AI adoption is more than just implementing technology. It means equipping people to use AI effectively, continuously learning and adapting, and keeping trust, accountability, and human judgment at the center. By embedding AI into everyday work, organizations can improve decisions, move beyond experiments, and create sustained business value.</p>
       </div>
     </div>
   </div>
