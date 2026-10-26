@@ -36,7 +36,7 @@ Believe `#beliefs` → Reading `#reading`; then the Knowledge → Agency strip).
   without touching CSS. The six `.built-divider` signal lines shift their blip
   left → right down the list (H120 / H260 / H400 / H540 / H680 / H820).
 - Each project preview scopes its own product palette as custom properties on the
-  section (`.friction-room{--fr-*}`, `.decision-room{--do-*}`, `.atlas-room{--at-*}`, `.codigo-room{--cg-*}`, `.aspen-room{--as-*}`, `.water-room{--wa-*}`),
+  section (`.friction-room{--fr-*}`, `.decision-room{--do-*}`, `.atlas-room{--at-*}`, `.codigo-room{--cg-*}` (its card is an 18s reel gated on `.is-live`: bottles with liquid glows → piña opens on the cross → piña fades → divider lines → cross turns terracotta; the cross is one element in the divider frame, under the piña, so it never moves), `.aspen-room{--as-*}`, `.water-room{--wa-*}`),
   pulled from that project's source. Don't leak them into `:root`.
 
 ## Design scales (pass 1, 2026-10-18)
