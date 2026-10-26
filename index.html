@@ -761,7 +761,7 @@
   @keyframes cgDeco{ 0%,66%{ opacity:0; } 71%,100%{ opacity:1; } }
   /* 1. the homepage hero: a slow push-in on the bottles, a vignette, and one soft key-light sweep.
         The image always covers the frame, so the reel background never shows through. */
-  .codigo-frame-hero{ background:#1a1410; }
+  .codigo-frame-hero{ background:#1a1410; isolation:isolate; }
   .cg-stage{ position:absolute; inset:0; transform:scale(1.12) translateX(0); transform-origin:52% 60%; }
   .codigo-reel.is-live .cg-stage{ animation:cgPush 18s cubic-bezier(.33,0,.2,1) infinite; }
   @keyframes cgPush{ 0%{ transform:scale(1.12) translateX(0); } 34%{ transform:scale(1.26) translateX(-1.5%); } 50%,100%{ transform:scale(1.12) translateX(0); } } /* resets while the hero is hidden */
@@ -785,6 +785,15 @@
   .codigo-reel.is-live .cg-glow-5{ animation-delay:.5s; animation-name:cgGlowSoft; }
   @keyframes cgGlow{ 0%,2%{ opacity:0; } 9%{ opacity:.95; } 16%{ opacity:.5; } 23%{ opacity:.9; } 31%,100%{ opacity:0; } }
   @keyframes cgGlowSoft{ 0%,3%{ opacity:0; } 11%{ opacity:.6; } 18%{ opacity:.3; } 25%{ opacity:.55; } 31%,100%{ opacity:0; } }
+  /* iOS Safari mishandles blend modes and filters inside a rounded, clipped, transformed box (images drop out),
+     so on iOS the glows are plain alpha, no blur, at lower peaks */
+  @supports (-webkit-touch-callout: none){
+    .cg-glow{ mix-blend-mode:normal; filter:none; }
+    .codigo-reel.is-live .cg-glow{ animation-name:cgGlowPlain; }
+    .codigo-reel.is-live .cg-glow-5{ animation-name:cgGlowPlainSoft; }
+  }
+  @keyframes cgGlowPlain{ 0%,2%{ opacity:0; } 9%{ opacity:.5; } 16%{ opacity:.25; } 23%{ opacity:.45; } 31%,100%{ opacity:0; } }
+  @keyframes cgGlowPlainSoft{ 0%,3%{ opacity:0; } 11%{ opacity:.3; } 18%{ opacity:.15; } 25%{ opacity:.28; } 31%,100%{ opacity:0; } }
   .codigo-frame-hero::after{
     content:""; position:absolute; z-index:2; inset:0; pointer-events:none;
     background:
@@ -1611,10 +1620,10 @@
                 <defs>
                   <radialGradient id="cgDome" cx="42%" cy="36%" r="68%"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#14261A" stop-opacity=".55"/></radialGradient>
                   <clipPath id="cgDomeClip"><ellipse rx="72" ry="64"/></clipPath>
-                  <clipPath id="cgQ1"><rect x="-90" y="-90" width="90" height="90"/></clipPath>
-                  <clipPath id="cgQ2"><rect x="0" y="-90" width="90" height="90"/></clipPath>
-                  <clipPath id="cgQ3"><rect x="-90" y="0" width="90" height="90"/></clipPath>
-                  <clipPath id="cgQ4"><rect x="0" y="0" width="90" height="90"/></clipPath>
+                  <clipPath id="cgQ1"><rect x="-90" y="-90" width="91" height="91"/></clipPath>
+                  <clipPath id="cgQ2"><rect x="-1" y="-90" width="91" height="91"/></clipPath>
+                  <clipPath id="cgQ3"><rect x="-90" y="-1" width="91" height="91"/></clipPath>
+                  <clipPath id="cgQ4"><rect x="-1" y="-1" width="91" height="91"/></clipPath>
                   <g id="cgPina">
                     <ellipse rx="72" ry="64" fill="#F1E9D2"/>
                     <g clip-path="url(#cgDomeClip)">
