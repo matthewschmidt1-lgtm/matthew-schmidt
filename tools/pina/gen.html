@@ -1,0 +1,320 @@
+<!doctype html><meta charset="utf-8"><div class="agave" id="agave" data-collections='[{"label":"a","href":"#"},{"label":"b","href":"#"},{"label":"c","href":"#"},{"label":"d","href":"#"}]'><svg class="agave__svg" viewBox="20 40 720 560"></svg></div><script>
+(function () {
+  var root = document.getElementById('agave');
+  if (!root) return;
+  var svg = root.querySelector('svg');
+  var NS = 'http://www.w3.org/2000/svg';
+  var cols = JSON.parse(root.getAttribute('data-collections'));
+
+  /* ---------- settings you can tweak ---------- */
+  var INK = '#1E2021', TERRA = '#8F3F26';
+  var CX = 380, CY = 305;        // centre of the whole piña
+  var R = 128;                   // half-width of the egg
+  var C = 176;                   // half-height of the egg (taller than wide = egg shape)
+  var EGG = 0.10;                // 0 = symmetrical oval, bigger = wider at the bottom like an egg
+  var TILT = 63, YAW = 20;       // camera: how far we look down on it, and a slight turn (degrees)
+  var N_SCALES = 84;            // number of leaf-base scales over the whole egg
+  var SPREAD = [150, 66];        // how far each piece travels when it opens (sideways, up/down)
+  var ROT = [-7, -6, 6, 5];      // final tilt of each piece, degrees
+  var START_AT = 0.92;           // opening begins when the whole piña is on screen (its bottom edge at 92% of window height)
+  var END_AT = 0.38;             // fully open when its centre reaches 38% of window height (lower number = longer scroll)
+  /* -------------------------------------------- */
+
+  function el(name, attrs, parent) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function rng(s) {
+    return function () {
+      s |= 0; s = s + 0x6D2B79F5 | 0;
+      var t = Math.imul(s ^ s >>> 15, 1 | s);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function toRGB(c) {
+    if (c.charAt(0) === '#') return [1, 3, 5].map(function (i) { return parseInt(c.substr(i, 2), 16); });
+    return c.match(/[\d.]+/g).slice(0, 3).map(Number);
+  }
+  function mix(a, b, t) {
+    var pa = toRGB(a), pb = toRGB(b);
+    return 'rgb(' + pa.map(function (v, i) { return Math.round(v + (pb[i] - v) * t); }).join(',') + ')';
+  }
+  function pathOf(pts, close) {
+    return 'M' + pts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join('L') + (close ? 'Z' : '');
+  }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function smooth(t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); }
+
+  /* ---------- the egg in 3D, seen from above and slightly to the side ---------- */
+  var T = TILT * Math.PI / 180, Y = YAW * Math.PI / 180;
+  var VX = Math.sin(Y) * Math.cos(T), VY = Math.cos(Y) * Math.cos(T), VZ = Math.sin(T);      // direction towards the viewer
+  var RX = Math.cos(Y), RY = -Math.sin(Y);                                                    // screen right
+  var UX = -Math.sin(T) * Math.sin(Y), UY = -Math.sin(T) * Math.cos(Y), UZ = Math.cos(T);     // screen up
+  function P3(a, b) {                                                                          // a: 0 = top pole .. PI = bottom, b: angle around
+    var rr = R * (1 - EGG * Math.cos(a));
+    return [rr * Math.sin(a) * Math.cos(b), rr * Math.sin(a) * Math.sin(b), C * Math.cos(a)];
+  }
+  function prj(p) { return [p[0] * RX + p[1] * RY, -(p[0] * UX + p[1] * UY + p[2] * UZ), p[0] * VX + p[1] * VY + p[2] * VZ]; }
+  function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function norm3(a, b) {                                                                       // outward surface normal
+    var h = 0.01, aa = clamp(a, 0.03, Math.PI - 0.03);
+    var da = sub(P3(aa + h, b), P3(aa - h, b)), db = sub(P3(aa, b + h), P3(aa, b - h));
+    var n = [da[1] * db[2] - da[2] * db[1], da[2] * db[0] - da[0] * db[2], da[0] * db[1] - da[1] * db[0]];
+    var l = Math.hypot(n[0], n[1], n[2]) || 1, p = P3(aa, b);
+    var sg = (n[0] * p[0] + n[1] * p[1] + n[2] * p[2]) < 0 ? -1 : 1;
+    return [sg * n[0] / l, sg * n[1] / l, sg * n[2] / l];
+  }
+  function shadeOf(n) {                                                                        // lighting from the upper left
+    var nx = n[0] * RX + n[1] * RY, nu = n[0] * UX + n[1] * UY + n[2] * UZ, nd = n[0] * VX + n[1] * VY + n[2] * VZ;
+    var l = nx * -0.50 + nu * 0.55 + nd * 0.68;
+    return { lit: clamp((l + 0.2) / 1.1, 0, 1), face: nd };
+  }
+  function hull(pts) {                                                                         // outline of a convex shape
+    var p = pts.slice().sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; }), lo = [], up = [], i;
+    function cr(o, a, b) { return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]); }
+    for (i = 0; i < p.length; i++) { while (lo.length > 1 && cr(lo[lo.length - 2], lo[lo.length - 1], p[i]) <= 0) lo.pop(); lo.push(p[i]); }
+    for (i = p.length - 1; i >= 0; i--) { while (up.length > 1 && cr(up[up.length - 2], up[up.length - 1], p[i]) <= 0) up.pop(); up.push(p[i]); }
+    lo.pop(); up.pop(); return lo.concat(up);
+  }
+
+  /* ---------- leaf-base scales spread evenly over the whole egg (golden spiral), a little irregular ---------- */
+  var GOLD = 2.39996323, SCALES = [], rg = rng(41), side0 = Math.sqrt(4 * Math.PI * R * Math.sqrt(R * C) / N_SCALES);
+  for (var i = 0; i < N_SCALES; i++) {
+    var f = (i + 0.5) / N_SCALES, al = Math.acos(1 - 2 * f), be = (i * GOLD) % (2 * Math.PI);
+    al = clamp(al + (rg() - 0.5) * 0.05, 0.02, Math.PI - 0.02); be += (rg() - 0.5) * 0.08;
+    var nn = norm3(al, be), sh = shadeOf(nn);
+    if (sh.face < -0.18) continue;                                                             // hidden on the far side
+    var h = 0.01, La = Math.hypot.apply(null, sub(P3(al + h, be), P3(al - h, be))) / (2 * h), Lb = Math.max(Math.hypot.apply(null, sub(P3(al, be + h), P3(al, be - h))) / (2 * h), 8);
+    SCALES.push({ al: al, be: be, La: La, Lb: Lb, th: (rg() - 0.5) * 0.9, k: (0.9 + 0.2 * rg()) * (0.62 + 0.38 * smooth(al / 0.55)), lit: sh.lit, face: sh.face, core: 1 - smooth(al / 0.42) });
+  }
+  SCALES.sort(function (a, b) { return b.al - a.al; });                                       // outer scales first, inner ones overlap them
+
+  function lens(sc, k, r, b0, b1, bm) {                                                        // leaf-shaped outline, projected onto the egg
+    var A = 0.9 * side0 * sc.k * k, B = 0.52 * side0 * sc.k * k, pts = [], side, t;
+    for (side = 1; side >= -1; side -= 2) {
+      for (t = 0; t <= 8; t++) {
+        var u = side === 1 ? -1 + 2 * t / 8 : 1 - 2 * t / 8;
+        var w = u >= 0 ? Math.pow(Math.max(0, 1 - u * u), 0.72) : Math.pow(Math.max(0, 1 - u * u), 1.25);
+        var lx = u * A, ly = side * w * B, c = Math.cos(sc.th), s = Math.sin(sc.th);
+        var da = (lx * c - ly * s) / sc.La, db = clamp((lx * s + ly * c) / sc.Lb, -0.9, 0.9);
+        var aa = sc.al + da, bb = sc.be + db;
+        if (b0 !== null) { var d = (((bb - bm + Math.PI) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI) - Math.PI; bb = clamp(bm + d, b0, b1); }
+        var p = prj(P3(clamp(aa, 0.02, Math.PI - 0.02), bb));
+        pts.push([p[0] + (r() - 0.5) * 0.8, p[1] + (r() - 0.5) * 0.8]);
+      }
+    }
+    return pts;
+  }
+  function drawScales(g, r, b0, b1, bm) {
+    SCALES.forEach(function (sc) {
+      if (b0 !== null) {                                                                       // only scales that reach into this piece
+        var d = (((sc.be - bm + Math.PI) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+        if (Math.abs(d) > (b1 - b0) / 2 + 0.5) return;
+      }
+      var rim = lens(sc, 1, r, b0, b1, bm);
+      var xs = rim.map(function (p) { return p[0]; }), ys = rim.map(function (p) { return p[1]; });
+      var bw = Math.max.apply(null, xs) - Math.min.apply(null, xs), bh = Math.max.apply(null, ys) - Math.min.apply(null, ys);
+      if (bw < 0.6 && bh < 0.6) return;
+      var inn = lens(sc, 0.72, r, b0, b1, bm).map(function (p) { return [p[0] - 0.12 * bw, p[1] - 0.15 * bh]; });
+      var limb = Math.pow(clamp(sc.face / 0.5, 0, 1), 0.6);                                    // edges of the egg roll away into shade
+      var rimCol = mix(mix('#2F4A2D', '#40603B', limb), '#9DB587', sc.core);
+      var inCol = mix(mix('#7E9A6C', mix('#A9C192', '#F4F1DF', sc.lit), limb), '#F7EBCB', sc.core * 0.8);
+      el('path', { d: pathOf(rim, true), fill: rimCol, stroke: INK, 'stroke-width': 0.9, 'stroke-linejoin': 'round', opacity: 0.97 }, g);
+      el('path', { d: pathOf(inn, true), fill: inCol, stroke: INK, 'stroke-width': 0.7, 'stroke-linejoin': 'round', opacity: 0.93 }, g);
+    });
+  }
+
+  /* ---------- defs ---------- */
+  var defs = el('defs', {}, svg);
+  var pat = el('pattern', { id: 'agHatch', width: 7, height: 7, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)' }, defs);
+  el('line', { x1: 0, y1: 0, x2: 0, y2: 7, stroke: INK, 'stroke-width': 1.1, opacity: 0.45 }, pat);
+  var soft = el('radialGradient', { id: 'agSoft' }, defs);                                    // soft shadow: no edge at all
+  el('stop', { offset: '0%', 'stop-color': INK, 'stop-opacity': 0.34 }, soft);
+  el('stop', { offset: '55%', 'stop-color': INK, 'stop-opacity': 0.15 }, soft);
+  el('stop', { offset: '100%', 'stop-color': INK, 'stop-opacity': 0 }, soft);
+  var under = el('linearGradient', { id: 'agUnder', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);    // the underside falls into shade
+  el('stop', { offset: '0%', 'stop-color': INK, 'stop-opacity': 0 }, under);
+  el('stop', { offset: '55%', 'stop-color': INK, 'stop-opacity': 0.06 }, under);
+  el('stop', { offset: '100%', 'stop-color': INK, 'stop-opacity': 0.34 }, under);
+  var fadeG = el('radialGradient', { id: 'agFadeG' }, defs);
+  el('stop', { offset: '0%', 'stop-color': '#fff' }, fadeG);
+  el('stop', { offset: '60%', 'stop-color': '#fff', 'stop-opacity': 0.75 }, fadeG);
+  el('stop', { offset: '100%', 'stop-color': '#000' }, fadeG);
+  var fadeM = el('mask', { id: 'agFade', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: 800, height: 700 }, defs);
+  el('ellipse', { cx: CX, cy: CY + 95, rx: 330, ry: 170, fill: 'url(#agFadeG)' }, fadeM);
+
+  /* ---------- ground ---------- */
+  var BOTTOM = C * Math.cos(T);                                                                // how far below the centre the egg touches the ground
+  var ground = el('g', { opacity: 0 }, svg);
+  el('ellipse', { cx: CX, cy: CY + 95, rx: 330, ry: 170, fill: 'url(#agHatch)', opacity: 0.35, mask: 'url(#agFade)' }, ground);
+  var gr = rng(7);
+  for (var gi = 0; gi < 26; gi++) {
+    var gx = 60 + gr() * 640, gy = 350 + gr() * 190, gl = 14 + gr() * 34;
+    el('path', { d: 'M' + gx + ' ' + gy + 'q' + gl / 2 + ' ' + (gr() * 3 - 1.5) + ' ' + gl + ' ' + (gr() * 2 - 1), fill: 'none', stroke: INK, 'stroke-width': 1.1, 'stroke-linecap': 'round', opacity: 0.35 }, ground);
+  }
+  var closedShadow = el('ellipse', { cx: CX + 8, cy: CY + BOTTOM * 0.88, rx: R * 1.25, ry: R * 0.5, fill: 'url(#agSoft)' }, svg);
+
+  /* ---------- Jerusalem cross revealed in the gap ---------- */
+  var cross = el('g', { opacity: 0, transform: 'translate(' + (CX - 45) + ' ' + (CY - 45) + ') scale(0.18)', fill: TERRA }, svg);
+  [[144, 0, 212, 53], [144, 447, 212, 53], [0, 144, 53, 212], [447, 144, 53, 212], [223, 0, 54, 500], [0, 223, 500, 54],
+   [127.5, 81, 21, 112], [81, 126.5, 114, 21], [351.5, 81, 21, 112], [305, 126.5, 114, 21],
+   [127.5, 307, 21, 112], [81, 352.5, 114, 21], [351.5, 307, 21, 112], [305, 352.5, 114, 21]].forEach(function (r) {
+    el('rect', { x: r[0], y: r[1], width: r[2], height: r[3] }, cross);
+  });
+
+  /* ---------- the whole egg (shown until it starts to open: one clean oval, no seams) ---------- */
+  var allPts = [], aa0, bb0;
+  for (aa0 = 0; aa0 <= Math.PI + 0.001; aa0 += Math.PI / 24) for (bb0 = 0; bb0 < 2 * Math.PI; bb0 += Math.PI / 24) allPts.push(prj(P3(aa0, bb0)));
+  var wholeOutline = hull(allPts);
+  var whole = el('g', {}, svg);
+  el('path', { d: pathOf(wholeOutline, true) }, el('clipPath', { id: 'agWhole' }, defs));
+  el('path', { d: pathOf(wholeOutline, true).replace(/M/, 'M'), fill: '#2F4A2D', transform: 'translate(' + CX + ' ' + CY + ')' }, whole);
+  var wholeG = el('g', { transform: 'translate(' + CX + ' ' + CY + ')' }, whole);
+  var wholeClip = el('g', { 'clip-path': 'url(#agWhole)' }, wholeG);
+  drawScales(wholeClip, rng(5), null, null, null);
+  el('path', { d: pathOf(wholeOutline, true), fill: 'url(#agUnder)' }, wholeClip);
+  el('path', { d: pathOf(wholeOutline, true), fill: 'none', stroke: INK, 'stroke-width': 1.7, 'stroke-linejoin': 'round' }, wholeG);
+
+  /* ---------- the four pieces (quarters of the egg, cut through the middle) ---------- */
+  // quadrant order in screen space: 0 bottom-right, 1 bottom-left, 2 top-left, 3 top-right
+  var order = [2, 3, 1, 0];                       // paint back to front
+  var assign = { 2: 0, 3: 1, 1: 2, 0: 3 };        // quadrant -> collection index
+  var pieces = [];
+
+  order.forEach(function (q, idx) {
+    var c = cols[assign[q]];
+    var r = rng(11 + q * 53);
+    var b0 = q * Math.PI / 2, b1 = (q + 1) * Math.PI / 2, bm = (b0 + b1) / 2;
+    var sx = Math.cos(bm) > 0 ? 1 : -1, sy = Math.sin(bm) > 0 ? 1 : -1;
+
+    var a = el('g', { 'data-piece': q }, svg);
+    var pc = el('g', {}, a);
+    var shadow = el('g', {}, pc);
+    var lift = el('g', { 'class': 'lift' }, pc);
+
+    // silhouette of this quarter
+    var pts = [], aS, bS;
+    for (aS = 0; aS <= Math.PI + 0.001; aS += Math.PI / 24) for (bS = b0; bS <= b1 + 0.001; bS += (b1 - b0) / 12) pts.push(prj(P3(aS, bS)));
+    for (var zi = -1; zi <= 1.001; zi += 0.1) pts.push(prj([0, 0, C * zi]));
+    var outline = hull(pts);
+    var cxp = 0, cyp = 0; outline.forEach(function (p) { cxp += p[0]; cyp += p[1]; }); cxp /= outline.length; cyp /= outline.length;
+    var lowY = Math.max.apply(null, outline.map(function (p) { return p[1]; }));
+
+    el('ellipse', { cx: cxp + 10, cy: lowY - 14, rx: R * 0.78, ry: R * 0.3, fill: 'url(#agSoft)' }, shadow);
+
+    el('path', { d: pathOf(outline, true) }, el('clipPath', { id: 'agPiece' + q }, defs));
+    el('path', { d: pathOf(outline, true), fill: '#2F4A2D' }, lift);
+    var gP = el('g', { 'clip-path': 'url(#agPiece' + q + ')' }, lift);
+    drawScales(gP, r, b0, b1, bm);
+
+    // cream cut faces (only the ones that face us)
+    [b0, b1].forEach(function (bf, fi) {
+      var nrmF = fi === 0 ? [Math.sin(bf), -Math.cos(bf), 0] : [-Math.sin(bf), Math.cos(bf), 0];
+      if (nrmF[0] * VX + nrmF[1] * VY <= 0.02) return;
+      var face = [], ap;
+      for (ap = 0; ap <= Math.PI + 0.001; ap += Math.PI / 30) face.push(prj(P3(ap, bf)));
+      for (ap = 1; ap >= -1.001; ap -= 0.1) face.push(prj([0, 0, C * ap]));
+      el('path', { d: pathOf(face, true), fill: '#F1E8CF', stroke: INK, 'stroke-width': 1.3, 'stroke-linejoin': 'round' }, lift);
+      [0.5, 0.0, -0.5].forEach(function (zf) {                                                  // layer lines, like stacked slices
+        var ang = Math.acos(clamp(zf, -1, 1));
+        var pA = prj([0, 0, C * zf]), pB = prj(P3(ang, bf));
+        el('path', { d: 'M' + pA[0] + ' ' + pA[1] + 'L' + pB[0] + ' ' + pB[1], stroke: INK, 'stroke-width': 0.9, opacity: 0.35, 'stroke-linecap': 'round' }, lift);
+      });
+      for (var fb = 0; fb < 16; fb++) {                                                          // fibres
+        var fz = -0.9 + r() * 1.8, fa = Math.acos(clamp(fz, -1, 1)), tt0 = 0.15 + r() * 0.3, tt1 = 0.55 + r() * 0.4;
+        var q0 = prj([0, 0, C * fz]), q1 = prj(P3(fa, bf));
+        el('path', { d: 'M' + (q0[0] + (q1[0] - q0[0]) * tt0) + ' ' + (q0[1] + (q1[1] - q0[1]) * tt0) + 'L' + (q0[0] + (q1[0] - q0[0]) * tt1) + ' ' + (q0[1] + (q1[1] - q0[1]) * tt1), stroke: '#8E7A44', 'stroke-width': 0.9, opacity: 0.5, 'stroke-linecap': 'round' }, lift);
+      }
+    });
+    el('path', { d: pathOf(outline, true), fill: 'url(#agUnder)' }, gP);
+    el('path', { d: pathOf(outline, true), fill: 'none', stroke: INK, 'stroke-width': 1.7, 'stroke-linejoin': 'round' }, lift);
+
+    // label
+    var tagX = sx > 0 ? 690 : 70, tagY = sy > 0 ? 566 : 74, anchor = sx > 0 ? 'end' : 'start';
+    if (sx < 0 && sy > 0) tagX = 44;   // keep the longest label clear of the piece
+    var tag = el('g', { 'class': 'tag', opacity: 0 });
+    var tx = el('text', {}, tag); var rule = el('path', {}, tag);
+
+    pieces.push({ q: q, a: a, pc: pc, tag: tag, tx: tx, rule: rule, sx: sx, sy: sy, shadow: shadow, cx: cxp, cy: cyp, rot: ROT[idx] });
+  });
+
+  function drawRules() {
+    pieces.forEach(function (p) {
+      var bb = p.tx.getBBox();
+      if (!bb.width) return;
+      var y = bb.y + bb.height + 4, x0 = bb.x, x1 = bb.x + bb.width, rr = rng(5 + p.q), d = 'M' + x0 + ' ' + y;
+      var steps = Math.max(4, Math.round(bb.width / 18));
+      for (var i = 1; i <= steps; i++) {
+        d += 'L' + (x0 + (x1 - x0) * i / steps) + ' ' + (y + (rr() - 0.5) * 3.2);
+      }
+      p.rule.setAttribute('d', d);
+    });
+  }
+  
+
+  /* ---------- scroll-driven animation ---------- */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ticking = false;
+
+  function render(p) {
+    var e = smooth((p - 0.06) / 0.86);
+    var ease = 1 - Math.pow(1 - e, 3);
+    var hop = Math.sin(Math.PI * clamp(e * 1.15, 0, 1)) * 30;
+    var opened = e > 0.004;                                                                    // until then, show the single whole egg
+    whole.setAttribute('opacity', opened ? 0 : 1);
+    pieces.forEach(function (pc, i) {
+      pc.a.style.display = opened ? '' : 'none';
+      var dx = pc.sx * SPREAD[0] * ease, dy = pc.sy * SPREAD[1] * ease - hop * (0.7 + 0.15 * i % 3);
+      var rot = pc.rot * ease;
+      pc.pc.setAttribute('transform', 'translate(' + (CX + dx).toFixed(2) + ' ' + (CY + dy).toFixed(2) + ') rotate(' + rot.toFixed(2) + ' ' + pc.cx.toFixed(1) + ' ' + pc.cy.toFixed(1) + ')');
+      var t = smooth((e - 0.1) / 0.3);
+      pc.tag.setAttribute('opacity', t.toFixed(3));
+      pc.tag.setAttribute('transform', 'translate(0 ' + ((1 - t) * 10).toFixed(1) + ')');
+      pc.a.style.pointerEvents = 'auto';
+      pc.shadow.setAttribute('opacity', smooth((e - 0.05) / 0.5).toFixed(3));
+    });
+    closedShadow.setAttribute('opacity', (1 - 0.88 * smooth(e / 0.6)).toFixed(3));
+    ground.setAttribute('opacity', smooth((e - 0.1) / 0.6).toFixed(3));
+    cross.setAttribute('opacity', (smooth((e - 0.35) / 0.55) * 0.9).toFixed(3));
+  }
+
+  var toOpen = 0;
+  function update() {
+    ticking = false;
+    if (reduce) { render(1); return; }
+    var rect = svg.getBoundingClientRect(), vh = window.innerHeight;
+    var c = rect.top + rect.height / 2;
+    var startC = vh * START_AT - rect.height / 2;                 // centre position when the opening begins
+    var maxScroll = document.documentElement.scrollHeight - vh;
+    var cAtBottom = c - (maxScroll - (window.pageYOffset || 0));  // where the centre ends up at the very bottom of the page
+    var endC = Math.max(vh * END_AT, cAtBottom + 10);             // never finish later than the page can scroll
+    if (startC - endC < 120) endC = startC - 120;
+    toOpen = c - endC;
+    render(clamp((startC - c) / (startC - endC), 0, 1));
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  /* tapping the closed egg opens it (scrolls it open) */
+  whole.style.cursor = 'pointer';
+  whole.addEventListener('click', function () { window.scrollBy({ top: Math.max(toOpen, 0), behavior: reduce ? 'auto' : 'smooth' }); });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+
+  var samples = [];
+  [0, 0.2, 0.4, 0.6, 0.8, 1].forEach(function (e) {
+    var ease = 1 - Math.pow(1 - e, 3), hop = Math.sin(Math.PI * clamp(e * 1.15, 0, 1)) * 30;
+    samples.push(pieces.map(function (pc, i) {
+      var dx = pc.sx * SPREAD[0] * ease, dy = pc.sy * SPREAD[1] * ease - hop * (0.7 + 0.15 * i % 3);
+      return { q: pc.q, tx: +(CX + dx).toFixed(2), ty: +(CY + dy).toFixed(2), rot: +(pc.rot * ease).toFixed(2), cx: +pc.cx.toFixed(1), cy: +pc.cy.toFixed(1) };
+    }));
+  });
+  pieces.forEach(function (pc) { pc.pc.setAttribute('transform', 'translate(' + CX + ' ' + CY + ')'); pc.shadow.setAttribute('data-shadow', '1'); });
+  whole.setAttribute('data-whole', '1'); ground.setAttribute('data-ground', '1'); ground.setAttribute('opacity', '0');
+  closedShadow.setAttribute('data-closed-shadow', '1'); cross.remove();
+  var out = document.createElement('pre'); out.id = 'out';
+  out.textContent = JSON.stringify({ samples: samples, svg: svg.innerHTML });
+  document.body.appendChild(out);
+})();
+</script>
