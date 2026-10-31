@@ -847,39 +847,24 @@
   }
   .dance-top svg{ width:12px; height:12px; flex:none; }
   .dance-top svg rect{ fill:var(--dn-ink); } .dance-top svg .dn-wm-l{ fill:var(--dn-teal); }
-  /* the stage: the game's own rendered dance floor on a slow push-in; every 18s the scene freezes,
-     desaturates over a strategy grid, and numbered pins mark the two pieces, the way Slow Motion Strategy does in the game */
+  /* the stage: the game's own dance floor, rendered in two layers (the floor, and the two pieces on transparency).
+     The scene pushes in slowly; every 18s the pieces drift away to the upper left and fade into the dark, then quietly return. */
   .dance-stage{ position:relative; height:128px; overflow:hidden; background:var(--dn-cine); }
-  .dance-stage img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 60%; transform:scale(1.04); transform-origin:62% 70%; animation:dnPush 18s var(--ease-inout) infinite; }
-  @keyframes dnPush{ 0%{ transform:scale(1.04); filter:saturate(1); } 36%{ transform:scale(1.14); filter:saturate(1); } 42%{ filter:saturate(.25) contrast(1.08); } 70%{ transform:scale(1.14); filter:saturate(.25) contrast(1.08); } 76%{ filter:saturate(1); } 100%{ transform:scale(1.04); filter:saturate(1); } }
-  .dn-grid{
-    position:absolute; inset:0; opacity:0; pointer-events:none;
-    background-image:linear-gradient(rgba(102,212,204,.28) 1px, transparent 1px), linear-gradient(90deg, rgba(102,212,204,.28) 1px, transparent 1px);
-    background-size:24px 24px; background-position:12px 8px;
-    -webkit-mask-image:radial-gradient(ellipse at 62% 70%, #000 30%, transparent 85%); mask-image:radial-gradient(ellipse at 62% 70%, #000 30%, transparent 85%);
-    animation:dnGrid 18s var(--ease-inout) infinite;
+  .dn-scene{ position:absolute; inset:0; transform:scale(1.04); transform-origin:62% 70%; animation:dnPush 18s var(--ease-inout) infinite; }
+  .dn-scene img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 60%; }
+  @keyframes dnPush{ 0%{ transform:scale(1.04); } 50%{ transform:scale(1.12); } 100%{ transform:scale(1.04); } }
+  .dn-pieces{ transform-origin:70% 78%; animation:dnDrift 18s cubic-bezier(.5,0,.6,1) infinite; }
+  @keyframes dnDrift{
+    0%,36%{ transform:translate(0,0) scale(1); opacity:1; }
+    62%{ transform:translate(-34%,-38%) scale(.5); opacity:0; }
+    84%{ transform:translate(-34%,-38%) scale(.5); opacity:0; }
+    85%{ transform:translate(0,0) scale(1); opacity:0; }
+    94%,100%{ transform:translate(0,0) scale(1); opacity:1; }
   }
-  @keyframes dnGrid{ 0%,36%{ opacity:0; } 42%,70%{ opacity:1; } 76%,100%{ opacity:0; } }
-  .dn-pin{
-    position:absolute; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%;
-    font-family:var(--font-mono); font-size:9px; font-weight:600; line-height:16px; text-align:center;
-    background:var(--dn-glow); color:var(--dn-cine); box-shadow:0 0 0 2px rgba(14,16,20,.6), 0 0 12px rgba(102,212,204,.6);
-    opacity:0; transform:scale(.4); animation:dnPin 18s var(--ease-out) infinite;
-  }
-  .dn-pin-1{ left:63%; top:52%; animation-delay:0s; }
-  .dn-pin-2{ left:79.5%; top:52%; animation-delay:.6s; }
-  .dn-pin-you{ background:var(--dn-you); box-shadow:0 0 0 2px rgba(14,16,20,.6), 0 0 12px rgba(242,196,109,.6); }
-  @keyframes dnPin{ 0%,38%{ opacity:0; transform:scale(.4); } 42%,70%{ opacity:1; transform:scale(1); } 74%,100%{ opacity:0; transform:scale(.4); } }
-  .dn-line{ position:absolute; left:63%; top:52%; width:16.5%; height:1px; background:var(--dn-glow); opacity:0; transform:scaleX(0); transform-origin:left; animation:dnLine 18s var(--ease-inout) infinite; }
-  @keyframes dnLine{ 0%,43%{ opacity:0; transform:scaleX(0); } 47%,70%{ opacity:.7; transform:scaleX(1); } 74%,100%{ opacity:0; transform:scaleX(1); } }
   .dance-cap{
-    position:relative; height:34px; border-top:1px solid rgba(242,243,245,.08);
+    height:34px; display:flex; align-items:center; justify-content:center; border-top:1px solid rgba(242,243,245,.08);
     font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.14em; text-transform:uppercase; color:var(--dn-muted);
   }
-  .dance-cap span{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; animation:dnCapA 18s var(--ease-inout) infinite; }
-  .dance-cap .dn-cap-b{ color:var(--dn-glow); animation-name:dnCapB; }
-  @keyframes dnCapA{ 0%,36%{ opacity:1; } 42%,70%{ opacity:0; } 76%,100%{ opacity:1; } }
-  @keyframes dnCapB{ 0%,36%{ opacity:0; } 42%,70%{ opacity:1; } 76%,100%{ opacity:0; } }
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
   .room .eyebrow{ color:var(--verdant-deep); }
@@ -1094,8 +1079,8 @@
     .net-halo, .net-ring-big, .drill-mult::after{ animation:none !important; }
     .codigo-frame, .cg-stage, .cg-glow, .cg-cross, .cg-line, .cg-line::after, .cg-diamond{ animation:none !important; }
     .codigo-frame-bar{ display:none; }
-    .dance-stage img, .dn-grid, .dn-pin, .dn-line, .dance-cap span{ animation:none !important; }
-    .dance-stage img{ transform:scale(1.04); filter:none; }
+    .dn-scene, .dn-pieces{ animation:none !important; }
+    .dn-pieces{ opacity:1; transform:none; }
     .cg-line, .cg-diamond{ opacity:1; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
@@ -1703,16 +1688,15 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="10" height="10"/><rect x="12" y="12" width="10" height="10"/><rect x="12" y="2" width="10" height="10" class="dn-wm-l"/><rect x="2" y="12" width="10" height="10" class="dn-wm-l"/></svg>
             <span>The Dance</span>
           </div>
-          <!-- The game's own rendered dance floor. Every 18s the scene freezes over a strategy grid
-               and numbered pins mark the pieces, like the game's Slow Motion Strategy. Static under reduced motion. -->
-          <div class="dance-stage" role="img" aria-label="Two chess pieces face each other on a checkered dance floor, each in its own spotlight, with a corridor of doorways receding behind them. The scene freezes and numbered pins mark each piece.">
-            <img src="images/dance/hero.webp" alt="" width="2400" height="1028" decoding="async">
-            <i class="dn-grid"></i>
-            <i class="dn-line"></i>
-            <b class="dn-pin dn-pin-1 dn-pin-you">1</b>
-            <b class="dn-pin dn-pin-2">2</b>
+          <!-- The game's own dance floor in two layers: the floor, and the two pieces on transparency.
+               Every 18s the pieces drift off to the upper left and fade into the dark. Static under reduced motion. -->
+          <div class="dance-stage" role="img" aria-label="Two chess pieces face each other on a checkered dance floor, each in its own spotlight, with a corridor of doorways receding behind them. The pieces drift away into the dark and return.">
+            <div class="dn-scene">
+              <img class="dn-floor" src="images/dance/floor.webp" alt="" width="1200" height="514" decoding="async">
+              <img class="dn-pieces" src="images/dance/pieces.webp" alt="" width="1200" height="514" decoding="async">
+            </div>
           </div>
-          <div class="dance-cap"><span class="dn-cap-a">Episode 1 · Scene 1 of 6</span><span class="dn-cap-b">Slow motion strategy</span></div>
+          <div class="dance-cap"><span>Episode 1 · Scene 1 of 6</span></div>
         </a>
         <div>
           <p class="room-body">See how incentives shape decisions, how one move changes another, how trust shifts, and how small choices create unexpected consequences.</p>
