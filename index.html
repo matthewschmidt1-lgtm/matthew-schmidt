@@ -847,13 +847,10 @@
   }
   .dance-top svg{ width:12px; height:12px; flex:none; }
   .dance-top svg rect{ fill:var(--dn-ink); } .dance-top svg .dn-wm-l{ fill:var(--dn-teal); }
-  /* the stage: the game's own dance floor, rendered in two layers (the floor, and the two pieces on transparency,
-     both 1200x514 so they align). Still, with a soft teal glow behind the pieces. */
+  /* the stage: the game's own hero render, framed the way its home page shows it (dice large at the bottom left, pawns centre right) */
   .dance-stage{ position:relative; height:150px; overflow:hidden; background:var(--dn-cine); }
   .dn-scene{ position:absolute; inset:0; }
-  .dn-scene img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 100%; }
-  .dn-halo{ position:absolute; left:57%; top:34%; width:34%; height:60%; border-radius:50%;
-    background:radial-gradient(ellipse at 50% 55%, rgba(102,212,204,.34), rgba(102,212,204,.12) 45%, rgba(102,212,204,0) 72%); }
+  .dn-scene img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 100%; transform:scale(1.38); transform-origin:68% 100%; }
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
   .room .eyebrow{ color:var(--verdant-deep); }
@@ -1675,12 +1672,10 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="10" height="10"/><rect x="12" y="12" width="10" height="10"/><rect x="12" y="2" width="10" height="10" class="dn-wm-l"/><rect x="2" y="12" width="10" height="10" class="dn-wm-l"/></svg>
             <span>The Dance</span>
           </div>
-          <!-- The game's own dance floor in two layers: the floor, and the two pieces on transparency, with a soft glow behind them. -->
+          <!-- The game's own hero render, cropped to the pieces and dice. -->
           <div class="dance-stage" role="img" aria-label="Two chess pieces face each other on a checkered dance floor, each in its own spotlight, with a corridor of doorways receding behind them.">
             <div class="dn-scene">
-              <img class="dn-floor" src="images/dance/floor.webp" alt="" width="1200" height="514" decoding="async">
-              <i class="dn-halo"></i>
-              <img class="dn-pieces" src="images/dance/pieces.webp" alt="" width="1200" height="514" decoding="async">
+              <img src="images/dance/hero.webp" alt="" width="2400" height="1028" decoding="async">
             </div>
           </div>
         </a>
