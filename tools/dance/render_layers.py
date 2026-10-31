@@ -5,7 +5,7 @@ Symbols, not words:
   two pieces, two spotlights  partly shared, partly conflicting interests (Schelling)
   teal glow where light overlaps  value that only exists together (Nalebuff)
   curve of dance steps        moves answered by moves (Axelrod)
-  receding doorways           the same meeting again and again; the lit exit is walking away (Aumann)
+  receding doorways           the same meeting again and again; the glow beyond is walking away (Aumann)
   dice in the foreground      you never know everything (Duke)
 
 Run:
@@ -225,21 +225,20 @@ for i in range(7):
 for i in range(7):
     y = 6.0 + i * 3.6
     ld = bpy.data.lights.new(f'door{i}', 'AREA')
-    ld.energy = 220 * (0.68 ** i)
+    ld.energy = 220 * (0.82 ** i)
     ld.color = lin('#9fe6dd')[:3]
     ld.size = 2.0
     o = link(bpy.data.objects.new(f'door{i}', ld))
     o.location = (0.55, y - 0.4, 3.4)
-# The exit glows softly through the haze rather than burning to white.
-exit_light = mat('exit', '#9a9283', 0.5, emit='#b8a98e', strength=0.12)
-ld = bpy.data.lights.new('exit-glow', 'AREA')
-ld.energy = 25
-ld.color = lin('#f3dfbf')[:3]
-ld.size = 2.0
+# The exit is only light: a warm glow blooming through the haze at the end of the corridor,
+# with a dark back wall, so there is no hard bright shape to pull the eye.
+box('exit', (0.55, 6.0 + 7 * 3.6 + 1.5, 1.8), (2.3, 0.05, 3.6), mat('exit', '#1d2527', 0.8))
+ld = bpy.data.lights.new('exit-glow', 'POINT')
+ld.energy = 140
+ld.color = lin('#e9c79a')[:3]
+ld.shadow_soft_size = 1.2
 eg = link(bpy.data.objects.new('exit-glow', ld))
-eg.location = (0.55, 6.0 + 7 * 3.6 - 0.6, 1.8)
-eg.rotation_euler = (math.radians(-90), 0, 0)
-box('exit', (0.55, 6.0 + 7 * 3.6, 1.8), (2.3, 0.05, 3.6), exit_light)
+eg.location = (0.55, 6.0 + 7 * 3.6 - 0.8, 1.9)
 
 # Dice at rest in the foreground.
 die = mat('die', '#f2efe8', 0.25, coat=0.5)
@@ -247,7 +246,7 @@ pip = mat('pip', '#14171a', 0.4)
 
 
 def dice(name, c, rz, top, front):
-    s = 0.34
+    s = 0.39
     ob = box(name, c, (s, s, s), die, bevel=0.05)
     ob.rotation_euler = (0, 0, rz)
     layouts = {1: [(0, 0)], 2: [(-1, -1), (1, 1)], 3: [(-1, -1), (0, 0), (1, 1)], 4: [(-1, -1), (1, 1), (-1, 1), (1, -1)],
@@ -262,9 +261,9 @@ def dice(name, c, rz, top, front):
     return ob
 
 
-dice('die-a', (-1.45, -1.25, 0.17), math.radians(22), 5, 3)
-dice('die-b', (-0.95, -0.95, 0.17), math.radians(-14), 2, 6)
-spot('dice-light', (-2.2, -2.4, 2.6), (-1.2, -1.1, 0.1), 260, '#ffe7c4', 30, 0.8)
+dice('die-a', (-1.25, -0.45, 0.195), math.radians(22), 5, 3)
+dice('die-b', (-0.68, -0.12, 0.195), math.radians(-14), 2, 6)
+spot('dice-light', (-2.0, -1.6, 2.6), (-1.0, -0.3, 0.1), 260, '#ffe7c4', 30, 0.8)
 
 # Haze, so the light has a shape.
 fog = mat('fog', '#ffffff')
@@ -298,9 +297,8 @@ else:
     bpy.data.lights['spot-b'].energy = 1700
     bpy.data.lights['rim'].energy = 2600
     spot('rim-2', (-1.6, 6.5, 2.2), (0.55, 1.6, 0.7), 1400, '#9fe6dd', 34, 0.7)
-    keep = pieces if LAYER == 'pieces' else {bpy.data.objects['piece-' + LAYER]}
     for o in bpy.data.objects:
-        if o.type in ('MESH',) and o not in keep: o.hide_render = True
+        if o.type in ('MESH',) and o not in pieces: o.hide_render = True
 sc.render.filepath = OUT
 bpy.ops.render.render(write_still=True)
 print('hero rendered', OUT)
