@@ -826,6 +826,60 @@
   /* 3. the piña */
   .codigo-scene{ display:block; width:100%; height:100%; }
   .codigo-room .cta-row{ margin:0; }
+
+  /* ---------- The Dance preview (the game's own night palette: cine black, teal, the gold that marks you) ---------- */
+  .dance-room{ --dn-cine:#0e1014; --dn-ink:#f2f3f5; --dn-teal:#0b7a87; --dn-glow:#66d4cc; --dn-you:#f2c46d; --dn-muted:#9aa1ae; --dn-line:rgba(20,23,28,.14); }
+  .dance-room .eyebrow{ color:var(--dn-teal); }
+  .room.dance-room h2{ font-size:var(--fs-h3); max-width:24ch; } /* .room h2 is declared later */
+  .dance-room .room-cta{ color:var(--dn-teal); border-bottom-color:var(--dn-teal); }
+  .dance-layout{ margin-top:var(--s6); }
+  .dance-mock{
+    display:block; width:100%; max-width:300px; margin:0 auto; background:var(--dn-cine); overflow:hidden;
+    border:1px solid var(--dn-line); border-radius:20px; padding:0;
+    box-shadow:0 24px 44px rgba(14,16,20,.28);
+    text-decoration:none; color:var(--dn-ink); cursor:pointer;
+    transition:transform var(--t-hover) var(--ease-out);
+  }
+  .dance-mock:hover{ transform:scale(1.03); }
+  .dance-top{
+    display:flex; align-items:center; gap:8px; padding:12px 16px 10px;
+    font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.14em; text-transform:uppercase; color:var(--dn-muted);
+  }
+  .dance-top svg{ width:12px; height:12px; flex:none; }
+  .dance-top svg rect{ fill:var(--dn-ink); } .dance-top svg .dn-wm-l{ fill:var(--dn-teal); }
+  /* the stage: the game's own rendered dance floor on a slow push-in; every 18s the scene freezes,
+     desaturates over a strategy grid, and numbered pins mark the two pieces, the way Slow Motion Strategy does in the game */
+  .dance-stage{ position:relative; height:128px; overflow:hidden; background:var(--dn-cine); }
+  .dance-stage img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 60%; transform:scale(1.04); transform-origin:62% 70%; animation:dnPush 18s var(--ease-inout) infinite; }
+  @keyframes dnPush{ 0%{ transform:scale(1.04); filter:saturate(1); } 36%{ transform:scale(1.14); filter:saturate(1); } 42%{ filter:saturate(.25) contrast(1.08); } 70%{ transform:scale(1.14); filter:saturate(.25) contrast(1.08); } 76%{ filter:saturate(1); } 100%{ transform:scale(1.04); filter:saturate(1); } }
+  .dn-grid{
+    position:absolute; inset:0; opacity:0; pointer-events:none;
+    background-image:linear-gradient(rgba(102,212,204,.28) 1px, transparent 1px), linear-gradient(90deg, rgba(102,212,204,.28) 1px, transparent 1px);
+    background-size:24px 24px; background-position:12px 8px;
+    -webkit-mask-image:radial-gradient(ellipse at 62% 70%, #000 30%, transparent 85%); mask-image:radial-gradient(ellipse at 62% 70%, #000 30%, transparent 85%);
+    animation:dnGrid 18s var(--ease-inout) infinite;
+  }
+  @keyframes dnGrid{ 0%,36%{ opacity:0; } 42%,70%{ opacity:1; } 76%,100%{ opacity:0; } }
+  .dn-pin{
+    position:absolute; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%;
+    font-family:var(--font-mono); font-size:9px; font-weight:600; line-height:16px; text-align:center;
+    background:var(--dn-glow); color:var(--dn-cine); box-shadow:0 0 0 2px rgba(14,16,20,.6), 0 0 12px rgba(102,212,204,.6);
+    opacity:0; transform:scale(.4); animation:dnPin 18s var(--ease-out) infinite;
+  }
+  .dn-pin-1{ left:63%; top:52%; animation-delay:0s; }
+  .dn-pin-2{ left:79.5%; top:52%; animation-delay:.6s; }
+  .dn-pin-you{ background:var(--dn-you); box-shadow:0 0 0 2px rgba(14,16,20,.6), 0 0 12px rgba(242,196,109,.6); }
+  @keyframes dnPin{ 0%,38%{ opacity:0; transform:scale(.4); } 42%,70%{ opacity:1; transform:scale(1); } 74%,100%{ opacity:0; transform:scale(.4); } }
+  .dn-line{ position:absolute; left:63%; top:52%; width:16.5%; height:1px; background:var(--dn-glow); opacity:0; transform:scaleX(0); transform-origin:left; animation:dnLine 18s var(--ease-inout) infinite; }
+  @keyframes dnLine{ 0%,43%{ opacity:0; transform:scaleX(0); } 47%,70%{ opacity:.7; transform:scaleX(1); } 74%,100%{ opacity:0; transform:scaleX(1); } }
+  .dance-cap{
+    position:relative; height:34px; border-top:1px solid rgba(242,243,245,.08);
+    font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.14em; text-transform:uppercase; color:var(--dn-muted);
+  }
+  .dance-cap span{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; animation:dnCapA 18s var(--ease-inout) infinite; }
+  .dance-cap .dn-cap-b{ color:var(--dn-glow); animation-name:dnCapB; }
+  @keyframes dnCapA{ 0%,36%{ opacity:1; } 42%,70%{ opacity:0; } 76%,100%{ opacity:1; } }
+  @keyframes dnCapB{ 0%,36%{ opacity:0; } 42%,70%{ opacity:1; } 76%,100%{ opacity:0; } }
   /* ================= STILLWARD (room) ================= */
   .room{ background:var(--paper); color:var(--ink); }
   .room .eyebrow{ color:var(--verdant-deep); }
@@ -1040,6 +1094,8 @@
     .net-halo, .net-ring-big, .drill-mult::after{ animation:none !important; }
     .codigo-frame, .cg-stage, .cg-glow, .cg-cross, .cg-line, .cg-line::after, .cg-diamond{ animation:none !important; }
     .codigo-frame-bar{ display:none; }
+    .dance-stage img, .dn-grid, .dn-pin, .dn-line, .dance-cap span{ animation:none !important; }
+    .dance-stage img{ transform:scale(1.04); filter:none; }
     .cg-line, .cg-diamond{ opacity:1; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
@@ -1628,6 +1684,40 @@
         </a>
         <div>
           <a class="room-cta" href="https://codigo1530shop.com/" target="_blank" rel="noopener">Visit the merch site →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H610 L616,5 L625,19 L634,12 L643,12 L649,7 L658,17 L667,12 H1000"/></svg>
+  </div>
+
+  <section class="room dance-room" id="dance-project">
+    <div class="wrap">
+      <span class="eyebrow">The Dance</span>
+      <h2>Every room is a game. Learn to see it.</h2>
+      <div class="stillward-layout dance-layout">
+        <a class="dance-mock" href="https://the-dance-production.up.railway.app/" target="_blank" rel="noopener" aria-label="Play The Dance (opens in a new tab)">
+          <div class="dance-top">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="10" height="10"/><rect x="12" y="12" width="10" height="10"/><rect x="12" y="2" width="10" height="10" class="dn-wm-l"/><rect x="2" y="12" width="10" height="10" class="dn-wm-l"/></svg>
+            <span>The Dance</span>
+          </div>
+          <!-- The game's own rendered dance floor. Every 18s the scene freezes over a strategy grid
+               and numbered pins mark the pieces, like the game's Slow Motion Strategy. Static under reduced motion. -->
+          <div class="dance-stage" role="img" aria-label="Two chess pieces face each other on a checkered dance floor, each in its own spotlight, with a corridor of doorways receding behind them. The scene freezes and numbered pins mark each piece.">
+            <img src="images/dance/hero.webp" alt="" width="2400" height="1028" decoding="async">
+            <i class="dn-grid"></i>
+            <i class="dn-line"></i>
+            <b class="dn-pin dn-pin-1 dn-pin-you">1</b>
+            <b class="dn-pin dn-pin-2">2</b>
+          </div>
+          <div class="dance-cap"><span class="dn-cap-a">Episode 1 · Scene 1 of 6</span><span class="dn-cap-b">Slow motion strategy</span></div>
+        </a>
+        <div>
+          <p class="quote">You don't have to be the most powerful person in the room. You have to understand the room.</p>
+          <p class="room-body">A playable episode of ordinary life. A checkout lane, an office, your street. Watch the scene unfold, make your move, and see how the room reacts. Then time slows down and the game shows you what was really going on: who wanted what, where the leverage was, and what you could not have known. Six scenes. The characters remember you.</p>
+          <a class="room-cta" href="https://the-dance-production.up.railway.app/" target="_blank" rel="noopener">Play Episode 1 →</a>
         </div>
       </div>
     </div>
