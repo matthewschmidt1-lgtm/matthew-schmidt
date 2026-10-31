@@ -853,12 +853,28 @@
   .dn-scene{ position:absolute; inset:0; transform:scale(1.04); transform-origin:62% 70%; animation:dnPush 18s var(--ease-inout) infinite; }
   .dn-scene img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 60%; }
   @keyframes dnPush{ 0%{ transform:scale(1.04); } 50%{ transform:scale(1.12); } 100%{ transform:scale(1.04); } }
-  .dn-pieces{ transform-origin:70% 78%; animation:dnDrift 18s cubic-bezier(.5,0,.6,1) infinite; }
-  @keyframes dnDrift{
-    0%,36%{ transform:translate(0,0) scale(1); opacity:1; }
-    62%{ transform:translate(-34%,-38%) scale(.5); opacity:0; }
-    84%{ transform:translate(-34%,-38%) scale(.5); opacity:0; }
-    85%{ transform:translate(0,0) scale(1); opacity:0; }
+  /* the pieces play a short game: ivory moves, ebony answers, ivory again, ebony again, each a lift-and-land hop up the board.
+     Then both fade into the dark, and after a pause they are back in place for the next game. Percentages are of the frame. */
+  .dn-ivory{ transform-origin:63% 85%; animation:dnIvory 18s linear infinite; }
+  .dn-ebony{ transform-origin:80% 85%; animation:dnEbony 18s linear infinite; }
+  @keyframes dnIvory{
+    0%,11%{ transform:translate(0,0) scale(1); opacity:1; animation-timing-function:ease-in-out; }
+    13.2%{ transform:translate(-3.5%,-9%) scale(.93); animation-timing-function:ease-in-out; }
+    15.5%,33%{ transform:translate(-7%,-10%) scale(.86); opacity:1; animation-timing-function:ease-in-out; }
+    35.2%{ transform:translate(-10.5%,-19%) scale(.8); animation-timing-function:ease-in-out; }
+    37.5%,61%{ transform:translate(-14%,-20%) scale(.74); opacity:1; animation-timing-function:ease-in; }
+    69%,85%{ transform:translate(-22%,-30%) scale(.6); opacity:0; }
+    86%{ transform:translate(0,0) scale(1); opacity:0; animation-timing-function:ease-out; }
+    94%,100%{ transform:translate(0,0) scale(1); opacity:1; }
+  }
+  @keyframes dnEbony{
+    0%,22%{ transform:translate(0,0) scale(1); opacity:1; animation-timing-function:ease-in-out; }
+    24.2%{ transform:translate(-3.5%,-9%) scale(.93); animation-timing-function:ease-in-out; }
+    26.5%,44%{ transform:translate(-7%,-10%) scale(.86); opacity:1; animation-timing-function:ease-in-out; }
+    46.2%{ transform:translate(-10.5%,-19%) scale(.8); animation-timing-function:ease-in-out; }
+    48.5%,61%{ transform:translate(-14%,-20%) scale(.74); opacity:1; animation-timing-function:ease-in; }
+    69%,85%{ transform:translate(-22%,-30%) scale(.6); opacity:0; }
+    86%{ transform:translate(0,0) scale(1); opacity:0; animation-timing-function:ease-out; }
     94%,100%{ transform:translate(0,0) scale(1); opacity:1; }
   }
   .dance-cap{
@@ -1079,8 +1095,8 @@
     .net-halo, .net-ring-big, .drill-mult::after{ animation:none !important; }
     .codigo-frame, .cg-stage, .cg-glow, .cg-cross, .cg-line, .cg-line::after, .cg-diamond{ animation:none !important; }
     .codigo-frame-bar{ display:none; }
-    .dn-scene, .dn-pieces{ animation:none !important; }
-    .dn-pieces{ opacity:1; transform:none; }
+    .dn-scene, .dn-ivory, .dn-ebony{ animation:none !important; }
+    .dn-ivory, .dn-ebony{ opacity:1; transform:none; }
     .cg-line, .cg-diamond{ opacity:1; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
@@ -1689,11 +1705,12 @@
             <span>The Dance</span>
           </div>
           <!-- The game's own dance floor in two layers: the floor, and the two pieces on transparency.
-               Every 18s the pieces drift off to the upper left and fade into the dark. Static under reduced motion. -->
-          <div class="dance-stage" role="img" aria-label="Two chess pieces face each other on a checkered dance floor, each in its own spotlight, with a corridor of doorways receding behind them. The pieces drift away into the dark and return.">
+               Every 18s the pieces play two moves each, one at a time, then fade into the dark. Static under reduced motion. -->
+          <div class="dance-stage" role="img" aria-label="Two chess pieces face each other on a checkered dance floor, each in its own spotlight, with a corridor of doorways receding behind them. The pieces take turns moving up the board, two moves each, then fade into the dark and return.">
             <div class="dn-scene">
               <img class="dn-floor" src="images/dance/floor.webp" alt="" width="1200" height="514" decoding="async">
-              <img class="dn-pieces" src="images/dance/pieces.webp" alt="" width="1200" height="514" decoding="async">
+              <img class="dn-ivory" src="images/dance/ivory.webp" alt="" width="1200" height="514" decoding="async">
+              <img class="dn-ebony" src="images/dance/ebony.webp" alt="" width="1200" height="514" decoding="async">
             </div>
           </div>
           <div class="dance-cap"><span>Episode 1 · Scene 1 of 6</span></div>
