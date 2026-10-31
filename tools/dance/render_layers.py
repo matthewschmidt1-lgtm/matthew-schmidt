@@ -276,14 +276,14 @@ box('haze', (0.5, 12, 4), (30, 34, 8.2), fog)
 
 # Camera: low, close to the floor, looking up the corridor.
 cd = bpy.data.cameras.new('cam')
-cd.lens = 32
+cd.lens = 29.5
 cd.sensor_width = 36
 cd.dof.use_dof = True
 cd.dof.focus_distance = 7.2
 cd.dof.aperture_fstop = 4.0
 cam = link(bpy.data.objects.new('cam', cd))
 cam.location = (-1.2, -5.6, 1.0)
-cam.rotation_euler = (Vector((-1.15, 3.0, 1.3)) - cam.location).to_track_quat('-Z', 'Y').to_euler()
+cam.rotation_euler = (Vector((-1.15, 3.0, 1.15)) - cam.location).to_track_quat('-Z', 'Y').to_euler()
 sc.camera = cam
 
 sc.render.image_settings.file_format = 'PNG'
