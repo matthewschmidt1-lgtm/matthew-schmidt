@@ -225,15 +225,15 @@ for i in range(7):
 for i in range(7):
     y = 6.0 + i * 3.6
     ld = bpy.data.lights.new(f'door{i}', 'AREA')
-    ld.energy = 220 * (0.82 ** i)
+    ld.energy = 220 * (0.68 ** i)
     ld.color = lin('#9fe6dd')[:3]
     ld.size = 2.0
     o = link(bpy.data.objects.new(f'door{i}', ld))
     o.location = (0.55, y - 0.4, 3.4)
 # The exit glows softly through the haze rather than burning to white.
-exit_light = mat('exit', '#e8dcc6', 0.5, emit='#f3dfbf', strength=1.6)
+exit_light = mat('exit', '#9a9283', 0.5, emit='#b8a98e', strength=0.12)
 ld = bpy.data.lights.new('exit-glow', 'AREA')
-ld.energy = 260
+ld.energy = 25
 ld.color = lin('#f3dfbf')[:3]
 ld.size = 2.0
 eg = link(bpy.data.objects.new('exit-glow', ld))
