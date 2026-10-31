@@ -297,8 +297,10 @@ else:
     bpy.data.lights['spot-b'].energy = 1700
     bpy.data.lights['rim'].energy = 2600
     spot('rim-2', (-1.6, 6.5, 2.2), (0.55, 1.6, 0.7), 1400, '#9fe6dd', 34, 0.7)
+    floor_ob = bpy.data.objects['floor']
     for o in bpy.data.objects:
-        if o.type in ('MESH',) and o not in pieces: o.hide_render = True
+        if o.type in ('MESH',) and o not in pieces and o is not floor_ob: o.hide_render = True
+    floor_ob.is_shadow_catcher = True
 sc.render.filepath = OUT
 bpy.ops.render.render(write_still=True)
 print('hero rendered', OUT)
