@@ -2613,6 +2613,7 @@
           "warning": "Blame increases. Defensiveness increases. The same problem keeps happening despite repeated attempts to \"fix\" other people.",
           "pattern": "The organization is treating problems as something other people have rather than something the system is producing.",
           "move": "Before solving the problem, examine your own role in creating or maintaining it.",
+          "monday": "Name one project nobody would start today. Say so out loud, with the numbers to back it up. The next time you're wrong, admit it first, and thank the person who caught it.",
           "ask": "What might I be contributing that I can't currently see?"
       },
       "t2": {
@@ -2622,6 +2623,7 @@
           "warning": "People stay quiet in meetings. Problems surface late. Everyone agrees publicly and disagrees privately.",
           "pattern": "People are managing their relationship with authority rather than focusing entirely on the work.",
           "move": "Reward candor, especially when the information is uncomfortable. Describe the observed behavior, its impact, and the change needed, then invite the other person's perspective. Candor should increase clarity, not become an excuse for disrespect.",
+          "monday": "Ask your team one question: What's the one thing people here are least likely to tell me? Write down the answers without defending, explaining or responding. Then act on one of them, visibly.",
           "ask": "What truth are people least likely to tell me?"
       },
       "t3": {
@@ -2631,6 +2633,7 @@
           "warning": "People are constantly told to \"communicate better,\" \"take ownership,\" or \"prioritize,\" but the system keeps producing the opposite.",
           "pattern": "The organization is trying to change people without changing the conditions around them.",
           "move": "Change the environment that produces the behavior.",
+          "monday": "Find one process that protects nothing: not money, safety, quality or the law. Eliminate it for 30 days. If nothing breaks, leave it gone.",
           "ask": "What are our current conditions making almost inevitable?"
       },
       "t4": {
@@ -2640,6 +2643,7 @@
           "warning": "More activity, more meetings, more reports, but little movement in meaningful outcomes.",
           "pattern": "Activity has become a proxy for value.",
           "move": "Trace work all the way to the customer or business outcome.",
+          "monday": "At your next decision meeting, ask: Who's speaking for the customer? If no one can answer, start there. Trace one customer problem across every team it touches. Name one person accountable for fixing the whole experience.",
           "ask": "If we stopped doing this, who would actually lose value?"
       },
       "t5": {
@@ -2649,6 +2653,7 @@
           "warning": "People optimize metrics, protect their territory, avoid risk, or pursue short-term wins despite the stated strategy.",
           "pattern": "The real strategy is being communicated through consequences, not words.",
           "move": "Examine what gets rewarded, promoted, measured, celebrated, and tolerated.",
+          "monday": "List what your company rewarded, promoted and celebrated last quarter. Put that list next to your stated strategy. The gap between them is your real strategy.",
           "ask": "What behavior are we unintentionally paying people to produce?"
       },
       "t6": {
@@ -2658,6 +2663,7 @@
           "warning": "Leaders are busy everywhere but progress is slow. More people and more effort aren't producing proportional results.",
           "pattern": "Effort is being applied to symptoms instead of constraints or high-leverage points.",
           "move": "Find the point where changing one thing changes many things. Judge your contribution by the value you create, the scope of problems you can solve, and the quality of your judgment, not the volume of work you complete.",
+          "monday": "Write down the three things consuming most of your time. Circle the one that actually moves the needle. Stop doing the other two, or give them to someone better positioned to own them.",
           "ask": "What could I stop doing, delegate, or redesign so I can spend more time on the decisions that matter most?"
       },
       "t7": {
@@ -2667,6 +2673,7 @@
           "warning": "Persistent performance gaps get worked around rather than addressed. Nobody can say plainly what excellent work looks like.",
           "pattern": "The organization is compensating for unclear standards with more process and more oversight.",
           "move": "Hire and develop people who raise the team's capability. Be explicit about what excellent work looks like, and address persistent gaps rather than working around them indefinitely.",
+          "monday": "Fix one detail customers may never notice. Tell your team why it matters. Then examine what customers do notice: how quickly you respond, how easy it is to buy, and what happens after the sale.",
           "ask": "Where are we working around a performance gap instead of addressing it?"
       }
   };
@@ -2711,6 +2718,7 @@
         ideaBlock('Warning signs', d.warning) +
         ideaBlock('The pattern', d.pattern) +
         ideaBlock('The move', d.move) +
+        (d.monday ? ideaBlock('Monday', d.monday) : '') +
         ideaBlock('Ask', d.ask, 'idea-block-ask') +
         footer;
       ideaModal.scrollTop = 0;
@@ -2932,11 +2940,13 @@
   var loopStages = [
     { eyebrow:'The Activity Loop', heading:'More activity. Same problem.',
       blocks:['More data, more decks, more meetings. Information moves, presentations multiply, meetings repeat. Yet decisions stall, the same issues return, and the organization risks confusing the visibility of work with its impact.',
-              'The blind spot: Activity can look like progress yet results remain unchanged.'],
+              'The blind spot: Activity can look like progress yet results remain unchanged.',
+              { label:'What it sounds like', text:'"We need more data before we decide." "Let\'s take this to another meeting." "We need everyone aligned first." "Let\'s circle back next quarter." Each one is reasonable on its own. Together they are a decision being delayed.' }],
       next:'Explore the Learning Loop →' },
     { eyebrow:'The Learning Loop', heading:'Signal becomes understanding.',
       blocks:['A loop where every decision makes the next one better and uncertainty\'s reduced. Actions generate outcomes, and outcomes create learning that shapes what happens next.',
-              'The advantage: Each cycle builds on the last, turning better decisions into better results over time.'],
+              'The advantage: Each cycle builds on the last, turning better decisions into better results over time.',
+              { label:'What it sounds like', text:'"Here is the test, here is the stop date, and here is what would make us stop." "We were wrong about that. Here is what we\'re changing." "Who owns this all the way to the customer?" Each one moves something.' }],
       next:'Reveal the insight →' },
     { eyebrow:'The Insight', heading:'The Difference Is What Happens Next.',
       blocks:["It's not the amount of activity that creates progress. It's whether that activity changes what happens next. Information must change understanding. Understanding must inform decisions. Decisions must lead to action. And action must generate learning that improves the next cycle. One loop repeats the work. The other builds on it.",
