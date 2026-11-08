@@ -889,6 +889,41 @@
 
   .quote{ font-family:var(--font-display); font-style:italic; font-size:var(--fs-lede-fluid); color:var(--ink); line-height:1.5; }
 
+  /* ---------- The Garage preview (the site's own sand and copper palette) ---------- */
+  .garage-room{
+    --ga-bg:#F3EEE4; --ga-sand:#E9E1D1; --ga-ink:#2A2621; --ga-mute:#655D51;
+    --ga-clay:#8A5638; --ga-copper:#C47C55; --ga-line:rgba(42,38,33,.18);
+  }
+  .garage-room .eyebrow{ color:var(--ga-clay); }
+  .room.garage-room h2{ font-size:var(--fs-h3); max-width:22ch; }
+  .garage-room .room-cta{ color:var(--ga-clay); border-bottom-color:var(--ga-clay); }
+  .garage-layout{ margin-top:var(--s6); }
+  .garage-mock{
+    display:block; width:100%; max-width:300px; margin:0 auto; background:var(--ga-bg);
+    border:1px solid var(--ga-line); border-radius:20px; padding:var(--s5) var(--s5) var(--s4);
+    box-shadow:0 24px 44px rgba(42,38,33,.14);
+    text-decoration:none; color:var(--ga-ink); cursor:pointer;
+    transition:transform var(--t-hover) var(--ease-out);
+  }
+  .garage-mock:hover{ transform:scale(1.03); }
+  .garage-top{
+    display:flex; align-items:center; gap:var(--s2); margin-bottom:var(--s4);
+    font-family:var(--font-body); font-weight:600; font-size:var(--fs-small); color:var(--ga-ink);
+  }
+  .garage-top svg{ width:16px; height:16px; flex:none; }
+  .garage-stage{ background:var(--ga-sand); border-radius:12px; padding:var(--s4) var(--s4) var(--s3); }
+  .garage-mark{ display:block; width:132px; height:auto; margin:0 auto; color:var(--ga-ink); overflow:visible; }
+  .garage-mark .ga-pendulum{
+    transform-origin:60px 111px;
+    animation:gaTick 1.1s cubic-bezier(.45,0,.55,1) infinite alternate;
+  }
+  @keyframes gaTick{ from{ transform:rotate(-14deg); } to{ transform:rotate(14deg); } }
+  .garage-cap{
+    margin:var(--s3) 0 0; text-align:center;
+    font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.06em; color:var(--ga-mute); line-height:1.5;
+  }
+  .garage-quote{ color:var(--ga-clay); }
+
   /* ---------- Friction preview (pulls its own "Low Tide" palette) ---------- */
   .friction-room{
     --fr-foam:#F7F3EA; --fr-sand:#E9DCC4; --fr-sand-deep:#8A6A38;
@@ -1066,6 +1101,7 @@
     .codigo-frame, .cg-stage, .cg-glow, .cg-cross, .cg-line, .cg-line::after, .cg-diamond{ animation:none !important; }
     .codigo-frame-bar{ display:none; }
     .cg-line, .cg-diamond{ opacity:1; }
+    .garage-mark .ga-pendulum{ animation:none !important; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
   }
@@ -1493,6 +1529,46 @@
     </svg>
     <h2>Things I've Built:</h2>
   </section>
+
+  <section class="room garage-room" id="garage-project">
+    <div class="wrap">
+      <span class="eyebrow">The Garage</span>
+      <h2>Is your company built for the customer, or for itself?</h2>
+      <div class="stillward-layout garage-layout">
+        <a class="garage-mock" href="https://corporate-production-f647.up.railway.app/" target="_blank" rel="noopener" aria-label="Visit The Garage (opens in a new tab)">
+          <div class="garage-top">
+            <svg viewBox="0 0 44 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="6" width="32" height="8"/><rect x="6" y="18" width="32" height="8"/><rect x="6" y="30" width="32" height="8"/></g><line x1="22" y1="2" x2="22" y2="42" stroke="#C47C55" stroke-width="3.5" stroke-linecap="round"/></svg>
+            <span>The Garage</span>
+          </div>
+          <div class="garage-stage">
+            <svg class="garage-mark" viewBox="0 0 120 130" role="img" aria-label="Three stacked blocks with one copper line swinging through them like a metronome.">
+              <g class="ga-blocks" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="16" y="20" width="88" height="18"/>
+                <rect x="16" y="48" width="88" height="18"/>
+                <rect x="16" y="76" width="88" height="18"/>
+              </g>
+              <g class="ga-pendulum">
+                <line x1="60" y1="6" x2="60" y2="111" stroke="#C47C55" stroke-width="3.5" stroke-linecap="round"/>
+                <circle cx="60" cy="30" r="5" fill="#C47C55"/>
+              </g>
+              <circle cx="60" cy="111" r="4.5" fill="#C47C55"/>
+            </svg>
+            <p class="garage-cap">Three layers of approval. One line that reaches the customer.</p>
+          </div>
+        </a>
+        <div>
+          <p class="quote garage-quote">Five lessons from Steve Jobs on how great companies should work.</p>
+          <p class="room-body">Most companies start with the customer at the center. Then, slowly, layers of management, processes, meetings and approvals get in the way. Before long, the company is working harder to serve itself than the people it exists to serve.</p>
+          <p class="room-body">The Garage explores five principles that keep a company honest: Focus, Customer, Simplicity, Excellence and Innovation.</p>
+          <a class="room-cta" href="https://corporate-production-f647.up.railway.app/" target="_blank" rel="noopener">Visit The Garage →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H380 L386,5 L395,19 L404,12 L413,12 L419,7 L428,17 L437,12 H1000"/></svg>
+  </div>
 
   <section class="room friction-room" id="ideas">
     <div class="wrap">
