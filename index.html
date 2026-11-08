@@ -196,8 +196,6 @@
   .path-arrow.now{ color:var(--verdant); }
   .story-lede{ margin-top:var(--s6); max-width:48ch; font-family:var(--font-display); font-style:italic; font-size:var(--fs-lede-fluid); line-height:1.5; color:var(--bone); }
   .story-body{ margin-top:var(--s5); max-width:58ch; color:var(--bone-dim); font-size:var(--fs-body-l); line-height:1.7; }
-  .philosophy-wrap{ margin-top:var(--s10); padding-top:var(--s8); border-top:1px solid var(--ground-line); }
-  .pullquote{ margin-top:var(--s4); max-width:52ch; font-family:var(--font-display); font-style:italic; font-size:var(--fs-lede); line-height:1.55; color:var(--bone); }
 
   /* ---------- activity loop / learning loop diagnostic ---------- */
   .loops-wrap{ margin-top:var(--s11); padding-top:var(--s8); border-top:1px solid var(--ground-line); }
@@ -256,6 +254,10 @@
 
   /* ================= READING ================= */
   /* ================= CONTINUED LEARNING ================= */
+  .thesis-wrap{ margin-top:var(--s10); padding-top:var(--s8); border-top:1px solid var(--ground-line); }
+  .thesis-title{ margin-top:var(--s3); font-size:var(--fs-h3); max-width:24ch; line-height:1.2; color:var(--bone); }
+  .thesis-body{ margin-top:var(--s5); max-width:58ch; font-size:var(--fs-body); line-height:1.7; color:var(--bone-dim); }
+  .thesis-body + .thesis-body{ margin-top:var(--s3); }
   .learning-wrap{ margin-top:var(--s10); padding-top:var(--s8); border-top:1px solid var(--ground-line); }
   .learning-title{ margin-top:var(--s3); font-size:var(--fs-h3); max-width:24ch; line-height:1.2; color:var(--bone); }
   .learning-meta{
@@ -1198,9 +1200,12 @@
         <p class="learning-body">Exploring how organizations can move beyond siloed AI initiatives to deliver sustained business value and align people, systems, and strategy to make adoption stick. <button class="reflect-link" type="button" id="reflectOpen" aria-haspopup="dialog">My Reflections →</button></p>
       </div>
 
-      <div class="philosophy-wrap">
-        <span class="eyebrow">Operating Philosophy</span>
-        <p class="pullquote">Understand the problem deeply. Find the signal through the noise. Then build a better shared system so the output of teams can compound across the organization. Excellence is the operating system.</p>
+      <div class="thesis-wrap" id="philosophy">
+        <span class="eyebrow">The Philosophy</span>
+        <h3 class="thesis-title">The gap between knowing and doing.</h3>
+        <p class="thesis-body">Organizations rarely fail for lack of information or good intentions. They fail in the gap between knowing and doing, and the hardest thing to see is what everyone has learned to accept.</p>
+        <p class="thesis-body">Every company starts by serving a customer. Left alone, it drifts toward serving itself. Layers, approvals, meetings and reports accumulate until the work becomes disconnected from why the company exists.</p>
+        <p class="thesis-body">My work is about closing that gap. Understand the problem deeply and find the signal through the noise. See the whole problem, not the loudest part of it, and the forces underneath it. Then change the conditions, act on what matters, and build a shared system so the work of teams compounds across the organization. Excellence is the operating system. <button class="reflect-link" type="button" id="thesisOpen" aria-haspopup="dialog">Read the full thesis →</button></p>
       </div>
 
       <div class="loops-wrap">
@@ -2029,6 +2034,23 @@
     </div>
   </div>
 
+  <div class="book-modal-overlay" id="thesisModalOverlay" hidden>
+    <div class="book-modal reflect-modal thesis-modal" role="dialog" aria-modal="true" aria-labelledby="thesisModalHeading" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="lens-modal-eyebrow reflect-eyebrow">The Philosophy · The Full Thesis</span>
+      <span class="lens-modal-heading" id="thesisModalHeading">See clearly. Understand deeply. Act intentionally.</span>
+      <div class="reflect-body">
+        <p>Organizations rarely fail for lack of information or good intentions. They have more data than they can turn into insight and more strategy than they can translate into action. They fail in the gap between knowing and doing, and the hardest thing to see is what everyone has learned to accept.</p>
+        <p>Every company starts by serving a customer. Left alone, it drifts toward serving itself. Layers, approvals, meetings, and reports accumulate like lint until the company loses sight of why it was built. You can hear the drift before you can see it. "We need more data." "Let's get everyone aligned first." Each sounds reasonable on its own. Together, they become a pattern of deferred decisions.</p>
+        <p>Seeing clearly starts with three lenses. How does the business create value? How does the system create leverage? How do we help people do their best work? Each reveals what the others can miss. The most important problems often live where they intersect.</p>
+        <p>Beneath these lenses are seven forces that shape how an organization behaves and performs: Awareness, Trust, Conditions, Value, Incentives, Leverage, and Excellence. They compound in whichever direction they point. When they reinforce one another, individual talent becomes collective performance. When they work against one another, dysfunction compounds just as reliably. Culture is what everyday decisions and consequences reinforce, not what is written on the walls.</p>
+        <p>Seeing the problem is only the beginning. Knowledge must become understanding, understanding must become judgment, and judgment must become action. That means focusing on the few things that move results. Staying close to the customer. Removing processes that protect nothing. Defining what excellence looks like and holding the standard. Making decisions close to the work. And building systems that make the better path the easier path, so improvements endure beyond the people who initiate them.</p>
+        <p>That is the work: using analytics to find the signal in the noise, applying judgment to understand what gets in the way, and building decisions, systems, and tools that turn insight into lasting improvement. Complexity becomes clarity. Understanding becomes action. Individual effort becomes collective performance.</p>
+        <p class="reflect-final">Excellence is the operating system that makes it last.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="book-modal-overlay" id="multModalOverlay" hidden>
     <div class="book-modal mult-modal" role="dialog" aria-modal="true" aria-labelledby="multModalHeading" tabindex="-1">
       <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
@@ -2524,6 +2546,33 @@
     reflectOpen.addEventListener('click', openReflectModal);
     reflectClose.addEventListener('click', closeReflectModal);
     reflectOverlay.addEventListener('click', function(e){ if(e.target === reflectOverlay) closeReflectModal(); });
+  }
+
+  /* ---------- the full thesis modal ---------- */
+  var thesisOverlay = document.getElementById('thesisModalOverlay');
+  var thesisOpen = document.getElementById('thesisOpen');
+  if(thesisOverlay && thesisOpen){
+    var thesisModal = thesisOverlay.querySelector('.book-modal');
+    var thesisClose = thesisOverlay.querySelector('.book-modal-close');
+    function onThesisKeydown(e){
+      if(e.key === 'Escape') closeThesisModal();
+      else if(e.key === 'Tab'){ e.preventDefault(); thesisClose.focus(); }
+    }
+    function openThesisModal(){
+      thesisOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      thesisModal.focus();
+      document.addEventListener('keydown', onThesisKeydown);
+    }
+    function closeThesisModal(){
+      thesisOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onThesisKeydown);
+      thesisOpen.focus();
+    }
+    thesisOpen.addEventListener('click', openThesisModal);
+    thesisClose.addEventListener('click', closeThesisModal);
+    thesisOverlay.addEventListener('click', function(e){ if(e.target === thesisOverlay) closeThesisModal(); });
   }
 
   /* ---------- certificate modal ---------- */
