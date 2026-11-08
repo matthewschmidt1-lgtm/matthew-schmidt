@@ -829,6 +829,7 @@
 
   /* ---------- The Dance preview (the game's own night palette: cine black, teal, the gold that marks you) ---------- */
   .dance-room{ --dn-cine:#0e1014; --dn-ink:#f2f3f5; --dn-teal:#0b7a87; --dn-glow:#66d4cc; --dn-you:#f2c46d; --dn-muted:#9aa1ae; --dn-line:rgba(20,23,28,.14); }
+  .dance-room.is-hidden, .dance-divider:has(+ .dance-room.is-hidden){ display:none; }
   .dance-room .eyebrow{ color:var(--dn-teal); }
   .room.dance-room h2{ font-size:var(--fs-h3); max-width:24ch; } /* .room h2 is declared later */
   .dance-room .room-cta{ color:var(--dn-teal); border-bottom-color:var(--dn-teal); }
@@ -1734,11 +1735,12 @@
     </div>
   </section>
 
-  <div class="built-divider" aria-hidden="true">
+  <div class="built-divider dance-divider" aria-hidden="true">
     <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H610 L616,5 L625,19 L634,12 L643,12 L649,7 L658,17 L667,12 H1000"/></svg>
   </div>
 
-  <section class="room dance-room" id="dance-project">
+  <!-- The Dance card is hidden for now (2026-11-07); remove .is-hidden to show it again. -->
+  <section class="room dance-room is-hidden" id="dance-project">
     <div class="wrap">
       <span class="eyebrow">The Dance</span>
       <h2>Game Theory. Read the Room.</h2>
