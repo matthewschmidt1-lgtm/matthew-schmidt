@@ -12,7 +12,7 @@ svg=re.sub(r'(\d)\.0\b', r'\1', svg)              # 380.0 -> 380
 svg=re.sub(r'rgb\((\d+),(\d+),(\d+)\)', lambda m:'#%02x%02x%02x'%tuple(int(x) for x in m.groups()), svg)
 style='<style>.r{stroke:#1E2021;stroke-width:.9;stroke-linejoin:round;opacity:.97}.i{stroke:#1E2021;stroke-width:.7;stroke-linejoin:round;opacity:.93}.o{stroke:#1E2021;stroke-width:1.7;stroke-linejoin:round}.f{stroke:#1E2021;stroke-width:1.3;stroke-linejoin:round}.g{stroke:#1E2021;stroke-width:1.1;stroke-linecap:round;opacity:.35}.l{stroke:#1E2021;stroke-width:.9;opacity:.35;stroke-linecap:round}.b{stroke:#8E7A44;stroke-width:.9;opacity:.5;stroke-linecap:round}</style>'
 # --- timeline (18s loop): closed until .37, open by .50, hold, snap back at .851 while the frame is hidden
-D='dur="30s" repeatCount="indefinite"'
+D='dur="24s" repeatCount="indefinite"'
 def anim(attr, vals, keys, extra=''):
     return '<animate attributeName="%s" values="%s" keyTimes="%s" %s %s/>' % (attr, ';'.join(vals), ';'.join(keys), D, extra)
 # ground and the piece shadows appear as it opens; the closed shadow gives way
