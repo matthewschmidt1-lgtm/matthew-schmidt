@@ -2678,6 +2678,7 @@
     var CAPS = ['Omega Speedmaster · Ref. 105.003 · 1964', 'The Living Solar Clock · one day', 'The month · one lunation'];
     var MOONS = ['New moon','Waxing crescent','First quarter','Waxing gibbous','Full moon','Waning gibbous','Last quarter','Waning crescent'];
     var T0 = 5, T1 = 5.5, T2 = 5.5, TOTAL = T0 + T1 + T2;
+    var SPEED = .72; // below 1 slows the whole loop
     var t = 0, last = 0, running = false, scene = -1, RAD = Math.PI / 180;
     function ease(x){ return x < .5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2; }
     function pad(n){ return (n < 10 ? '0' : '') + n; }
@@ -2710,7 +2711,7 @@
     }
     function frame(ms){
       if(!running) return;
-      t = (t + Math.min(.1, (ms - last) / 1000 || 0)) % TOTAL; last = ms;
+      t = (t + Math.min(.1, (ms - last) / 1000 || 0) * SPEED) % TOTAL; last = ms;
       if(t < T0){ setScene(0); drawWatch(t); }
       else if(t < T0 + T1){ setScene(1); drawSolar((t - T0) / T1); }
       else { setScene(2); drawMoon((t - T0 - T1) / T2); }
