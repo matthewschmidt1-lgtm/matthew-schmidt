@@ -286,6 +286,11 @@
   .reflect-body p + p{ margin-top:var(--s4); }
   .reflect-body .reflect-final{ font-family:var(--font-display); font-style:italic; font-size:var(--fs-body-l); line-height:1.5; color:var(--bone); }
   .thesis-modal .reflect-body .reflect-final{ color:var(--verdant); }
+  .book-modal.thesis-modal{ max-width:760px; }
+  .thesis-mark{ display:block; width:96px; height:16px; margin:var(--s7) auto var(--s4); }
+  .thesis-mark path{ fill:none; stroke:var(--verdant); stroke-width:1.5; }
+  .thesis-modal .reflect-body .thesis-mark + .reflect-final{ margin-top:0; }
+  .thesis-foot{ display:flex; justify-content:flex-end; margin-top:var(--s6); }
   /* ---- The Multiplier: the one card that looks different ---- */
   .book-modal.mult-modal{
     max-width:640px; padding-top:44px; padding-bottom:52px; text-align:center;
@@ -2053,8 +2058,10 @@
         <p>When they reinforce one another, individual talent becomes collective capability. When they work against one another, dysfunction becomes embedded in the organization. Culture is not what a company says it values. It is what everyday decisions, behaviors, incentives, and consequences consistently reinforce.</p>
         <p>Seeing clearly is only the beginning. Knowledge must become understanding, understanding must become judgment, and judgment must become action. That means focusing on what matters, staying close to customers, challenging assumptions, removing unnecessary complexity, setting meaningful standards, and putting decisions in the hands of people closest to the work. It means building systems that enable good decisions and making the better path the easier choice to make.</p>
         <p>That is the work: using evidence and analytics to find the signal in the noise, applying judgment to understand what matters, and translating insight into decisions, systems, and tools that produce lasting improvement. Not more activity, but better outcomes. Not more complexity, but greater clarity. Not dependence on individual effort, but an organization designed to turn individual potential into collective performance.</p>
+        <svg class="thesis-mark" viewBox="0 0 120 20" aria-hidden="true"><path d="M0,10 L20,10 L30,10 L36,3 L45,17 L54,10 L63,10 L69,5 L78,15 L87,10 L96,10 L120,10"/></svg>
         <p class="reflect-final">Excellence is the discipline of continually improving how an organization creates value. It means knowing what consumers value, never settling for good enough, and sweating the details that others overlook.</p>
       </div>
+      <div class="thesis-foot"><button class="reflect-link thesis-close-bottom" type="button" id="thesisCloseBottom">Close &times;</button></div>
     </div>
   </div>
 
@@ -2561,9 +2568,10 @@
   if(thesisOverlay && thesisOpen){
     var thesisModal = thesisOverlay.querySelector('.book-modal');
     var thesisClose = thesisOverlay.querySelector('.book-modal-close');
+    var thesisCloseBottom = document.getElementById('thesisCloseBottom');
     function onThesisKeydown(e){
       if(e.key === 'Escape') closeThesisModal();
-      else if(e.key === 'Tab'){ e.preventDefault(); thesisClose.focus(); }
+      else if(e.key === 'Tab'){ e.preventDefault(); (document.activeElement === thesisClose && thesisCloseBottom ? thesisCloseBottom : thesisClose).focus(); }
     }
     function openThesisModal(){
       thesisOverlay.hidden = false;
@@ -2579,6 +2587,7 @@
     }
     thesisOpen.addEventListener('click', openThesisModal);
     thesisClose.addEventListener('click', closeThesisModal);
+    if(thesisCloseBottom) thesisCloseBottom.addEventListener('click', closeThesisModal);
     thesisOverlay.addEventListener('click', function(e){ if(e.target === thesisOverlay) closeThesisModal(); });
   }
 
