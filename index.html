@@ -900,6 +900,42 @@
   .quote{ font-family:var(--font-display); font-style:italic; font-size:var(--fs-lede-fluid); color:var(--ink); line-height:1.5; }
 
   /* ---------- The Garage preview (the site's own sand and copper palette) ---------- */
+  .watch-room{
+    --wa-ivory:#EDE6D8; --wa-parch:#D9CEB9; --wa-ink:#242521; --wa-mute:#77766E;
+    --wa-brass:#8A6A2A; --wa-gold:#C9A968; --wa-dark:#1d1e1b; --wa-line:rgba(36,37,33,.2);
+  }
+  .watch-room .eyebrow{ color:var(--wa-brass); }
+  .room.watch-room h2{ font-size:var(--fs-h3); max-width:22ch; }
+  .watch-room .room-cta{ color:var(--wa-brass); border-bottom-color:var(--wa-brass); }
+  .watch-quote{ color:var(--wa-brass); }
+  .watch-layout{ margin-top:var(--s6); }
+  .watch-mock{
+    display:block; width:100%; max-width:330px; margin:0 auto; background:var(--wa-ivory);
+    border:1px solid var(--wa-line); border-radius:20px; padding:var(--s4) var(--s4) var(--s3);
+    box-shadow:0 24px 44px rgba(36,37,33,.16);
+    text-decoration:none; color:var(--wa-ink); cursor:pointer;
+    transition:transform var(--t-hover) var(--ease-out);
+  }
+  .watch-mock:hover{ transform:scale(1.03); }
+  .watch-top{ display:flex; align-items:center; justify-content:space-between; gap:var(--s2); margin-bottom:var(--s3); }
+  .watch-brand{ display:flex; align-items:center; gap:var(--s2); font-family:var(--font-display); font-size:13px; white-space:nowrap; color:var(--wa-ink); }
+  .watch-brand svg{ width:14px; height:14px; flex:none; fill:none; stroke:currentColor; stroke-width:1.2; }
+  .watch-seg{ display:flex; font-family:var(--font-body); font-size:9px; font-weight:600; border:1px solid var(--wa-ink); flex:none; }
+  .watch-seg span{ padding:2px 5px; }
+  .watch-seg .on{ background:var(--wa-ink); color:var(--wa-ivory); }
+  .watch-stage{ background:var(--wa-dark); border-radius:10px; overflow:hidden; }
+  .watch-reel{
+    width:100%; aspect-ratio:1; background:var(--wa-dark) url(images/watch/speedmaster-explode.webp) 0 0 / 2400% 100% no-repeat;
+    animation:waExplode 3.4s linear infinite alternate;
+  }
+  @keyframes waExplode{
+    0%, 18%{ background-position:0 0; animation-timing-function:steps(23, end); }
+    82%, 100%{ background-position:100% 0; }
+  }
+  .watch-cap{
+    margin:var(--s3) 0 0; text-align:center;
+    font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.06em; color:var(--wa-mute); line-height:1.5;
+  }
   .garage-room{
     --ga-bg:#F3EEE4; --ga-sand:#E9E1D1; --ga-ink:#2A2621; --ga-mute:#655D51;
     --ga-clay:#8A5638; --ga-copper:#C47C55; --ga-line:rgba(42,38,33,.18);
@@ -1137,6 +1173,7 @@
     .codigo-frame-bar{ display:none; }
     .cg-line, .cg-diamond{ opacity:1; }
     .garage-mark .ga-pendulum{ animation:none !important; }
+    .watch-reel{ animation:none !important; background-position:100% 0; }
     .aspen-star, .aspen-leaf{ animation:none !important; }
     .aspen-leaf-fall{ opacity:0 !important; }
   }
@@ -1698,6 +1735,35 @@
           <p class="room-body">A decade at Código 1530 as Analytics Director was an important chapter in my career. It was an opportunity to solve difficult problems, build capabilities across analytics and technology, explore creative ideas, and work alongside talented people.</p>
           <p class="room-body">I'm proud of what we accomplished, grateful for the people, and carry the experience forward into whatever comes next.</p>
           <a class="room-cta" href="https://codigo1530shop.com/" target="_blank" rel="noopener">Visit the merch site →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="built-divider" aria-hidden="true">
+    <svg viewBox="0 0 1000 24" preserveAspectRatio="none"><path vector-effect="non-scaling-stroke" d="M0,12 H260 L266,5 L275,19 L284,12 L293,12 L299,7 L308,17 L317,12 H1000"/></svg>
+  </div>
+
+  <section class="room watch-room" id="watch-project">
+    <div class="wrap">
+      <span class="eyebrow">An Appreciation of Time</span>
+      <h2>The Mystery of Time</h2>
+      <div class="stillward-layout watch-layout">
+        <a class="watch-mock" href="https://horology-production.up.railway.app/workbench?watch=speedmaster-105003" target="_blank" rel="noopener" aria-label="Open the Workbench (opens in a new tab)">
+          <div class="watch-top">
+            <span class="watch-brand"><svg viewBox="-12 -12 24 24" aria-hidden="true"><circle r="10.5"/><circle r="8.6"/><path d="M0,-8.6V-6.6M8.6,0H6.6M0,8.6V6.6M-8.6,0H-6.6M0,0L0,-5.4M0,0L3.9,2.2"/></svg>The Horological Archive</span>
+            <span class="watch-seg" aria-hidden="true"><span>Drawing</span><span class="on">Studio</span></span>
+          </div>
+          <div class="watch-stage">
+            <div class="watch-reel" role="img" aria-label="An Omega Speedmaster 105.003 in the studio view, separating into crystal, bezel, dial, movement, case and caseback, then closing again."></div>
+          </div>
+          <p class="watch-cap">Omega Speedmaster · Ref. 105.003 · 1964</p>
+        </a>
+        <div>
+          <p class="quote watch-quote">Vintage timepieces. Drawn as engineering art. Opened for discovery.</p>
+          <p class="room-body">Step onto the Workbench. Turn back the case, wander through the gears, and uncover the tiny universe hidden beneath each dial. Every watch holds a story. Every mechanism, a little wonder. Every detail brings us closer to understanding the art of time.</p>
+          <p class="room-body">A celebration of time, craftsmanship, and the beauty of what lies within.</p>
+          <a class="room-cta" href="https://horology-production.up.railway.app/workbench?watch=speedmaster-105003" target="_blank" rel="noopener">Open the Workbench →</a>
         </div>
       </div>
     </div>
