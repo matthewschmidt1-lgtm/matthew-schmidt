@@ -924,8 +924,10 @@
   .watch-seg span{ padding:2px 5px; }
   .watch-seg .on{ background:var(--wa-ink); color:var(--wa-ivory); }
   .watch-stage{ background:var(--wa-dark); border-radius:10px; overflow:hidden; position:relative; aspect-ratio:1; }
-  .watch-scene{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .6s var(--ease); }
-  .watch-scene.on{ opacity:1; }
+  .watch-scene{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 1s ease; }
+  .watch-scene.on{ opacity:1; transition:opacity 1.3s ease; }
+  .ws-move{ transition-duration:1.5s; } .ws-solar.on{ transition:opacity 1.7s ease .2s; }
+  .ws-watch.on{ transition:opacity 2s ease .8s; } /* the loop restarts out of a dark stage */
   .ws-solar{ padding:5%; }
   .ws-moon{ flex-direction:column; }
   .ws-moon svg{ display:block; width:100%; height:100%; overflow:visible; }
@@ -1794,7 +1796,7 @@
       <div class="stillward-layout watch-layout">
         <a class="watch-mock" href="https://horology-production.up.railway.app/workbench?watch=speedmaster-105003" target="_blank" rel="noopener" aria-label="Open the Workbench (opens in a new tab)">
           <div class="watch-top">
-            <span class="watch-brand"><svg viewBox="-12 -12 24 24" aria-hidden="true"><circle r="10.5"/><circle r="8.6"/><path d="M0,-8.6V-6.6M8.6,0H6.6M0,8.6V6.6M-8.6,0H-6.6M0,0L0,-5.4M0,0L3.9,2.2"/></svg>The Horological Archive</span>
+            <span class="watch-brand"><svg viewBox="-12 -12 24 24" aria-hidden="true"><circle r="10.5"/><circle r="8.6"/><path d="M0,-8.6V-6.6M8.6,0H6.6M0,8.6V6.6M-8.6,0H-6.6M0,0L0,-5.4M0,0L3.9,2.2"/></svg>The Shape of Time</span>
             <span class="watch-seg" aria-hidden="true"><span>Drawing</span><span class="on">Studio</span></span><span class="watch-tag" aria-hidden="true">Nature of Time</span>
           </div>
           <div class="watch-stage">
@@ -2694,9 +2696,9 @@
     var STEPS = [[60,39.6,0,4],[60,40,0,4],[60,40.5,0,4],[60,40.8,0,4],[60,41,0,4],[60,41.2,0,4],[60,41.3,0,4],[-60,41.4,0,4],[-60,41.3,0,4],[-60,41.1,0,4],[-60,40.9,0,4],[-60,40.6,0,4],[-60,40.2,0,4],[-60,39.8,0,4],[-60,39.3,0,4],[-60,38.7,0,4],[-60,38,0,4],[-60,37.4,0,4],[-60,36.6,0,4],[-60,35.8,0,4],[-60,35,0,4],[-59,34.1,0,4],[-57.8,33.2,0,4],[-56.7,32.2,0,4],[-55.7,31.3,0,4],[-54.6,30.3,0,4],[-53.6,29.2,0,4],[-52.7,28.2,0,4],[-51.8,27.1,0,4],[-50.9,26,0,4],[-50,24.9,0,4],[-49.2,23.8,0,4],[-48.3,22.7,0,4],[-47.5,21.5,0,4],[-46.7,20.4,0,0],[-46,19.2,0,0],[-45.2,18,0,0],[-44.5,16.9,0,3],[-43.7,15.7,0,3],[-43,14.5,0,3],[-42.3,13.3,0,1],[-41.6,12.1,0,1],[-40.8,10.9,0,1],[-40.1,9.7,1,2],[-39.4,8.5,1,2],[-38.7,7.3,1,2],[-38,6.1,1,2],[-37.2,4.9,1,2],[-36.5,3.7,1,2],[-35.8,2.5,1,2],[-35,1.4,1,2],[-34.2,0.2,1,2],[-33.5,-0.9,1,2],[-32.7,-2.1,1,2],[-31.9,-3.2,1,2],[-31,-4.4,1,2],[-30.2,-5.5,1,2],[-29.3,-6.6,1,2],[-28.4,-7.7,1,2],[-27.4,-8.7,1,2],[-26.5,-9.8,1,2],[-25.5,-10.8,1,2],[-24.4,-11.8,1,2],[-23.3,-12.7,1,2],[-22.2,-13.7,1,2],[-21,-14.6,1,2],[-19.8,-15.4,1,2],[-18.5,-16.2,1,2],[-17.2,-17,1,2],[-15.8,-17.7,1,2],[-14.4,-18.4,1,2],[-12.9,-19,1,2],[-11.4,-19.5,1,2],[-9.8,-20,1,2],[-8.1,-20.4,1,2],[-6.5,-20.8,1,2],[-4.8,-21,1,2],[-3,-21.2,1,2],[-1.3,-21.3,1,2],[0.5,-21.3,1,2],[2.2,-21.3,1,2],[4,-21.1,1,2],[5.7,-20.9,1,2],[7.4,-20.6,1,2],[9,-20.2,1,2],[10.6,-19.8,1,2],[12.2,-19.3,1,2],[13.7,-18.7,1,2],[15.2,-18,1,2],[16.6,-17.4,1,2],[17.9,-16.6,1,2],[19.2,-15.8,1,2],[20.5,-15,1,2],[21.7,-14.1,1,2],[22.8,-13.2,1,2],[23.9,-12.2,1,2],[25,-11.3,1,2],[26,-10.3,1,2],[27,-9.2,1,2],[28,-8.2,1,2],[28.9,-7.1,1,2],[29.8,-6,1,2],[30.7,-4.9,1,2],[31.5,-3.8,1,2],[32.4,-2.7,1,2],[33.1,-1.6,1,2],[33.9,-0.4,1,2],[34.7,0.8,1,2],[35.5,1.9,1,2],[36.2,3.1,1,2],[37,4.3,1,2],[37.7,5.5,1,2],[38.4,6.7,1,2],[39.1,7.9,1,2],[39.9,9.1,1,2],[40.6,10.3,1,2],[41.3,11.5,0,1],[42,12.7,0,1],[42.7,13.8,0,3],[43.5,15,0,3],[44.2,16.2,0,3],[45,17.4,0,3],[45.7,18.6,0,0],[46.5,19.7,0,0],[47.2,20.9,0,0],[48,22,0,4],[48.9,23.2,0,4],[49.7,24.3,0,4],[50.6,25.4,0,4],[51.5,26.5,0,4],[52.4,27.6,0,4],[53.3,28.6,0,4],[54.3,29.7,0,4],[55.3,30.7,0,4],[56.3,31.6,0,4],[57.4,32.6,0,4],[58.5,33.5,0,4],[59.7,34.4,0,4],[60,35.3,0,4],[60,36.1,0,4],[60,36.8,0,4],[60,37.5,0,4],[60,38.2,0,4],[60,38.8,0,4],[60,39.4,0,4]];
     var CAPS = ['Omega Speedmaster · Ref. 105.003 · 1964', 'Calibre 321 · the movement, layer by layer', 'The Living Solar Clock · one day', 'The month · one lunation', 'One orbit · time in motion'];
     var MOONS = ['New moon','Waxing crescent','First quarter','Waxing gibbous','Full moon','Waning gibbous','Last quarter','Waning crescent'];
-    var T0 = 5, TM = 5.2, T1 = 5.5, T2 = 5.5, T3 = 6.5, TOTAL = T0 + TM + T1 + T2 + T3;
+    var T0 = 6.5, TM = 5.2, T1 = 5.5, T2 = 5.5, T3 = 6.5, TOTAL = T0 + TM + T1 + T2 + T3;
     var SPEED = .72; // below 1 slows the whole loop
-    var t = 0, last = 0, running = false, scene = -1, RAD = Math.PI / 180;
+    var t = 1.5, last = 0, running = false, scene = -1, RAD = Math.PI / 180;
     function ease(x){ return x < .5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2; }
     function pad(n){ return (n < 10 ? '0' : '') + n; }
     function setScene(n){
@@ -2705,6 +2707,7 @@
       mock.setAttribute('data-scene', n); if(cap) cap.textContent = CAPS[n];
     }
     function drawWatch(x){ // hold, open, hold, close
+      x -= 1.5; // the first beat is the fade up from dark
       var v = x < .5 ? 0 : x < 2.3 ? ease((x - .5) / 1.8) : x < 3.4 ? 1 : x < 4.8 ? 1 - ease((x - 3.4) / 1.4) : 0;
       reel.style.backgroundPosition = (Math.round(v * 23) / 23 * 100) + '% 0';
     }
