@@ -108,3 +108,5 @@ All sizes, spacing and motion read from named tokens on `:root`; don't add raw v
   `el.cx.animVal.value` / `getAnimations()`, and CSS timing by real-time polling.
 - The pane's "desktop" size is ~815px wide; check true desktop layouts with
   `resize_window` at 1280.
+
+The Lenses nav link has the same kind of dropdown (`#navLenses`: The Blind Spot `#blind-spot`, The Three Lenses `#lenses`, The Path to Agency `#seeing`; the Blind Spot thumbnail is a drawn two-loop icon, the other two are captures). The Ideas nav link has a dropdown (`.nav-dd#navIdeas` > `.nav-menu`) listing each visible project with a 96px thumbnail from `images/nav/` (cropped captures of the preview cards). Hover or keyboard focus opens it; on touch the first tap opens it and the second goes to `#ideas`. When a project is added, removed or reordered, update the dropdown rows and add a thumbnail. The scroll-spy only reads `.topnav-links a[data-id]`.

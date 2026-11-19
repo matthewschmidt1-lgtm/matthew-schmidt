@@ -150,6 +150,39 @@
     color:var(--verdant); border-bottom-color:var(--verdant);
   }
   .topnav-sep{ color:var(--bone-faint); font-family:var(--font-mono); font-size:var(--fs-label-l); }
+  /* Ideas dropdown: the things I've built, each with a mini of its preview */
+  .nav-dd{ position:relative; display:inline-flex; }
+  #blind-spot{ scroll-margin-top:var(--s11); }
+  .nav-menu{
+    position:absolute; top:100%; left:50%; width:264px; padding-top:31px; transform:translate(-50%, -4px);
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), visibility 0s linear var(--t-fast);
+  }
+  .nav-dd.open .nav-menu, .nav-dd:has(a:focus-visible) .nav-menu{
+    opacity:1; visibility:visible; pointer-events:auto; transform:translate(-50%, 0); transition-delay:0s;
+  }
+  @media (hover:hover){
+    .nav-dd:hover:not(.shut) .nav-menu{ opacity:1; visibility:visible; pointer-events:auto; transform:translate(-50%, 0); transition-delay:0s; }
+  }
+  .nav-menu-panel{
+    background:var(--ground); border:1px solid var(--ground-line); border-radius:14px; padding:6px;
+    box-shadow:0 18px 40px rgba(0,0,0,.35); max-height:calc(100vh - 96px); overflow-y:auto;
+  }
+  .topnav-links .nav-menu a{
+    display:flex; align-items:center; gap:12px; margin:0; padding:5px 8px; border:0; border-radius:9px;
+    font-family:var(--font-body); font-size:14px; letter-spacing:0; text-transform:none; color:var(--bone); white-space:nowrap;
+  }
+  .topnav-links .nav-menu a:hover, .topnav-links .nav-menu a:focus-visible{ background:rgba(239,234,218,.08); color:var(--verdant); }
+  .nav-menu img{ width:40px; height:40px; border-radius:8px; object-fit:cover; flex:none; border:1px solid var(--ground-line); }
+  .topnav-links .nav-menu a.nav-menu-all{
+    font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.12em; text-transform:uppercase; color:var(--bone-faint);
+    padding:8px 8px 9px; margin-bottom:4px; border-bottom:1px solid var(--ground-line); border-radius:9px 9px 0 0;
+  }
+  @media (max-width:640px){
+    .nav-dd{ position:static; }
+    .nav-menu{ left:auto; right:10px; width:min(264px, calc(100vw - 20px)); padding-top:8px; transform:translate(0, -4px); }
+    .nav-dd.open .nav-menu, .nav-dd:has(a:focus-visible) .nav-menu, .nav-dd:hover:not(.shut) .nav-menu{ transform:none; }
+  }
   @media (max-width:640px){
     .topnav{ padding:0 var(--s4); }
     .topnav-mark{ display:none; }
@@ -1235,9 +1268,34 @@
     <span class="topnav-sep" aria-hidden="true">·</span>
     <a href="#about" data-id="about">About</a>
     <span class="topnav-sep" aria-hidden="true">·</span>
-    <a href="#lenses" data-id="lenses">Lenses</a>
+    <span class="nav-dd" id="navLenses">
+      <a href="#lenses" data-id="lenses" aria-haspopup="true" aria-expanded="false" aria-controls="navLensesMenu">Lenses</a>
+      <div class="nav-menu" id="navLensesMenu">
+        <div class="nav-menu-panel">
+          <a href="#blind-spot"><img src="images/nav/blind-spot.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Blind Spot</a>
+          <a href="#lenses"><img src="images/nav/three-lenses.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Three Lenses</a>
+          <a href="#seeing"><img src="images/nav/path-to-agency.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Path to Agency</a>
+        </div>
+      </div>
+    </span>
     <span class="topnav-sep" aria-hidden="true">·</span>
-    <a href="#ideas" data-id="ideas">Ideas</a>
+    <span class="nav-dd" id="navIdeas">
+      <a href="#ideas" data-id="ideas" aria-haspopup="true" aria-expanded="false" aria-controls="navIdeasMenu">Ideas</a>
+      <div class="nav-menu" id="navIdeasMenu">
+        <div class="nav-menu-panel">
+          <a class="nav-menu-all" href="#ideas">Things I've Built</a>
+          <a href="#garage-project"><img src="images/nav/garage.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Garage</a>
+          <a href="#decision-project"><img src="images/nav/decision.webp" alt="" width="40" height="40" loading="lazy" decoding="async">Decision OS</a>
+          <a href="#codigo-project"><img src="images/nav/codigo.webp" alt="" width="40" height="40" loading="lazy" decoding="async">Código 1530</a>
+          <a href="#watch-project"><img src="images/nav/time.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Shape of Time</a>
+          <a href="#friction-project"><img src="images/nav/friction.webp" alt="" width="40" height="40" loading="lazy" decoding="async">Friction</a>
+          <a href="#atlas-project"><img src="images/nav/atlas.webp" alt="" width="40" height="40" loading="lazy" decoding="async">Algorithm Atlas</a>
+          <a href="#water-project"><img src="images/nav/water.webp" alt="" width="40" height="40" loading="lazy" decoding="async">Water</a>
+          <a href="#stillward-project"><img src="images/nav/stillward.webp" alt="" width="40" height="40" loading="lazy" decoding="async">Stillward</a>
+          <a href="#aspen-project"><img src="images/nav/night-night.webp" alt="" width="40" height="40" loading="lazy" decoding="async">Night Night</a>
+        </div>
+      </div>
+    </span>
     <span class="topnav-sep" aria-hidden="true">·</span>
     <a href="#contact" data-id="contact">Contact</a>
   </div>
@@ -1297,7 +1355,7 @@
       <p class="thesis-body">My work is about closing that gap. See the organization through three lenses: Business, Systems, and People. Understand the forces underneath. Find the signal in the noise, then turn insight into decisions, systems, and tools that produce lasting improvement. Not more activity, but better outcomes. Excellence is the discipline of never settling for good enough. <button class="reflect-link" type="button" id="thesisOpen" aria-haspopup="dialog">Read the full thesis →</button></p>
       </div>
 
-      <div class="loops-wrap">
+      <div class="loops-wrap" id="blind-spot">
         <span class="eyebrow">The Blind Spot</span>
         <p class="loops-lede">Activity isn't progress. Sometimes the hardest thing to see is what everyone has learned to accept.</p>
         <p class="loops-body">Organizations develop patterns. Over time, patterns become routines, routines become expectations, and expectations become invisible. Some patterns keep everyone busy without moving anything forward. Others turn what the organization learns into better decisions and better outcomes.</p>
@@ -2517,7 +2575,7 @@
 
   /* ---------- nav progress + active link ---------- */
   var hairlineFill = document.getElementById('hairlineFill');
-  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.topnav-links a'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.topnav-links a[data-id]'));
   var navSections = navLinks.map(function(a){ return document.getElementById(a.dataset.id); });
 
   function onScroll(){
@@ -2534,6 +2592,25 @@
   window.addEventListener('scroll', onScroll, { passive:true });
   window.addEventListener('resize', onScroll);
   onScroll();
+
+  /* ---------- Lenses and Ideas dropdowns ----------
+     Hover or keyboard focus opens it on a computer. On touch the first tap opens it
+     and the second tap goes to the section itself. */
+  Array.prototype.forEach.call(document.querySelectorAll('.nav-dd'), function(dd){
+    var trigger = dd.querySelector('a[data-id]'), menu = dd.querySelector('.nav-menu');
+    var noHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    function setOpen(on){ dd.classList.toggle('open', on); trigger.setAttribute('aria-expanded', on ? 'true' : 'false'); }
+    function shut(){ setOpen(false); dd.classList.add('shut'); if(document.activeElement && dd.contains(document.activeElement)) document.activeElement.blur(); }
+    trigger.addEventListener('click', function(e){
+      if(noHover && !dd.classList.contains('open')){ e.preventDefault(); dd.classList.remove('shut'); setOpen(true); }
+      else shut();
+    });
+    menu.addEventListener('click', function(e){ if(e.target.closest('a')) shut(); });
+    dd.addEventListener('mouseenter', function(){ trigger.setAttribute('aria-expanded', dd.classList.contains('shut') ? 'false' : 'true'); });
+    dd.addEventListener('mouseleave', function(){ dd.classList.remove('shut'); if(!dd.classList.contains('open')) trigger.setAttribute('aria-expanded', 'false'); });
+    document.addEventListener('click', function(e){ if(!dd.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && (dd.classList.contains('open') || dd.contains(document.activeElement))) shut(); });
+  });
 
   /* ---------- book insight modal ---------- */
   var bookOverlay = document.getElementById('bookModalOverlay');
