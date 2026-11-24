@@ -324,6 +324,21 @@
   .thesis-mark path{ fill:none; stroke:var(--verdant); stroke-width:1.5; }
   .thesis-modal .reflect-body .thesis-mark + .reflect-final{ margin-top:0; }
   .thesis-foot{ display:flex; justify-content:flex-end; margin-top:var(--s6); }
+  /* ---- The Garage: seven questions every CEO should ask ---- */
+  .room-cta-row{ display:flex; flex-wrap:wrap; align-items:baseline; column-gap:var(--s7); }
+  .room-cta-btn{ background:none; border:none; border-bottom:1px solid; padding:0 0 2px; cursor:pointer; }
+  .ceo-q{ list-style:none; margin:0; padding:0; counter-reset:ceo; }
+  .ceo-q li{ counter-increment:ceo; padding:var(--s5) 0; border-bottom:1px solid var(--ground-line); }
+  .ceo-q li:first-child{ padding-top:0; }
+  .ceo-k{ display:block; font-family:var(--font-mono); font-size:14px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:#D08A62; }
+  .ceo-q .ceo-k::before{ content:counter(ceo) ". "; }
+  .reflect-body .ceo-ask{ margin-top:var(--s2); font-family:var(--font-display); font-size:var(--fs-body-l); line-height:1.4; color:var(--bone); }
+  .reflect-body .ceo-more{ margin-top:var(--s2); font-size:var(--fs-body-s); line-height:1.65; }
+  .ceo-block{ padding:var(--s6) 0 0; }
+  .ceo-block .ceo-k{ margin-bottom:var(--s3); }
+  .ceo-block .reflect-final{ color:var(--verdant); }
+  .ceo-foot{ justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:var(--s4); }
+  .ceo-foot a.reflect-link{ text-decoration:none; font-size:var(--fs-body-s); }
   /* ---- The Multiplier: the one card that looks different ---- */
   .book-modal.mult-modal{
     max-width:640px; padding-top:44px; padding-bottom:52px; text-align:center;
@@ -1743,7 +1758,7 @@
           <p class="room-body">Inspired by the entrepreneurial principles behind Steve Jobs' approach to building companies, The Garage explores five disciplines that keep organizations focused on what matters: Focus. Customer. Simplicity. Excellence. Innovation.</p>
           <p class="room-body">It's about questioning what everyone else has learned to accept, removing what gets in the way, and building companies that stay close to the people they serve.</p>
           <p class="room-body">Great companies aren't built to serve themselves. They're built to serve the customer.</p>
-          <a class="room-cta" href="https://corporate-production-f647.up.railway.app/" target="_blank" rel="noopener">Visit The Garage →</a>
+          <div class="room-cta-row"><a class="room-cta" href="https://corporate-production-f647.up.railway.app/" target="_blank" rel="noopener">Visit The Garage →</a><button class="room-cta room-cta-btn" type="button" id="ceoOpen" aria-haspopup="dialog">Seven Questions for CEOs</button></div>
         </div>
       </div>
     </div>
@@ -2220,6 +2235,35 @@
         <p>As AI reshapes how work gets done, organizations must rethink how decisions are made, how trust and accountability are maintained, and where human judgment matters most. The opportunity isn't just to automate existing work, but to reimagine what people and AI can accomplish together.</p>
         <p class="reflect-final">Successful AI adoption is more than just implementing technology. It means equipping people to use AI effectively, continuously learning and adapting, and keeping trust, accountability, and human judgment at the center. By embedding AI into everyday work, organizations can improve decisions, move beyond experiments, and create sustained business value.</p>
       </div>
+    </div>
+  </div>
+
+  <div class="book-modal-overlay" id="ceoModalOverlay" hidden>
+    <div class="book-modal reflect-modal thesis-modal" role="dialog" aria-modal="true" aria-labelledby="ceoModalHeading" tabindex="-1">
+      <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
+      <span class="lens-modal-eyebrow reflect-eyebrow">The Garage · The Corporate Speed Trap</span>
+      <span class="lens-modal-heading" id="ceoModalHeading">Seven questions every CEO should ask</span>
+      <div class="reflect-body">
+        <ol class="ceo-q">
+          <li><span class="ceo-k">Customer proximity</span><p class="ceo-ask">Are we making decisions too far removed from the customer?</p><p class="ceo-more">Do we understand what customers actually experience, or are we relying on filtered information, internal assumptions, or secondhand opinions?</p></li>
+          <li><span class="ceo-k">Organizational complexity</span><p class="ceo-ask">Have we created too many layers between ideas and action?</p><p class="ceo-more">How much time and energy are spent navigating internal processes instead of solving problems, making decisions, and moving the business forward?</p></li>
+          <li><span class="ceo-k">Empowerment</span><p class="ceo-ask">Are our best people trusted and empowered to make decisions?</p><p class="ceo-more">Or do we preach ownership while keeping authority at the top, forcing people to seek permission instead of taking action?</p></li>
+          <li><span class="ceo-k">Transparency versus politics</span><p class="ceo-ask">Does information flow openly, or is it filtered, controlled and withheld?</p><p class="ceo-more">Do people understand why decisions are made? Are mistakes and failures discussed honestly? Can employees raise uncomfortable questions without being labelled difficult or disloyal?</p></li>
+          <li><span class="ceo-k">Values versus reality</span><p class="ceo-ask">Do our actions reflect the values we claim to stand for?</p><p class="ceo-more">Can people challenge leadership without fear of repercussions? Can they speak honestly when the truth is uncomfortable? Are people treated fairly, regardless of their position or title?</p></li>
+          <li><span class="ceo-k">Accountability</span><p class="ceo-ask">Are we measuring activity or real results?</p><p class="ceo-more">Do people take ownership of outcomes, or simply focus on completing assigned tasks and ticking boxes?</p></li>
+          <li><span class="ceo-k">The courage to reinvent</span><p class="ceo-ask">Are we protecting yesterday's success at the expense of tomorrow's opportunities?</p><p class="ceo-more">Are we willing to challenge the business models that made us successful, even when they're still profitable?</p></li>
+        </ol>
+        <div class="ceo-block">
+          <span class="ceo-k">The consequence</span>
+          <p>People stop telling the truth. They tell leadership what it wants to hear. Problems go unreported, decisions slow down, and trust erodes. The CEO may believe the culture is healthy, unaware that information has been filtered at every level before reaching the top.</p>
+          <p>A company cannot move quickly when people spend more time managing perceptions than solving problems.</p>
+        </div>
+        <div class="ceo-block">
+          <span class="ceo-k">The uncomfortable question</span>
+          <p class="reflect-final">What happens when telling the truth becomes harder than telling people what they want to hear?</p>
+        </div>
+      </div>
+      <div class="thesis-foot ceo-foot"><a class="reflect-link" href="https://corporate-production-f647.up.railway.app/lessons.html" target="_blank" rel="noopener">Read the lessons →</a><button class="reflect-link thesis-close-bottom" type="button" id="ceoCloseBottom">Close &times;</button></div>
     </div>
   </div>
 
@@ -2880,6 +2924,39 @@
     thesisClose.addEventListener('click', closeThesisModal);
     if(thesisCloseBottom) thesisCloseBottom.addEventListener('click', closeThesisModal);
     thesisOverlay.addEventListener('click', function(e){ if(e.target === thesisOverlay) closeThesisModal(); });
+  }
+
+  /* ---------- The Garage: seven questions modal ---------- */
+  var ceoOverlay = document.getElementById('ceoModalOverlay');
+  var ceoOpen = document.getElementById('ceoOpen');
+  if(ceoOverlay && ceoOpen){
+    var ceoModal = ceoOverlay.querySelector('.book-modal');
+    var ceoStops = ceoOverlay.querySelectorAll('button, a[href]');
+    function onCeoKeydown(e){
+      if(e.key === 'Escape') closeCeoModal();
+      else if(e.key === 'Tab'){
+        e.preventDefault();
+        var i = Array.prototype.indexOf.call(ceoStops, document.activeElement);
+        ceoStops[(i + (e.shiftKey ? -1 : 1) + ceoStops.length) % ceoStops.length].focus();
+      }
+    }
+    function openCeoModal(){
+      ceoOverlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      ceoModal.scrollTop = 0;
+      ceoModal.focus();
+      document.addEventListener('keydown', onCeoKeydown);
+    }
+    function closeCeoModal(){
+      ceoOverlay.hidden = true;
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onCeoKeydown);
+      ceoOpen.focus();
+    }
+    ceoOpen.addEventListener('click', openCeoModal);
+    ceoOverlay.querySelector('.book-modal-close').addEventListener('click', closeCeoModal);
+    document.getElementById('ceoCloseBottom').addEventListener('click', closeCeoModal);
+    ceoOverlay.addEventListener('click', function(e){ if(e.target === ceoOverlay) closeCeoModal(); });
   }
 
   /* ---------- certificate modal ---------- */
