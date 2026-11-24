@@ -513,6 +513,12 @@
   .lens-map[data-active="business"] .lens-circle-business,
   .lens-map[data-active="system"] .lens-circle-system,
   .lens-map[data-active="people"] .lens-circle-people{ transform:scale(1.065); }
+  /* Product is the ring around the other three: lighter fill, and it sits underneath so the circles keep their clicks */
+  .lens-circle-product{ fill-opacity:.07; stroke-opacity:.55; mix-blend-mode:normal; }
+  .lens-map[data-active="product"] .lens-circle-product{ fill-opacity:.14; stroke-opacity:1; transform:scale(1.02); }
+  .lens-map[data-active="business"] .lens-circle-product,
+  .lens-map[data-active="system"] .lens-circle-product,
+  .lens-map[data-active="people"] .lens-circle-product{ opacity:.45; }
   .lens-map[data-active="business"] .lens-circle-system,
   .lens-map[data-active="business"] .lens-circle-people,
   .lens-map[data-active="system"] .lens-circle-business,
@@ -547,6 +553,10 @@
   .lens-map.pre-anim .lens-circle-business{ transform:translate(-63px,-31px); }
   .lens-map.pre-anim .lens-circle-system{ transform:translate(63px,-31px); }
   .lens-map.pre-anim .lens-circle-people{ transform:translate(0,70px); }
+  .lens-map.pre-anim .lens-circle-product{ transform:scale(.9); }
+  .lens-map.pre-anim.in .lens-circle-product{ transform:scale(1); transition:transform var(--t-reveal) var(--ease-out) 1.1s, opacity var(--t-slow) var(--ease) 1.1s; }
+  .lens-map.pre-anim .lens-label-product{ opacity:0; }
+  .lens-map.pre-anim.in .lens-label-product{ opacity:1; transition:opacity var(--t-slow) var(--ease) 1.5s; }
   .lens-map.pre-anim.in .lens-circle{ opacity:1; }
   .lens-map.pre-anim.in .lens-circle-business{ transform:translate(0,0); transition:transform var(--t-reveal) var(--ease-out) 0s, opacity var(--t-slow) var(--ease) 0s; }
   .lens-map.pre-anim.in .lens-circle-system{ transform:translate(0,0); transition:transform var(--t-reveal) var(--ease-out) var(--t-fast), opacity var(--t-slow) var(--ease) var(--t-fast); }
@@ -693,7 +703,7 @@
   }
   .drill-mult small{ font-family:var(--font-display); font-style:italic; font-weight:400; font-size:var(--fs-label-l); letter-spacing:0; line-height:1.3; color:var(--bone-dim); text-transform:none; }
   .drill-stem{ width:1px; height:26px; margin:0 auto; background:var(--ground-line); }
-  .drill-lenses{ display:flex; justify-content:center; gap:var(--s3); }
+  .drill-lenses{ display:flex; justify-content:center; gap:var(--s2); }
   .drill-lens{
     flex:1 1 0; max-width:108px; aspect-ratio:1; padding:0; border-radius:50%; cursor:pointer;
     border:1.5px solid var(--verdant); background:rgba(92,152,115,.14); color:var(--bone);
@@ -734,7 +744,7 @@
   .idea-next-count{ font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.12em; text-transform:uppercase; color:var(--bone-faint); }
   .idea-next .mult-link{ font-size:var(--fs-small); }
 
-  /* ---- one phone layout for every pop-up card (Blind Spot, Three Lenses, forces, books, certificate) ----
+  /* ---- one phone layout for every pop-up card (Blind Spot, Four Lenses, forces, books, certificate) ----
      Declared after all the card rules so the single source of truth for small screens lives here.
      Same overlay padding, side padding, body size, heading size and eyebrow size on every card. */
   @media (max-width:520px){
@@ -1292,7 +1302,7 @@
       <div class="nav-menu" id="navLensesMenu">
         <div class="nav-menu-panel">
           <a href="#blind-spot"><img src="images/nav/blind-spot.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Blind Spot</a>
-          <a href="#lenses"><img src="images/nav/three-lenses.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Three Lenses</a>
+          <a href="#lenses"><img src="images/nav/three-lenses.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Four Lenses</a>
           <a href="#seeing"><img src="images/nav/path-to-agency.webp" alt="" width="40" height="40" loading="lazy" decoding="async">The Path to Agency</a>
         </div>
       </div>
@@ -1371,7 +1381,7 @@
         <h3 class="thesis-title">The gap between knowing and doing.</h3>
         <p class="thesis-body">Organizations rarely fail for lack of information, ambition, or good intentions. They fail in the gap between knowing and doing. Often, the hardest problems to solve are the ones everyone has learned to accept.</p>
       <p class="thesis-body">Every company starts by serving a customer. Gradually, it drifts toward serving itself, until managing the organization becomes more important than creating value.</p>
-      <p class="thesis-body">My work is about closing that gap. See the organization through three lenses: Business, Systems, and People. Understand the seven forces beneath them, and how they interact to create flow or friction. Then turn insight into decisions, systems, and tools that produce lasting improvement. Not more activity, but better outcomes. Excellence is the discipline of never settling for good enough. <button class="reflect-link" type="button" id="thesisOpen" aria-haspopup="dialog">Read the full thesis →</button></p>
+      <p class="thesis-body">My work is about closing that gap. See the organization through four lenses: Business, Systems, People, and Product. Understand the seven forces beneath them, and how they interact to create flow or friction. Then turn insight into decisions, systems, and tools that produce lasting improvement. Not more activity, but better outcomes. Excellence is the discipline of never settling for good enough. <button class="reflect-link" type="button" id="thesisOpen" aria-haspopup="dialog">Read the full thesis →</button></p>
       </div>
 
       <div class="loops-wrap" id="blind-spot">
@@ -1399,11 +1409,16 @@
   <section class="lens-section" id="lenses">
     <div class="wrap">
       <div class="lens-map">
-        <span class="eyebrow">The Three Lenses</span>
-        <p class="lens-lede">Three Places To Look.</p>
-        <p class="lens-body">When you want to understand what's really happening, look at it three ways:</p>
-        <p class="lens-body lens-questions">1) How does the business create value?<br>2) How does the system create leverage?<br>3) How do we help people do their best work?</p>
-        <svg class="lens-diagram" viewBox="0 0 540 460" role="group" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier. Click a circle or an overlap for more detail.">
+        <span class="eyebrow">The Four Lenses</span>
+        <p class="lens-lede">Four Places To Look.</p>
+        <p class="lens-body">When you want to understand what's really happening, look at it four ways:</p>
+        <p class="lens-body lens-questions">1) How does the business create value?<br>2) How does the system create leverage?<br>3) How do we help people do their best work?<br>4) How does the product create desire?</p>
+        <svg class="lens-diagram" viewBox="16 -44 508 508" role="group" aria-label="Three overlapping circles labeled Business, System, and People, with the overlap in the center labeled The Multiplier, all inside a larger ring labeled Product. Click a circle, the ring, or an overlap for more detail.">
+          <circle class="lens-circle lens-circle-product" cx="270" cy="210" r="244" tabindex="0" role="button"
+            aria-label="Product: Create desire"
+            data-lens="product" data-eyebrow="Product" data-heading="Create desire"
+            data-text="Where an organization's capabilities become tangible value. Customers experience the product, not the organization behind it."
+            data-keywords="Quality · Design · Experience"/>
           <circle class="lens-circle lens-circle-business" cx="220" cy="180" r="130" tabindex="0" role="button"
             aria-label="Business: Create value"
             data-lens="business" data-eyebrow="Business" data-heading="Create value"
@@ -1432,6 +1447,10 @@
             <tspan x="270" dy="0">PEOPLE</tspan>
             <tspan class="lens-label-tagline" x="270" dy="1.3em">Create capability</tspan>
           </text>
+          <text class="lens-label lens-label-product" x="270" y="-4">
+            <tspan x="270" dy="0">PRODUCT</tspan>
+            <tspan class="lens-label-tagline" x="270" dy="1.3em">Create desire</tspan>
+          </text>
           <text class="lens-label lens-label-center" x="270" y="200">
             <tspan x="270" dy="0">THE</tspan>
             <tspan x="270" dy="1.1em">MULTIPLIER</tspan>
@@ -1452,8 +1471,8 @@
             data-eyebrow="Business + People" data-heading="Leadership"
             data-text="You connect what the organization needs with what people need to do their best work."/>
           <circle class="lens-hotspot lens-hotspot-center" cx="270" cy="205" r="30" tabindex="0" role="button"
-            aria-label="Business, System, and People: The Multiplier"
-            data-eyebrow="Business + System + People" data-heading="The Multiplier"
+            aria-label="Business, System, People, and Product: The Multiplier"
+            data-eyebrow="Business + System + People + Product" data-heading="The Multiplier"
             data-text="There's a clarity that comes from understanding the business, creating leverage through the system, and trusting people to act. When they all work together, great things start to compound."/>
         </svg>
       </div>
@@ -1469,7 +1488,7 @@
       <p class="net-intro net-intro-2">The lenses help us see. The forces help us understand. The ideas that follow help us think more clearly and develop better judgment. And judgment is what turns understanding into agency, the ability to act with intention and influence the outcomes that matter.</p>
       <p class="net-intro net-intro-3">Explore the connections:</p>
       <div class="net-scroll">
-        <svg class="net-svg" viewBox="0 0 1040 612" role="group" aria-label="A network: The Multiplier on the left, fed by the People, Business, and System lenses, which are fed by seven forces, which are fed by six books on the right.">
+        <svg class="net-svg" viewBox="0 0 1040 612" role="group" aria-label="A network: The Multiplier on the left, fed by the People, Business, System, and Product lenses, which are fed by seven forces, which are fed by six books on the right.">
           <g class="net-heads" aria-hidden="true">
             <text x="290" y="24" text-anchor="middle">LENSES</text>
             <text x="580" y="24" text-anchor="middle">FORCES</text>
@@ -1494,20 +1513,24 @@
             <path class="net-edge" data-from="b2" data-to="t7" pathLength="1" d="M800,193 C690.0,193 690.0,562 580,562"/>
             <path class="net-edge" data-from="b4" data-to="t7" pathLength="1" d="M800,357 C690.0,357 690.0,562 580,562"/>
             <path class="net-edge" data-from="b6" data-to="t7" pathLength="1" d="M800,521 C690.0,521 690.0,562 580,562"/>
-            <path class="net-edge" data-from="t1" data-to="lp" pathLength="1" d="M580,70 C435.0,70 435.0,202 290,202"/>
-            <path class="net-edge" data-from="t2" data-to="lp" pathLength="1" d="M580,152 C435.0,152 435.0,202 290,202"/>
-            <path class="net-edge" data-from="t3" data-to="lp" pathLength="1" d="M580,234 C435.0,234 435.0,202 290,202"/>
-            <path class="net-edge" data-from="t3" data-to="ls" pathLength="1" d="M580,234 C435.0,234 435.0,430 290,430"/>
-            <path class="net-edge" data-from="t4" data-to="lb" pathLength="1" d="M580,316 C435.0,316 435.0,316 290,316"/>
-            <path class="net-edge" data-from="t5" data-to="lb" pathLength="1" d="M580,398 C435.0,398 435.0,316 290,316"/>
-            <path class="net-edge" data-from="t5" data-to="ls" pathLength="1" d="M580,398 C435.0,398 435.0,430 290,430"/>
-            <path class="net-edge" data-from="t6" data-to="ls" pathLength="1" d="M580,480 C435.0,480 435.0,430 290,430"/>
-            <path class="net-edge" data-from="t6" data-to="lb" pathLength="1" d="M580,480 C435.0,480 435.0,316 290,316"/>
-            <path class="net-edge" data-from="t7" data-to="lp" pathLength="1" d="M580,562 C435.0,562 435.0,202 290,202"/>
-            <path class="net-edge" data-from="t7" data-to="ls" pathLength="1" d="M580,562 C435.0,562 435.0,430 290,430"/>
-            <path class="net-edge" data-from="lp" data-to="m" pathLength="1" d="M290,202 C190.0,202 190.0,316 90,316"/>
-            <path class="net-edge" data-from="lb" data-to="m" pathLength="1" d="M290,316 C190.0,316 190.0,316 90,316"/>
-            <path class="net-edge" data-from="ls" data-to="m" pathLength="1" d="M290,430 C190.0,430 190.0,316 90,316"/>
+            <path class="net-edge" data-from="t1" data-to="lp" pathLength="1" d="M580,70 C435.0,70 435.0,145 290,145"/>
+            <path class="net-edge" data-from="t2" data-to="lp" pathLength="1" d="M580,152 C435.0,152 435.0,145 290,145"/>
+            <path class="net-edge" data-from="t3" data-to="lp" pathLength="1" d="M580,234 C435.0,234 435.0,145 290,145"/>
+            <path class="net-edge" data-from="t3" data-to="ls" pathLength="1" d="M580,234 C435.0,234 435.0,373 290,373"/>
+            <path class="net-edge" data-from="t4" data-to="lb" pathLength="1" d="M580,316 C435.0,316 435.0,259 290,259"/>
+            <path class="net-edge" data-from="t5" data-to="lb" pathLength="1" d="M580,398 C435.0,398 435.0,259 290,259"/>
+            <path class="net-edge" data-from="t5" data-to="ls" pathLength="1" d="M580,398 C435.0,398 435.0,373 290,373"/>
+            <path class="net-edge" data-from="t6" data-to="ls" pathLength="1" d="M580,480 C435.0,480 435.0,373 290,373"/>
+            <path class="net-edge" data-from="t6" data-to="lb" pathLength="1" d="M580,480 C435.0,480 435.0,259 290,259"/>
+            <path class="net-edge" data-from="t7" data-to="lp" pathLength="1" d="M580,562 C435.0,562 435.0,145 290,145"/>
+            <path class="net-edge" data-from="t7" data-to="ls" pathLength="1" d="M580,562 C435.0,562 435.0,373 290,373"/>
+            <path class="net-edge" data-from="t1" data-to="lr" pathLength="1" d="M580,70 C435.0,70 435.0,487 290,487"/>
+            <path class="net-edge" data-from="t4" data-to="lr" pathLength="1" d="M580,316 C435.0,316 435.0,487 290,487"/>
+            <path class="net-edge" data-from="t7" data-to="lr" pathLength="1" d="M580,562 C435.0,562 435.0,487 290,487"/>
+            <path class="net-edge" data-from="lp" data-to="m" pathLength="1" d="M290,145 C190.0,145 190.0,316 90,316"/>
+            <path class="net-edge" data-from="lb" data-to="m" pathLength="1" d="M290,259 C190.0,259 190.0,316 90,316"/>
+            <path class="net-edge" data-from="ls" data-to="m" pathLength="1" d="M290,373 C190.0,373 190.0,316 90,316"/>
+            <path class="net-edge" data-from="lr" data-to="m" pathLength="1" d="M290,487 C190.0,487 190.0,316 90,316"/>
           </g>
           <g class="net-nodes">
             <g class="net-node net-mult" data-id="m" tabindex="0" role="button" aria-label="The Multiplier: the compounding effect of the forces working together. Opens the card.">
@@ -1518,19 +1541,24 @@
               <text class="net-label" x="90" y="325" text-anchor="middle">MULTIPLIER</text>
             </g>
             <g class="net-node net-lens" data-id="lp" tabindex="0" role="button" aria-label="People lens">
-              <circle class="net-hit" cx="290" cy="202" r="40"/>
-              <circle class="net-ring" cx="290" cy="202" r="24"/>
-              <text class="net-label" x="290" y="244" text-anchor="middle">PEOPLE</text>
+              <circle class="net-hit" cx="290" cy="145" r="40"/>
+              <circle class="net-ring" cx="290" cy="145" r="24"/>
+              <text class="net-label" x="290" y="187" text-anchor="middle">PEOPLE</text>
             </g>
             <g class="net-node net-lens" data-id="lb" tabindex="0" role="button" aria-label="Business lens">
-              <circle class="net-hit" cx="290" cy="316" r="40"/>
-              <circle class="net-ring" cx="290" cy="316" r="24"/>
-              <text class="net-label" x="290" y="358" text-anchor="middle">BUSINESS</text>
+              <circle class="net-hit" cx="290" cy="259" r="40"/>
+              <circle class="net-ring" cx="290" cy="259" r="24"/>
+              <text class="net-label" x="290" y="301" text-anchor="middle">BUSINESS</text>
             </g>
             <g class="net-node net-lens" data-id="ls" tabindex="0" role="button" aria-label="System lens">
-              <circle class="net-hit" cx="290" cy="430" r="40"/>
-              <circle class="net-ring" cx="290" cy="430" r="24"/>
-              <text class="net-label" x="290" y="472" text-anchor="middle">SYSTEM</text>
+              <circle class="net-hit" cx="290" cy="373" r="40"/>
+              <circle class="net-ring" cx="290" cy="373" r="24"/>
+              <text class="net-label" x="290" y="415" text-anchor="middle">SYSTEM</text>
+            </g>
+            <g class="net-node net-lens" data-id="lr" tabindex="0" role="button" aria-label="Product lens">
+              <circle class="net-hit" cx="290" cy="487" r="40"/>
+              <circle class="net-ring" cx="290" cy="487" r="24"/>
+              <text class="net-label" x="290" y="529" text-anchor="middle">PRODUCT</text>
             </g>
             <g class="net-node net-theme" data-id="t1" tabindex="0" role="button" aria-label="Awareness: notice your own part">
               <circle class="net-hit" cx="580" cy="70" r="30"/>
@@ -1675,7 +1703,7 @@
   </div>
 
   <!-- Staged panels: one modal whose content is swapped in place (The Blind Spot,
-       The Three Lenses). Stages live in the script (loopStages, vennStages). -->
+       The Four Lenses). Stages live in the script (loopStages, vennStages). -->
   <div class="book-modal-overlay" id="loopModalOverlay" hidden>
     <div class="book-modal loop-modal" role="dialog" aria-modal="true" aria-label="The Blind Spot" tabindex="-1">
       <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
@@ -1693,10 +1721,10 @@
   </div>
 
   <div class="book-modal-overlay" id="vennModalOverlay" hidden>
-    <div class="book-modal loop-modal venn-modal" role="dialog" aria-modal="true" aria-label="The Three Lenses" tabindex="-1">
+    <div class="book-modal loop-modal venn-modal" role="dialog" aria-modal="true" aria-label="The Four Lenses" tabindex="-1">
       <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
-      <ol class="loop-progress" aria-label="Lenses"><li class="loop-progress-label">Lenses</li><li><button type="button" class="loop-step" data-step="0">Business</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="1">System</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="2">People</button></li></ol>
-      <ol class="loop-progress" aria-label="Together"><li><button type="button" class="loop-step" data-step="3">Leadership</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="4">Capability</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="5">Scale</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="6">The Multiplier</button></li></ol>
+      <ol class="loop-progress" aria-label="Lenses"><li class="loop-progress-label">Lenses</li><li><button type="button" class="loop-step" data-step="0">Business</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="1">System</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="2">People</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="3">Product</button></li></ol>
+      <ol class="loop-progress" aria-label="Together"><li><button type="button" class="loop-step" data-step="4">Leadership</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="5">Capability</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="6">Scale</button></li><li aria-hidden="true">→</li><li><button type="button" class="loop-step" data-step="7">The Multiplier</button></li></ol>
       <div class="loop-stage">
         <span class="lens-modal-eyebrow stage-eyebrow"></span>
         <span class="lens-modal-heading stage-heading"></span>
@@ -2275,7 +2303,7 @@
       <div class="reflect-body">
         <p>Organizations rarely fail for lack of information, ambition, or good intentions. They have more data than they can turn into insight and more strategy than they can translate into action. They fail in the gap between knowing and doing. Often, the hardest problems to solve are the ones everyone has learned to accept.</p>
         <p>Every company starts by serving a customer. Gradually, it drifts toward serving itself. Management layers, approvals, meetings, and reports accumulate until managing the organization becomes more important than creating value. Decisions move further from the work, and people spend more time navigating the system than improving what it delivers.</p>
-        <p>Understanding an organization requires three lenses: Business, Systems, and People. Business reveals how value is created and sustained. Systems reveal how work gets done and how effectively information and resources flow. People reveal how talent, leadership, trust, and accountability translate potential into performance. These lenses are interconnected; understanding one without the others provides an incomplete picture.</p>
+        <p>Understanding an organization requires four lenses: Business, Systems, People, and Product. Business reveals how value is created and sustained. Systems reveal how work gets done and how effectively information and resources flow. People reveal how talent, leadership, trust, and accountability translate potential into performance. Product reveals whether those capabilities become tangible value for customers and consumers. These lenses are interconnected; understanding one without the others provides an incomplete picture.</p>
         <p>Beneath these lenses are seven forces that shape organizational behavior and performance: Awareness, Trust, Conditions, Value, Incentives, Leverage, and Excellence. They influence how people see problems, make decisions, and approach their work. They interact continuously, reinforcing or undermining one another. When aligned, they turn individual talent into collective capability. When misaligned, dysfunction becomes embedded in the organization. Culture is not what a company says it values. It is what everyday decisions, behaviors, incentives, and consequences consistently reinforce.</p>
         <p>How these lenses and forces interact determines the organization's ability to create flow and momentum. Organizational flow is the ability to translate priorities, information, decisions, and resources into coordinated action. It depends on clarity, alignment, coordination, and adaptability. When people understand what matters, information moves, decisions happen at the right level, and resources are aligned, the organization gains momentum. When these connections break down, friction accumulates and individual effort becomes harder to translate into collective results. The objective is not to eliminate structure, but to create the conditions for effective coordination and sustained flow.</p>
         <p>Seeing clearly is only the beginning. Knowledge must become understanding, understanding must inform judgment, and judgment must translate into intentional action. That means staying close to customers, challenging assumptions, removing unnecessary complexity, setting meaningful standards, and putting decisions in the hands of people closest to the work. It means building systems that enable good decisions and making the better path the easier choice.</p>
@@ -2293,7 +2321,7 @@
       <button class="book-modal-close" type="button" aria-label="Close">&times;</button>
       <div class="mult-view" id="multViewMain">
       <span class="lens-modal-eyebrow mult-eyebrow">The Multiplier · Business + System + People</span>
-      <span class="mult-heading" id="multModalHeading">The multiplier is the compounding effect of business, systems, and people working together.</span>
+      <span class="mult-heading" id="multModalHeading">The multiplier is the compounding effect of business, systems, people, and product working together.</span>
       <div class="mult-body">
         <p>When people understand what excellence looks like, receive timely feedback, have the information to make sound decisions, and are rewarded for the right outcomes, performance compounds.</p>
         <p>Each force strengthens the others. Awareness clarifies expectations. Trust enables honest feedback and sound judgment. The right conditions allow people to perform at their best. Value aligns effort with meaningful outcomes. Incentives reinforce the right behaviors. Leverage amplifies individual capability. Excellence becomes the standard that sustains the cycle.</p>
@@ -3393,7 +3421,7 @@
     });
   }
 
-  /* ---------- The Three Lenses: three lenses, three intersections, The Multiplier ---------- */
+  /* ---------- The Four Lenses: four lenses, three intersections, The Multiplier ---------- */
   var vennStages = [
     { eyebrow:'Business', heading:'Create Value',
       blocks:['Every organization exists to create value. The question is whether its strategy, priorities, and measures of success are aligned around the value that matters most.',
@@ -3409,6 +3437,11 @@
       blocks:['People bring the judgment, knowledge, creativity, and ability that turn strategy and systems into real outcomes. Their potential is realized when they have the clarity, support, and conditions to do their best work.',
               { label:'The blind spot', text:'Expecting people to compensate indefinitely for systems that make good performance difficult.' },
               { label:'The connection', text:'People give the organization its capability to act, adapt, and improve. What they can accomplish depends on how the business and system enable them.' }],
+      next:'See the product →' },
+    { eyebrow:'Product', heading:'Create Desire',
+      blocks:["Product is where an organization's capabilities become tangible value. It connects customer and consumer needs with what the business creates and delivers. It encompasses quality, design, differentiation, and experience. It requires understanding not just what can be made, but what should be made, why it matters, and whether it delivers on its promise. Ultimately, customers experience the product, not the organization behind it.",
+              { label:'The blind spot', text:'Judging the product by what the organization intended, instead of what the customer actually experiences.' },
+              { label:'The connection', text:'Product is where the work of business, systems, and people reaches the customer. It can only be as good as the organization behind it.' }],
       next:'Where the lenses overlap →' },
     { eyebrow:'Leadership', sub:'Business + People', heading:'A clear direction only matters when it changes what the organization does.',
       blocks:['Connecting business direction with the systems and decisions that turn intent into action.'],
@@ -3419,19 +3452,19 @@
     { eyebrow:'Scale', sub:'Business + System', heading:'Growth becomes sustainable when the organization can reproduce results without reproducing the same problems.',
       blocks:['Connecting value creation, repeatable systems, and human capability so results can grow without depending on heroic individual effort.'],
       next:'The Multiplier →' },
-    { eyebrow:'The Multiplier', sub:'Business + System + People', heading:'The whole is greater when the parts work together.',
-      blocks:['Business defines the value worth creating. Systems make that value repeatable. People bring the capability to deliver it.',
+    { eyebrow:'The Multiplier', sub:'Business + System + People + Product', heading:'The whole is greater when the parts work together.',
+      blocks:['Business defines the value worth creating. Systems make that value repeatable. People bring the capability to deliver it. Product is where the customer experiences it.',
               'Leadership connects direction to action. Capability turns potential into performance. Scale extends what works.',
-              "But the real advantage emerges when all three lenses reinforce one another, so that the organization doesn't just work harder, but becomes better at producing results.",
-              { final:"The question isn't whether your business, systems, and people are strong individually. It's whether they're making one another stronger." }],
+              "But the real advantage emerges when all four lenses reinforce one another, so that the organization doesn't just work harder, but becomes better at producing results.",
+              { final:"The question isn't whether your business, systems, people, and product are strong individually. It's whether they're making one another stronger." }],
       next:'Explore The Path to Agency →', end:'#seeing' }
   ];
   var vennPanel = stagePanel('vennModalOverlay', vennStages);
   if(vennPanel){
-    var vennIndex = { business:0, system:1, people:2, bp:3, sp:4, bs:5 };
+    var vennIndex = { business:0, system:1, people:2, product:3, bp:4, sp:5, bs:6 };
     document.querySelectorAll('.lens-hotspot, .lens-circle').forEach(function(h){
       var i = h.dataset.lens !== undefined ? vennIndex[h.dataset.lens]
-            : h.dataset.previewKey !== undefined ? vennIndex[h.dataset.previewKey] : 6;
+            : h.dataset.previewKey !== undefined ? vennIndex[h.dataset.previewKey] : 7;
       function openIt(){
         var mapEl = document.querySelector('.lens-map');
         if(mapEl){ mapEl.removeAttribute('data-active-hotspot'); mapEl.removeAttribute('data-active'); }
