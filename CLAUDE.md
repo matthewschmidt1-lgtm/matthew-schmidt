@@ -4,6 +4,7 @@ Single static file: `index.html` (all CSS + JS inline). No build step, no framew
 dependencies. Deployed on Railway from GitHub `matthewschmidt1-lgtm/matthew-schmidt`;
 every push to `main` redeploys https://matthew-schmidt-production.up.railway.app.
 `package.json` exists only so Railway has a `serve` process to run.
+`serve.json` sets the security headers (including a content security policy: only same-site files, inline code and Google Fonts are allowed, so a new outside script, image host or embed must be added there), turns off directory listings, and hides working files (`CLAUDE.md`, `README.md`, `tools/`, config files) from the live site. A new working file at the repo root needs a line in its `rewrites` list.
 
 ## Workflow for every change
 

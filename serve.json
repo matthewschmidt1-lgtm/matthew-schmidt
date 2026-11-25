@@ -1,1 +1,81 @@
-{"cleanUrls":false}
+{
+  "cleanUrls": false,
+  "directoryListing": false,
+  "rewrites": [
+    {
+      "source": "CLAUDE.md",
+      "destination": "/_not_found"
+    },
+    {
+      "source": "README.md",
+      "destination": "/_not_found"
+    },
+    {
+      "source": "package.json",
+      "destination": "/_not_found"
+    },
+    {
+      "source": "package-lock.json",
+      "destination": "/_not_found"
+    },
+    {
+      "source": "railway.json",
+      "destination": "/_not_found"
+    },
+    {
+      "source": "serve.json",
+      "destination": "/_not_found"
+    },
+    {
+      "source": "og-image-source.html",
+      "destination": "/_not_found"
+    },
+    {
+      "source": "tools/**",
+      "destination": "/_not_found"
+    },
+    {
+      "source": ".claude/**",
+      "destination": "/_not_found"
+    },
+    {
+      "source": ".claude/launch.json",
+      "destination": "/_not_found"
+    },
+    {
+      "source": ".gitignore",
+      "destination": "/_not_found"
+    }
+  ],
+  "headers": [
+    {
+      "source": "**",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+        }
+      ]
+    }
+  ]
+}
