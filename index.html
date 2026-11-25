@@ -328,16 +328,20 @@
   .room-cta-row{ display:flex; flex-wrap:wrap; align-items:baseline; column-gap:var(--s7); }
   .room-cta-btn{ background:none; border:none; border-bottom:1px solid; padding:0 0 2px; cursor:pointer; }
   /* ---- The Shape of Time: every Workbench watch in its studio view, all on one screen ---- */
-  .book-modal.bench-modal{ max-width:min(1340px, max(760px, calc((100vh - 495px) * 3.7 + 150px))); padding-bottom:var(--s5); }
-  .bench-grid{ display:grid; grid-template-columns:repeat(8,1fr); gap:10px; margin-top:var(--s4); }
+  .book-modal.bench-modal{ max-width:min(1000px, max(480px, calc((100vh - 500px) * 1.85 + 116px))); padding-bottom:var(--s5); }
+  .bench-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--s3); margin-top:var(--s4); }
+  .bench-tile[hidden]{ display:none; }
+  .bench-pager{ display:flex; align-items:center; gap:var(--s3); font-family:var(--font-mono); font-size:var(--fs-label-l); letter-spacing:.08em; color:var(--bone-dim); }
+  .bench-page{ width:38px; height:38px; border-radius:50%; border:1px solid var(--verdant); background:none; color:var(--verdant); font-size:20px; line-height:1; cursor:pointer; transition:background var(--t-fast) var(--ease), color var(--t-fast) var(--ease); }
+  .bench-page:hover, .bench-page:focus-visible{ background:var(--verdant); color:var(--ground); outline:none; }
+  .bench-page:disabled{ opacity:.3; cursor:default; background:none; color:var(--verdant); }
   .bench-tile{ display:block; text-decoration:none; background:#1d1e1b; border:1px solid transparent; border-radius:8px; overflow:hidden; transition:border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
   .bench-tile img{ display:block; width:100%; height:auto; aspect-ratio:1/1.08; object-fit:cover; }
   .bench-tile:hover, .bench-tile:focus-visible{ border-color:#C9A46A; transform:translateY(-2px); outline:none; }
   .bench-tile span{ display:block; padding:6px 5px 9px; text-align:center; color:var(--bone); font-family:var(--font-display); font-size:var(--fs-label-l); line-height:1.25; }
   .bench-tile small{ display:block; margin-top:2px; font-family:var(--font-mono); font-size:var(--fs-micro); letter-spacing:.06em; color:var(--bone-dim); }
   .bench-modal .thesis-foot{ margin-top:var(--s4); }
-  @media (max-width:900px){ .book-modal.bench-modal{ max-width:none; } .bench-grid{ grid-template-columns:repeat(4,1fr); } }
-  @media (max-width:560px){ .bench-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .book-modal.bench-modal{ max-width:none; } .bench-grid{ grid-template-columns:repeat(2,1fr); } }
   .ceo-q{ list-style:none; margin:0; padding:0; counter-reset:ceo; }
   .ceo-q li{ counter-increment:ceo; padding:var(--s5) 0; border-bottom:1px solid var(--ground-line); }
   .ceo-q li:first-child{ padding-top:0; }
@@ -1012,12 +1016,12 @@
   .ws-orbit .ob-star:nth-child(4n+1){ animation-duration:3.4s; animation-delay:-1.9s; }
   .ws-orbit .ob-star:nth-child(7n){ fill:#f1dc92; }
   @keyframes obTwinkle{ from{ opacity:.25; } to{ opacity:1; } }
-  /* the Earth and its moon, rendered from the Meaning of Time page of the watch site: 48 frames of one orbit */
+  /* the Earth and its moon, drawn live on two canvases with the Meaning of Time page's own shading, from baked surface maps (images/watch/earth-surface, earth-mask, moon-surface) */
   .ws-orbit svg{ position:absolute; inset:0; }
-  .ws-orbit i{ position:absolute; display:block; }
+  .ws-orbit i, .ws-orbit canvas{ position:absolute; display:block; }
   .ws-orbit .ob-glow{ inset:0; background:radial-gradient(ellipse 52% 52% at 50% 50%, rgba(70,120,220,.26) 0%, rgba(40,80,170,.1) 45%, transparent 76%); }
-  .ws-orbit .ob-earth{ left:30.625%; top:30.625%; width:38.75%; height:38.75%; z-index:2; background:url(images/watch/earth-turn.webp) 0 0 / 800% 600% no-repeat; }
-  .ws-orbit .ob-moon{ width:10.3125%; height:10.3125%; margin:-5.156% 0 0 -5.156%; left:50%; top:50%; z-index:1; background:url(images/watch/moon-turn.webp) 0 0 / 4800% 100% no-repeat; }
+  .ws-orbit .ob-earth{ left:30.625%; top:30.625%; width:38.75%; height:38.75%; z-index:2; }
+  .ws-orbit .ob-moon{ width:10.3125%; height:10.3125%; margin:-5.156% 0 0 -5.156%; left:50%; top:50%; z-index:1; }
   .watch-stage .sol{ display:block; width:100%; height:auto; overflow:visible; }
   .watch-stage .sol-case{ fill:#0b1220; stroke:#b8975a; stroke-width:.5; } .watch-stage .sol-rim{ fill:none; stroke:#33415c; stroke-width:.25; }
   .watch-stage .sg{ fill:none; stroke-width:15; }
@@ -1921,7 +1925,7 @@
             <div class="watch-scene ws-move" aria-hidden="true"><div class="watch-reel wr-move"></div></div>
             <div class="watch-scene ws-solar" aria-hidden="true"><svg class="sol" viewBox="-112 -112 224 224"><g class="sol-static"><circle class="sol-case" r="108"/><circle class="sol-rim" r="100.5"/><path class="sg sg-night" d="M0.0,90A90,90 0 0 1 -89.2,11.6"/><path class="sg sg-ast" d="M-89.2,11.83A90,90 0 0 1 -89.9,-2.0"/><path class="sg sg-nau" d="M-89.9,-1.88A90,90 0 0 1 -88.9,-13.7"/><path class="sg sg-civ" d="M-88.9,-13.61A90,90 0 0 1 -86.9,-23.3"/><path class="sg sg-day" d="M-86.9,-23.22A90,90 0 0 1 68.9,-57.7"/><path class="sg sg-day" d="M68.8,-57.91A90,90 0 0 1 85.2,29"/><path class="sg sg-civ" d="M85.2,28.86A90,90 0 0 1 81.5,38.1"/><path class="sg sg-nau" d="M81.6,37.96A90,90 0 0 1 75.8,48.4"/><path class="sg sg-ast" d="M75.9,48.29A90,90 0 0 1 67.6,59.4"/><path class="sg sg-night" d="M67.7,59.28A90,90 0 0 1 -0.0,90"/><circle class="sol-line" r="97.5"/><circle class="sol-line" r="82.5"/><line class="sol-tick" x1="0" y1="82.5" x2="0" y2="77"/><text class="sol-num" x="0" y="73.5">00</text><line class="sol-tick" x1="-21.3" y1="79.6" x2="-20.5" y2="76.7"/><line class="sol-tick" x1="-41.2" y1="71.4" x2="-39.7" y2="68.8"/><line class="sol-tick" x1="-58.3" y1="58.3" x2="-54.4" y2="54.4"/><text class="sol-num" x="-50.5" y="52.5">03</text><line class="sol-tick" x1="-71.4" y1="41.2" x2="-68.8" y2="39.7"/><line class="sol-tick" x1="-79.6" y1="21.3" x2="-76.7" y2="20.5"/><line class="sol-tick" x1="-82.5" y1="0" x2="-77" y2="0"/><text class="sol-num" x="-71.5" y="2">06</text><line class="sol-tick" x1="-79.6" y1="-21.3" x2="-76.7" y2="-20.5"/><line class="sol-tick" x1="-71.4" y1="-41.2" x2="-68.8" y2="-39.7"/><line class="sol-tick" x1="-58.3" y1="-58.3" x2="-54.4" y2="-54.4"/><text class="sol-num" x="-50.5" y="-48.5">09</text><line class="sol-tick" x1="-41.2" y1="-71.4" x2="-39.7" y2="-68.8"/><line class="sol-tick" x1="-21.3" y1="-79.6" x2="-20.5" y2="-76.7"/><line class="sol-tick" x1="0" y1="-82.5" x2="0" y2="-77"/><text class="sol-num" x="0" y="-69.5">12</text><line class="sol-tick" x1="21.3" y1="-79.6" x2="20.5" y2="-76.7"/><line class="sol-tick" x1="41.2" y1="-71.4" x2="39.7" y2="-68.8"/><line class="sol-tick" x1="58.3" y1="-58.3" x2="54.4" y2="-54.4"/><text class="sol-num" x="50.5" y="-48.5">15</text><line class="sol-tick" x1="71.4" y1="-41.2" x2="68.8" y2="-39.7"/><line class="sol-tick" x1="79.6" y1="-21.3" x2="76.7" y2="-20.5"/><line class="sol-tick" x1="82.5" y1="0" x2="77" y2="0"/><text class="sol-num" x="71.5" y="2">18</text><line class="sol-tick" x1="79.6" y1="21.3" x2="76.7" y2="20.5"/><line class="sol-tick" x1="71.4" y1="41.2" x2="68.8" y2="39.7"/><line class="sol-tick" x1="58.3" y1="58.3" x2="54.4" y2="54.4"/><text class="sol-num" x="50.5" y="52.5">21</text><line class="sol-tick" x1="41.2" y1="71.4" x2="39.7" y2="68.8"/><line class="sol-tick" x1="21.3" y1="79.6" x2="20.5" y2="76.7"/><line class="sol-ev r" x1="-79.5" y1="-21.7" x2="-99.3" y2="-27.1"/><text class="sol-evt" x="-103.7" y="-26.7" transform="rotate(285.2 -103.7 -28.3)">RISE</text><line class="sol-ev n" x1="23.7" y1="-79" x2="29.6" y2="-98.6"/><text class="sol-evt" x="30.9" y="-101.3" transform="rotate(376.7 30.9 -102.9)">NOON</text><line class="sol-ev s" x1="78.3" y1="25.8" x2="97.8" y2="32.2"/><text class="sol-evt" x="102.1" y="35.2" transform="rotate(468.2 102.1 33.6)">SET</text><defs><clipPath id="wsA"><rect x="-64" y="-64" width="128" height="74"/></clipPath><clipPath id="wsB"><rect x="-64" y="10" width="128" height="54"/></clipPath><clipPath id="wsC"><circle r="63"/></clipPath></defs><g clip-path="url(#wsC)"><rect class="sol-ground" x="-64" y="10" width="128" height="54"/><path class="sol-path up" d="M60,39.35L60,39.82L60,40.23L60,40.56L60,40.81L60,40.99L60,41.08M-60,41.1L-60,41.03L-60,40.89L-60,40.66L-60,40.36L-60,39.99L-60,39.54L-60,39.03L-60,38.45L-60,37.81L-60,37.12L-60,36.38L-60,35.59L-60,34.75L-59.0,33.88L-57.9,32.97L-56.8,32.03L-55.7,31.05L-54.7,30.05L-53.7,29.03L-52.8,27.98L-51.8,26.91L-50.9,25.82L-50.1,24.72L-49.2,23.6L-48.4,22.47L-47.6,21.32L-46.8,20.17L-46.0,19.01L-45.3,17.83L-44.5,16.66L-43.8,15.47L-43.1,14.28L-42.3,13.09L-41.6,11.9L-40.9,10.7L-40.2,9.5L-39.5,8.31L-38.8,7.11L-38.0,5.92L-37.3,4.72L-36.6,3.54L-35.8,2.35L-35.1,1.18L-34.3,0.01L-33.5,-1.15L-32.7,-2.3L-31.9,-3.45L-31.1,-4.57L-30.2,-5.69L-29.4,-6.79L-28.4,-7.87L-27.5,-8.93L-26.5,-9.97L-25.5,-10.99L-24.5,-11.98L-23.4,-12.95L-22.2,-13.88L-21.1,-14.77L-19.8,-15.63L-18.6,-16.45L-17.2,-17.22L-15.8,-17.94L-14.4,-18.61L-12.9,-19.22L-11.4,-19.77L-9.8,-20.25L-8.1,-20.66L-6.4,-21L-4.7,-21.26L-3,-21.44L-1.2,-21.54L0.5,-21.56L2.3,-21.5L4.0,-21.35L5.7,-21.13L7.4,-20.82L9.1,-20.44L10.7,-19.99L12.3,-19.47L13.8,-18.89L15.3,-18.25L16.7,-17.55L18.0,-16.8L19.4,-16L20.6,-15.16L21.8,-14.28L23.0,-13.37L24.1,-12.42L25.1,-11.44L26.2,-10.43L27.2,-9.4L28.1,-8.35L29.0,-7.28L29.9,-6.19L30.8,-5.08L31.6,-3.96L32.5,-2.82L33.3,-1.68L34.1,-0.52L34.8,0.64L35.6,1.82L36.3,2.99L37.1,4.18L37.8,5.37L38.5,6.56L39.3,7.75L40.0,8.95L40.7,10.14L41.4,11.34L42.1,12.53L42.9,13.72L43.6,14.91L44.3,16.09L45.1,17.27L45.8,18.44L46.6,19.6L47.4,20.76L48.2,21.9L49.0,23.03L49.8,24.15L50.7,25.26L51.6,26.35L52.5,27.42L53.4,28.47L54.4,29.51L55.4,30.51L56.5,31.49L57.5,32.44L58.7,33.36L59.8,34.24L60,35.09L60,35.89L60,36.64L60,37.35L60,38L60,38.6L60,39.1" clip-path="url(#wsA)"/><path class="sol-path down" d="M60,39.35L60,39.82L60,40.23L60,40.56L60,40.81L60,40.99L60,41.08M-60,41.1L-60,41.03L-60,40.89L-60,40.66L-60,40.36L-60,39.99L-60,39.54L-60,39.03L-60,38.45L-60,37.81L-60,37.12L-60,36.38L-60,35.59L-60,34.75L-59.0,33.88L-57.9,32.97L-56.8,32.03L-55.7,31.05L-54.7,30.05L-53.7,29.03L-52.8,27.98L-51.8,26.91L-50.9,25.82L-50.1,24.72L-49.2,23.6L-48.4,22.47L-47.6,21.32L-46.8,20.17L-46.0,19.01L-45.3,17.83L-44.5,16.66L-43.8,15.47L-43.1,14.28L-42.3,13.09L-41.6,11.9L-40.9,10.7L-40.2,9.5L-39.5,8.31L-38.8,7.11L-38.0,5.92L-37.3,4.72L-36.6,3.54L-35.8,2.35L-35.1,1.18L-34.3,0.01L-33.5,-1.15L-32.7,-2.3L-31.9,-3.45L-31.1,-4.57L-30.2,-5.69L-29.4,-6.79L-28.4,-7.87L-27.5,-8.93L-26.5,-9.97L-25.5,-10.99L-24.5,-11.98L-23.4,-12.95L-22.2,-13.88L-21.1,-14.77L-19.8,-15.63L-18.6,-16.45L-17.2,-17.22L-15.8,-17.94L-14.4,-18.61L-12.9,-19.22L-11.4,-19.77L-9.8,-20.25L-8.1,-20.66L-6.4,-21L-4.7,-21.26L-3,-21.44L-1.2,-21.54L0.5,-21.56L2.3,-21.5L4.0,-21.35L5.7,-21.13L7.4,-20.82L9.1,-20.44L10.7,-19.99L12.3,-19.47L13.8,-18.89L15.3,-18.25L16.7,-17.55L18.0,-16.8L19.4,-16L20.6,-15.16L21.8,-14.28L23.0,-13.37L24.1,-12.42L25.1,-11.44L26.2,-10.43L27.2,-9.4L28.1,-8.35L29.0,-7.28L29.9,-6.19L30.8,-5.08L31.6,-3.96L32.5,-2.82L33.3,-1.68L34.1,-0.52L34.8,0.64L35.6,1.82L36.3,2.99L37.1,4.18L37.8,5.37L38.5,6.56L39.3,7.75L40.0,8.95L40.7,10.14L41.4,11.34L42.1,12.53L42.9,13.72L43.6,14.91L44.3,16.09L45.1,17.27L45.8,18.44L46.6,19.6L47.4,20.76L48.2,21.9L49.0,23.03L49.8,24.15L50.7,25.26L51.6,26.35L52.5,27.42L53.4,28.47L54.4,29.51L55.4,30.51L56.5,31.49L57.5,32.44L58.7,33.36L59.8,34.24L60,35.09L60,35.89L60,36.64L60,37.35L60,38L60,38.6L60,39.1" clip-path="url(#wsB)"/><line class="sol-hz" x1="-64" y1="10" x2="64" y2="10"/></g><circle class="sol-line" r="63"/><text class="sol-card" x="-52" y="18">E</text><text class="sol-card" x="52" y="18">W</text><text class="sol-card" x="0" y="18">S</text></g><g class="sol-live"><line class="sol-hand" id="wsHand"/><circle class="sol-sun-ring" id="wsRing" r="5.4"/><circle class="sol-sun" id="wsSun" r="3.4"/><text class="sol-time" id="wsTime" x="0" y="38"></text><text class="sol-phase" id="wsPhase" x="0" y="48"></text></g></svg></div>
             <div class="watch-scene ws-moon" aria-hidden="true"><svg viewBox="-60 -56 120 120"><circle class="mo-ring faint" r="42" cy="-6"/><g transform="translate(0,-6)"><circle class="mo-dark" r="34"/><path class="mo-lit" id="wsMoon" d=""/><circle class="mo-ring" r="34"/></g><text class="mo-name" id="wsMoonName" x="0" y="50"></text><text class="mo-day" id="wsMoonDay" x="0" y="58"></text></svg></div>
-            <div class="watch-scene ws-orbit" aria-hidden="true"><svg viewBox="-100 -100 200 200"><g id="wsStars"></g></svg><i class="ob-glow"></i><i class="ob-moon" id="wsObMoon"></i><i class="ob-earth" id="wsObEarthA"></i><i class="ob-earth" id="wsObEarthB"></i></div>
+            <div class="watch-scene ws-orbit" aria-hidden="true"><svg viewBox="-100 -100 200 200"><g id="wsStars"></g></svg><i class="ob-glow"></i><canvas class="ob-moon" id="wsObMoon"></canvas><canvas class="ob-earth" id="wsObEarth"></canvas></div>
           </div>
           <p class="watch-cap" id="wsCap">Omega Speedmaster · Ref. 105.003 · 1964</p>
         </a>
@@ -1930,7 +1934,7 @@
           <p class="room-body">Step onto the Workbench. Explore the hidden world beneath each dial, then look beyond the watch to discover the rhythms and wonders of the natural world.</p>
           <p class="room-body">Every watch tells a story. Every moment holds a mystery.</p>
           <p class="room-body">A celebration of time, craftsmanship and curiosity.</p>
-          <div class="room-cta-row"><a class="room-cta" href="https://horology-production.up.railway.app/workbench?watch=speedmaster-105003" target="_blank" rel="noopener">Open the Workbench →</a><button class="room-cta room-cta-btn" type="button" id="benchOpen" aria-haspopup="dialog">Preview the Watches</button></div>
+          <div class="room-cta-row"><a class="room-cta" href="https://horology-production.up.railway.app/workbench?watch=speedmaster-105003" target="_blank" rel="noopener">Open the Workbench →</a><button class="room-cta room-cta-btn" type="button" id="benchOpen" aria-haspopup="dialog">See the Masterpieces</button></div>
         </div>
       </div>
     </div>
@@ -2284,7 +2288,7 @@
       <span class="lens-modal-eyebrow reflect-eyebrow">The Shape of Time · The Workbench</span>
       <span class="lens-modal-heading" id="benchModalHeading">Sixteen watches, in the studio view</span>
       <div class="bench-grid"><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=lange-grand-complication" target="_blank" rel="noopener"><img src="images/watch/studio/lange-grand-complication.webp" alt="A. Lange &amp; Söhne Grand Complication, studio view" width="520" height="650" loading="lazy" decoding="async"><span>A. Lange &amp; Söhne Grand Complication<small>2013</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=royal-oak-5402" target="_blank" rel="noopener"><img src="images/watch/studio/royal-oak-5402.webp" alt="Audemars Piguet Royal Oak, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Audemars Piguet Royal Oak<small>Ref. 5402 · 1972</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=navitimer-806" target="_blank" rel="noopener"><img src="images/watch/studio/navitimer-806.webp" alt="Breitling Navitimer, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Breitling Navitimer<small>Ref. 806 · c. 1954</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=accutron-spaceview" target="_blank" rel="noopener"><img src="images/watch/studio/accutron-spaceview.webp" alt="Bulova Accutron Spaceview, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Bulova Accutron Spaceview<small>Cal. 214 · 1960</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=tank-louis-cartier" target="_blank" rel="noopener"><img src="images/watch/studio/tank-louis-cartier.webp" alt="Cartier Tank Louis Cartier, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Cartier Tank Louis Cartier<small>1922</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=carrera-2447" target="_blank" rel="noopener"><img src="images/watch/studio/carrera-2447.webp" alt="Heuer Carrera, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Heuer Carrera<small>Ref. 2447 · 1963</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=monaco-1133b" target="_blank" rel="noopener"><img src="images/watch/studio/monaco-1133b.webp" alt="Heuer Monaco, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Heuer Monaco<small>Ref. 1133B · 1969</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=jlc-gyrotourbillon-3" target="_blank" rel="noopener"><img src="images/watch/studio/jlc-gyrotourbillon-3.webp" alt="Jaeger-LeCoultre Gyrotourbillon 3, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Jaeger-LeCoultre Gyrotourbillon 3<small>2019</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=speedmaster-105003" target="_blank" rel="noopener"><img src="images/watch/studio/speedmaster-105003.webp" alt="Omega Speedmaster, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Omega Speedmaster<small>Ref. 105.003 · 1964</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=calatrava-96" target="_blank" rel="noopener"><img src="images/watch/studio/calatrava-96.webp" alt="Patek Philippe Calatrava, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Patek Philippe Calatrava<small>Ref. 96 · 1932</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=patek-3974" target="_blank" rel="noopener"><img src="images/watch/studio/patek-3974.webp" alt="Patek Philippe Ref. 3974, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Patek Philippe Ref. 3974<small>1989</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=daytona-6263" target="_blank" rel="noopener"><img src="images/watch/studio/daytona-6263.webp" alt="Rolex Cosmograph Daytona, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Rolex Cosmograph Daytona<small>Ref. 6263 · c. 1970</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=explorer-1016" target="_blank" rel="noopener"><img src="images/watch/studio/explorer-1016.webp" alt="Rolex Explorer, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Rolex Explorer<small>Ref. 1016 · c. 1963</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=submariner-5513" target="_blank" rel="noopener"><img src="images/watch/studio/submariner-5513.webp" alt="Rolex Submariner, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Rolex Submariner<small>Ref. 5513 · 1962</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=seiko-62mas" target="_blank" rel="noopener"><img src="images/watch/studio/seiko-62mas.webp" alt="Seiko 62MAS, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Seiko 62MAS<small>Ref. 6217 · 1965</small></span></a><a class="bench-tile" href="https://horology-production.up.railway.app/workbench?watch=el-primero-a386" target="_blank" rel="noopener"><img src="images/watch/studio/el-primero-a386.webp" alt="Zenith El Primero, studio view" width="520" height="650" loading="lazy" decoding="async"><span>Zenith El Primero<small>Ref. A386 · 1969</small></span></a></div>
-      <div class="thesis-foot ceo-foot"><a class="reflect-link" id="benchLink" href="https://horology-production.up.railway.app/workbench?watch=speedmaster-105003" target="_blank" rel="noopener">Open the Workbench →</a><button class="reflect-link thesis-close-bottom" type="button" id="benchCloseBottom">Close &times;</button></div>
+      <div class="thesis-foot ceo-foot"><a class="reflect-link" id="benchLink" href="https://horology-production.up.railway.app/workbench?watch=speedmaster-105003" target="_blank" rel="noopener">Open the Workbench →</a><span class="bench-pager"><button type="button" class="bench-page" id="benchPrev" aria-label="Previous page">&#8249;</button><span id="benchCount" aria-live="polite">1 / 2</span><button type="button" class="bench-page" id="benchNext" aria-label="Next page">&#8250;</button></span><button class="reflect-link thesis-close-bottom" type="button" id="benchCloseBottom">Close &times;</button></div>
     </div>
   </div>
 
@@ -2893,22 +2897,102 @@
       if(reelM) reelM.style.backgroundPosition = (Math.round(v * 23) / 23 * 100) + '% 0';
     }
     /* the orbit: the Earth turning and its moon going once round, against a starfield */
-    var NS = 'http://www.w3.org/2000/svg', OF = 48, OE1 = [.9613, .2756, 0], OE2 = [.0852, -.2970, .9511];
+    var NS = 'http://www.w3.org/2000/svg';
     var gStars = document.getElementById('wsStars'), obMoon = document.getElementById('wsObMoon');
-    var obA = document.getElementById('wsObEarthA'), obB = document.getElementById('wsObEarthB');
+    var obEarth = document.getElementById('wsObEarth');
     if(gStars){
       var seed = 7; function rnd(){ seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
       for(var i = 0; i < 80; i++){ var st = document.createElementNS(NS, 'circle'); st.setAttribute('class', 'ob-star'); st.setAttribute('cx', (rnd() * 240 - 120).toFixed(1)); st.setAttribute('cy', (rnd() * 240 - 120).toFixed(1)); st.setAttribute('r', (.25 + rnd() * rnd() * 1.1).toFixed(2)); gStars.appendChild(st); }
     }
-    function earthPos(n){ return (n % 8) / 7 * 100 + '% ' + Math.floor(n / 8) / 5 * 100 + '%'; }
+    /* One sun, a tilted orbit. The geometry and shading follow the watch site's meaning-orbit.js;
+       the surfaces are read from baked maps instead of being generated here. */
+    var OB = (function(){
+      var TAU = Math.PI * 2, AX = -.36, RM = .27, ORB = 2.6, TW = 2048, TH = 1024, KW = 1024, MW = 768, MH = 384;
+      function cl(v, a, b){ return v < a ? a : v > b ? b : v; }
+      function ss(a, b, v){ var t = cl((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+      function rot(v, g){ return [v[0] * Math.cos(g) - v[1] * Math.sin(g), v[0] * Math.sin(g) + v[1] * Math.cos(g), v[2]]; }
+      var TILT = 18 * Math.PI / 180, LEAN = 16 * Math.PI / 180;
+      var E1 = rot([1, 0, 0], LEAN), E2 = rot([0, -Math.sin(TILT), Math.cos(TILT)], LEAN), NRM = rot([0, Math.cos(TILT), Math.sin(TILT)], LEAN);
+      var L = (function(){ var v = [0, 0, 0], k, n; for(k = 0; k < 3; k++) v[k] = -.62 * E1[k] + .78 * E2[k] + .13 * NRM[k]; n = Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]); return [v[0]/n, v[1]/n, v[2]/n]; })();
+      var EC = null, EM = null, MO = null, asked = false, size = 0, K = 0, T = null, eOff, eImg, halo, mImg, Rp = 0, ms = 0;
+      function pixels(src, w, h, done){
+        var im = new Image();
+        im.onload = function(){ var c = document.createElement('canvas'); c.width = w; c.height = h; var x = c.getContext('2d'); x.drawImage(im, 0, 0, w, h); try { done(x.getImageData(0, 0, w, h).data); } catch(e){} };
+        im.src = src;
+      }
+      function load(){
+        if(asked) return; asked = true;
+        pixels('images/watch/earth-surface.webp', TW, TH, function(d){ EC = d; });
+        pixels('images/watch/earth-mask.webp', KW, KW / 2, function(d){ EM = d; });
+        pixels('images/watch/moon-surface.webp', MW, MH, function(d){ MO = d; });
+      }
+      function setup(){
+        var dpr = Math.min(2, window.devicePixelRatio || 1), cs = Math.round(obEarth.clientWidth * dpr);
+        if(!cs) return false; if(cs === size) return true;
+        size = cs; obEarth.width = obEarth.height = cs; Rp = cs * .4516; var c = cs / 2, n = cs * cs, x, y;
+        var PI4 = new Int32Array(n), U = new Float32Array(n), V = new Int32Array(n), NX = new Float32Array(n), NY = new Float32Array(n), NZ = new Float32Array(n),
+            DIF = new Float32Array(n), DAY = new Float32Array(n), SPC = new Float32Array(n), RIM = new Float32Array(n), AA = new Uint8Array(n);
+        var hl = Math.sqrt(L[0]*L[0] + L[1]*L[1] + (L[2]+1)*(L[2]+1)), HX = L[0]/hl, HY = L[1]/hl, HZ = (L[2]+1)/hl; K = 0;
+        for(y = 0; y < cs; y++) for(x = 0; x < cs; x++){
+          var dx = (x + .5 - c) / Rp, dy = -(y + .5 - c) / Rp, r = Math.sqrt(dx*dx + dy*dy), aa = cl((1 - r) * Rp + .5, 0, 1); if(aa <= 0) continue;
+          if(r > .9995){ dx *= .9995 / r; dy *= .9995 / r; } var nz = Math.sqrt(Math.max(0, 1 - dx*dx - dy*dy));
+          var bx = dx * Math.cos(AX) + dy * Math.sin(AX), by = -dx * Math.sin(AX) + dy * Math.cos(AX), nl = dx*L[0] + dy*L[1] + nz*L[2], day = ss(-.1, .2, nl);
+          PI4[K] = (y * cs + x) * 4; U[K] = Math.atan2(bx, nz) / TAU + 1; V[K] = cl(((.5 - Math.asin(cl(by, -1, 1)) / Math.PI) * TH) | 0, 0, TH - 1);
+          NX[K] = dx; NY[K] = dy; NZ[K] = nz; DAY[K] = day; DIF[K] = Math.max(day * .05, Math.pow(Math.max(0, nl), .85) * (.62 + .38 * Math.sqrt(nz)));
+          SPC[K] = Math.pow(Math.max(0, dx*HX + dy*HY + nz*HZ), 46) * .7; RIM[K] = Math.pow(1 - nz, 2.6) * day; AA[K] = aa * 255; K++;
+        }
+        T = { PI4:PI4, U:U, V:V, NX:NX, NY:NY, NZ:NZ, DIF:DIF, DAY:DAY, SPC:SPC, RIM:RIM, AA:AA };
+        eOff = document.createElement('canvas'); eOff.width = eOff.height = cs; eImg = eOff.getContext('2d').createImageData(cs, cs);
+        // the thin shell of air: a faint light on the sunward limb only
+        halo = document.createElement('canvas'); halo.width = halo.height = cs; var hx = halo.getContext('2d'), hi = hx.createImageData(cs, cs);
+        for(y = 0; y < cs; y++) for(x = 0; x < cs; x++){
+          var ex = (x + .5 - c) / Rp, ey = -(y + .5 - c) / Rp, er = Math.sqrt(ex*ex + ey*ey); if(er < .985 || er > 1.08) continue;
+          var f = cl(1 - (er - 1) / .08, 0, 1), lit = ss(-.35, .45, (ex*L[0] + ey*L[1]) / er), j = (y * cs + x) * 4;
+          hi.data[j] = 96; hi.data[j+1] = 156; hi.data[j+2] = 236; hi.data[j+3] = f * f * lit * 84;
+        }
+        hx.putImageData(hi, 0, 0);
+        ms = Math.max(8, Math.round(obMoon.clientWidth * dpr)); obMoon.width = obMoon.height = ms; mImg = obMoon.getContext('2d').createImageData(ms, ms);
+        return true;
+      }
+      function earth(turn, M){
+        var d = eImg.data, i, PI4 = T.PI4, U = T.U, V = T.V, NX = T.NX, NY = T.NY, NZ = T.NZ, DIF = T.DIF, DAY = T.DAY, SPC = T.SPC, RIM = T.RIM, AA = T.AA;
+        var ml = M[0]*L[0] + M[1]*L[1] + M[2]*L[2], px = M[0] - ml*L[0], py = M[1] - ml*L[1], pz = M[2] - ml*L[2];
+        var ecl = ml > 0 && Math.sqrt(px*px + py*py + pz*pz) < 1 + RM * 1.5;
+        for(i = 0; i < K; i++){
+          var u = U[i] - turn; u -= Math.floor(u); var tx = (u * TW) | 0, j = (V[i] * TW + tx) * 4, k = ((V[i] >> 1) * KW + (tx >> 1)) * 4, sh = 1;
+          if(ecl){ var vx = M[0] - NX[i], vy = M[1] - NY[i], vz = M[2] - NZ[i], s = vx*L[0] + vy*L[1] + vz*L[2]; if(s > 0) sh = .1 + .9 * ss(.5, 1.45, Math.sqrt(Math.max(0, vx*vx + vy*vy + vz*vz - s*s)) / RM); }
+          var li = .012 + DIF[i] * 1.06 * sh, sp = SPC[i] * (EM[k] / 255) * sh * 190, rm = RIM[i] * sh, nt = EM[k+1] * (1 - DAY[i]) * .8, o = PI4[i];
+          d[o] = EC[j] * li + sp + rm * 34 + nt; d[o+1] = EC[j+1] * li + sp * .96 + rm * 72 + nt * .72; d[o+2] = EC[j+2] * li + sp * .86 + rm * 138 + nt * .4; d[o+3] = AA[i];
+        }
+        eOff.getContext('2d').putImageData(eImg, 0, 0);
+        var g = obEarth.getContext('2d'); g.clearRect(0, 0, size, size); g.drawImage(halo, 0, 0); g.drawImage(eOff, 0, 0);
+      }
+      function moon(M){
+        // the moon keeps one face to the Earth, so it turns once on its axis in each orbit
+        var d = mImg.data, c = ms / 2, rp = Rp * RM, ml = Math.sqrt(M[0]*M[0] + M[1]*M[1] + M[2]*M[2]), A = [-M[0]/ml, -M[1]/ml, -M[2]/ml];
+        var B = [NRM[1]*A[2] - NRM[2]*A[1], NRM[2]*A[0] - NRM[0]*A[2], NRM[0]*A[1] - NRM[1]*A[0]], x, y;
+        for(y = 0; y < ms; y++) for(x = 0; x < ms; x++){
+          var dx = (x + .5 - c) / rp, dy = -(y + .5 - c) / rp, r = Math.sqrt(dx*dx + dy*dy), aa = cl((1 - r) * rp + .5, 0, 1), o = (y * ms + x) * 4; if(aa <= 0){ d[o+3] = 0; continue; }
+          if(r > .9995){ dx *= .9995 / r; dy *= .9995 / r; } var nz = Math.sqrt(Math.max(0, 1 - dx*dx - dy*dy));
+          var lo = Math.atan2(dx*B[0] + dy*B[1] + nz*B[2], dx*A[0] + dy*A[1] + nz*A[2]), la = Math.asin(cl(dx*NRM[0] + dy*NRM[1] + nz*NRM[2], -1, 1));
+          var a = MO[(cl(((.5 - la / Math.PI) * MH) | 0, 0, MH - 1) * MW + (cl((lo / TAU + .5) * MW, 0, MW - 1) | 0)) * 4] / 255, nl = dx*L[0] + dy*L[1] + nz*L[2];
+          var li = Math.pow(Math.max(0, nl), .62) * 1.02, cr = 1, cg = 1, cb = 1;
+          var qx = M[0] + dx * RM, qy = M[1] + dy * RM, qz = M[2] + nz * RM, s = qx*L[0] + qy*L[1] + qz*L[2];
+          if(s < 0){ var f = ss(.86, 1.12, Math.sqrt(Math.max(0, qx*qx + qy*qy + qz*qz - s*s))); cr = f + (1 - f) * .2; cg = f + (1 - f) * .07; cb = f + (1 - f) * .045; } // in the Earth's shadow it dims to a dull copper
+          d[o] = a * (li * 212 * cr + 5); d[o+1] = a * (li * 208 * cg + 6); d[o+2] = a * (li * 200 * cb + 9); d[o+3] = aa * 255;
+        }
+        obMoon.getContext('2d').putImageData(mImg, 0, 0);
+      }
+      return { load: load, draw: function(p){
+        var th = .9 - TAU * p, M = [0, 0, 0], k; for(k = 0; k < 3; k++) M[k] = ORB * (Math.cos(th) * E1[k] + Math.sin(th) * E2[k]);
+        obMoon.style.left = (50 + 17.5 * M[0]).toFixed(2) + '%'; obMoon.style.top = (50 - 17.5 * M[1]).toFixed(2) + '%'; obMoon.style.zIndex = M[2] < 0 ? 1 : 3;
+        if(!EC || !EM || !MO || !setup()) return;
+        earth(p * 36 / 76, M); moon(M);
+      } };
+    })();
     function drawOrbit(p){
-      if(!obMoon || !obA || !obB) return;
-      var f = Math.min(.9999, p) * OF, n = Math.floor(f), th = .9 - 2 * Math.PI * f / OF, c = Math.cos(th), sn = Math.sin(th);
-      obA.style.backgroundPosition = earthPos(n); obB.style.backgroundPosition = earthPos((n + 1) % OF); obB.style.opacity = (f - n).toFixed(3);
-      obMoon.style.backgroundPosition = (n / (OF - 1) * 100) + '% 0';
-      obMoon.style.left = (50 + 45.5 * (c * OE1[0] + sn * OE2[0])).toFixed(2) + '%';
-      obMoon.style.top = (50 - 45.5 * (c * OE1[1] + sn * OE2[1])).toFixed(2) + '%';
-      obMoon.style.zIndex = (c * OE1[2] + sn * OE2[2]) < 0 ? 1 : 3;
+      if(!obMoon || !obEarth || !obEarth.getContext) return;
+      OB.draw(Math.min(.9999, p));
       if(gStars) gStars.setAttribute('transform', 'rotate(' + (p * 9).toFixed(2) + ')');
     }
     function drawSolar(p){
@@ -2942,7 +3026,7 @@
     mock.classList.add('is-timed'); drawWatch(0); drawMove(0); drawSolar(0); drawMoon(0); drawOrbit(0);
     new IntersectionObserver(function(entries){
       var on = entries[0].isIntersecting;
-      if(on && !running){ running = true; last = 0; requestAnimationFrame(frame); }
+      if(on && !running){ OB.load(); running = true; last = 0; requestAnimationFrame(frame); }
       else if(!on) running = false;
     }, { threshold: .45 }).observe(mock);
   })();
@@ -2981,16 +3065,31 @@
   var benchOpen = document.getElementById('benchOpen');
   if(benchOverlay && benchOpen){
     var benchModal = benchOverlay.querySelector('.book-modal');
+    var benchTiles = Array.prototype.slice.call(benchOverlay.querySelectorAll('.bench-tile'));
+    var benchPrev = document.getElementById('benchPrev'), benchNext = document.getElementById('benchNext'), benchCount = document.getElementById('benchCount');
+    var BENCH_PER = 8, benchPages = Math.ceil(benchTiles.length / BENCH_PER), benchAt = 0;
+    function benchPage(n){
+      benchAt = Math.max(0, Math.min(benchPages - 1, n));
+      benchTiles.forEach(function(t, i){ t.hidden = Math.floor(i / BENCH_PER) !== benchAt; });
+      benchCount.textContent = (benchAt + 1) + ' / ' + benchPages;
+      benchPrev.disabled = benchAt === 0; benchNext.disabled = benchAt === benchPages - 1;
+      benchModal.scrollTop = 0;
+    }
+    benchPrev.addEventListener('click', function(){ benchPage(benchAt - 1); if(benchPrev.disabled) benchNext.focus(); });
+    benchNext.addEventListener('click', function(){ benchPage(benchAt + 1); if(benchNext.disabled) benchPrev.focus(); });
     function onBenchKeydown(e){
       if(e.key === 'Escape') closeBenchModal();
+      else if(e.key === 'ArrowRight') benchPage(benchAt + 1);
+      else if(e.key === 'ArrowLeft') benchPage(benchAt - 1);
       else if(e.key === 'Tab'){
-        var stops = benchOverlay.querySelectorAll('button, a[href]');
+        var stops = benchOverlay.querySelectorAll('button:not(:disabled), a[href]:not([hidden])');
         var i = Array.prototype.indexOf.call(stops, document.activeElement);
         e.preventDefault();
         stops[(i + (e.shiftKey ? -1 : 1) + stops.length) % stops.length].focus();
       }
     }
     function openBenchModal(){
+      benchPage(0);
       benchOverlay.hidden = false;
       document.body.style.overflow = 'hidden';
       benchModal.scrollTop = 0;
