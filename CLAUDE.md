@@ -4,7 +4,7 @@ Single static file: `index.html` (all CSS + JS inline). No build step, no framew
 dependencies. Deployed on Railway from GitHub `matthewschmidt1-lgtm/matthew-schmidt`;
 every push to `main` redeploys https://matthew-schmidt-production.up.railway.app.
 `package.json` exists only so Railway has a `serve` process to run.
-`serve.json` sets the security headers (including a content security policy: only same-site files, inline code and Google Fonts are allowed, so a new outside script, image host or embed must be added there), turns off directory listings, and hides working files (`CLAUDE.md`, `README.md`, `tools/`, config files) from the live site. A new working file at the repo root needs a line in its `rewrites` list.
+`serve.json` sets the security headers (including a content security policy: only same-site files, inline code and Google Fonts are allowed, so a new outside script, image host or embed must be added there), turns off directory listings, and hides working files (`CLAUDE.md`, `README.md`, `tools/`, config files) from the live site. A new working file at the repo root needs a line in its `redirects` list (rewrites cannot hide a file that exists). The one rewrite sends `/` to `index.html`, which `serve` does not do by itself when `cleanUrls` is off.
 
 ## Workflow for every change
 
@@ -111,3 +111,5 @@ All sizes, spacing and motion read from named tokens on `:root`; don't add raw v
   `resize_window` at 1280.
 
 The Lenses nav link has the same kind of dropdown (`#navLenses`: The Blind Spot `#blind-spot`, The Four Lenses `#lenses`, The Path to Agency `#seeing`; the Blind Spot thumbnail is a drawn two-loop icon, the other two are captures). The Ideas nav link has a dropdown (`.nav-dd#navIdeas` > `.nav-menu`) listing each visible project with a 96px thumbnail from `images/nav/` (cropped captures of the preview cards). Hover or keyboard focus opens it; on touch the first tap opens it and the second goes to `#ideas`. When a project is added, removed or reordered, update the dropdown rows and add a thumbnail. The scroll-spy only reads `.topnav-links a[data-id]`.
+
+The Shape of Time section has a "Preview Ten Watches" button (`#benchOpen`) that opens `#benchModalOverlay`: one screen with a five-by-two grid of Workbench studio views (`images/watch/studio/<workbench id>.webp`, 520x650). Each `.bench-tile` links to its watch on the Workbench. The images are stills captured from the watch project's Workbench (`setView('studio')`), so they need recapturing if the 3D models change.
