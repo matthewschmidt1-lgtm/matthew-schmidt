@@ -3,48 +3,8 @@
   "directoryListing": false,
   "rewrites": [
     {
-      "source": "CLAUDE.md",
-      "destination": "/_not_found"
-    },
-    {
-      "source": "README.md",
-      "destination": "/_not_found"
-    },
-    {
-      "source": "package.json",
-      "destination": "/_not_found"
-    },
-    {
-      "source": "package-lock.json",
-      "destination": "/_not_found"
-    },
-    {
-      "source": "railway.json",
-      "destination": "/_not_found"
-    },
-    {
-      "source": "serve.json",
-      "destination": "/_not_found"
-    },
-    {
-      "source": "og-image-source.html",
-      "destination": "/_not_found"
-    },
-    {
-      "source": "tools/**",
-      "destination": "/_not_found"
-    },
-    {
-      "source": ".claude/**",
-      "destination": "/_not_found"
-    },
-    {
-      "source": ".claude/launch.json",
-      "destination": "/_not_found"
-    },
-    {
-      "source": ".gitignore",
-      "destination": "/_not_found"
+      "source": "/",
+      "destination": "/index.html"
     }
   ],
   "headers": [
@@ -76,6 +36,63 @@
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "CLAUDE.md",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": "README.md",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": "package.json",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": "package-lock.json",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": "railway.json",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": "serve.json",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": "og-image-source.html",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": "tools/**",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": ".claude/**",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": ".claude/launch.json",
+      "destination": "/not-found",
+      "type": 302
+    },
+    {
+      "source": ".gitignore",
+      "destination": "/not-found",
+      "type": 302
     }
   ]
 }
